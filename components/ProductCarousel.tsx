@@ -4,24 +4,6 @@ import Link from 'next/link';
 
 const products = [
   {
-    id: 'mini-gps-tracker',
-    name: 'Mini GPS Tracker',
-    image: 'https://i.ebayimg.com/images/g/Ha0AAeSwPjVpbDkr/s-l1600.webp',
-    category: 'Car Accessories',
-  },
-  {
-    id: 'solar-street-light',
-    name: 'Solar Street Light',
-    image: 'https://i.ebayimg.com/images/g/sLUAAeSwhsRpbDrM/s-l1600.webp',
-    category: 'Outdoor & Garden',
-  },
-  {
-    id: 'aoc-wireless-earbuds',
-    name: 'Wireless Earbuds',
-    image: 'https://i.ebayimg.com/images/g/6jUAAeSwA11pbDiX/s-l1600.webp',
-    category: 'Audio & Earbuds',
-  },
-  {
     id: 'laptop-stand-rotating',
     name: 'Laptop Stand',
     image: 'https://i.ebayimg.com/images/g/-pgAAeSw93dpbDuO/s-l1600.webp',
@@ -68,12 +50,6 @@ const products = [
     name: 'Magnetic iPhone Case',
     image: 'https://i.ebayimg.com/images/g/k1wAAeSwhfFpVQd3/s-l1600.webp',
     category: 'Phone Accessories',
-  },
-  {
-    id: 'azdome-dash-cam',
-    name: 'AZDOME Dash Cam',
-    image: 'https://i.ebayimg.com/images/g/m1UAAeSwCFxpZyrZ/s-l1600.webp',
-    category: 'Car Accessories',
   },
 ];
 
