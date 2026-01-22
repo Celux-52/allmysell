@@ -3,33 +3,12 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Our eBay Store - AllMySell | 19 Active Tech Products',
-  description: 'Browse 19+ quality tech and mobile accessories on our eBay store. Chargers, car accessories, phone cases & more. Fast shipping with eBay buyer protection.',
+  title: 'Our eBay Store - AllMySell | 8 Active Tech Products',
+  description: 'Browse quality tech and mobile accessories on our eBay store. Chargers, car accessories, phone cases & more. Fast shipping with eBay buyer protection.',
   keywords: ['eBay store', 'tech accessories', 'mobile accessories', 'chargers', 'power banks', 'car accessories', 'phone cases', 'USB hubs'],
 };
 
 const products = [
-  {
-    name: 'Mini GPS Tracker for Car',
-    description: 'Hidden Vehicle Tracking Device iOS Only No Monthly Fee',
-    category: 'Car Accessories',
-    image: 'https://i.ebayimg.com/images/g/Ha0AAeSwPjVpbDkr/s-l1600.webp',
-    link: 'https://www.ebay.com/itm/206006621658',
-  },
-  {
-    name: 'Solar Street Light Outdoor',
-    description: 'Solar Parking Lot Light, Wide Angle Lamp',
-    category: 'Outdoor & Garden',
-    image: 'https://i.ebayimg.com/images/g/sLUAAeSwhsRpbDrM/s-l1600.webp',
-    link: 'https://www.ebay.com/itm/206006625660',
-  },
-  {
-    name: 'AOC ACD1504 Wireless Open-Ear Earbuds',
-    description: 'Bluetooth 5.4 Waterproof Headphones',
-    category: 'Audio & Earbuds',
-    image: 'https://i.ebayimg.com/images/g/6jUAAeSwA11pbDiX/s-l1600.webp',
-    link: 'https://www.ebay.com/itm/206006631824',
-  },
   {
     name: 'Adjustable 360° Rotating Laptop Stand',
     description: 'Aluminum Laptop Stand and Hub for Gaming, Gray',
@@ -85,62 +64,6 @@ const products = [
     category: 'Phone Accessories',
     image: 'https://i.ebayimg.com/images/g/k1wAAeSwhfFpVQd3/s-l1600.webp',
     link: 'https://www.ebay.com/itm/205961323859',
-  },
-  {
-    name: 'USB-C Fast Charger Cable',
-    description: 'For iPhone 17 16 15 14 13 12 11 Pro Max Type C',
-    category: 'Chargers',
-    image: 'https://i.ebayimg.com/images/g/JWwAAeSwA11pXd~K/s-l1600.webp',
-    link: 'https://www.ebay.com/itm/205978309605',
-  },
-  {
-    name: 'AZDOME M17 Pro Dual Dash Cam',
-    description: 'Voice-Activated, 3K Single Channel',
-    category: 'Car Accessories',
-    image: 'https://i.ebayimg.com/images/g/m1UAAeSwCFxpZyrZ/s-l1600.webp',
-    link: 'https://www.ebay.com/itm/205997420254',
-  },
-  {
-    name: 'Portable 10W Solar Panel',
-    description: 'Dual USB/Type-C Ports, Fast Charging',
-    category: 'Chargers',
-    image: 'https://i.ebayimg.com/images/g/WAMAAeSw8PRpZykn/s-l1600.webp',
-    link: 'https://www.ebay.com/itm/205997412680',
-  },
-  {
-    name: 'Mini Electric Shaver',
-    description: 'Upgrade Pocket Dual Head Shaver, Portable Razor',
-    category: 'Personal Care',
-    image: 'https://i.ebayimg.com/images/g/Q2gAAeSwjOhpZyae/s-l1600.webp',
-    link: 'https://www.ebay.com/itm/205997403850',
-  },
-  {
-    name: 'Portable Mobile Phone Tripod',
-    description: 'Dual Beauty Fill Lights and Bluetooth',
-    category: 'Photo & Video',
-    image: 'https://i.ebayimg.com/images/g/pesAAeSwNvdpY5wh/s-l1600.webp',
-    link: 'https://www.ebay.com/itm/205990565113',
-  },
-  {
-    name: 'Auto AI Box',
-    description: 'Netflix Youtube Support Card Dongle Plug and Play',
-    category: 'Car Accessories',
-    image: 'https://i.ebayimg.com/images/g/ph0AAeSwek1pYUXL/s-l1600.webp',
-    link: 'https://www.ebay.com/itm/205985370019',
-  },
-  {
-    name: 'Heavy Duty Charging Cable',
-    description: 'Type-C USB-C For Samsung Android LG Charger',
-    category: 'Chargers',
-    image: 'https://i.ebayimg.com/images/g/mAEAAeSw1~BpXeja/s-l1600.webp',
-    link: 'https://www.ebay.com/itm/205978355570',
-  },
-  {
-    name: 'Wired Earphones for iPhone with Lightning Connector',
-    description: 'Compatible with iPhone 11-16',
-    category: 'Phone Accessories',
-    image: 'https://i.ebayimg.com/images/g/K0QAAeSwWP1paZsz/s-l1600.webp',
-    link: 'https://www.ebay.com/itm/206002163067',
   },
 ];
 
