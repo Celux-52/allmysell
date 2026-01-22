@@ -72,7 +72,7 @@ const products = [
     name: 'Wired Earphones Lightning',
     description: 'HiFi Stereo Earbuds for iPhone with Microphone',
     category: 'Audio',
-    image: 'https://i.ebayimg.com/images/g/QhkAAeSwoKRpZOXh/s-l1600.webp',
+    image: 'https://i.ebayimg.com/images/g/OBsAAeSwgb9paZsz/s-l1600.webp',
     platform: 'eBay',
     platformLink: 'https://www.ebay.com/itm/206002163067',
   },

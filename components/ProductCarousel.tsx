@@ -48,7 +48,7 @@ const products = [
   {
     id: 'wired-earphones-lightning',
     name: 'Wired Earphones',
-    image: 'https://i.ebayimg.com/images/g/QhkAAeSwoKRpZOXh/s-l1600.webp',
+    image: 'https://i.ebayimg.com/images/g/OBsAAeSwgb9paZsz/s-l1600.webp',
     category: 'Audio',
   },
 ];
