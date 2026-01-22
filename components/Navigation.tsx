@@ -19,11 +19,14 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-white shadow-lg sticky top-0 z-50">
+    <nav className="bg-[#1a1a1a] shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-[#E07A2C] to-[#8B5A2B] rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xl">A</span>
+            </div>
+            <span className="text-2xl font-bold bg-gradient-to-r from-[#E07A2C] to-[#D4A574] bg-clip-text text-transparent">
               AllMySell
             </span>
           </Link>
@@ -34,7 +37,7 @@ export default function Navigation() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="px-4 py-2 rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors font-medium"
+                className="px-4 py-2 rounded-lg text-gray-300 hover:bg-[#E07A2C]/20 hover:text-[#E07A2C] transition-colors font-medium"
               >
                 {item.name}
               </Link>
@@ -44,7 +47,7 @@ export default function Navigation() {
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100"
+            className="md:hidden p-2 rounded-lg text-gray-300 hover:bg-[#E07A2C]/20"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -53,13 +56,13 @@ export default function Navigation() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t">
+        <div className="md:hidden bg-[#1a1a1a] border-t border-gray-800">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="block px-4 py-3 rounded-lg text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors font-medium"
+                className="block px-4 py-3 rounded-lg text-gray-300 hover:bg-[#E07A2C]/20 hover:text-[#E07A2C] transition-colors font-medium"
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}

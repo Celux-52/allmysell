@@ -6,6 +6,28 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 255, 255, 255;
+  --primary-orange: #E07A2C;
+  --primary-brown: #8B5A2B;
+  --primary-black: #1a1a1a;
+  --soft-cream: #FFF8F0;
+}
+
+/* Product Carousel Animation */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 30s linear infinite;
+}
+
+.animate-scroll-left:hover {
+  animation-play-state: paused;
 }
 
 body {
