@@ -109,12 +109,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Our Store Section */}
+      {/* Who We Are Section */}
       <section className="py-24 bg-gradient-to-b from-[#FFF8F0] to-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-6xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#E07A2C] via-[#8B5A2B] to-[#1a1a1a] mb-4 tracking-tight">
-              Our Store
+              Who We Are
             </h2>
             <div className="w-24 h-1.5 bg-gradient-to-r from-[#E07A2C] to-[#8B5A2B] mx-auto rounded-full"></div>
           </div>
@@ -203,12 +203,12 @@ export default function HomePage() {
       {/* Product Carousel */}
       <ProductCarousel />
 
-      {/* Platforms Section */}
+      {/* Our Store Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-[#1a1a1a] mb-4">
-              Who We Are
+              Our Store
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Explore our active and upcoming marketplaces
