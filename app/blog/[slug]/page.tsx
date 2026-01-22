@@ -68,13 +68,13 @@ const products = [
     platformLink: 'https://www.ebay.com/itm/205970285393',
   },
   {
-    id: 'supfine-magnetic-case',
-    name: 'SUPFINE Magnetic iPhone Case',
-    description: 'Compatible with MagSafe (Military Grade)',
-    category: 'Phone Accessories',
-    image: 'https://i.ebayimg.com/images/g/k1wAAeSwhfFpVQd3/s-l1600.webp',
+    id: 'wired-earphones-lightning',
+    name: 'Wired Earphones Lightning',
+    description: 'HiFi Stereo Earbuds for iPhone with Microphone',
+    category: 'Audio',
+    image: 'https://i.ebayimg.com/images/g/QhkAAeSwoKRpZOXh/s-l1600.webp',
     platform: 'eBay',
-    platformLink: 'https://www.ebay.com/itm/205961323859',
+    platformLink: 'https://www.ebay.com/itm/206002163067',
   },
 ];
 

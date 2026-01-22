@@ -46,10 +46,10 @@ const products = [
     category: 'Chargers',
   },
   {
-    id: 'supfine-magnetic-case',
-    name: 'Magnetic iPhone Case',
-    image: 'https://i.ebayimg.com/images/g/k1wAAeSwhfFpVQd3/s-l1600.webp',
-    category: 'Phone Accessories',
+    id: 'wired-earphones-lightning',
+    name: 'Wired Earphones',
+    image: 'https://i.ebayimg.com/images/g/QhkAAeSwoKRpZOXh/s-l1600.webp',
+    category: 'Audio',
   },
 ];
 
