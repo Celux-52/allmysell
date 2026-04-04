@@ -2,32 +2,8 @@ import Link from 'next/link';
 import { Calendar, Clock, ArrowRight, TrendingUp } from 'lucide-react';
 import Image from 'next/image';
 
-// eBay Products - 19 aktif ürün
+// eBay Products - 10 aktif ürün
 const ebayProducts = [
-  {
-    id: 'mini-gps-tracker',
-    name: 'Mini GPS Tracker for Car',
-    description: 'Hidden Vehicle Tracking Device iOS Only No Monthly Fee',
-    category: 'Car Accessories',
-    image: 'https://i.ebayimg.com/images/g/Ha0AAeSwPjVpbDkr/s-l1600.webp',
-    platform: 'eBay',
-  },
-  {
-    id: 'solar-street-light',
-    name: 'Solar Street Light Outdoor',
-    description: 'Solar Parking Lot Light, Wide Angle Lamp',
-    category: 'Outdoor & Garden',
-    image: 'https://i.ebayimg.com/images/g/sLUAAeSwhsRpbDrM/s-l1600.webp',
-    platform: 'eBay',
-  },
-  {
-    id: 'aoc-wireless-earbuds',
-    name: 'AOC ACD1504 Wireless Open-Ear Earbuds',
-    description: 'Bluetooth 5.4 Waterproof Headphones',
-    category: 'Audio & Earbuds',
-    image: 'https://i.ebayimg.com/images/g/6jUAAeSwA11pbDiX/s-l1600.webp',
-    platform: 'eBay',
-  },
   {
     id: 'laptop-stand-rotating',
     name: 'Adjustable 360° Rotating Laptop Stand',
@@ -85,75 +61,11 @@ const ebayProducts = [
     platform: 'eBay',
   },
   {
-    id: 'supfine-magnetic-case',
-    name: 'SUPFINE Magnetic iPhone Case',
-    description: 'Compatible with MagSafe (Military Grade)',
-    category: 'Phone Accessories',
-    image: 'https://i.ebayimg.com/images/g/k1wAAeSwhfFpVQd3/s-l1600.webp',
-    platform: 'eBay',
-  },
-  {
-    id: 'usbc-fast-charger',
-    name: 'USB-C Fast Charger Cable',
-    description: 'For iPhone 17 16 15 14 13 12 11 Pro Max Type C',
-    category: 'Chargers',
-    image: 'https://i.ebayimg.com/images/g/JWwAAeSwA11pXd~K/s-l1600.webp',
-    platform: 'eBay',
-  },
-  {
-    id: 'azdome-dash-cam',
-    name: 'AZDOME M17 Pro Dual Dash Cam',
-    description: 'Voice-Activated, 3K Single Channel',
-    category: 'Car Accessories',
-    image: 'https://i.ebayimg.com/images/g/m1UAAeSwCFxpZyrZ/s-l1600.webp',
-    platform: 'eBay',
-  },
-  {
-    id: 'portable-solar-panel',
-    name: 'Portable 10W Solar Panel',
-    description: 'Dual USB/Type-C Ports, Fast Charging',
-    category: 'Chargers',
-    image: 'https://i.ebayimg.com/images/g/WAMAAeSw8PRpZykn/s-l1600.webp',
-    platform: 'eBay',
-  },
-  {
-    id: 'mini-electric-shaver',
-    name: 'Mini Electric Shaver',
-    description: 'Upgrade Pocket Dual Head Shaver, Portable Razor',
-    category: 'Personal Care',
-    image: 'https://i.ebayimg.com/images/g/Q2gAAeSwjOhpZyae/s-l1600.webp',
-    platform: 'eBay',
-  },
-  {
-    id: 'mobile-phone-tripod',
-    name: 'Portable Mobile Phone Tripod',
-    description: 'Dual Beauty Fill Lights and Bluetooth',
-    category: 'Photo & Video',
-    image: 'https://i.ebayimg.com/images/g/pesAAeSwNvdpY5wh/s-l1600.webp',
-    platform: 'eBay',
-  },
-  {
-    id: 'auto-ai-box',
-    name: 'Auto AI Box',
-    description: 'Netflix Youtube Support Card Dongle Plug and Play',
-    category: 'Car Accessories',
-    image: 'https://i.ebayimg.com/images/g/ph0AAeSwek1pYUXL/s-l1600.webp',
-    platform: 'eBay',
-  },
-  {
-    id: 'heavy-duty-cable',
-    name: 'Heavy Duty Charging Cable',
-    description: 'Type-C USB-C For Samsung Android LG Charger',
-    category: 'Chargers',
-    image: 'https://i.ebayimg.com/images/g/mAEAAeSw1~BpXeja/s-l1600.webp',
-    platform: 'eBay',
-  },
-  {
     id: 'wired-earphones-lightning',
-    name: 'Wired Earphones for iPhone with Lightning Connector',
-    description: 'Compatible with iPhone 11-16',
-    category: 'Phone Accessories',
-    image: 'https://i.ebayimg.com/images/g/K0QAAeSwWP1paZsz/s-l1600.webp',
+    name: 'Wired Earphones Lightning',
+    description: 'HiFi Stereo Earbuds for iPhone with Microphone',
+    category: 'Audio',
+    image: 'https://i.ebayimg.com/images/g/OBsAAeSwgb9paZsz/s-l1600.webp',
     platform: 'eBay',
   },
   {
