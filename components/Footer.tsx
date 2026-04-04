@@ -20,27 +20,27 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">Our Stores</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/ebay" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/shop/ebay" className="text-gray-400 hover:text-white transition-colors">
                   eBay Store
                 </Link>
               </li>
               <li>
-                <Link href="/amazon" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/shop/amazon" className="text-gray-400 hover:text-white transition-colors">
                   Amazon Store
                 </Link>
               </li>
               <li>
-                <Link href="/etsy" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/shop/etsy" className="text-gray-400 hover:text-white transition-colors">
                   Etsy Store
                 </Link>
               </li>
               <li>
-                <Link href="/shopify" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/shop/shopify" className="text-gray-400 hover:text-white transition-colors">
                   Shopify Store
                 </Link>
               </li>
               <li>
-                <Link href="/tiktok" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/shop/tiktok" className="text-gray-400 hover:text-white transition-colors">
                   TikTok Shop
                 </Link>
               </li>

@@ -8,11 +8,11 @@ const navigation = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
   { name: 'Blog', href: '/blog' },
-  { name: 'eBay', href: '/ebay' },
-  { name: 'Amazon', href: '/amazon' },
-  { name: 'Etsy', href: '/etsy' },
-  { name: 'Shopify', href: '/shopify' },
-  { name: 'TikTok Shop', href: '/tiktok' },
+  { name: 'eBay', href: '/shop/ebay' },
+  { name: 'Amazon', href: '/shop/amazon' },
+  { name: 'Etsy', href: '/shop/etsy' },
+  { name: 'Shopify', href: '/shop/shopify' },
+  { name: 'TikTok Shop', href: '/shop/tiktok' },
 ];
 
 export default function Navigation() {

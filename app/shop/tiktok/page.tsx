@@ -65,7 +65,7 @@ export default function TikTokPage() {
             Visit our eBay store now to be notified when our TikTok Shop store opens
           </p>
           <a
-            href="/ebay"
+            href="/shop/ebay"
             className="inline-flex items-center space-x-2 bg-white text-blue-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-cyan-50 transition-all hover:scale-105 shadow-lg"
           >
             <span>Visit Our eBay Store</span>

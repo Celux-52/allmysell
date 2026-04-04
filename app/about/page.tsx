@@ -304,7 +304,7 @@ export default function AboutPage() {
             Browse our technology products in our currently active eBay store
           </p>
           <Link
-            href="/ebay"
+            href="/shop/ebay"
             className="inline-block bg-white text-purple-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-blue-50 transition-all hover:scale-105 shadow-lg"
           >
             View eBay Store

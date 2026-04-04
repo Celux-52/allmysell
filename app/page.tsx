@@ -361,7 +361,7 @@ export default function HomePage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/ebay"
+              href="/shop/ebay"
               className="bg-white text-[#8B5A2B] px-8 py-4 rounded-full font-semibold hover:bg-orange-50 transition-all hover:scale-105 shadow-lg"
             >
               Browse Products

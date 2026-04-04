@@ -111,7 +111,7 @@ export default function ProductCarousel() {
       
       <div className="text-center mt-10">
         <Link
-          href="/ebay"
+          href="/shop/ebay"
           className="inline-flex items-center gap-2 bg-gradient-to-r from-[#E07A2C] to-[#8B5A2B] text-white px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform shadow-lg"
         >
           View All Products
