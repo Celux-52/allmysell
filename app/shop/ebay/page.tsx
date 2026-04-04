@@ -4,8 +4,8 @@ import type { Metadata } from 'next';
 import TrackedLink from '@/components/TrackedLink';
 
 export const metadata: Metadata = {
-  title: 'Our eBay Store - AllMySell | 7 Active Tech Products',
-  keywords: ['eBay store', 'tech accessories', 'mobile accessories', 'chargers', 'power banks', 'car accessories', 'phone cases', 'USB hubs'],
+  title: 'Our eBay Store - AllMySell | 10 Active Tech Products',
+  keywords: ['eBay store', 'tech accessories', 'mobile accessories', 'chargers', 'power banks', 'car accessories', 'phone cases', 'USB hubs', 'MagSafe'],
 };
 
 const products = [
@@ -57,6 +57,27 @@ const products = [
     category: 'Phone Accessories',
     image: 'https://i.ebayimg.com/images/g/euIAAeSwTh5p0SZ5/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206189596772',
+  },
+  {
+    name: 'Magnetic Phone Grip Ring Holder for MagSafe',
+    description: 'Magnet Cell Phone Grip Kickstand Universal Holder',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/nSoAAeSw-2Bp0VQE/s-l1600.webp',
+    link: 'https://www.ebay.com/itm/206189855409',
+  },
+  {
+    name: '8PCS WebCam Cover Slide Camera Privacy',
+    description: 'Security Protect Sticker For Phone Laptop',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/nZEAAeSwLydp0V5y/s-l1600.webp',
+    link: 'https://www.ebay.com/itm/206189917643',
+  },
+  {
+    name: '3Black for MagSafe Ring Sticker',
+    description: 'Universal Metal Ring Compatible with MagSafe Accessories',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/JyUAAeSwLeFp0WHH/s-l1600.webp',
+    link: 'https://www.ebay.com/itm/206189931472',
   },
 ];
 
@@ -168,7 +189,7 @@ export default function EbayPage() {
           {/* Stats */}
           <div className="grid md:grid-cols-4 gap-8 mb-16">
             <div className="text-center p-6 bg-gradient-to-br from-yellow-50 to-red-50 rounded-xl">
-              <div className="text-4xl font-bold text-red-600 mb-2">7</div>
+              <div className="text-4xl font-bold text-red-600 mb-2">10</div>
               <div className="text-gray-700 font-medium">Active Products</div>
             </div>
             <div className="text-center p-6 bg-gradient-to-br from-yellow-50 to-red-50 rounded-xl">

@@ -45,6 +45,24 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/euIAAeSwTh5p0SZ5/s-l1600.webp',
     category: 'Phone Accessories',
   },
+  {
+    id: 'magnetic-phone-grip-ring',
+    name: 'Magnetic Phone Grip Ring',
+    image: 'https://i.ebayimg.com/images/g/nSoAAeSw-2Bp0VQE/s-l1600.webp',
+    category: 'Phone Accessories',
+  },
+  {
+    id: 'webcam-cover-8pcs',
+    name: 'WebCam Cover 8PCS',
+    image: 'https://i.ebayimg.com/images/g/nZEAAeSwLydp0V5y/s-l1600.webp',
+    category: 'Phone Accessories',
+  },
+  {
+    id: 'magsafe-ring-sticker-black',
+    name: 'MagSafe Ring Sticker Black',
+    image: 'https://i.ebayimg.com/images/g/JyUAAeSwLeFp0WHH/s-l1600.webp',
+    category: 'Phone Accessories',
+  },
 ];
 
 export default function ProductCarousel() {

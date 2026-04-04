@@ -59,6 +59,33 @@ const products = [
     platform: 'eBay',
     platformLink: 'https://www.ebay.com/itm/206002163067',
   },
+  {
+    id: 'magnetic-phone-grip-ring',
+    name: 'Magnetic Phone Grip Ring Holder for MagSafe',
+    description: 'Magnet Cell Phone Grip Kickstand Universal Holder',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/nSoAAeSw-2Bp0VQE/s-l1600.webp',
+    platform: 'eBay',
+    platformLink: 'https://www.ebay.com/itm/206189855409',
+  },
+  {
+    id: 'webcam-cover-8pcs',
+    name: '8PCS WebCam Cover Slide Camera Privacy',
+    description: 'Security Protect Sticker For Phone Laptop',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/nZEAAeSwLydp0V5y/s-l1600.webp',
+    platform: 'eBay',
+    platformLink: 'https://www.ebay.com/itm/206189917643',
+  },
+  {
+    id: 'magsafe-ring-sticker-black',
+    name: '3Black for MagSafe Ring Sticker',
+    description: 'Universal Metal Ring Compatible with MagSafe Accessories',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/JyUAAeSwLeFp0WHH/s-l1600.webp',
+    platform: 'eBay',
+    platformLink: 'https://www.ebay.com/itm/206189931472',
+  },
 ];
 
 const generateBlogContent = (product: any) => {
