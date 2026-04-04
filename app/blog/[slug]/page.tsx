@@ -6,6 +6,15 @@ import TrackedLink from '@/components/TrackedLink';
 // eBay Products - Only active products
 const products = [
   {
+    id: 'magsafe-sticker-360-ring',
+    name: 'MagSafe Sticker 360 Manyetik Halkalı 2 Paket',
+    description: 'Evrensel Kablosuz Şarj Adaptörü Kiti',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/euIAAeSwTh5p0SZ5/s-l1600.webp',
+    platform: 'eBay',
+    platformLink: 'https://www.ebay.com/itm/206189596772',
+  },
+  {
     id: 'laptop-stand-rotating',
     name: 'Adjustable 360° Rotating Laptop Stand',
     description: 'Aluminum Laptop Stand and Hub for Gaming, Gray',
