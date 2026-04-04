@@ -57,6 +57,12 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/AT8AAeSwuC9pzahW/s-l1600.webp',
     category: 'Audio',
   },
+  {
+    id: 'magsafe-sticker-360-ring',
+    name: 'MagSafe Sticker 360',
+    image: 'https://i.ebayimg.com/images/g/euIAAeSwTh5p0SZ5/s-l1600.webp',
+    category: 'Phone Accessories',
+  },
 ];
 
 export default function ProductCarousel() {
