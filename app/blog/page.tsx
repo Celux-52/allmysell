@@ -69,14 +69,6 @@ const ebayProducts = [
     platform: 'eBay',
   },
   {
-    id: 'airpod-4-usbc',
-    name: 'AirPod 4 with USB-C Charging Case 4th Gen White ANC',
-    description: 'Active Noise Cancelling Wireless Earbuds',
-    category: 'Audio',
-    image: 'https://i.ebayimg.com/images/g/AT8AAeSwuC9pzahW/s-l1600.webp',
-    platform: 'eBay',
-  },
-  {
     id: 'magsafe-sticker-360-ring',
     name: 'MagSafe Sticker 360 Manyetik Halkalı 2 Paket',
     description: 'Evrensel Kablosuz Şarj Adaptörü Kiti',
