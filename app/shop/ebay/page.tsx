@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import TrackedLink from '@/components/TrackedLink';
 
 export const metadata: Metadata = {
-  title: 'Our eBay Store - AllMySell | 9 Active Tech Products',
+  title: 'Our eBay Store - AllMySell | 10 Active Tech Products',
   description: 'Browse quality tech and mobile accessories on our eBay store. Chargers, car accessories, phone cases & more. Fast shipping with eBay buyer protection.',
   keywords: ['eBay store', 'tech accessories', 'mobile accessories', 'chargers', 'power banks', 'car accessories', 'phone cases', 'USB hubs'],
 };
@@ -73,6 +73,13 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/AT8AAeSwuC9pzahW/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206183485842',
   },
+  {
+    name: 'MagSafe Sticker 360 Manyetik Halkalı 2 Paket',
+    description: 'Evrensel Kablosuz Şarj Adaptörü Kiti',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/euIAAeSwTh5p0SZ5/s-l1600.webp',
+    link: 'https://www.ebay.com/itm/206189596772',
+  },
 ];
 
 const categories = [
@@ -93,7 +100,7 @@ const categories = [
   {
     name: 'Phone & Tablet Accessories',
     description: 'Cases, tripods and mobile accessories',
-    productCount: '6',
+    productCount: '7',
     subtext: 'active products on eBay',
     icon: '📱',
   },
@@ -183,7 +190,7 @@ export default function EbayPage() {
           {/* Stats */}
           <div className="grid md:grid-cols-4 gap-8 mb-16">
             <div className="text-center p-6 bg-gradient-to-br from-yellow-50 to-red-50 rounded-xl">
-              <div className="text-4xl font-bold text-red-600 mb-2">9</div>
+              <div className="text-4xl font-bold text-red-600 mb-2">10</div>
               <div className="text-gray-700 font-medium">Active Products</div>
             </div>
             <div className="text-center p-6 bg-gradient-to-br from-yellow-50 to-red-50 rounded-xl">

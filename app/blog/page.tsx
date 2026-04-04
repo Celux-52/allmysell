@@ -164,6 +164,14 @@ const ebayProducts = [
     image: 'https://i.ebayimg.com/images/g/AT8AAeSwuC9pzahW/s-l1600.webp',
     platform: 'eBay',
   },
+  {
+    id: 'magsafe-sticker-360-ring',
+    name: 'MagSafe Sticker 360 Manyetik Halkalı 2 Paket',
+    description: 'Evrensel Kablosuz Şarj Adaptörü Kiti',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/euIAAeSwTh5p0SZ5/s-l1600.webp',
+    platform: 'eBay',
+  },
 ];
 
 // Blog posts - ürünlerden otomatik oluşturulan içerik
