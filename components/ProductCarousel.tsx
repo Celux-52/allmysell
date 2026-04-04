@@ -16,12 +16,6 @@ const products = [
     category: 'Car Accessories',
   },
   {
-    id: 'usb-car-charger',
-    name: 'USB Car Charger',
-    image: 'https://i.ebayimg.com/images/g/cf0AAeSwvQ5pXfAv/s-l1600.webp',
-    category: 'Car Accessories',
-  },
-  {
     id: 'usb-hub-8in2',
     name: 'USB Hub 8 in 2',
     image: 'https://i.ebayimg.com/images/g/Gx8AAeSw~eVpWc1Q/s-l1600.webp',
@@ -31,12 +25,6 @@ const products = [
     id: 'magnetic-power-bank-10000',
     name: 'Power Bank 10000mAh',
     image: 'https://i.ebayimg.com/images/g/eloAAeSwe2FpY56W/s-l1600.webp',
-    category: 'Chargers',
-  },
-  {
-    id: 'invisible-holder-charger',
-    name: 'Invisible Charger',
-    image: 'https://i.ebayimg.com/images/g/FTEAAeSw4A9pYTib/s-l1600.webp',
     category: 'Chargers',
   },
   {

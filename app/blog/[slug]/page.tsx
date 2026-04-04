@@ -24,15 +24,6 @@ const products = [
     platformLink: 'https://www.ebay.com/itm/206006629452',
   },
   {
-    id: 'usb-car-charger',
-    name: 'USB Port Super Fast Car Charger',
-    description: 'Adapter For iPhone Samsung Android Cell Phone',
-    category: 'Car Accessories',
-    image: 'https://i.ebayimg.com/images/g/cf0AAeSwvQ5pXfAv/s-l1600.webp',
-    platform: 'eBay',
-    platformLink: 'https://www.ebay.com/itm/205978408766',
-  },
-  {
     id: 'usb-hub-8in2',
     name: '8 in 2 USB Hub',
     description: 'Type C HUB Docking Station with 3.5mm Audio Jack Adapter',
@@ -49,15 +40,6 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/eloAAeSwe2FpY56W/s-l1600.webp',
     platform: 'eBay',
     platformLink: 'https://www.ebay.com/itm/205990599969',
-  },
-  {
-    id: 'invisible-holder-charger',
-    name: 'Invisible Holder Charger Cable',
-    description: '240w super fast charging 2-in-1 Fast with Stand',
-    category: 'Chargers',
-    image: 'https://i.ebayimg.com/images/g/FTEAAeSw4A9pYTib/s-l1600.webp',
-    platform: 'eBay',
-    platformLink: 'https://www.ebay.com/itm/205985301623',
   },
   {
     id: 'portable-charger-20000',

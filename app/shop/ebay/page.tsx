@@ -4,8 +4,7 @@ import type { Metadata } from 'next';
 import TrackedLink from '@/components/TrackedLink';
 
 export const metadata: Metadata = {
-  title: 'Our eBay Store - AllMySell | 9 Active Tech Products',
-  description: 'Browse quality tech and mobile accessories on our eBay store. Chargers, car accessories, phone cases & more. Fast shipping with eBay buyer protection.',
+  title: 'Our eBay Store - AllMySell | 7 Active Tech Products',
   keywords: ['eBay store', 'tech accessories', 'mobile accessories', 'chargers', 'power banks', 'car accessories', 'phone cases', 'USB hubs'],
 };
 
@@ -25,13 +24,6 @@ const products = [
     link: 'https://www.ebay.com/itm/206006629452',
   },
   {
-    name: 'USB Port Super Fast Car Charger',
-    description: 'Adapter For iPhone Samsung Android Cell Phone',
-    category: 'Car Accessories',
-    image: 'https://i.ebayimg.com/images/g/cf0AAeSwvQ5pXfAv/s-l1600.webp',
-    link: 'https://www.ebay.com/itm/205978408766',
-  },
-  {
     name: '8 in 2 USB Hub',
     description: 'Type C HUB Docking Station with 3.5mm Audio Jack Adapter',
     category: 'Computer Accessories',
@@ -44,13 +36,6 @@ const products = [
     category: 'Chargers',
     image: 'https://i.ebayimg.com/images/g/eloAAeSwe2FpY56W/s-l1600.webp',
     link: 'https://www.ebay.com/itm/205990599969',
-  },
-  {
-    name: 'Invisible Holder Charger Cable',
-    description: '240w super fast charging 2-in-1 Fast with Stand',
-    category: 'Chargers',
-    image: 'https://i.ebayimg.com/images/g/FTEAAeSw4A9pYTib/s-l1600.webp',
-    link: 'https://www.ebay.com/itm/205985301623',
   },
   {
     name: '20000mAh 45W Portable Charger',
@@ -183,7 +168,7 @@ export default function EbayPage() {
           {/* Stats */}
           <div className="grid md:grid-cols-4 gap-8 mb-16">
             <div className="text-center p-6 bg-gradient-to-br from-yellow-50 to-red-50 rounded-xl">
-              <div className="text-4xl font-bold text-red-600 mb-2">9</div>
+              <div className="text-4xl font-bold text-red-600 mb-2">7</div>
               <div className="text-gray-700 font-medium">Active Products</div>
             </div>
             <div className="text-center p-6 bg-gradient-to-br from-yellow-50 to-red-50 rounded-xl">
