@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import { Analytics } from '@vercel/analytics/react';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import CookieBanner from '@/components/CookieBanner';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -57,6 +58,7 @@ export default function RootLayout({
         <Footer />
         <WhatsAppButton />
         <CookieBanner />
+        <GoogleAnalytics />
         <Analytics />
       </body>
     </html>

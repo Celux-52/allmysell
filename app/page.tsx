@@ -4,6 +4,7 @@ import Newsletter from '@/components/Newsletter';
 import Testimonials from '@/components/Testimonials';
 import TrustBadges from '@/components/TrustBadges';
 import ProductCarousel from '@/components/ProductCarousel';
+import TrackedLink from '@/components/TrackedLink';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -100,12 +101,14 @@ export default function HomePage() {
             Discover quality tech products and mobile accessories on eBay. 
             More platforms coming soon!
           </p>
-          <Link
+          <TrackedLink
             href="/about"
+            buttonId="hero_learn_more_btn"
+            eventName="click_learn_more"
             className="inline-block bg-white text-[#8B5A2B] px-8 py-4 rounded-full font-semibold text-lg hover:bg-orange-50 transition-all hover:scale-105 shadow-lg"
           >
             Learn About Us
-          </Link>
+          </TrackedLink>
         </div>
       </section>
 
@@ -122,9 +125,12 @@ export default function HomePage() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {platforms.map((platform, index) => (
-              <Link
+              <TrackedLink
                 key={index}
                 href={platform.href}
+                eventName="platform_card_click"
+                buttonId={`platform_card_${platform.name.toLowerCase()}`}
+                payload={{ platform_name: platform.name }}
                 className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 border border-[#E07A2C]/10 ${!platform.active && 'opacity-75'}`}
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${platform.color} opacity-0 group-hover:opacity-10 transition-opacity`}></div>
@@ -161,7 +167,7 @@ export default function HomePage() {
                     </svg>
                   </div>
                 </div>
-              </Link>
+              </TrackedLink>
             ))}
           </div>
         </div>

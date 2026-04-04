@@ -1,9 +1,10 @@
 import { ExternalLink, Package, Shield, Zap } from 'lucide-react';
 import Image from 'next/image';
 import type { Metadata } from 'next';
+import TrackedLink from '@/components/TrackedLink';
 
 export const metadata: Metadata = {
-  title: 'Our eBay Store - AllMySell | 8 Active Tech Products',
+  title: 'Our eBay Store - AllMySell | 9 Active Tech Products',
   description: 'Browse quality tech and mobile accessories on our eBay store. Chargers, car accessories, phone cases & more. Fast shipping with eBay buyer protection.',
   keywords: ['eBay store', 'tech accessories', 'mobile accessories', 'chargers', 'power banks', 'car accessories', 'phone cases', 'USB hubs'],
 };
@@ -64,6 +65,13 @@ const products = [
     category: 'Audio',
     image: 'https://i.ebayimg.com/images/g/OBsAAeSwgb9paZsz/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206002163067',
+  },
+  {
+    name: 'AirPod 4 with USB-C Charging Case 4th Gen White ANC',
+    description: 'Active Noise Cancelling Wireless Earbuds',
+    category: 'Audio',
+    image: 'https://i.ebayimg.com/images/g/AT8AAeSwuC9pzahW/s-l1600.webp',
+    link: 'https://www.ebay.com/itm/206183485842',
   },
 ];
 
@@ -132,15 +140,17 @@ export default function EbayPage() {
                 Serving you with technology and mobile accessory products. 
                 You can safely purchase all our products on eBay.
               </p>
-              <a
+              <TrackedLink
                 href="https://www.ebay.com/usr/ymglobal"
                 target="_blank"
                 rel="noopener noreferrer"
+                buttonId="ebay_store_hero_btn"
+                eventName="visit_ebay_store"
                 className="inline-flex items-center space-x-2 bg-white text-red-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-yellow-50 transition-all hover:scale-105 shadow-lg"
               >
                 <span>Visit eBay Store</span>
                 <ExternalLink size={20} />
-              </a>
+              </TrackedLink>
             </div>
             <div className="grid grid-cols-2 gap-4">
               {features.map((feature, index) => (
@@ -173,7 +183,7 @@ export default function EbayPage() {
           {/* Stats */}
           <div className="grid md:grid-cols-4 gap-8 mb-16">
             <div className="text-center p-6 bg-gradient-to-br from-yellow-50 to-red-50 rounded-xl">
-              <div className="text-4xl font-bold text-red-600 mb-2">19</div>
+              <div className="text-4xl font-bold text-red-600 mb-2">9</div>
               <div className="text-gray-700 font-medium">Active Products</div>
             </div>
             <div className="text-center p-6 bg-gradient-to-br from-yellow-50 to-red-50 rounded-xl">
@@ -205,11 +215,17 @@ export default function EbayPage() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {products.map((product, index) => (
-              <a
+              <TrackedLink
                 key={index}
                 href={product.link}
                 target="_blank"
                 rel="noopener noreferrer"
+                eventName="ebay_product_click"
+                buttonId={`ebay_product_${index}`}
+                payload={{
+                  item_name: product.name,
+                  item_category: product.category
+                }}
                 className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden block group border border-gray-100"
               >
                 <div className="relative w-full h-52 bg-gray-50 flex items-center justify-center p-4">
@@ -230,7 +246,7 @@ export default function EbayPage() {
                     <ExternalLink className="text-red-600 group-hover:translate-x-1 transition-transform" size={18} />
                   </div>
                 </div>
-              </a>
+              </TrackedLink>
             ))}
           </div>
         </div>
@@ -249,11 +265,14 @@ export default function EbayPage() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {categories.map((category, index) => (
-              <a
+              <TrackedLink
                 key={index}
                 href="https://www.ebay.com/usr/ymglobal"
                 target="_blank"
                 rel="noopener noreferrer"
+                eventName="ebay_category_click"
+                buttonId={`ebay_category_${index}`}
+                payload={{ category_name: category.name }}
                 className="bg-gradient-to-br from-yellow-50 to-red-50 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-yellow-100 group block"
               >
                 <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">{category.icon}</div>
@@ -266,7 +285,7 @@ export default function EbayPage() {
                     {category.productCount} {category.subtext}
                   </p>
                 </div>
-              </a>
+              </TrackedLink>
             ))}
           </div>
         </div>
@@ -281,15 +300,17 @@ export default function EbayPage() {
           <p className="text-xl mb-8 text-yellow-100">
             Find the best one for you among thousands of products
           </p>
-          <a
+          <TrackedLink
             href="https://www.ebay.com/usr/ymglobal"
             target="_blank"
             rel="noopener noreferrer"
+            buttonId="ebay_store_bottom_cta"
+            eventName="visit_ebay_store_footer"
             className="inline-flex items-center space-x-2 bg-white text-red-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-yellow-50 transition-all hover:scale-105 shadow-lg"
           >
             <span>Start Shopping Now</span>
             <ExternalLink size={20} />
-          </a>
+          </TrackedLink>
         </div>
       </section>
     </div>

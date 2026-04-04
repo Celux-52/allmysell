@@ -1,6 +1,7 @@
 import { Calendar, Clock, Share2, ExternalLink, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import TrackedLink from '@/components/TrackedLink';
 
 // eBay Products - Only active products
 const products = [
@@ -75,6 +76,15 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/OBsAAeSwgb9paZsz/s-l1600.webp',
     platform: 'eBay',
     platformLink: 'https://www.ebay.com/itm/206002163067',
+  },
+  {
+    id: 'airpod-4-usbc',
+    name: 'AirPod 4 with USB-C Charging Case 4th Gen White ANC',
+    description: 'Active Noise Cancelling Wireless Earbuds',
+    category: 'Audio',
+    image: 'https://i.ebayimg.com/images/g/AT8AAeSwuC9pzahW/s-l1600.webp',
+    platform: 'eBay',
+    platformLink: 'https://www.ebay.com/itm/206183485842',
   },
 ];
 
@@ -320,15 +330,24 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             <p className="text-purple-100 mb-6">
               Get this product now from our verified {product.platform} store
             </p>
-            <a
+            <TrackedLink
               href={product.platformLink}
               target="_blank"
               rel="noopener noreferrer"
+              buttonId={`blog_buy_now_${product.id}`}
+              eventName="blog_purchase_click"
+              funnelStep="add_to_cart"
+              payload={{
+                item_id: product.id,
+                item_name: product.name,
+                item_category: product.category,
+                platform: product.platform
+              }}
               className="inline-flex items-center gap-2 bg-white text-purple-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-blue-50 transition-all hover:scale-105 shadow-lg"
             >
               <span>View on {product.platform}</span>
               <ExternalLink size={20} />
-            </a>
+            </TrackedLink>
           </div>
 
           {/* Related Products */}

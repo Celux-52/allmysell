@@ -156,6 +156,14 @@ const ebayProducts = [
     image: 'https://i.ebayimg.com/images/g/K0QAAeSwWP1paZsz/s-l1600.webp',
     platform: 'eBay',
   },
+  {
+    id: 'airpod-4-usbc',
+    name: 'AirPod 4 with USB-C Charging Case 4th Gen White ANC',
+    description: 'Active Noise Cancelling Wireless Earbuds',
+    category: 'Audio',
+    image: 'https://i.ebayimg.com/images/g/AT8AAeSwuC9pzahW/s-l1600.webp',
+    platform: 'eBay',
+  },
 ];
 
 // Blog posts - ürünlerden otomatik oluşturulan içerik

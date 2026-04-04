@@ -51,6 +51,12 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/OBsAAeSwgb9paZsz/s-l1600.webp',
     category: 'Audio',
   },
+  {
+    id: 'airpod-4-usbc',
+    name: 'AirPod 4 USB-C',
+    image: 'https://i.ebayimg.com/images/g/AT8AAeSwuC9pzahW/s-l1600.webp',
+    category: 'Audio',
+  },
 ];
 
 export default function ProductCarousel() {
