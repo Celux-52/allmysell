@@ -86,18 +86,18 @@ export default function HomePage() {
       <section className="relative bg-gradient-to-br from-[#1a1a1a] via-[#8B5A2B] to-[#E07A2C] text-white py-24 md:py-32">
         <div className="absolute inset-0 bg-black/30"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mb-6 animate-bounceIn">
             <div className="w-20 h-20 bg-gradient-to-br from-[#E07A2C] to-[#8B5A2B] rounded-2xl flex items-center justify-center shadow-2xl">
               <span className="text-white font-bold text-4xl">A</span>
             </div>
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-slideInUp">
             AllMySell
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-orange-100 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl mb-8 text-orange-100 max-w-3xl mx-auto animate-slideInUp" style={{animationDelay: '0.1s'}}>
             Technology & Mobile Accessories
           </p>
-          <p className="text-lg md:text-xl mb-12 text-white/90 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl mb-12 text-white/90 max-w-2xl mx-auto animate-slideInUp" style={{animationDelay: '0.2s'}}>
             Discover quality tech products and mobile accessories on eBay. 
             More platforms coming soon!
           </p>
@@ -134,7 +134,8 @@ export default function HomePage() {
                 eventName="platform_card_click"
                 buttonId={`platform_card_${platform.name.toLowerCase()}`}
                 payload={{ platform_name: platform.name }}
-                className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 border border-[#E07A2C]/10 ${!platform.active && 'opacity-75'}`}
+                className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 border border-[#E07A2C]/10 animate-scaleIn ${!platform.active && 'opacity-75'}`}
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${platform.color} opacity-0 group-hover:opacity-10 transition-opacity`}></div>
                 {platform.active && (
@@ -179,7 +180,7 @@ export default function HomePage() {
       {/* Features Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 animate-slideInUp">
             <h2 className="text-4xl font-bold text-[#1a1a1a] mb-4">
               Why AllMySell?
             </h2>
@@ -191,9 +192,10 @@ export default function HomePage() {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="bg-[#FFF8F0] p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow border border-[#E07A2C]/10"
+                className="bg-[#FFF8F0] p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow border border-[#E07A2C]/10 animate-slideInUp hover:scale-105 transform"
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <feature.icon className="w-12 h-12 text-[#E07A2C] mb-4" />
+                <feature.icon className="w-12 h-12 text-[#E07A2C] mb-4 animate-float" />
                 <h3 className="text-xl font-semibold text-[#1a1a1a] mb-2">
                   {feature.title}
                 </h3>

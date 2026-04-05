@@ -159,11 +159,11 @@ export default function EbayPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="text-6xl mb-6">🛍️</div>
-              <h1 className="text-5xl md:text-6xl font-bold mb-6">
+              <div className="text-6xl mb-6 animate-bounceIn">🛍️</div>
+              <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-slideInLeft">
                 Our eBay Store
               </h1>
-              <p className="text-xl md:text-2xl text-yellow-100 mb-8">
+              <p className="text-xl md:text-2xl text-yellow-100 mb-8 animate-slideInLeft" style={{animationDelay: '0.1s'}}>
                 Serving you with technology and mobile accessory products. 
                 You can safely purchase all our products on eBay.
               </p>
@@ -173,7 +173,8 @@ export default function EbayPage() {
                 rel="noopener noreferrer"
                 buttonId="ebay_store_hero_btn"
                 eventName="visit_ebay_store"
-                className="inline-flex items-center space-x-2 bg-white text-red-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-yellow-50 transition-all hover:scale-105 shadow-lg"
+                className="inline-flex items-center space-x-2 bg-white text-red-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-yellow-50 transition-all hover:scale-105 shadow-lg animate-slideInLeft"
+                style={{animationDelay: '0.2s'}}
               >
                 <span>Visit eBay Store</span>
                 <ExternalLink size={20} />
@@ -181,8 +182,8 @@ export default function EbayPage() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               {features.map((feature, index) => (
-                <div key={index} className="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
-                  <feature.icon className="w-10 h-10 mb-3" />
+                <div key={index} className="bg-white/10 backdrop-blur-sm p-6 rounded-xl animate-slideInRight" style={{animationDelay: `${index * 0.1}s`}}>
+                  <feature.icon className="w-10 h-10 mb-3 animate-float" />
                   <h3 className="font-semibold mb-2">{feature.title}</h3>
                   <p className="text-sm text-yellow-100">{feature.description}</p>
                 </div>
@@ -195,7 +196,7 @@ export default function EbayPage() {
       {/* About eBay Store */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-16">
+          <div className="max-w-3xl mx-auto text-center mb-16 animate-slideInUp">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">
               AllMySell on eBay
             </h2>
@@ -232,7 +233,7 @@ export default function EbayPage() {
       {/* Featured Products */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 animate-slideInUp">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
               Featured Products
             </h2>
@@ -253,7 +254,8 @@ export default function EbayPage() {
                   item_name: product.name,
                   item_category: product.category
                 }}
-                className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden block group border border-gray-100"
+                className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden block group border border-gray-100 animate-scaleIn"
+                style={{ animationDelay: `${(index % 8) * 0.1}s` }}
               >
                 <div className="relative w-full h-52 bg-gray-50 flex items-center justify-center p-4">
                   <img 
