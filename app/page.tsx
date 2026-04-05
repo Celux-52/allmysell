@@ -17,7 +17,7 @@ const platforms = [
   {
     name: 'eBay',
     description: 'Now Active! Tech & Mobile Accessories',
-    href: '/ebay',
+    href: '/shop/ebay',
     color: 'from-yellow-500 to-red-500',
     icon: '🛍️',
     active: true,
@@ -25,7 +25,7 @@ const platforms = [
   {
     name: 'Amazon',
     description: 'Coming Soon',
-    href: '/amazon',
+    href: '/shop/amazon',
     color: 'from-orange-500 to-yellow-600',
     icon: '📦',
     active: false,
@@ -33,7 +33,7 @@ const platforms = [
   {
     name: 'Etsy',
     description: 'Coming Soon',
-    href: '/etsy',
+    href: '/shop/etsy',
     color: 'from-orange-400 to-pink-500',
     icon: '✨',
     active: false,
@@ -41,7 +41,7 @@ const platforms = [
   {
     name: 'Shopify',
     description: 'Coming Soon',
-    href: '/shopify',
+    href: '/shop/shopify',
     color: 'from-green-500 to-emerald-600',
     icon: '🏪',
     active: false,
@@ -49,7 +49,7 @@ const platforms = [
   {
     name: 'TikTok Shop',
     description: 'Coming Soon',
-    href: '/tiktok',
+    href: '/shop/tiktok',
     color: 'from-cyan-500 to-blue-600',
     icon: '🎥',
     active: false,
