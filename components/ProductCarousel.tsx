@@ -63,6 +63,24 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/JyUAAeSwLeFp0WHH/s-l1600.webp',
     category: 'Phone Accessories',
   },
+  {
+    id: 'bluetooth-usb-audio-adapter',
+    name: 'Bluetooth USB Audio Adapter',
+    image: 'https://i.ebayimg.com/images/g/4zIAAeSwzypp0aFP/s-l1600.webp',
+    category: 'Audio Accessories',
+  },
+  {
+    id: 'iphone-17-pro-max-case',
+    name: 'iPhone 17 Pro Case',
+    image: 'https://i.ebayimg.com/images/g/VlcAAeSwbSBp0ZL1/s-l1600.webp',
+    category: 'Phone Accessories',
+  },
+  {
+    id: 'magnetic-phone-case-iphone-16',
+    name: 'Magnetic Phone Case iPhone 16',
+    image: 'https://i.ebayimg.com/images/g/buoAAeSwlcZp0aA3/s-l1600.webp',
+    category: 'Phone Accessories',
+  },
 ];
 
 export default function ProductCarousel() {

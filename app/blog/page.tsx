@@ -84,6 +84,30 @@ const ebayProducts = [
     image: 'https://i.ebayimg.com/images/g/JyUAAeSwLeFp0WHH/s-l1600.webp',
     platform: 'eBay',
   },
+  {
+    id: 'bluetooth-usb-audio-adapter',
+    name: 'Bluetooth 5.0 USB Audio Adapter',
+    description: 'Wireless Music Receiver for PC TV Laptop, Low Latency',
+    category: 'Audio Accessories',
+    image: 'https://i.ebayimg.com/images/g/4zIAAeSwzypp0aFP/s-l1600.webp',
+    platform: 'eBay',
+  },
+  {
+    id: 'iphone-17-pro-max-case',
+    name: 'For iPhone 17 Pro Max Case',
+    description: 'iPhone 17 Pro Phone Cover Shockproof + Tempered Glass',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/VlcAAeSwbSBp0ZL1/s-l1600.webp',
+    platform: 'eBay',
+  },
+  {
+    id: 'magnetic-phone-case-iphone-16',
+    name: 'Magnetic Phone Case For iPhone 16',
+    description: 'iPhone 16 Pro Max Plus Bumper Hard Cover',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/buoAAeSwlcZp0aA3/s-l1600.webp',
+    platform: 'eBay',
+  },
 ];
 
 // Blog posts - ürünlerden otomatik oluşturulan içerik

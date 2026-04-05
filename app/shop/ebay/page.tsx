@@ -4,8 +4,8 @@ import type { Metadata } from 'next';
 import TrackedLink from '@/components/TrackedLink';
 
 export const metadata: Metadata = {
-  title: 'Our eBay Store - AllMySell | 10 Active Tech Products',
-  keywords: ['eBay store', 'tech accessories', 'mobile accessories', 'chargers', 'power banks', 'car accessories', 'phone cases', 'USB hubs', 'MagSafe'],
+  title: 'Our eBay Store - AllMySell | 13 Active Tech Products',
+  keywords: ['eBay store', 'tech accessories', 'mobile accessories', 'chargers', 'power banks', 'car accessories', 'phone cases', 'USB hubs', 'MagSafe', 'Bluetooth adapter', 'iPhone cases'],
 };
 
 const products = [
@@ -78,6 +78,27 @@ const products = [
     category: 'Phone Accessories',
     image: 'https://i.ebayimg.com/images/g/JyUAAeSwLeFp0WHH/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206189931472',
+  },
+  {
+    name: 'Bluetooth 5.0 USB Audio Adapter',
+    description: 'Wireless Music Receiver for PC TV Laptop, Low Latency',
+    category: 'Audio Accessories',
+    image: 'https://i.ebayimg.com/images/g/4zIAAeSwzypp0aFP/s-l1600.webp',
+    link: 'https://www.ebay.com/itm/206190278629',
+  },
+  {
+    name: 'For iPhone 17 Pro Max Case',
+    description: 'iPhone 17 Pro Phone Cover Shockproof + Tempered Glass',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/VlcAAeSwbSBp0ZL1/s-l1600.webp',
+    link: 'https://www.ebay.com/itm/206190239980',
+  },
+  {
+    name: 'Magnetic Phone Case For iPhone 16',
+    description: 'iPhone 16 Pro Max Plus Bumper Hard Cover',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/buoAAeSwlcZp0aA3/s-l1600.webp',
+    link: 'https://www.ebay.com/itm/206190264444',
   },
 ];
 
@@ -189,7 +210,7 @@ export default function EbayPage() {
           {/* Stats */}
           <div className="grid md:grid-cols-4 gap-8 mb-16">
             <div className="text-center p-6 bg-gradient-to-br from-yellow-50 to-red-50 rounded-xl">
-              <div className="text-4xl font-bold text-red-600 mb-2">10</div>
+              <div className="text-4xl font-bold text-red-600 mb-2">13</div>
               <div className="text-gray-700 font-medium">Active Products</div>
             </div>
             <div className="text-center p-6 bg-gradient-to-br from-yellow-50 to-red-50 rounded-xl">
