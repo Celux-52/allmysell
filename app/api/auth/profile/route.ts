@@ -1,12 +1,61 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { promises as fs } from 'fs';
+import path from 'path';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const DATA_FILE = path.join(process.cwd(), '.data', 'users.json');
+
+async function ensureDataFile() {
+  try {
+    await fs.readFile(DATA_FILE, 'utf-8');
+  } catch {
+    const dir = path.dirname(DATA_FILE);
+    try {
+      await fs.mkdir(dir, { recursive: true });
+    } catch (err) {
+      // Dir might already exist
+    }
+    await fs.writeFile(DATA_FILE, '[]', 'utf-8');
+  }
+}
+
+async function getUsers() {
+  await ensureDataFile();
+  const content = await fs.readFile(DATA_FILE, 'utf-8');
+  return JSON.parse(content || '[]');
+}
+
+async function saveUserData(userData: any) {
+  await ensureDataFile();
+  const users = await getUsers();
+  
+  // Check if user already exists
+  const existingIndex = users.findIndex((u: any) => u.email === userData.email);
+  
+  if (existingIndex >= 0) {
+    // Update existing user
+    users[existingIndex] = {
+      ...users[existingIndex],
+      ...userData,
+      updatedAt: new Date().toISOString(),
+    };
+  } else {
+    // Add new user
+    users.push({
+      ...userData,
+      id: Date.now().toString(),
+      createdAt: new Date().toISOString(),
+    });
+  }
+  
+  await fs.writeFile(DATA_FILE, JSON.stringify(users, null, 2), 'utf-8');
+}
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, platform, monthlyOrders, fullName } = body;
+    const { email, platform, monthlyOrders, fullName, password } = body;
 
     if (!email) {
       return NextResponse.json(
@@ -64,6 +113,15 @@ export async function POST(request: NextRequest) {
       to: 'melihbicak@gmail.com',
       subject: `Yeni Profil: ${fullName || email}`,
       html: adminHtmlContent,
+    });
+
+    // User verisini JSON dosyaya kaydet
+    await saveUserData({
+      email,
+      platform,
+      monthlyOrders,
+      fullName,
+      password, // TODO: Password hashing yapılmalı production'da
     });
 
     return NextResponse.json({

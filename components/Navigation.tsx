@@ -70,6 +70,12 @@ export default function Navigation() {
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center gap-3">
             <Link
+              href="/login"
+              className="px-6 py-2 rounded-lg text-[#8F00FF] hover:bg-[#8F00FF]/10 transition-colors font-medium"
+            >
+              Giriş Yap
+            </Link>
+            <Link
               href="/register"
               className="px-6 py-2 rounded-lg text-[#8F00FF] hover:bg-[#8F00FF]/10 transition-colors font-medium"
             >

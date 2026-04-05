@@ -8,6 +8,7 @@ export default function ProfileSetupPage() {
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
+  const [password, setPassword] = useState('');
   const [platform, setPlatform] = useState('');
   const [monthlyOrders, setMonthlyOrders] = useState('');
   const [loading, setLoading] = useState(false);
@@ -31,9 +32,15 @@ export default function ProfileSetupPage() {
   }, []);
 
   const handleNextStep = () => {
-    if (step === 1 && !fullName.trim()) {
-      setError('Lütfen adınızı girin');
-      return;
+    if (step === 1) {
+      if (!fullName.trim()) {
+        setError('Lütfen adınızı girin');
+        return;
+      }
+      if (!password || password.length < 6) {
+        setError('Şifreniz en az 6 karakter olmalı');
+        return;
+      }
     }
     if (step === 2 && !platform) {
       setError('Lütfen bir platform seçin');
@@ -61,6 +68,7 @@ export default function ProfileSetupPage() {
         body: JSON.stringify({
           email,
           fullName,
+          password,
           platform,
           monthlyOrders,
         }),
@@ -166,6 +174,19 @@ export default function ProfileSetupPage() {
                         placeholder="Adınız Soyadınız"
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8F00FF] focus:border-transparent"
                       />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Şifre
+                      </label>
+                      <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="En az 6 karakter"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8F00FF] focus:border-transparent"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">Minimum 6 karakter</p>
                     </div>
                   </div>
                 )}
