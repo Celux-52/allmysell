@@ -18,7 +18,7 @@ const platforms = [
     name: 'eBay',
     description: 'Now Active! Tech & Mobile Accessories',
     href: '/shop/ebay',
-    color: 'from-yellow-500 to-red-500',
+    color: 'from-blue-500 to-purple-600',
     icon: '🛍️',
     active: true,
   },
@@ -26,7 +26,7 @@ const platforms = [
     name: 'Amazon',
     description: 'Coming Soon',
     href: '/shop/amazon',
-    color: 'from-orange-500 to-yellow-600',
+    color: 'from-purple-500 to-violet-600',
     icon: '📦',
     active: false,
   },
@@ -34,7 +34,7 @@ const platforms = [
     name: 'Etsy',
     description: 'Coming Soon',
     href: '/shop/etsy',
-    color: 'from-orange-400 to-pink-500',
+    color: 'from-violet-400 to-purple-500',
     icon: '✨',
     active: false,
   },
@@ -42,7 +42,7 @@ const platforms = [
     name: 'Shopify',
     description: 'Coming Soon',
     href: '/shop/shopify',
-    color: 'from-green-500 to-emerald-600',
+    color: 'from-indigo-500 to-purple-600',
     icon: '🏪',
     active: false,
   },
@@ -50,7 +50,7 @@ const platforms = [
     name: 'TikTok Shop',
     description: 'Coming Soon',
     href: '/shop/tiktok',
-    color: 'from-cyan-500 to-blue-600',
+    color: 'from-purple-500 to-indigo-600',
     icon: '🎥',
     active: false,
   },
@@ -83,11 +83,11 @@ export default function HomePage() {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#1a1a1a] via-[#8B5A2B] to-[#E07A2C] text-white py-24 md:py-32">
+      <section className="relative bg-gradient-to-br from-[#000033] via-[#330066] to-[#8F00FF] text-white py-24 md:py-32">
         <div className="absolute inset-0 bg-black/30"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex justify-center mb-6 animate-bounceIn">
-            <div className="w-20 h-20 bg-gradient-to-br from-[#E07A2C] to-[#8B5A2B] rounded-2xl flex items-center justify-center shadow-2xl">
+            <div className="w-20 h-20 bg-gradient-to-br from-[#8F00FF] to-[#0000FF] rounded-2xl flex items-center justify-center shadow-2xl">
               <span className="text-white font-bold text-4xl">A</span>
             </div>
           </div>
@@ -134,12 +134,12 @@ export default function HomePage() {
                 eventName="platform_card_click"
                 buttonId={`platform_card_${platform.name.toLowerCase()}`}
                 payload={{ platform_name: platform.name }}
-                className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 border border-[#E07A2C]/10 animate-scaleIn ${!platform.active && 'opacity-75'}`}
+                className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 border border-[#8F00FF]/10 animate-scaleIn ${!platform.active && 'opacity-75'}`}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${platform.color} opacity-0 group-hover:opacity-10 transition-opacity`}></div>
                 {platform.active && (
-                  <div className="absolute top-4 right-4 bg-[#E07A2C] text-white px-3 py-1 rounded-full text-sm font-semibold">
+                  <div className="absolute top-4 right-4 bg-[#8F00FF] text-white px-3 py-1 rounded-full text-sm font-semibold">
                     Active
                   </div>
                 )}
@@ -150,11 +150,11 @@ export default function HomePage() {
                 )}
                 <div className="p-8">
                   <div className="text-5xl mb-4">{platform.icon}</div>
-                  <h3 className="text-2xl font-bold text-[#1a1a1a] mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#E07A2C] group-hover:to-[#8B5A2B] transition-all">
+                  <h3 className="text-2xl font-bold text-[#1a1a1a] mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#8F00FF] group-hover:to-[#0000FF] transition-all">
                     {platform.name}
                   </h3>
                   <p className="text-gray-600 mb-4">{platform.description}</p>
-                  <div className={`flex items-center font-semibold ${platform.active ? 'text-[#E07A2C]' : 'text-gray-500'}`}>
+                  <div className={`flex items-center font-semibold ${platform.active ? 'text-[#8F00FF]' : 'text-gray-500'}`}>
                     <span>{platform.active ? 'Visit Store' : 'Coming Soon'}</span>
                     <svg
                       className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform"
@@ -192,10 +192,10 @@ export default function HomePage() {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="bg-[#FFF8F0] p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow border border-[#E07A2C]/10 animate-slideInUp hover:scale-105 transform"
+                className="bg-[#F0F3FF] p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow border border-[#8F00FF]/10 animate-slideInUp hover:scale-105 transform"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <feature.icon className="w-12 h-12 text-[#E07A2C] mb-4 animate-float" />
+                <feature.icon className="w-12 h-12 text-[#8F00FF] mb-4 animate-float" />
                 <h3 className="text-xl font-semibold text-[#1a1a1a] mb-2">
                   {feature.title}
                 </h3>

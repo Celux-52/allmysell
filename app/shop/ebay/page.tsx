@@ -155,7 +155,7 @@ export default function EbayPage() {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-yellow-500 to-red-500 text-white py-20">
+      <section className="relative bg-gradient-to-br from-blue-500 to-purple-600 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -163,7 +163,7 @@ export default function EbayPage() {
               <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-slideInLeft">
                 Our eBay Store
               </h1>
-              <p className="text-xl md:text-2xl text-yellow-100 mb-8 animate-slideInLeft" style={{animationDelay: '0.1s'}}>
+              <p className="text-xl md:text-2xl text-blue-100 mb-8 animate-slideInLeft" style={{animationDelay: '0.1s'}}>
                 Serving you with technology and mobile accessory products. 
                 You can safely purchase all our products on eBay.
               </p>
@@ -173,7 +173,7 @@ export default function EbayPage() {
                 rel="noopener noreferrer"
                 buttonId="ebay_store_hero_btn"
                 eventName="visit_ebay_store"
-                className="inline-flex items-center space-x-2 bg-white text-red-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-yellow-50 transition-all hover:scale-105 shadow-lg animate-slideInLeft"
+                className="inline-flex items-center space-x-2 bg-white text-purple-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-purple-50 transition-all hover:scale-105 shadow-lg animate-slideInLeft"
                 style={{animationDelay: '0.2s'}}
               >
                 <span>Visit eBay Store</span>
@@ -185,7 +185,7 @@ export default function EbayPage() {
                 <div key={index} className="bg-white/10 backdrop-blur-sm p-6 rounded-xl animate-slideInRight" style={{animationDelay: `${index * 0.1}s`}}>
                   <feature.icon className="w-10 h-10 mb-3 animate-float" />
                   <h3 className="font-semibold mb-2">{feature.title}</h3>
-                  <p className="text-sm text-yellow-100">{feature.description}</p>
+                  <p className="text-sm text-blue-100">{feature.description}</p>
                 </div>
               ))}
             </div>
@@ -265,14 +265,14 @@ export default function EbayPage() {
                   />
                 </div>
                 <div className="p-5">
-                  <div className="text-xs text-red-600 font-semibold mb-2 uppercase tracking-wide">{product.category}</div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-red-600 transition-colors">
+                  <div className="text-xs text-purple-600 font-semibold mb-2 uppercase tracking-wide">{product.category}</div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-purple-600 transition-colors">
                     {product.name}
                   </h3>
                   <p className="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed">{product.description}</p>
                   <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-                    <span className="text-red-600 font-semibold text-sm">View on eBay</span>
-                    <ExternalLink className="text-red-600 group-hover:translate-x-1 transition-transform" size={18} />
+                    <span className="text-purple-600 font-semibold text-sm">View on eBay</span>
+                    <ExternalLink className="text-purple-600 group-hover:translate-x-1 transition-transform" size={18} />
                   </div>
                 </div>
               </TrackedLink>
@@ -302,7 +302,7 @@ export default function EbayPage() {
                 eventName="ebay_category_click"
                 buttonId={`ebay_category_${index}`}
                 payload={{ category_name: category.name }}
-                className="bg-gradient-to-br from-yellow-50 to-red-50 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-yellow-100 group block"
+                className="bg-gradient-to-br from-purple-50 to-blue-50 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-purple-100 group block"
               >
                 <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">{category.icon}</div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-red-600 transition-colors">
@@ -326,7 +326,7 @@ export default function EbayPage() {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Visit Our eBay Store
           </h2>
-          <p className="text-xl mb-8 text-yellow-100">
+          <p className="text-xl mb-8 text-blue-100">
             Find the best one for you among thousands of products
           </p>
           <TrackedLink
