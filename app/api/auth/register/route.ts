@@ -18,7 +18,8 @@ export async function POST(request: NextRequest) {
     // Verification linki oluştur
     const verificationToken = Math.random().toString(36).substring(2, 15) + 
                              Math.random().toString(36).substring(2, 15);
-    const verificationLink = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001'}/onboarding?token=${verificationToken}&email=${encodeURIComponent(email)}`;
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3003';
+    const verificationLink = `${appUrl}/onboarding?token=${verificationToken}&email=${encodeURIComponent(email)}`;
 
     // Verification email gönder
     const htmlContent = `
@@ -55,7 +56,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message: 'Doğrulama emiali gönderildi',
-      verificationToken, // Development için, production'da bunu saklamayın
+      verificationToken,
     });
   } catch (error) {
     console.error('Register error:', error);
