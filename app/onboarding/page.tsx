@@ -15,10 +15,18 @@ export default function ProfileSetupPage() {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    // sessionStorage'dan email'i al
-    const pendingEmail = sessionStorage.getItem('pendingEmail');
-    if (pendingEmail) {
-      setEmail(pendingEmail);
+    // URL parametrelerinden email'i al, yoksa sessionStorage'dan
+    const params = new URLSearchParams(window.location.search);
+    const emailParam = params.get('email');
+    
+    if (emailParam) {
+      setEmail(decodeURIComponent(emailParam));
+      sessionStorage.setItem('pendingEmail', decodeURIComponent(emailParam));
+    } else {
+      const pendingEmail = sessionStorage.getItem('pendingEmail');
+      if (pendingEmail) {
+        setEmail(pendingEmail);
+      }
     }
   }, []);
 
@@ -140,17 +148,25 @@ export default function ProfileSetupPage() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Step 1: Full Name */}
                 {step === 1 && (
-                  <div className="animate-slideInUp">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Adınız
-                    </label>
-                    <input
-                      type="text"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      placeholder="Adınız Soyadınız"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8F00FF] focus:border-transparent"
-                    />
+                  <div className="animate-slideInUp space-y-4">
+                    {email && (
+                      <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                        <p className="text-sm text-gray-600">Email Adresiniz</p>
+                        <p className="text-base font-semibold text-gray-900">{email}</p>
+                      </div>
+                    )}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Adınız
+                      </label>
+                      <input
+                        type="text"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                        placeholder="Adınız Soyadınız"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8F00FF] focus:border-transparent"
+                      />
+                    </div>
                   </div>
                 )}
 

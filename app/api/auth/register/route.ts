@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     // Verification linki oluştur
     const verificationToken = Math.random().toString(36).substring(2, 15) + 
                              Math.random().toString(36).substring(2, 15);
-    const verificationLink = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001'}/verify?token=${verificationToken}&email=${encodeURIComponent(email)}`;
+    const verificationLink = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001'}/onboarding?token=${verificationToken}&email=${encodeURIComponent(email)}`;
 
     // Verification email gönder
     const htmlContent = `
