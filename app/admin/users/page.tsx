@@ -94,7 +94,7 @@ export default function AdminUsersPage() {
                     return acc;
                   }, {})
                 )
-                  .sort((a, b) => b[1] - a[1])
+                  .sort((a, b) => (b[1] as number) - (a[1] as number))
                   .slice(0, 3)
                   .map(([platform, count]) => `${platform} (${count})`)
                   .join(', ')
@@ -113,7 +113,7 @@ export default function AdminUsersPage() {
                       return acc;
                     }, {})
                   )
-                    .sort((a, b) => b[1] - a[1])
+                    .sort((a, b) => (b[1] as number) - (a[1] as number))
                     .slice(0, 1)
                     .map(([platform]) => platform)
                     .join('')
