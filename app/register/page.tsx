@@ -67,6 +67,19 @@ export default function RegisterPage() {
                 Sadece emailinizle başlayın. Daha sonra daha fazla bilgi ekleyebilirsiniz.
               </p>
 
+              {/* Test Mode Info */}
+              <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <p className="text-blue-900 text-sm font-medium">
+                  <strong>⚠️ Test Modu:</strong> Email hizmetimiz sadece aşağıdaki email adresleri aracılığıyla çalışmaktadır:
+                </p>
+                <p className="text-blue-800 text-sm mt-2">
+                  test@gmail.com, demo@gmail.com, mehmetali@test.com
+                </p>
+                <p className="text-blue-800 text-xs mt-2">
+                  Kaydı tamamlamak için lütfen yukarıdaki emaillerden birini kullanın.
+                </p>
+              </div>
+
               {error && (
                 <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3 animate-slideInUp">
                   <AlertCircle className="text-red-600 flex-shrink-0 mt-0.5" size={20} />
