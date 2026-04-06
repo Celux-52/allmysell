@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { promises as fs } from 'fs';
 import path from 'path';
+import bcrypt from 'bcryptjs';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const DATA_FILE = path.join(process.cwd(), '.data', 'users.json');
@@ -64,6 +65,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (!password || password.length < 6) {
+      return NextResponse.json(
+        { success: false, message: 'Şifre gerekli ve en az 6 karakter olmalı' },
+        { status: 400 }
+      );
+    }
+
+    // Hash password with bcrypt
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
     // Profil tamamlama emaili gönder
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -121,7 +133,7 @@ export async function POST(request: NextRequest) {
       platform,
       monthlyOrders,
       fullName,
-      password, // TODO: Password hashing yapılmalı production'da
+      password: hashedPassword, // Hashed password
     });
 
     return NextResponse.json({

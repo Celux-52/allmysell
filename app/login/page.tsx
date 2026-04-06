@@ -28,6 +28,7 @@ export default function LoginPage() {
 
       if (data.success) {
         sessionStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('authToken', data.token);
         router.push('/dashboard');
       } else {
         setError(data.message || 'Giriş başarısız');

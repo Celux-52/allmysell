@@ -92,9 +92,17 @@ export default function ProfileSetupPage() {
         platform,
         monthlyOrders,
       }));
+      
+      // Store in localStorage for persistence
+      localStorage.setItem('user', JSON.stringify({
+        email,
+        fullName,
+        platform,
+        monthlyOrders,
+      }));
 
       setTimeout(() => {
-        window.location.href = '/onboarding-complete';
+        window.location.href = '/dashboard';
       }, 2000);
     } catch (err) {
       setError('Bir hata oluştu. Lütfen tekrar deneyin.');

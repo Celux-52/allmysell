@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 const DATA_FILE = path.join(process.cwd(), '.data', 'users.json');
 
@@ -57,21 +59,44 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (user.password !== password) {
+    // Compare passwords using bcrypt
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    
+    if (!passwordMatch) {
       return NextResponse.json(
         { success: false, message: 'Şifre yanlış' },
         { status: 401 }
       );
     }
 
-    // Password hashing yapılmalı ama şimdilik basit demo
+    // Return user without password
     const { password: _, ...userWithoutPassword } = user;
 
-    return NextResponse.json({
+    // Generate JWT token
+    const jwtSecret = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+    const token = jwt.sign(
+      { email: user.email, id: user.id },
+      jwtSecret,
+      { expiresIn: '7d' }
+    );
+
+    // Create response with JWT in cookie
+    const response = NextResponse.json({
       success: true,
       message: 'Giriş başarılı',
       user: userWithoutPassword,
+      token,
     });
+
+    // Set secure HTTP-only cookie
+    response.cookies.set('authToken', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60, // 7 days
+    });
+
+    return response;
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(
