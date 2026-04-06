@@ -143,8 +143,9 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Profile update error:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { success: false, message: 'Bir hata oluştu' },
+      { success: false, message: `Bir hata oluştu: ${errorMessage}` },
       { status: 500 }
     );
   }

@@ -61,6 +61,13 @@ export default function LoginPage() {
             </div>
           )}
 
+          {/* Test Mode Info */}
+          <div className="mb-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+            <p className="text-blue-400 text-sm">
+              <strong>Test Modu:</strong> Email: test@gmail.com | Şifre: test123
+            </p>
+          </div>
+
           <form onSubmit={handleLogin} className="space-y-5">
             {/* Email Input */}
             <div>
