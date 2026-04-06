@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": "1775472784063",
+    "email": "test@gmail.com",
+    "password": "$2b$10$Pc6TVVqNfQXRnSGDjUvKUemvZWLalKWdJHo5nJmW33BtF8qkaCfD6",
+    "fullName": "Test Kullanıcı",
+    "platform": "amazon",
+    "monthlyOrders": "high",
+    "createdAt": "2026-04-06T10:53:04.063Z",
+    "emailVerified": true
+  }
+]

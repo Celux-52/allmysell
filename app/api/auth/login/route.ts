@@ -42,6 +42,8 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { email, password } = body;
 
+    console.log('🔐 LOGIN REQUEST:', { email, password: '***' });
+
     if (!email || !password) {
       return NextResponse.json(
         { success: false, message: 'Email ve şifre gerekli' },
@@ -50,7 +52,10 @@ export async function POST(request: NextRequest) {
     }
 
     const users = await getUsers();
+    console.log('📊 USERS IN DB:', users.map((u: any) => u.email));
+    
     const user = users.find((u: any) => u.email === email);
+    console.log('🔍 FOUND USER:', user ? user.email : 'NOT FOUND');
 
     if (!user) {
       return NextResponse.json(
