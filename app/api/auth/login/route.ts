@@ -4,7 +4,7 @@ import path from 'path';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const DATA_FILE = path.join(process.cwd(), '.data', 'users.json');
+const DATA_FILE = path.join('/tmp', 'users.json');
 
 async function ensureDataFile() {
   try {
@@ -16,7 +16,14 @@ async function ensureDataFile() {
     } catch (err) {
       // Dir might already exist
     }
-    await fs.writeFile(DATA_FILE, '[]', 'utf-8');
+    try {
+      // Seed the test user so login always works demo-wise
+      const hash = await bcrypt.hash('test123', 10);
+      const mockUsers = [{ email: 'test@gmail.com', password: hash, id: 'demo1' }];
+      await fs.writeFile(DATA_FILE, JSON.stringify(mockUsers), 'utf-8');
+    } catch (e) {
+      console.error('Could not write to /tmp', e);
+    }
   }
 }
 

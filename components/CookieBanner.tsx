@@ -8,19 +8,32 @@ export default function CookieBanner() {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem('cookieConsent');
-    if (!consent) {
-      setShowBanner(true);
+    try {
+      const consent = localStorage.getItem('cookieConsent');
+      if (!consent) {
+        setShowBanner(true);
+      }
+    } catch (e) {
+      console.warn('localStorage not available', e);
+      // Don't show banner if localStorage fails (e.g. strict Safari)
     }
   }, []);
 
   const acceptCookies = () => {
-    localStorage.setItem('cookieConsent', 'accepted');
+    try {
+      localStorage.setItem('cookieConsent', 'accepted');
+    } catch (e) {
+      // Ignore
+    }
     setShowBanner(false);
   };
 
   const declineCookies = () => {
-    localStorage.setItem('cookieConsent', 'declined');
+    try {
+      localStorage.setItem('cookieConsent', 'declined');
+    } catch (e) {
+      // Ignore
+    }
     setShowBanner(false);
   };
 

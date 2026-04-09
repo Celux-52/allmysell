@@ -5,7 +5,7 @@ import path from 'path';
 import bcrypt from 'bcryptjs';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const DATA_FILE = path.join(process.cwd(), '.data', 'users.json');
+const DATA_FILE = path.join('/tmp', 'users.json');
 
 async function ensureDataFile() {
   try {
