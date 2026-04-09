@@ -41,23 +41,23 @@ export default function AdminUsersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1a1a1a] via-[#2d1b4e] to-[#1a1a1a]">
+    <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#2d1b4e] to-[#000000]">
       {/* Header */}
-      <div className="bg-[#252525] border-b border-[#8F00FF]/20 sticky top-0 z-40">
+      <div className="bg-[#252525] border-b border-[#808000]/20 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#8F00FF] to-[#0000FF] rounded-lg flex items-center justify-center">
-                <Users className="text-white" size={24} />
+              <div className="w-12 h-12 bg-gradient-to-br from-[#808000] to-[#CD853F] rounded-lg flex items-center justify-center">
+                <Users className="text-cornsilk" size={24} />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-white">Admin Panel</h1>
+                <h1 className="text-2xl font-bold text-cornsilk">Admin Panel</h1>
                 <p className="text-gray-400 text-sm">Kayıtlı Kullanıcılar</p>
               </div>
             </div>
             <Link
               href="/"
-              className="flex items-center gap-2 px-4 py-2 text-gray-300 hover:text-[#8F00FF] transition-colors"
+              className="flex items-center gap-2 px-4 py-2 text-gray-300 hover:text-[#808000] transition-colors"
             >
               <LogOut size={20} />
               Ana Sayfa
@@ -70,13 +70,13 @@ export default function AdminUsersPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-[#252525] border border-[#8F00FF]/20 rounded-lg p-6">
+          <div className="bg-[#252525] border border-[#808000]/20 rounded-lg p-6">
             <p className="text-gray-400 text-sm mb-2">Toplam Kullanıcı</p>
-            <p className="text-3xl font-bold text-[#8F00FF]">{users.length}</p>
+            <p className="text-3xl font-bold text-[#808000]">{users.length}</p>
           </div>
-          <div className="bg-[#252525] border border-[#8F00FF]/20 rounded-lg p-6">
+          <div className="bg-[#252525] border border-[#808000]/20 rounded-lg p-6">
             <p className="text-gray-400 text-sm mb-2">Bu Ay Kayıt</p>
-            <p className="text-3xl font-bold text-[#0000FF]">
+            <p className="text-3xl font-bold text-[#CD853F]">
               {users.filter((u) => {
                 const date = new Date(u.createdAt);
                 const now = new Date();
@@ -84,7 +84,7 @@ export default function AdminUsersPage() {
               }).length}
             </p>
           </div>
-          <div className="bg-[#252525] border border-[#8F00FF]/20 rounded-lg p-6">
+          <div className="bg-[#252525] border border-[#808000]/20 rounded-lg p-6">
             <p className="text-gray-400 text-sm mb-2">Platform Dağılımı</p>
             <p className="text-sm text-gray-300 mt-2">
               {users.length > 0 ? (
@@ -103,7 +103,7 @@ export default function AdminUsersPage() {
               )}
             </p>
           </div>
-          <div className="bg-[#252525] border border-[#8F00FF]/20 rounded-lg p-6">
+          <div className="bg-[#252525] border border-[#808000]/20 rounded-lg p-6">
             <p className="text-gray-400 text-sm mb-2">En Popüler</p>
             <p className="text-sm text-gray-300 mt-2">
               {users.length > 0
@@ -132,15 +132,15 @@ export default function AdminUsersPage() {
             <p className="text-red-400">{error}</p>
           </div>
         ) : users.length === 0 ? (
-          <div className="text-center py-12 bg-[#252525] rounded-lg border border-[#8F00FF]/20">
+          <div className="text-center py-12 bg-[#252525] rounded-lg border border-[#808000]/20">
             <p className="text-gray-400 mb-2">Henüz kayıtlı kullanıcı yok</p>
             <p className="text-gray-500 text-sm">Kullanıcılar kayıt olduğunda burada görünecektir</p>
           </div>
         ) : (
-          <div className="bg-[#252525] rounded-lg border border-[#8F00FF]/20 overflow-hidden">
+          <div className="bg-[#252525] rounded-lg border border-[#808000]/20 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-[#1a1a1a] border-b border-[#8F00FF]/20">
+                <thead className="bg-[#000000] border-b border-[#808000]/20">
                   <tr>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Ad</th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Email</th>
@@ -149,13 +149,13 @@ export default function AdminUsersPage() {
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Tarih</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#8F00FF]/10">
+                <tbody className="divide-y divide-[#808000]/10">
                   {users.map((user) => (
                     <tr key={user.id} className="hover:bg-[#2d2d2d] transition-colors">
                       <td className="px-6 py-4 text-sm text-gray-300">{user.fullName}</td>
                       <td className="px-6 py-4 text-sm text-gray-400">{user.email}</td>
                       <td className="px-6 py-4 text-sm">
-                        <span className="px-3 py-1 bg-[#8F00FF]/20 text-[#8F00FF] rounded-full text-xs font-medium">
+                        <span className="px-3 py-1 bg-[#808000]/20 text-[#808000] rounded-full text-xs font-medium">
                           {user.platform}
                         </span>
                       </td>

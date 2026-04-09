@@ -34,14 +34,14 @@ export default function CookieBanner() {
           <div className="flex items-start space-x-4 flex-1">
             <Cookie className="w-8 h-8 text-yellow-400 flex-shrink-0 mt-1" />
             <div>
-              <h3 className="text-white font-semibold text-lg mb-1">
+              <h3 className="text-cornsilk font-semibold text-lg mb-1">
                 We use cookies
               </h3>
               <p className="text-gray-300 text-sm">
                 We use cookies to enhance your browsing experience, serve personalized content, 
                 and analyze our traffic. By clicking "Accept All", you consent to our use of cookies. 
                 {' '}
-                <Link href="/privacy-policy" className="text-purple-400 hover:text-purple-300 underline">
+                <Link href="/privacy-policy" className="text-olive hover:text-olive underline">
                   Learn more
                 </Link>
               </p>
@@ -52,19 +52,19 @@ export default function CookieBanner() {
           <div className="flex items-center space-x-3 flex-shrink-0">
             <button
               onClick={declineCookies}
-              className="px-6 py-2 text-gray-300 hover:text-white transition-colors font-medium"
+              className="px-6 py-2 text-gray-300 hover:text-cornsilk transition-colors font-medium"
             >
               Decline
             </button>
             <button
               onClick={acceptCookies}
-              className="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl"
+              className="px-6 py-2 bg-gradient-to-r from-olive to-peru text-cornsilk rounded-lg font-semibold hover:from-olive hover:to-peru transition-all shadow-lg hover:shadow-xl"
             >
               Accept All
             </button>
             <button
               onClick={declineCookies}
-              className="p-2 text-gray-400 hover:text-white transition-colors"
+              className="p-2 text-gray-400 hover:text-cornsilk transition-colors"
               aria-label="Close"
             >
               <X className="w-5 h-5" />

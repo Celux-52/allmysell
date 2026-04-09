@@ -25,13 +25,13 @@ export default function RegisterPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.message || 'Bir hata oluştu');
+        setError(data.message || 'An error occurred');
         return;
       }
 
       setSuccess(true);
       
-      // Email ve token'ı sessionStorage'a kaydet
+      // Save email and token to sessionStorage
       sessionStorage.setItem('pendingEmail', email);
       sessionStorage.setItem('verificationToken', data.verificationToken);
 
@@ -39,7 +39,7 @@ export default function RegisterPage() {
         window.location.href = '/verify-email';
       }, 2000);
     } catch (err) {
-      setError('Bir hata oluştu. Lütfen tekrar deneyin.');
+      setError('An error occurred. Please try again.');
       console.error(err);
     } finally {
       setLoading(false);
@@ -47,36 +47,36 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#000033] via-[#330066] to-[#8F00FF] flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#808000] to-[#808000] flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8 animate-slideInUp">
-          <div className="w-16 h-16 bg-gradient-to-br from-[#8F00FF] to-[#0000FF] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-2xl">
-            <span className="text-white font-bold text-3xl">A</span>
+          <div className="w-16 h-16 bg-gradient-to-br from-[#808000] to-[#CD853F] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-2xl">
+            <span className="text-cornsilk font-bold text-3xl">A</span>
           </div>
-          <h1 className="text-4xl font-bold text-white mb-2">AllMySell</h1>
-          <p className="text-blue-100">Aşamalı Profille Başlayın</p>
+          <h1 className="text-4xl font-bold text-cornsilk mb-2">AllMySell</h1>
+          <p className="text-peru">Start with a Progressive Profile</p>
         </div>
 
         {/* Form Card */}
-        <div className="bg-white rounded-2xl shadow-2xl p-8 animate-scaleIn">
+        <div className="bg-cornsilk rounded-2xl shadow-2xl p-8 animate-scaleIn">
           {!success ? (
             <>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Kayıt Ol</h2>
+              <h2 className="text-2xl font-bold text-black mb-2">Sign Up</h2>
               <p className="text-gray-600 mb-6">
-                Sadece emailinizle başlayın. Daha sonra daha fazla bilgi ekleyebilirsiniz.
+                Start with just your email. You can add more info later.
               </p>
 
               {/* Test Mode Info */}
-              <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                <p className="text-blue-900 text-sm font-medium">
-                  <strong>⚠️ Test Modu:</strong> Email hizmetimiz sadece aşağıdaki email adresleri aracılığıyla çalışmaktadır:
+              <div className="mb-6 p-4 bg-peru border border-peru rounded-lg">
+                <p className="text-peru text-sm font-medium">
+                  <strong>⚠️ Test Mode:</strong> Our email service only works with the following email addresses:
                 </p>
-                <p className="text-blue-800 text-sm mt-2">
+                <p className="text-peru text-sm mt-2">
                   test@gmail.com, demo@gmail.com, mehmetali@test.com
                 </p>
-                <p className="text-blue-800 text-xs mt-2">
-                  Kaydı tamamlamak için lütfen yukarıdaki emaillerden birini kullanın.
+                <p className="text-peru text-xs mt-2">
+                  Please use one of the emails above to complete registration.
                 </p>
               </div>
 
@@ -90,7 +90,7 @@ export default function RegisterPage() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Adresi
+                    Email Address
                   </label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-3 text-gray-400" size={20} />
@@ -99,9 +99,9 @@ export default function RegisterPage() {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="ornek@email.com"
+                      placeholder="example@email.com"
                       required
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8F00FF] focus:border-transparent"
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#808000] focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -109,17 +109,17 @@ export default function RegisterPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-gradient-to-r from-[#8F00FF] to-[#0000FF] text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full bg-gradient-to-r from-[#808000] to-[#CD853F] text-cornsilk py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  {loading ? 'Gönderiliyor...' : 'Başlayın'}
+                  {loading ? 'Submitting...' : 'Get Started'}
                   <ArrowRight size={20} />
                 </button>
               </form>
 
               <p className="text-center text-gray-600 text-sm mt-4">
-                Zaten hesabınız var mı?{' '}
-                <Link href="/login" className="text-[#8F00FF] hover:underline font-semibold">
-                  Giriş yapın
+                Already have an account?{' '}
+                <Link href="/login" className="text-[#808000] hover:underline font-semibold">
+                  Log in
                 </Link>
               </p>
             </>
@@ -128,11 +128,11 @@ export default function RegisterPage() {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="text-green-600" size={32} />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Başarılı!</h3>
+              <h3 className="text-xl font-bold text-black mb-2">Success!</h3>
               <p className="text-gray-600 mb-4">
-                Doğrulama emaili {email} adresine gönderildi. Lütfen kontrol edin.
+                Verification email sent to {email}. Please check your inbox.
               </p>
-              <p className="text-sm text-gray-500">Yeniden yönlendiriliyorsunuz...</p>
+              <p className="text-sm text-gray-500">Redirecting...</p>
             </div>
           )}
         </div>
@@ -140,18 +140,18 @@ export default function RegisterPage() {
         {/* Step Indicator */}
         <div className="mt-8 flex justify-center gap-2">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-[#8F00FF] text-white rounded-full flex items-center justify-center font-semibold text-sm">1</div>
-            <p className="text-white text-sm font-medium">Email</p>
+            <div className="w-8 h-8 bg-[#808000] text-cornsilk rounded-full flex items-center justify-center font-semibold text-sm">1</div>
+            <p className="text-cornsilk text-sm font-medium">Email</p>
           </div>
           <div className="border-t-2 border-white/30 w-12 mt-4"></div>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-white/30 text-white rounded-full flex items-center justify-center font-semibold text-sm">2</div>
-            <p className="text-white/60 text-sm">Platform</p>
+            <div className="w-8 h-8 bg-cornsilk/30 text-cornsilk rounded-full flex items-center justify-center font-semibold text-sm">2</div>
+            <p className="text-cornsilk/60 text-sm">Platform</p>
           </div>
           <div className="border-t-2 border-white/30 w-12 mt-4"></div>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-white/30 text-white rounded-full flex items-center justify-center font-semibold text-sm">3</div>
-            <p className="text-white/60 text-sm">Hacim</p>
+            <div className="w-8 h-8 bg-cornsilk/30 text-cornsilk rounded-full flex items-center justify-center font-semibold text-sm">3</div>
+            <p className="text-cornsilk/60 text-sm">Volume</p>
           </div>
         </div>
       </div>

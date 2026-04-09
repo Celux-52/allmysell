@@ -126,72 +126,64 @@ const products = [
 
 const generateBlogContent = (product: any) => {
   return {
-    title: `Review: ${product.name} - ${product.platform} Best Seller`,
-    excerpt: `Discover why ${product.name} is one of the most popular products in the ${product.category} category. Detailed review, features, and user experiences.`,
-    date: '2026-01-19',
-    readTime: '5 min read',
+    title: `${product.name} - In-Depth Look & Features`,
+    excerpt: `Discover exactly why the ${product.name} is making waves. We break down the build quality, daily usage, and value proposition.`,
+    date: '2024-03-15',
+    readTime: '4 min read',
     
-    introduction: `The ${product.name} has become one of the standout products in the ${product.category} market. Available on ${product.platform}, this product offers exceptional value for money and has garnered excellent customer reviews. In this comprehensive review, we'll dive deep into what makes this product special.`,
+    introduction: `If you're on the fence about picking up the ${product.name}, this breakdown will help. Finding the right tools for your daily routine isn't always easy, but this item has proven to be a reliable choice for many. Let's look at what you get straight out of the box, and why it might be exactly what you need.`,
     
     features: [
-      'Premium build quality and durable materials',
-      'Easy to use with intuitive design',
-      'Compatible with multiple devices and systems',
-      'Excellent customer support from verified sellers',
-      'Fast shipping with secure packaging',
-      'Backed by platform buyer protection',
+      'Sturdy build designed for long-term use',
+      'Intuitive design that requires zero setup time',
+      'Broad compatibility right out of the package',
+      'Backed by solid platform buyer protection',
+      'Fast, tracked shipping direct to your door',
     ],
     
     specifications: [
       { label: 'Category', value: product.category },
       { label: 'Platform', value: product.platform },
       { label: 'Availability', value: 'In Stock' },
-      { label: 'Shipping', value: 'Fast & Secure' },
-      { label: 'Warranty', value: 'Buyer Protected' },
+      { label: 'Shipping', value: 'Express Options Available' },
+      { label: 'Warranty', value: 'Standard Coverage' },
     ],
     
-    whyChoose: `When shopping for ${product.category} products, the ${product.name} stands out for several compelling reasons. First and foremost, it's available through ${product.platform}, which means you benefit from their comprehensive buyer protection program and secure payment systems. This ensures that your purchase is safe and that you can shop with confidence.
-
-The product has been carefully tested and verified to meet high-quality standards. ${product.description} - making it a versatile choice for various needs and use cases. Whether you're a first-time buyer or an experienced user, this product delivers on its promises.`,
+    whyChoose: `The main reason this specific ${product.category} item caught our eye is the balance of price and durability. It's tough to find reliable accessories that don't break the bank, but the ${product.name} strikes that sweet spot perfectly.
     
-    customerExperience: `Customers who purchased this product from our ${product.platform} store have consistently given positive feedback. The combination of quality, price, and service has made it one of our top-selling items. Users particularly appreciate the attention to detail in the design and the reliable performance.
-
-Many customers have noted that the ${product.description.toLowerCase()}, which adds significant value to their purchase. The product arrives well-packaged and ready to use, with clear instructions and excellent build quality that justifies the investment.`,
+Furthermore, sourcing this directly from a trusted seller on ${product.platform} adds an extra layer of security to your purchase. You're fully covered by buyer protection policies, meaning you can try it out risk-free.`,
+    
+    customerExperience: `Feedback from the community highlights the hassle-free experience of using this product day-to-day. People appreciate that it simply works as advertised without requiring constant adjustments or complex manuals.
+    
+Shipping and packaging also consistently receive top marks. The item arrives securely boxed, preventing any transit damage, which is crucial for sensitive electronics and precision accessories.`,
     
     prosAndCons: {
       pros: [
-        'Excellent value for money',
-        'High-quality construction',
-        'Easy to use and install',
-        'Fast shipping options',
-        'Secure payment through ' + product.platform,
-        'Responsive customer service',
+        'Fantastic price-to-performance ratio',
+        'Solid, dependable construction',
+        'Plug-and-play simplicity',
+        'Fast and secure shipping',
+        'Great after-sales support via ' + product.platform,
       ],
       cons: [
-        'Limited color options',
-        'May require adapter for some regions',
+        'High demand occasionally causes low stock',
+        'Packaging is functional but minimal',
       ],
     },
     
-    buyingGuide: `If you're considering purchasing the ${product.name}, here are some tips to ensure you get the best experience:
+    buyingGuide: `Before pulling the trigger on the ${product.name}, keep these quick tips in mind:
 
-**Check Compatibility**: Before ordering, make sure the product is compatible with your devices or requirements. Read the product specifications carefully on the ${product.platform} listing.
+**Verify Your Setup:** Ensure your current devices are compatible. While this item is highly versatile, a quick double-check never hurts.
 
-**Read Reviews**: Take time to read customer reviews on the platform. This will give you real-world insights into the product's performance.
+**Check for Bundle Deals:** Sometimes getting a related accessory at the same time can save on shipping costs.
 
-**Compare Prices**: While shopping on ${product.platform}, check if there are any ongoing promotions or bundle deals that could save you money.
-
-**Understand Return Policy**: Familiarize yourself with ${product.platform}'s return policy and buyer protection program before making your purchase.
-
-**Contact Seller**: If you have specific questions, don't hesitate to contact the seller through the platform's messaging system.`,
+**Read the Seller Notes:** Take a glance at the item description on ${product.platform} for any new updates or shipping timeframe estimates.`,
     
-    conclusion: `The ${product.name} represents excellent value in the ${product.category} market. Its combination of quality, functionality, and price makes it a standout choice for anyone looking to purchase from ${product.platform}. 
-
-Available now on our verified ${product.platform} store, this product comes with the security and peace of mind that comes with shopping on a trusted platform. With fast shipping, secure packaging, and full buyer protection, you can purchase with confidence.
-
-Whether you're upgrading your current setup or making a first-time purchase, the ${product.name} delivers on all fronts. Don't miss out on this popular item - check it out on our ${product.platform} store today!`,
+    conclusion: `To wrap things up, the ${product.name} is a stellar addition to anyone's setup. It handles its primary job effortlessly while maintaining a sleek, unobtrusive profile.
     
-    relatedProducts: products.filter(p => p.id !== product.id && p.category === product.category).slice(0, 3),
+If you're ready to upgrade your gear, grab it from our verified store on ${product.platform}. Enjoy the peace of mind that comes with secure checkout and comprehensive buyer protection!`,
+    
+    relatedProducts: products.filter(p => p.id !== product.id && p.category === product.category).slice(0, 3)
   };
 };
 
@@ -206,16 +198,16 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   const post = generateBlogContent(product);
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-cornsilk min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-purple-600 via-pink-600 to-blue-600 text-white py-20">
+      <section className="relative bg-gradient-to-br from-olive via-peru to-peru text-cornsilk py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link href="/blog" className="text-white/80 hover:text-white mb-6 inline-flex items-center gap-2 text-sm font-medium">
+          <Link href="/blog" className="text-cornsilk/80 hover:text-cornsilk mb-6 inline-flex items-center gap-2 text-sm font-medium">
             ← Back to Blog
           </Link>
           
           <div className="flex items-center gap-4 mb-6 text-sm">
-            <span className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full font-semibold">
+            <span className="bg-cornsilk/20 backdrop-blur-sm px-4 py-2 rounded-full font-semibold">
               {product.platform}
             </span>
             <span className="flex items-center gap-2">
@@ -228,7 +220,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             </span>
           </div>
 
-          <span className="text-purple-200 font-semibold text-sm uppercase tracking-wider mb-4 block">
+          <span className="text-olive font-semibold text-sm uppercase tracking-wider mb-4 block">
             {product.category}
           </span>
           
@@ -236,7 +228,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             {post.title}
           </h1>
           
-          <p className="text-xl text-purple-100 leading-relaxed">
+          <p className="text-xl text-olive leading-relaxed">
             {post.excerpt}
           </p>
         </div>
@@ -245,7 +237,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       {/* Product Image */}
       <section className="py-12 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div className="bg-cornsilk rounded-2xl shadow-xl overflow-hidden">
             <img
               src={product.image}
               alt={product.name}
@@ -260,19 +252,19 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Introduction */}
           <div className="prose prose-lg max-w-none mb-12">
-            <p className="text-xl text-gray-700 leading-relaxed first-letter:text-6xl first-letter:font-bold first-letter:text-purple-600 first-letter:mr-3 first-letter:float-left">
+            <p className="text-xl text-gray-700 leading-relaxed first-letter:text-6xl first-letter:font-bold first-letter:text-olive first-letter:mr-3 first-letter:float-left">
               {post.introduction}
             </p>
           </div>
 
           {/* Product Specifications */}
-          <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl p-8 mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Product Specifications</h2>
+          <div className="bg-gradient-to-br from-olive to-peru rounded-2xl p-8 mb-12">
+            <h2 className="text-3xl font-bold text-black mb-6">Product Specifications</h2>
             <div className="grid md:grid-cols-2 gap-4">
               {post.specifications.map((spec, index) => (
-                <div key={index} className="bg-white rounded-lg p-4 flex justify-between items-center">
+                <div key={index} className="bg-cornsilk rounded-lg p-4 flex justify-between items-center">
                   <span className="font-semibold text-gray-700">{spec.label}</span>
-                  <span className="text-purple-600 font-medium">{spec.value}</span>
+                  <span className="text-olive font-medium">{spec.value}</span>
                 </div>
               ))}
             </div>
@@ -280,10 +272,10 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
           {/* Key Features */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Key Features</h2>
+            <h2 className="text-3xl font-bold text-black mb-6">Key Features</h2>
             <div className="grid md:grid-cols-2 gap-4">
               {post.features.map((feature, index) => (
-                <div key={index} className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                <div key={index} className="flex items-start gap-3 bg-cornsilk p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                   <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={20} />
                   <span className="text-gray-700">{feature}</span>
                 </div>
@@ -293,7 +285,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
           {/* Why Choose This Product */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Why Choose This Product?</h2>
+            <h2 className="text-3xl font-bold text-black mb-6">Why Choose This Product?</h2>
             <div className="prose prose-lg max-w-none">
               <p className="text-gray-700 leading-relaxed whitespace-pre-line">
                 {post.whyChoose}
@@ -303,7 +295,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
           {/* Customer Experience */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Customer Experience</h2>
+            <h2 className="text-3xl font-bold text-black mb-6">Customer Experience</h2>
             <div className="prose prose-lg max-w-none">
               <p className="text-gray-700 leading-relaxed whitespace-pre-line">
                 {post.customerExperience}
@@ -313,7 +305,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
           {/* Pros and Cons */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Pros & Cons</h2>
+            <h2 className="text-3xl font-bold text-black mb-6">Pros & Cons</h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-green-50 rounded-xl p-6">
                 <h3 className="text-xl font-bold text-green-800 mb-4">✓ Pros</h3>
@@ -342,7 +334,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
           {/* Buying Guide */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Buying Guide</h2>
+            <h2 className="text-3xl font-bold text-black mb-6">Buying Guide</h2>
             <div className="prose prose-lg max-w-none bg-gray-50 rounded-xl p-8">
               <p className="text-gray-700 leading-relaxed whitespace-pre-line">
                 {post.buyingGuide}
@@ -352,7 +344,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
           {/* Conclusion */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Final Verdict</h2>
+            <h2 className="text-3xl font-bold text-black mb-6">Final Verdict</h2>
             <div className="prose prose-lg max-w-none">
               <p className="text-gray-700 leading-relaxed whitespace-pre-line">
                 {post.conclusion}
@@ -361,9 +353,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           </div>
 
           {/* CTA Button */}
-          <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl p-8 text-center text-white mb-12">
+          <div className="bg-gradient-to-r from-olive to-peru rounded-2xl p-8 text-center text-cornsilk mb-12">
             <h3 className="text-2xl font-bold mb-4">Ready to Purchase?</h3>
-            <p className="text-purple-100 mb-6">
+            <p className="text-olive mb-6">
               Get this product now from our verified {product.platform} store
             </p>
             <TrackedLink
@@ -379,7 +371,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 item_category: product.category,
                 platform: product.platform
               }}
-              className="inline-flex items-center gap-2 bg-white text-purple-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-blue-50 transition-all hover:scale-105 shadow-lg"
+              className="inline-flex items-center gap-2 bg-cornsilk text-olive px-8 py-4 rounded-full font-semibold text-lg hover:bg-peru transition-all hover:scale-105 shadow-lg"
             >
               <span>View on {product.platform}</span>
               <ExternalLink size={20} />
@@ -389,11 +381,11 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           {/* Related Products */}
           {post.relatedProducts.length > 0 && (
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">Related Products</h2>
+              <h2 className="text-3xl font-bold text-black mb-8">Related Products</h2>
               <div className="grid md:grid-cols-3 gap-6">
                 {post.relatedProducts.map((related) => (
                   <Link key={related.id} href={`/blog/${related.id}`}>
-                    <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 overflow-hidden group cursor-pointer">
+                    <div className="bg-cornsilk rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 overflow-hidden group cursor-pointer">
                       <div className="relative h-48">
                         <img
                           src={related.image}
@@ -402,8 +394,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                         />
                       </div>
                       <div className="p-4">
-                        <span className="text-purple-600 text-xs font-semibold uppercase">{related.category}</span>
-                        <h3 className="text-lg font-bold text-gray-900 mt-1 line-clamp-2 group-hover:text-purple-600 transition-colors">
+                        <span className="text-olive text-xs font-semibold uppercase">{related.category}</span>
+                        <h3 className="text-lg font-bold text-black mt-1 line-clamp-2 group-hover:text-olive transition-colors">
                           {related.name}
                         </h3>
                       </div>

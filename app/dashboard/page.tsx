@@ -39,21 +39,21 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#1a1a1a] via-[#2d1b4e] to-[#1a1a1a] flex items-center justify-center">
-        <div className="text-white">Yükleniyor...</div>
+      <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#2d1b4e] to-[#000000] flex items-center justify-center">
+        <div className="text-cornsilk">Yükleniyor...</div>
       </div>
     );
   }
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#1a1a1a] via-[#2d1b4e] to-[#1a1a1a] flex items-center justify-center px-4">
+      <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#2d1b4e] to-[#000000] flex items-center justify-center px-4">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-white mb-4">Oturum Açılmamış</h1>
+          <h1 className="text-2xl font-bold text-cornsilk mb-4">Oturum Açılmamış</h1>
           <p className="text-gray-400 mb-6">Lütfen önce giriş yapın</p>
           <Link
             href="/login"
-            className="inline-block bg-gradient-to-r from-[#8F00FF] to-[#0000FF] text-white px-6 py-3 rounded-lg font-bold hover:shadow-lg transition-all"
+            className="inline-block bg-gradient-to-r from-[#808000] to-[#CD853F] text-cornsilk px-6 py-3 rounded-lg font-bold hover:shadow-lg transition-all"
           >
             Giriş Yap
           </Link>
@@ -63,12 +63,12 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1a1a1a] via-[#2d1b4e] to-[#1a1a1a] py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#2d1b4e] to-[#000000] py-12 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-[#8F00FF] to-[#0000FF] bg-clip-text text-transparent mb-2">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-[#808000] to-[#CD853F] bg-clip-text text-transparent mb-2">
               Pano
             </h1>
             <p className="text-gray-400">Hoş geldiniz, {user.fullName}!</p>
@@ -83,51 +83,51 @@ export default function DashboardPage() {
         </div>
 
         {/* User Profile Card */}
-        <div className="bg-[#252525] rounded-2xl shadow-2xl p-8 border border-[#8F00FF]/20 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Profil Bilgileri</h2>
+        <div className="bg-[#252525] rounded-2xl shadow-2xl p-8 border border-[#808000]/20 mb-8">
+          <h2 className="text-2xl font-bold text-cornsilk mb-6">Profil Bilgileri</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Full Name */}
             <div className="flex items-start gap-4">
-              <div className="bg-[#8F00FF]/20 p-3 rounded-lg">
-                <User className="text-[#8F00FF]" size={24} />
+              <div className="bg-[#808000]/20 p-3 rounded-lg">
+                <User className="text-[#808000]" size={24} />
               </div>
               <div>
                 <p className="text-gray-400 text-sm">Ad Soyad</p>
-                <p className="text-white font-semibold">{user.fullName || 'Belirtilmemiş'}</p>
+                <p className="text-cornsilk font-semibold">{user.fullName || 'Belirtilmemiş'}</p>
               </div>
             </div>
 
             {/* Email */}
             <div className="flex items-start gap-4">
-              <div className="bg-[#8F00FF]/20 p-3 rounded-lg">
-                <Mail className="text-[#8F00FF]" size={24} />
+              <div className="bg-[#808000]/20 p-3 rounded-lg">
+                <Mail className="text-[#808000]" size={24} />
               </div>
               <div>
                 <p className="text-gray-400 text-sm">Email Adresi</p>
-                <p className="text-white font-semibold">{user.email}</p>
+                <p className="text-cornsilk font-semibold">{user.email}</p>
               </div>
             </div>
 
             {/* Platform */}
             <div className="flex items-start gap-4">
-              <div className="bg-[#8F00FF]/20 p-3 rounded-lg">
-                <Store className="text-[#8F00FF]" size={24} />
+              <div className="bg-[#808000]/20 p-3 rounded-lg">
+                <Store className="text-[#808000]" size={24} />
               </div>
               <div>
                 <p className="text-gray-400 text-sm">Platform</p>
-                <p className="text-white font-semibold">{user.platform || 'Belirtilmemiş'}</p>
+                <p className="text-cornsilk font-semibold">{user.platform || 'Belirtilmemiş'}</p>
               </div>
             </div>
 
             {/* Monthly Orders */}
             <div className="flex items-start gap-4">
-              <div className="bg-[#8F00FF]/20 p-3 rounded-lg">
-                <TrendingUp className="text-[#8F00FF]" size={24} />
+              <div className="bg-[#808000]/20 p-3 rounded-lg">
+                <TrendingUp className="text-[#808000]" size={24} />
               </div>
               <div>
                 <p className="text-gray-400 text-sm">Aylık Sipariş Hacmi</p>
-                <p className="text-white font-semibold">{user.monthlyOrders || 'Belirtilmemiş'}</p>
+                <p className="text-cornsilk font-semibold">{user.monthlyOrders || 'Belirtilmemiş'}</p>
               </div>
             </div>
           </div>
@@ -137,19 +137,19 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Link
             href="/shop"
-            className="bg-[#252525] rounded-2xl shadow-2xl p-6 border border-[#8F00FF]/20 hover:border-[#8F00FF]/50 transition-all group"
+            className="bg-[#252525] rounded-2xl shadow-2xl p-6 border border-[#808000]/20 hover:border-[#808000]/50 transition-all group"
           >
-            <Store className="text-[#8F00FF] mb-4 group-hover:scale-110 transition-transform" size={32} />
-            <h3 className="text-xl font-bold text-white mb-2">Mağazalar</h3>
+            <Store className="text-[#808000] mb-4 group-hover:scale-110 transition-transform" size={32} />
+            <h3 className="text-xl font-bold text-cornsilk mb-2">Mağazalar</h3>
             <p className="text-gray-400">Amazon, eBay, Etsy ve daha fazlasına erişin</p>
           </Link>
 
           <Link
             href="/contact"
-            className="bg-[#252525] rounded-2xl shadow-2xl p-6 border border-[#8F00FF]/20 hover:border-[#8F00FF]/50 transition-all group"
+            className="bg-[#252525] rounded-2xl shadow-2xl p-6 border border-[#808000]/20 hover:border-[#808000]/50 transition-all group"
           >
-            <Mail className="text-[#8F00FF] mb-4 group-hover:scale-110 transition-transform" size={32} />
-            <h3 className="text-xl font-bold text-white mb-2">İletişim</h3>
+            <Mail className="text-[#808000] mb-4 group-hover:scale-110 transition-transform" size={32} />
+            <h3 className="text-xl font-bold text-cornsilk mb-2">İletişim</h3>
             <p className="text-gray-400">Bize ulaşın, sorularınız için buradayız</p>
           </Link>
         </div>

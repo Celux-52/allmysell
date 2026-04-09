@@ -10,15 +10,15 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="bg-white">
+    <div className="bg-cornsilk">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-purple-600 to-blue-600 text-white py-20">
+      <section className="relative bg-gradient-to-br from-olive to-peru text-cornsilk py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
               About Us
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-peru max-w-3xl mx-auto">
               A growing brand with multi-channel sales strategy, 
               establishing strong presence across global e-commerce platforms
             </p>
@@ -31,7 +31,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">
+              <h2 className="text-4xl font-bold text-black mb-6">
                 Our Vision
               </h2>
               <p className="text-lg text-gray-700 mb-4">
@@ -52,14 +52,14 @@ export default function AboutPage() {
                 multi-directional access.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-purple-100 to-blue-100 p-8 rounded-2xl">
+            <div className="bg-gradient-to-br from-olive to-peru p-8 rounded-2xl">
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
-                  <div className="bg-purple-600 text-white p-3 rounded-lg">
+                  <div className="bg-olive text-cornsilk p-3 rounded-lg">
                     <Target size={24} />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    <h3 className="text-xl font-semibold text-black mb-2">
                       Our Goal
                     </h3>
                     <p className="text-gray-700">
@@ -68,11 +68,11 @@ export default function AboutPage() {
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
-                  <div className="bg-blue-600 text-white p-3 rounded-lg">
+                  <div className="bg-peru text-cornsilk p-3 rounded-lg">
                     <Users size={24} />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    <h3 className="text-xl font-semibold text-black mb-2">
                       Customer Focused
                     </h3>
                     <p className="text-gray-700">
@@ -81,11 +81,11 @@ export default function AboutPage() {
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
-                  <div className="bg-purple-600 text-white p-3 rounded-lg">
+                  <div className="bg-olive text-cornsilk p-3 rounded-lg">
                     <TrendingUp size={24} />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    <h3 className="text-xl font-semibold text-black mb-2">
                       Continuous Growth
                     </h3>
                     <p className="text-gray-700">
@@ -94,11 +94,11 @@ export default function AboutPage() {
                   </div>
                 </div>
                 <div className="flex items-start space-x-4">
-                  <div className="bg-blue-600 text-white p-3 rounded-lg">
+                  <div className="bg-peru text-cornsilk p-3 rounded-lg">
                     <Globe2 size={24} />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    <h3 className="text-xl font-semibold text-black mb-2">
                       Global Vision
                     </h3>
                     <p className="text-gray-700">
@@ -116,7 +116,7 @@ export default function AboutPage() {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl font-bold text-black mb-4">
               Our Multi-Platform E-Commerce Strategy
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -126,9 +126,9 @@ export default function AboutPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-md">
+            <div className="bg-cornsilk p-8 rounded-xl shadow-md">
               <div className="text-4xl mb-4">🎯</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              <h3 className="text-2xl font-bold text-black mb-4">
                 Platform Diversity
               </h3>
               <p className="text-gray-600">
@@ -138,9 +138,9 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="bg-white p-8 rounded-xl shadow-md">
+            <div className="bg-cornsilk p-8 rounded-xl shadow-md">
               <div className="text-4xl mb-4">📊</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              <h3 className="text-2xl font-bold text-black mb-4">
                 Optimized Sales
               </h3>
               <p className="text-gray-600">
@@ -149,9 +149,9 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="bg-white p-8 rounded-xl shadow-md">
+            <div className="bg-cornsilk p-8 rounded-xl shadow-md">
               <div className="text-4xl mb-4">🚀</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              <h3 className="text-2xl font-bold text-black mb-4">
                 Rapid Growth
               </h3>
               <p className="text-gray-600">
@@ -167,43 +167,43 @@ export default function AboutPage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl font-bold text-black mb-4">
               Our Values
             </h2>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="bg-gradient-to-br from-purple-100 to-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-gradient-to-br from-olive to-peru w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">✨</span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Quality</h3>
+              <h3 className="text-xl font-semibold text-black mb-2">Quality</h3>
               <p className="text-gray-600">
                 Premium quality products and services on every platform
               </p>
             </div>
             <div className="text-center">
-              <div className="bg-gradient-to-br from-purple-100 to-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-gradient-to-br from-olive to-peru w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">🤝</span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Trust</h3>
+              <h3 className="text-xl font-semibold text-black mb-2">Trust</h3>
               <p className="text-gray-600">
                 Customer satisfaction and trust-oriented approach
               </p>
             </div>
             <div className="text-center">
-              <div className="bg-gradient-to-br from-purple-100 to-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-gradient-to-br from-olive to-peru w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">⚡</span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Speed</h3>
+              <h3 className="text-xl font-semibold text-black mb-2">Speed</h3>
               <p className="text-gray-600">
                 Fast delivery and customer support services
               </p>
             </div>
             <div className="text-center">
-              <div className="bg-gradient-to-br from-purple-100 to-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-gradient-to-br from-olive to-peru w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">🌟</span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Innovation</h3>
+              <h3 className="text-xl font-semibold text-black mb-2">Innovation</h3>
               <p className="text-gray-600">
                 Continuous development and new platform integrations
               </p>
@@ -216,7 +216,7 @@ export default function AboutPage() {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl font-bold text-black mb-4">
               Our Team & Contact
             </h2>
             <p className="text-xl text-gray-600">
@@ -225,57 +225,57 @@ export default function AboutPage() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div className="bg-white p-8 rounded-xl shadow-lg">
+            <div className="bg-cornsilk p-8 rounded-xl shadow-lg">
               <div className="flex items-center space-x-4 mb-6">
-                <div className="bg-purple-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">
+                <div className="bg-olive text-cornsilk w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">
                   M
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900">Melih</h3>
+                  <h3 className="text-2xl font-bold text-black">Melih</h3>
                   <p className="text-gray-600">Co-Founder & Partner</p>
                 </div>
               </div>
               <div className="space-y-3">
                 <div className="flex items-center space-x-3 text-gray-700">
-                  <Phone size={20} className="text-purple-600" />
+                  <Phone size={20} className="text-olive" />
                   <span>+90 553 706 59 12</span>
                 </div>
                 <div className="flex items-center space-x-3 text-gray-700">
-                  <Mail size={20} className="text-purple-600" />
+                  <Mail size={20} className="text-olive" />
                   <span>melihbicak@gmail.com</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white p-8 rounded-xl shadow-lg">
+            <div className="bg-cornsilk p-8 rounded-xl shadow-lg">
               <div className="flex items-center space-x-4 mb-6">
-                <div className="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">
+                <div className="bg-peru text-cornsilk w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">
                   Y
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900">Şükür Yunus</h3>
+                  <h3 className="text-2xl font-bold text-black">Şükür Yunus</h3>
                   <p className="text-gray-600">Co-Founder & Partner</p>
                 </div>
               </div>
               <div className="space-y-3">
                 <div className="flex items-center space-x-3 text-gray-700">
-                  <Phone size={20} className="text-blue-600" />
+                  <Phone size={20} className="text-peru" />
                   <span>+90 551 834 30 30</span>
                 </div>
                 <div className="flex items-center space-x-3 text-gray-700">
-                  <Mail size={20} className="text-blue-600" />
+                  <Mail size={20} className="text-peru" />
                   <span>yunussukur7@gmail.com</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white p-8 rounded-xl shadow-lg">
+            <div className="bg-cornsilk p-8 rounded-xl shadow-lg">
               <div className="flex items-center space-x-4 mb-6">
-                <div className="bg-green-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">
+                <div className="bg-green-600 text-cornsilk w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">
                   F
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900">Ferit Berke Gündüz</h3>
+                  <h3 className="text-2xl font-bold text-black">Ferit Berke Gündüz</h3>
                   <p className="text-gray-600">Social Media Manager</p>
                 </div>
               </div>
@@ -295,17 +295,17 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-purple-600 to-blue-600 text-white py-16">
+      <section className="bg-gradient-to-r from-olive to-peru text-cornsilk py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Explore Our eBay Store
           </h2>
-          <p className="text-xl mb-8 text-blue-100">
+          <p className="text-xl mb-8 text-peru">
             Browse our technology products in our currently active eBay store
           </p>
           <Link
             href="/shop/ebay"
-            className="inline-block bg-white text-purple-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-blue-50 transition-all hover:scale-105 shadow-lg"
+            className="inline-block bg-cornsilk text-olive px-8 py-4 rounded-full font-semibold text-lg hover:bg-peru transition-all hover:scale-105 shadow-lg"
           >
             View eBay Store
           </Link>

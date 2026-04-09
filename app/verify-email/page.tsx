@@ -38,23 +38,23 @@ export default function VerifyEmailPage() {
 
   const handleResendEmail = async () => {
     // Resend email logic
-    alert('Doğrulama emaili tekrar gönderildi!');
+    alert('Verification email resent!');
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#000033] via-[#330066] to-[#8F00FF] flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#808000] to-[#808000] flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-2xl shadow-2xl p-8 animate-scaleIn">
+        <div className="bg-cornsilk rounded-2xl shadow-2xl p-8 animate-scaleIn">
           {!verified ? (
             <>
               {/* Checking */}
               <div className="text-center animate-slideInUp">
-                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounceIn">
-                  <Mail className="text-[#8F00FF]" size={32} />
+                <div className="w-16 h-16 bg-olive rounded-full flex items-center justify-center mx-auto mb-4 animate-bounceIn">
+                  <Mail className="text-[#808000]" size={32} />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Email Doğrulama</h2>
+                <h2 className="text-2xl font-bold text-black mb-2">Email Verification</h2>
                 <p className="text-gray-600 mb-6">
-                  Email adresini doğruluyoruz...
+                  Verifying your email address...
                 </p>
 
                 {error && (
@@ -64,24 +64,24 @@ export default function VerifyEmailPage() {
                   </div>
                 )}
 
-                <div className="bg-purple-50 p-4 rounded-lg mb-6">
+                <div className="bg-olive p-4 rounded-lg mb-6">
                   <p className="text-sm text-gray-600">
-                    <strong>{email}</strong> adresine gönderilen emailde doğrulama linkine tıkladığınızda buraya yönlendirileceksiniz.
+                    You will be redirected here after clicking the verification link sent to <strong>{email}</strong>.
                   </p>
                 </div>
 
                 <div className="space-y-3">
                   <button
                     onClick={handleResendEmail}
-                    className="w-full py-3 border-2 border-[#8F00FF] text-[#8F00FF] rounded-lg font-semibold hover:bg-purple-50 transition-all"
+                    className="w-full py-3 border-2 border-[#808000] text-[#808000] rounded-lg font-semibold hover:bg-olive transition-all"
                   >
-                    Emaili Tekrar Gönder
+                    Resend Email
                   </button>
                   <Link
                     href="/register"
-                    className="block py-3 text-gray-600 hover:text-gray-900 text-sm"
+                    className="block py-3 text-gray-600 hover:text-black text-sm"
                   >
-                    E-mail Adresini Değiştir
+                    Change Email Address
                   </Link>
                 </div>
               </div>
@@ -91,9 +91,9 @@ export default function VerifyEmailPage() {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="text-green-600" size={32} />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Email Doğrulandı!</h3>
+              <h3 className="text-xl font-bold text-black mb-2">Email Verified!</h3>
               <p className="text-gray-600 mb-4">
-                Profilinizi tamamlamaya yönlendiriliyorsunuz...
+                Redirecting to complete your profile...
               </p>
             </div>
           )}

@@ -8,11 +8,11 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-olive via-peru to-indigo-50 py-12 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-olive to-peru bg-clip-text text-transparent">
             Contact Us
           </h1>
           <p className="text-gray-600 text-lg">
@@ -22,7 +22,7 @@ export default function ContactPage() {
 
         <div className="grid md:grid-cols-2 gap-8">
           {/* Contact Form */}
-          <div className="bg-white rounded-2xl shadow-xl p-8">
+          <div className="bg-cornsilk rounded-2xl shadow-xl p-8">
             <h2 className="text-2xl font-bold mb-6 text-gray-800">Send us a message</h2>
             <form className="space-y-6">
               <div>
@@ -32,7 +32,7 @@ export default function ContactPage() {
                 <input
                   type="text"
                   id="name"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-olive focus:border-transparent transition-all"
                   placeholder="John Doe"
                 />
               </div>
@@ -44,7 +44,7 @@ export default function ContactPage() {
                 <input
                   type="email"
                   id="email"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-olive focus:border-transparent transition-all"
                   placeholder="john@example.com"
                 />
               </div>
@@ -56,7 +56,7 @@ export default function ContactPage() {
                 <input
                   type="text"
                   id="subject"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-olive focus:border-transparent transition-all"
                   placeholder="How can we help?"
                 />
               </div>
@@ -68,14 +68,14 @@ export default function ContactPage() {
                 <textarea
                   id="message"
                   rows={6}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all resize-none"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-olive focus:border-transparent transition-all resize-none"
                   placeholder="Tell us more about your inquiry..."
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold py-3 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                className="w-full bg-gradient-to-r from-olive to-peru text-cornsilk font-semibold py-3 rounded-lg hover:from-olive hover:to-peru transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
               >
                 Send Message
               </button>
@@ -85,13 +85,13 @@ export default function ContactPage() {
           {/* Contact Information */}
           <div className="space-y-6">
             {/* Team Members */}
-            <div className="bg-white rounded-2xl shadow-xl p-8">
+            <div className="bg-cornsilk rounded-2xl shadow-xl p-8">
               <h2 className="text-2xl font-bold mb-6 text-gray-800">Our Team</h2>
               
               {/* Melih */}
               <div className="mb-6 pb-6 border-b border-gray-200">
                 <div className="flex items-center mb-4">
-                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                  <div className="w-16 h-16 bg-gradient-to-br from-olive to-peru rounded-full flex items-center justify-center text-cornsilk text-2xl font-bold">
                     M
                   </div>
                   <div className="ml-4">
@@ -102,9 +102,9 @@ export default function ContactPage() {
                 <div className="space-y-3">
                   <a 
                     href="tel:+905537065912" 
-                    className="flex items-center text-gray-700 hover:text-purple-600 transition-colors group"
+                    className="flex items-center text-gray-700 hover:text-olive transition-colors group"
                   >
-                    <Phone className="w-5 h-5 mr-3 text-purple-600 group-hover:scale-110 transition-transform" />
+                    <Phone className="w-5 h-5 mr-3 text-olive group-hover:scale-110 transition-transform" />
                     <span>+90 553 706 59 12</span>
                   </a>
                   <a 
@@ -120,9 +120,9 @@ export default function ContactPage() {
                   </a>
                   <a 
                     href="mailto:melihbicak@gmail.com" 
-                    className="flex items-center text-gray-700 hover:text-purple-600 transition-colors group"
+                    className="flex items-center text-gray-700 hover:text-olive transition-colors group"
                   >
-                    <Mail className="w-5 h-5 mr-3 text-purple-600 group-hover:scale-110 transition-transform" />
+                    <Mail className="w-5 h-5 mr-3 text-olive group-hover:scale-110 transition-transform" />
                     <span>melihbicak@gmail.com</span>
                   </a>
                 </div>
@@ -131,7 +131,7 @@ export default function ContactPage() {
               {/* Yunus */}
               <div>
                 <div className="flex items-center mb-4">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                  <div className="w-16 h-16 bg-gradient-to-br from-peru to-indigo-500 rounded-full flex items-center justify-center text-cornsilk text-2xl font-bold">
                     Y
                   </div>
                   <div className="ml-4">
@@ -142,9 +142,9 @@ export default function ContactPage() {
                 <div className="space-y-3">
                   <a 
                     href="tel:+905518343030" 
-                    className="flex items-center text-gray-700 hover:text-purple-600 transition-colors group"
+                    className="flex items-center text-gray-700 hover:text-olive transition-colors group"
                   >
-                    <Phone className="w-5 h-5 mr-3 text-purple-600 group-hover:scale-110 transition-transform" />
+                    <Phone className="w-5 h-5 mr-3 text-olive group-hover:scale-110 transition-transform" />
                     <span>+90 551 834 30 30</span>
                   </a>
                   <a 
@@ -160,9 +160,9 @@ export default function ContactPage() {
                   </a>
                   <a 
                     href="mailto:yunussukur7@gmail.com" 
-                    className="flex items-center text-gray-700 hover:text-purple-600 transition-colors group"
+                    className="flex items-center text-gray-700 hover:text-olive transition-colors group"
                   >
-                    <Mail className="w-5 h-5 mr-3 text-purple-600 group-hover:scale-110 transition-transform" />
+                    <Mail className="w-5 h-5 mr-3 text-olive group-hover:scale-110 transition-transform" />
                     <span>yunussukur7@gmail.com</span>
                   </a>
                 </div>
@@ -170,18 +170,18 @@ export default function ContactPage() {
             </div>
 
             {/* Quick Info */}
-            <div className="bg-white rounded-2xl shadow-xl p-8">
+            <div className="bg-cornsilk rounded-2xl shadow-xl p-8">
               <h2 className="text-2xl font-bold mb-6 text-gray-800">Quick Information</h2>
               <div className="space-y-4">
                 <div className="flex items-start">
-                  <MapPin className="w-6 h-6 text-purple-600 mr-3 flex-shrink-0 mt-1" />
+                  <MapPin className="w-6 h-6 text-olive mr-3 flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="font-semibold text-gray-800 mb-1">Global E-Commerce Platform</h3>
                     <p className="text-gray-600">Serving customers worldwide through multiple marketplaces</p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <svg className="w-6 h-6 text-purple-600 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-olive mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <div>

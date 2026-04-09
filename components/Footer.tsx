@@ -2,11 +2,11 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gray-900 text-cornsilk">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-5 gap-8">
           <div className="md:col-span-2">
-            <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+            <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-olive to-peru bg-clip-text text-transparent">
               AllMySell
             </h3>
             <p className="text-gray-400 mb-4">
@@ -20,27 +20,27 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">Our Stores</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/shop/ebay" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/shop/ebay" className="text-gray-400 hover:text-cornsilk transition-colors">
                   eBay Store
                 </Link>
               </li>
               <li>
-                <Link href="/shop/amazon" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/shop/amazon" className="text-gray-400 hover:text-cornsilk transition-colors">
                   Amazon Store
                 </Link>
               </li>
               <li>
-                <Link href="/shop/etsy" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/shop/etsy" className="text-gray-400 hover:text-cornsilk transition-colors">
                   Etsy Store
                 </Link>
               </li>
               <li>
-                <Link href="/shop/shopify" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/shop/shopify" className="text-gray-400 hover:text-cornsilk transition-colors">
                   Shopify Store
                 </Link>
               </li>
               <li>
-                <Link href="/shop/tiktok" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/shop/tiktok" className="text-gray-400 hover:text-cornsilk transition-colors">
                   TikTok Shop
                 </Link>
               </li>
@@ -51,22 +51,22 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">Company</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/about" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/about" className="text-gray-400 hover:text-cornsilk transition-colors">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/contact" className="text-gray-400 hover:text-cornsilk transition-colors">
                   Contact
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/blog" className="text-gray-400 hover:text-cornsilk transition-colors">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/faq" className="text-gray-400 hover:text-cornsilk transition-colors">
                   FAQ
                 </Link>
               </li>
@@ -77,12 +77,12 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">Legal</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/privacy-policy" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/privacy-policy" className="text-gray-400 hover:text-cornsilk transition-colors">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/terms" className="text-gray-400 hover:text-cornsilk transition-colors">
                   Terms of Service
                 </Link>
               </li>
@@ -101,7 +101,7 @@ export default function Footer() {
                 href="https://www.facebook.com/allmysell" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-cornsilk transition-colors"
                 aria-label="Facebook"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -112,7 +112,7 @@ export default function Footer() {
                 href="https://www.instagram.com/allmysell" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-cornsilk transition-colors"
                 aria-label="Instagram"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -123,7 +123,7 @@ export default function Footer() {
                 href="https://twitter.com/allmysell" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-cornsilk transition-colors"
                 aria-label="Twitter"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -134,7 +134,7 @@ export default function Footer() {
                 href="https://www.linkedin.com/company/allmysell" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-cornsilk transition-colors"
                 aria-label="LinkedIn"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -145,7 +145,7 @@ export default function Footer() {
                 href="https://www.youtube.com/@allmysell" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-cornsilk transition-colors"
                 aria-label="YouTube"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">

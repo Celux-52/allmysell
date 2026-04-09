@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
     // Profil tamamlama emaili gönder
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #8F00FF;">Profil Başarıyla Tamamlandı! 🎉</h2>
+        <h2 style="color: #808000;">Profil Başarıyla Tamamlandı! 🎉</h2>
         
         <div style="background: #f0f3ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <p><strong>Adı:</strong> ${fullName || 'Kullanıcı'}</p>
@@ -109,7 +109,7 @@ export async function POST(request: NextRequest) {
     // Yöneticiye de bildir
     const adminHtmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #8F00FF;">Yeni Kullanıcı Profili Tamamlandı</h2>
+        <h2 style="color: #808000;">Yeni Kullanıcı Profili Tamamlandı</h2>
         
         <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <p><strong>Adı:</strong> ${fullName || 'Belirtilmemiş'}</p>

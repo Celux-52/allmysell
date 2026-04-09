@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
 
     if (!email || !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
       return NextResponse.json(
-        { success: false, message: 'Geçerli bir email adresi girin' },
+        { success: false, message: 'Please enter a valid email address' },
         { status: 400 }
       );
     }
@@ -24,20 +24,20 @@ export async function POST(request: NextRequest) {
     // Verification email gönder
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #8F00FF;">AllMySell'e Hoş Geldiniz!</h2>
-        <p>Kaydınızı tamamlamak için aşağıdaki butona tıklayın:</p>
+        <h2 style="color: #808000;">Welcome to AllMySell!</h2>
+        <p>Please click the button below to complete your registration:</p>
         
         <div style="margin: 30px 0; text-align: center;">
           <a href="${verificationLink}" 
-             style="background: #8F00FF; color: white; padding: 12px 30px; 
+             style="background: #808000; color: white; padding: 12px 30px; 
                     text-decoration: none; border-radius: 6px; 
                     display: inline-block; font-weight: bold;">
-            Email'imi Doğrula
+            Verify My Email
           </a>
         </div>
         
         <p style="color: #666; font-size: 12px;">
-          Ya da bu linki tarayıcınıza yapıştırın:<br>
+          Or paste this link into your browser:<br>
           <small>${verificationLink}</small>
         </p>
       </div>
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     await resend.emails.send({
       from: 'AllMySell <onboarding@resend.dev>',
       to: email,
-      subject: 'AllMySell - Email Doğrulama',
+      subject: 'AllMySell - Email Verification',
       html: htmlContent,
     });
 
@@ -55,13 +55,13 @@ export async function POST(request: NextRequest) {
     
     return NextResponse.json({
       success: true,
-      message: 'Doğrulama emiali gönderildi',
+      message: 'Verification email sent',
       verificationToken,
     });
   } catch (error) {
     console.error('Register error:', error);
     return NextResponse.json(
-      { success: false, message: 'Bir hata oluştu' },
+      { success: false, message: 'An error occurred' },
       { status: 500 }
     );
   }

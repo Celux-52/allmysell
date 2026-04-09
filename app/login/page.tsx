@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
-import { Mail, Lock, AlertCircle } from 'lucide-react';
+import { useState, FormEvent, useEffect } from 'react';
+import { Mail, Lock, AlertCircle, ArrowRight, LogIn, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -11,9 +12,20 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
+    if (!email || !password) {
+      setError('Please fill in all fields.');
+      return;
+    }
+    
     setLoading(true);
     setError('');
 
@@ -26,124 +38,177 @@ export default function LoginPage() {
 
       const data = await response.json();
 
-      if (data.success) {
+      if (response.ok && data.success) {
+        setSuccess(true);
         sessionStorage.setItem('user', JSON.stringify(data.user));
         localStorage.setItem('authToken', data.token);
-        router.push('/dashboard');
+        
+        // Add a small delay for the success animation
+        setTimeout(() => {
+          router.push('/dashboard');
+        }, 1000);
       } else {
-        setError(data.message || 'Giriş başarısız');
+        setError(data.message || 'Login failed. Please check your credentials.');
       }
     } catch (err) {
-      setError('Bir hata oluştu');
-      console.error(err);
+      setError('Connection error occurred. Please check your internet connection and try again.');
+      console.error('Login error:', err);
     } finally {
-      setLoading(false);
+      if (!success) setLoading(false);
     }
   };
 
+  if (!mounted) return null; // Avoid hydration mismatch
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1a1a1a] via-[#2d1b4e] to-[#1a1a1a] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-[#0A0A0A] relative flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Dynamic Background Effects */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-olive/20 blur-[120px] animate-pulse"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-peru/20 blur-[120px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+
+      <div className="max-w-md w-full space-y-8 relative z-10">
+        
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-[#8F00FF] to-[#0000FF] bg-clip-text text-transparent mb-2">
-            AllMySell
-          </h1>
-          <p className="text-gray-400">Hesabınıza giriş yapın</p>
+        <div className="text-center">
+          <div className="mx-auto h-20 w-20 bg-gradient-to-tr from-olive to-peru rounded-2xl flex items-center justify-center shadow-2xl shadow-olive/20 mb-6 transform hover:scale-105 transition-transform duration-300">
+            <span className="text-3xl font-extrabold text-cornsilk">AMS</span>
+          </div>
+          <h2 className="mt-6 text-4xl font-extrabold text-cornsilk tracking-tight">
+            Sign In to Your Account
+          </h2>
+          <p className="mt-3 text-sm text-gray-400">
+            Welcome to the world of technology and accessories
+          </p>
         </div>
 
-        {/* Form Card */}
-        <div className="bg-[#252525] rounded-2xl shadow-2xl p-8 border border-[#8F00FF]/20">
+        {/* Form Container */}
+        <div className="mt-8 bg-[#151515]/80 backdrop-blur-xl py-10 px-8 shadow-2xl rounded-3xl border border-white/5">
           {error && (
-            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg flex gap-3">
-              <AlertCircle size={20} className="text-red-500 flex-shrink-0" />
-              <p className="text-red-400 text-sm">{error}</p>
+            <div className="mb-6 bg-red-500/10 border border-red-500/50 p-4 rounded-xl flex items-start gap-3 animate-fade-in">
+              <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
+              <p className="text-sm text-red-200 leading-relaxed">{error}</p>
             </div>
           )}
 
-          {/* Test Mode Info */}
-          <div className="mb-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
-            <p className="text-blue-400 text-sm">
-              <strong>Test Modu:</strong> Email: test@gmail.com | Şifre: test123
-            </p>
+          {success && (
+            <div className="mb-6 bg-green-500/10 border border-green-500/50 p-4 rounded-xl flex items-center gap-3 animate-fade-in">
+              <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <p className="text-sm text-green-200">Login successful! Redirecting...</p>
+            </div>
+          )}
+
+          <div className="mb-6 bg-peru/10 border border-peru/20 rounded-xl p-4 text-sm text-peru flex items-center justify-between">
+            <div>
+              <span className="block font-semibold mb-1">Demo Login</span>
+              <span className="opacity-80 block">test@gmail.com / test123</span>
+            </div>
+            <button 
+              onClick={() => { setEmail('test@gmail.com'); setPassword('test123'); }}
+              type="button" 
+              className="text-xs bg-peru/20 hover:bg-peru/40 text-peru px-3 py-1.5 rounded-lg transition-colors"
+            >
+              Fill
+            </button>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-5">
-            {/* Email Input */}
+          <form className="space-y-6" onSubmit={handleLogin}>
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Email Adresi
+              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                Email Address
               </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-3 text-[#8F00FF]/50" size={20} />
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <Mail className="h-5 w-5 text-gray-500 group-focus-within:text-olive transition-colors" />
+                </div>
                 <input
+                  id="email"
+                  name="email"
                   type="email"
+                  autoComplete="email"
+                  required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="ornek@email.com"
-                  className="w-full bg-[#1a1a1a] border border-[#8F00FF]/30 rounded-lg py-3 pl-10 pr-4 text-white placeholder-gray-500 focus:border-[#8F00FF] focus:outline-none transition-colors"
-                  required
+                  className="block w-full pl-12 pr-4 py-3.5 border border-white/10 rounded-xl bg-[#0A0A0A] text-cornsilk placeholder-gray-600 focus:ring-2 focus:ring-olive/50 focus:border-olive transition-all sm:text-sm"
+                  placeholder="example@email.com"
                 />
               </div>
             </div>
 
-            {/* Password Input */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Şifre
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-3 text-[#8F00FF]/50" size={20} />
+              <div className="flex items-center justify-between mb-2">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-300">
+                  Password
+                </label>
+                <Link href="#" className="text-xs font-medium text-olive hover:text-olive transition-colors">
+                  Forgot Password
+                </Link>
+              </div>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <Lock className="h-5 w-5 text-gray-500 group-focus-within:text-olive transition-colors" />
+                </div>
                 <input
+                  id="password"
+                  name="password"
                   type="password"
+                  autoComplete="current-password"
+                  required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  className="block w-full pl-12 pr-4 py-3.5 border border-white/10 rounded-xl bg-[#0A0A0A] text-cornsilk placeholder-gray-600 focus:ring-2 focus:ring-olive/50 focus:border-olive transition-all sm:text-sm"
                   placeholder="••••••••"
-                  className="w-full bg-[#1a1a1a] border border-[#8F00FF]/30 rounded-lg py-3 pl-10 pr-4 text-white placeholder-gray-500 focus:border-[#8F00FF] focus:outline-none transition-colors"
-                  required
                 />
               </div>
             </div>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-[#8F00FF] to-[#0000FF] text-white font-bold py-3 rounded-lg hover:shadow-lg transition-all disabled:opacity-50 mt-6"
-            >
-              {loading ? 'Giriş Yapılıyor...' : 'Giriş Yap'}
-            </button>
+            <div>
+              <button
+                type="submit"
+                disabled={loading || success}
+                className={`relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-xl text-cornsilk ${
+                  loading || success 
+                    ? 'bg-olive/50 cursor-not-allowed' 
+                    : 'bg-gradient-to-r from-olive to-peru hover:from-olive hover:to-peru transform hover:-translate-y-0.5 shadow-lg shadow-olive/25'
+                } transition-all duration-200 overflow-hidden group`}
+              >
+                {loading ? (
+                  <div className="flex items-center">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-cornsilk" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>Signing in...</span>
+                  </div>
+                ) : success ? (
+                  <span className="flex items-center gap-2"><CheckCircle2 className="w-5 h-5"/> Success</span>
+                ) : (
+                  <span className="flex items-center gap-2">
+                    Sign In <LogIn className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                )}
+              </button>
+            </div>
           </form>
 
           {/* Divider */}
-          <div className="my-6 flex items-center gap-4">
-            <div className="flex-1 h-px bg-[#8F00FF]/20"></div>
-            <span className="text-gray-400 text-sm">veya</span>
-            <div className="flex-1 h-px bg-[#8F00FF]/20"></div>
+          <div className="mt-8 relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-white/10" />
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-4 bg-[#151515] text-gray-500 text-xs">or</span>
+            </div>
           </div>
 
-          {/* Sign Up Link */}
-          <div className="text-center">
-            <p className="text-gray-400 text-sm">
-              Hesabınız yok mu?{' '}
-              <Link
-                href="/register"
-                className="text-[#8F00FF] hover:text-[#8F00FF]/80 font-semibold transition-colors"
-              >
-                Kayıt Ol
+          <div className="mt-8 text-center">
+            <p className="text-sm text-gray-400">
+              Don&apos;t have an account yet?{' '}
+              <Link href="/register" className="font-semibold text-cornsilk hover:text-olive transition-colors border-b border-olive/0 hover:border-olive/50 pb-0.5">
+                Sign Up Now
               </Link>
             </p>
           </div>
         </div>
-
-        {/* Footer Info */}
-        <p className="text-center text-gray-500 text-xs mt-6">
-          Giriş yaparak{' '}
-          <Link href="/terms" className="text-[#8F00FF] hover:underline">
-            Koşulları
-          </Link>{' '}
-          kabul edersiniz
-        </p>
       </div>
     </div>
   );

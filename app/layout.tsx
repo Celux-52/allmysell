@@ -37,6 +37,13 @@ export const metadata: Metadata = {
     description: 'Technology and mobile accessory products on eBay. Chargers, power banks, car accessories, phone cases and more.',
     images: ['https://i.ebayimg.com/images/g/cf0AAeSwvQ5pXfAv/s-l1600.webp'],
   },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION_ID || undefined,
+    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION_ID || undefined,
+    other: {
+      'msvalidate.01': process.env.NEXT_PUBLIC_BING_VERIFICATION_ID || '',
+    },
+  },
 };
 
 export default function RootLayout({
@@ -47,7 +54,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta property="fb:app_id" content="1234567890" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
       <body className={inter.className}>

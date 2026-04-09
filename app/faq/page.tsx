@@ -111,11 +111,11 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
     <div className="border-b border-gray-200 last:border-0">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full py-5 px-6 text-left flex justify-between items-center hover:bg-purple-50 transition-colors rounded-lg"
+        className="w-full py-5 px-6 text-left flex justify-between items-center hover:bg-olive transition-colors rounded-lg"
       >
-        <span className="font-semibold text-gray-900 pr-4">{question}</span>
+        <span className="font-semibold text-black pr-4">{question}</span>
         <ChevronDown 
-          className={`w-5 h-5 text-purple-600 flex-shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          className={`w-5 h-5 text-olive flex-shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`}
         />
       </button>
       {isOpen && (
@@ -129,11 +129,11 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
 
 export default function FAQPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-olive via-peru to-indigo-50 py-12 px-4">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-olive to-peru bg-clip-text text-transparent">
             Frequently Asked Questions
           </h1>
           <p className="text-gray-600 text-lg">
@@ -144,9 +144,9 @@ export default function FAQPage() {
         {/* FAQ Categories */}
         <div className="space-y-8">
           {faqCategories.map((category, index) => (
-            <div key={index} className="bg-white rounded-2xl shadow-xl overflow-hidden">
-              <div className="bg-gradient-to-r from-purple-600 to-blue-600 px-6 py-4">
-                <h2 className="text-2xl font-bold text-white">{category.category}</h2>
+            <div key={index} className="bg-cornsilk rounded-2xl shadow-xl overflow-hidden">
+              <div className="bg-gradient-to-r from-olive to-peru px-6 py-4">
+                <h2 className="text-2xl font-bold text-cornsilk">{category.category}</h2>
               </div>
               <div className="divide-y divide-gray-200">
                 {category.questions.map((item, qIndex) => (
@@ -158,8 +158,8 @@ export default function FAQPage() {
         </div>
 
         {/* Still Have Questions */}
-        <div className="mt-12 bg-white rounded-2xl shadow-xl p-8 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+        <div className="mt-12 bg-cornsilk rounded-2xl shadow-xl p-8 text-center">
+          <h2 className="text-2xl font-bold text-black mb-4">
             Still have questions?
           </h2>
           <p className="text-gray-600 mb-6">
@@ -167,7 +167,7 @@ export default function FAQPage() {
           </p>
           <a
             href="/contact"
-            className="inline-block bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            className="inline-block bg-gradient-to-r from-olive to-peru text-cornsilk px-8 py-3 rounded-lg font-semibold hover:from-olive hover:to-peru transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
             Contact Us
           </a>

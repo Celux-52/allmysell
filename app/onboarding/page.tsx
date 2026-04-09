@@ -34,16 +34,16 @@ export default function ProfileSetupPage() {
   const handleNextStep = () => {
     if (step === 1) {
       if (!fullName.trim()) {
-        setError('Lütfen adınızı girin');
+        setError('Please enter your name');
         return;
       }
       if (!password || password.length < 6) {
-        setError('Şifreniz en az 6 karakter olmalı');
+        setError('Password must be at least 6 characters');
         return;
       }
     }
     if (step === 2 && !platform) {
-      setError('Lütfen bir platform seçin');
+      setError('Please select a platform');
       return;
     }
     setError('');
@@ -54,7 +54,7 @@ export default function ProfileSetupPage() {
     e.preventDefault();
     
     if (!monthlyOrders) {
-      setError('Lütfen aylık sipariş hacmini seçin');
+      setError('Please select your monthly order volume');
       return;
     }
 
@@ -77,7 +77,7 @@ export default function ProfileSetupPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.message || 'Bir hata oluştu');
+        setError(data.message || 'An error occurred');
         return;
       }
 
@@ -105,7 +105,7 @@ export default function ProfileSetupPage() {
         window.location.href = '/dashboard';
       }, 2000);
     } catch (err) {
-      setError('Bir hata oluştu. Lütfen tekrar deneyin.');
+      setError('An error occurred. Please try again.');
       console.error(err);
     } finally {
       setLoading(false);
@@ -118,39 +118,39 @@ export default function ProfileSetupPage() {
     { id: 'shopify', name: 'Shopify', icon: '🏪' },
     { id: 'etsy', name: 'Etsy', icon: '✨' },
     { id: 'tiktok', name: 'TikTok Shop', icon: '🎥' },
-    { id: 'other', name: 'Diğer', icon: '📱' },
+    { id: 'other', name: 'Other', icon: '📱' },
   ];
 
   const orderVolumes = [
-    { id: 'low', label: '0-10 sipariş/ay' },
-    { id: 'medium', label: '11-50 sipariş/ay' },
-    { id: 'high', label: '51-200 sipariş/ay' },
-    { id: 'very-high', label: '200+  sipariş/ay' },
+    { id: 'low', label: '0-10 orders/month' },
+    { id: 'medium', label: '11-50 orders/month' },
+    { id: 'high', label: '51-200 orders/month' },
+    { id: 'very-high', label: '200+ orders/month' },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#000033] via-[#330066] to-[#8F00FF] flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#808000] to-[#808000] flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-2xl">
         {/* Back Button */}
         <div className="mb-6">
-          <Link href="/register" className="text-white/60 hover:text-white flex items-center gap-2 text-sm">
-            ← Geri Dön
+          <Link href="/register" className="text-cornsilk/60 hover:text-cornsilk flex items-center gap-2 text-sm">
+            ← Go Back
           </Link>
         </div>
 
         {/* Card */}
-        <div className="bg-white rounded-2xl shadow-2xl p-8 animate-scaleIn">
+        <div className="bg-cornsilk rounded-2xl shadow-2xl p-8 animate-scaleIn">
           {!success ? (
             <>
               {/* Header */}
               <div className="mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                  {step === 1 ? 'Merhaba!' : step === 2 ? 'Nerede Satış Yapıyorsunuz?' : 'Aylık Hacminiz?'}
+                <h2 className="text-3xl font-bold text-black mb-2">
+                  {step === 1 ? 'Hello!' : step === 2 ? 'Where do you sell?' : 'Monthly Volume?'}
                 </h2>
                 <p className="text-gray-600">
-                  {step === 1 && 'Adınızı öğrenebilir miyiz?'}
-                  {step === 2 && 'Sana daha iyi yardım edebilmek için hangi platformda satış yapıyorsunuz?'}
-                  {step === 3 && 'Aylık ortalama siparişiniz kaç tane?'}
+                  {step === 1 && 'Can we get your name?'}
+                  {step === 2 && 'To help you better, which platform are you selling on?'}
+                  {step === 3 && 'How many orders do you process monthly on average?'}
                 </p>
               </div>
 
@@ -166,35 +166,35 @@ export default function ProfileSetupPage() {
                 {step === 1 && (
                   <div className="animate-slideInUp space-y-4">
                     {email && (
-                      <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                        <p className="text-sm text-gray-600">Email Adresiniz</p>
-                        <p className="text-base font-semibold text-gray-900">{email}</p>
+                      <div className="p-3 bg-peru border border-peru rounded-lg">
+                        <p className="text-sm text-gray-600">Your Email</p>
+                        <p className="text-base font-semibold text-black">{email}</p>
                       </div>
                     )}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Adınız
+                        Full Name
                       </label>
                       <input
                         type="text"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
-                        placeholder="Adınız Soyadınız"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8F00FF] focus:border-transparent"
+                        placeholder="John Doe"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#808000] focus:border-transparent"
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Şifre
+                        Password
                       </label>
                       <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder="En az 6 karakter"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8F00FF] focus:border-transparent"
+                        placeholder="At least 6 characters"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#808000] focus:border-transparent"
                       />
-                      <p className="text-xs text-gray-500 mt-1">Minimum 6 karakter</p>
+                      <p className="text-xs text-gray-500 mt-1">Minimum 6 characters</p>
                     </div>
                   </div>
                 )}
@@ -210,12 +210,12 @@ export default function ProfileSetupPage() {
                           onClick={() => setPlatform(p.id)}
                           className={`p-4 rounded-lg border-2 transition-all ${
                             platform === p.id
-                              ? 'border-[#8F00FF] bg-purple-50'
-                              : 'border-gray-200 hover:border-[#8F00FF]/50'
+                              ? 'border-[#808000] bg-olive'
+                              : 'border-gray-200 hover:border-[#808000]/50'
                           }`}
                         >
                           <div className="text-3xl mb-2">{p.icon}</div>
-                          <div className="font-semibold text-gray-900">{p.name}</div>
+                          <div className="font-semibold text-black">{p.name}</div>
                         </button>
                       ))}
                     </div>
@@ -232,11 +232,11 @@ export default function ProfileSetupPage() {
                         onClick={() => setMonthlyOrders(volume.id)}
                         className={`w-full p-4 rounded-lg border-2 text-left transition-all ${
                           monthlyOrders === volume.id
-                            ? 'border-[#8F00FF] bg-purple-50'
-                            : 'border-gray-200 hover:border-[#8F00FF]/50'
+                            ? 'border-[#808000] bg-olive'
+                            : 'border-gray-200 hover:border-[#808000]/50'
                         }`}
                       >
-                        <div className="font-semibold text-gray-900">{volume.label}</div>
+                        <div className="font-semibold text-black">{volume.label}</div>
                       </button>
                     ))}
                   </div>
@@ -250,25 +250,25 @@ export default function ProfileSetupPage() {
                       onClick={() => setStep(step - 1)}
                       className="flex-1 py-3 border-2 border-gray-300 rounded-lg font-semibold text-gray-700 hover:bg-gray-50 transition-all"
                     >
-                      Geri
+                      Back
                     </button>
                   )}
                   {step < 3 && (
                     <button
                       type="button"
                       onClick={handleNextStep}
-                      className="flex-1 bg-gradient-to-r from-[#8F00FF] to-[#0000FF] text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                      className="flex-1 bg-gradient-to-r from-[#808000] to-[#CD853F] text-cornsilk py-3 rounded-lg font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2"
                     >
-                      Sonraki <ArrowRight size={20} />
+                      Next <ArrowRight size={20} />
                     </button>
                   )}
                   {step === 3 && (
                     <button
                       type="submit"
                       disabled={loading}
-                      className="flex-1 bg-gradient-to-r from-[#8F00FF] to-[#0000FF] text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      className="flex-1 bg-gradient-to-r from-[#808000] to-[#CD853F] text-cornsilk py-3 rounded-lg font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
-                      {loading ? 'Kaydediliyor...' : 'Tamamla'} <ArrowRight size={20} />
+                      {loading ? 'Saving...' : 'Complete'} <ArrowRight size={20} />
                     </button>
                   )}
                 </div>
@@ -279,30 +279,30 @@ export default function ProfileSetupPage() {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="text-green-600" size={32} />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Başarılı!</h3>
-              <p className="text-gray-600 mb-2">Profil bilgileriniz kaydedildi, {fullName}!</p>
-              <p className="text-sm text-gray-500">Yeniden yönlendiriliyorsunuz...</p>
+              <h3 className="text-2xl font-bold text-black mb-2">Success!</h3>
+              <p className="text-gray-600 mb-2">Profile saved, {fullName}!</p>
+              <p className="text-sm text-gray-500">Redirecting...</p>
             </div>
           )}
 
           {/* Step Indicator */}
           <div className="mt-8 flex justify-center gap-2">
             <div className={`flex items-center gap-2 ${step >= 1 ? '' : ''}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${step >= 1 ? 'bg-[#8F00FF] text-white' : 'bg-gray-200 text-gray-600'}`}>1</div>
-              <p className={`text-sm font-medium ${step >= 1 ? 'text-gray-900' : 'text-gray-500'}`}>Ad</p>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${step >= 1 ? 'bg-[#808000] text-cornsilk' : 'bg-gray-200 text-gray-600'}`}>1</div>
+              <p className={`text-sm font-medium ${step >= 1 ? 'text-black' : 'text-gray-500'}`}>Name</p>
             </div>
-            <div className={`border-t-2 w-12 mt-4 ${step >= 2 ? 'border-[#8F00FF]' : 'border-gray-300'}`}></div>
+            <div className={`border-t-2 w-12 mt-4 ${step >= 2 ? 'border-[#808000]' : 'border-gray-300'}`}></div>
             <div>
               <div className={`flex items-center gap-2`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${step >= 2 ? 'bg-[#8F00FF] text-white' : 'bg-gray-200 text-gray-600'}`}>2</div>
-                <p className={`text-sm font-medium ${step >= 2 ? 'text-gray-900' : 'text-gray-500'}`}>Platform</p>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${step >= 2 ? 'bg-[#808000] text-cornsilk' : 'bg-gray-200 text-gray-600'}`}>2</div>
+                <p className={`text-sm font-medium ${step >= 2 ? 'text-black' : 'text-gray-500'}`}>Platform</p>
               </div>
             </div>
-            <div className={`border-t-2 w-12 mt-4 ${step >= 3 ? 'border-[#8F00FF]' : 'border-gray-300'}`}></div>
+            <div className={`border-t-2 w-12 mt-4 ${step >= 3 ? 'border-[#808000]' : 'border-gray-300'}`}></div>
             <div>
               <div className={`flex items-center gap-2`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${step >= 3 ? 'bg-[#8F00FF] text-white' : 'bg-gray-200 text-gray-600'}`}>3</div>
-                <p className={`text-sm font-medium ${step >= 3 ? 'text-gray-900' : 'text-gray-500'}`}>Hacim</p>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${step >= 3 ? 'bg-[#808000] text-cornsilk' : 'bg-gray-200 text-gray-600'}`}>3</div>
+                <p className={`text-sm font-medium ${step >= 3 ? 'text-black' : 'text-gray-500'}`}>Volume</p>
               </div>
             </div>
           </div>

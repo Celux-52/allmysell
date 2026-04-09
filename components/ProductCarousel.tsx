@@ -88,10 +88,10 @@ export default function ProductCarousel() {
   const duplicatedProducts = [...products, ...products];
 
   return (
-    <section className="py-16 bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] overflow-hidden">
+    <section className="py-16 bg-gradient-to-b from-[#000000] to-[#2a2a2a] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <div className="text-center">
-          <h2 className="text-4xl font-bold text-white mb-4">
+          <h2 className="text-4xl font-bold text-cornsilk mb-4">
             Featured Products
           </h2>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
@@ -102,7 +102,7 @@ export default function ProductCarousel() {
       
       <div className="relative">
         {/* Gradient overlays for fade effect */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#1a1a1a] to-transparent z-10"></div>
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#000000] to-transparent z-10"></div>
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#2a2a2a] to-transparent z-10"></div>
         
         {/* Scrolling container */}
@@ -113,15 +113,15 @@ export default function ProductCarousel() {
               href={`/blog/${product.id}`}
               className="flex-shrink-0 w-48 mx-3 group"
             >
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10 hover:border-[#E07A2C]/50 transition-all duration-300 hover:scale-105 hover:bg-white/20">
-                <div className="w-40 h-40 bg-white rounded-lg overflow-hidden mb-3 flex items-center justify-center">
+              <div className="bg-cornsilk/10 backdrop-blur-sm rounded-xl p-4 border border-white/10 hover:border-[#CD853F]/50 transition-all duration-300 hover:scale-105 hover:bg-cornsilk/20">
+                <div className="w-40 h-40 bg-cornsilk rounded-lg overflow-hidden mb-3 flex items-center justify-center">
                   <img
                     src={product.image}
                     alt={product.name}
                     className="w-full h-full object-contain p-2 group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
-                <h3 className="text-white text-sm font-semibold truncate group-hover:text-[#E07A2C] transition-colors">
+                <h3 className="text-cornsilk text-sm font-semibold truncate group-hover:text-[#CD853F] transition-colors">
                   {product.name}
                 </h3>
                 <p className="text-gray-400 text-xs truncate">
@@ -136,7 +136,7 @@ export default function ProductCarousel() {
       <div className="text-center mt-10">
         <Link
           href="/shop/ebay"
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#E07A2C] to-[#8B5A2B] text-white px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform shadow-lg"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#CD853F] to-[#808000] text-cornsilk px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform shadow-lg"
         >
           View All Products
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
