@@ -43,12 +43,20 @@ export async function POST(request: NextRequest) {
       </div>
     `;
 
-    await resend.emails.send({
+    const emailResponse = await resend.emails.send({
       from: 'AllMySell <onboarding@resend.dev>',
       to: email,
       subject: 'AllMySell - Email Verification',
       html: htmlContent,
     });
+
+    if (emailResponse.error) {
+      console.error('Resend Validation Error:', emailResponse.error);
+      return NextResponse.json(
+        { success: false, message: emailResponse.error.message },
+        { status: 400 }
+      );
+    }
 
     // User data'sı sessionStorage'da tutulacak (client-side)
     // Token backendde tutmak isterseniz database'e yazabilirsiniz
