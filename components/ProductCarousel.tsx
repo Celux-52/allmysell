@@ -88,22 +88,25 @@ export default function ProductCarousel() {
   const duplicatedProducts = [...products, ...products];
 
   return (
-    <section className="py-16 bg-gradient-to-b from-[#000000] to-[#2a2a2a] overflow-hidden">
+    <section className="py-16 bg-gradient-to-b from-[#0A0A0A] to-[#111111] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <div className="text-center">
           <h2 className="text-4xl font-bold text-cornsilk mb-4">
-            Featured Products
+            Our Products
           </h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Quality tech & mobile accessories from our eBay store
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-3">
+            Tech & mobile accessories from our eBay store
           </p>
+          <span className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-2 rounded-full text-sm font-medium">
+            All items currently sold out — Restocking soon
+          </span>
         </div>
       </div>
       
       <div className="relative">
         {/* Gradient overlays for fade effect */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#000000] to-transparent z-10"></div>
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#2a2a2a] to-transparent z-10"></div>
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#0A0A0A] to-transparent z-10"></div>
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#111111] to-transparent z-10"></div>
         
         {/* Scrolling container */}
         <div className="flex animate-scroll-left">
@@ -113,18 +116,21 @@ export default function ProductCarousel() {
               href={`/blog/${product.id}`}
               className="flex-shrink-0 w-48 mx-3 group"
             >
-              <div className="bg-cornsilk/10 backdrop-blur-sm rounded-xl p-4 border border-white/10 hover:border-[#CD853F]/50 transition-all duration-300 hover:scale-105 hover:bg-cornsilk/20">
-                <div className="w-40 h-40 bg-cornsilk rounded-lg overflow-hidden mb-3 flex items-center justify-center">
+              <div className="relative bg-[#1A1A1A] backdrop-blur-sm rounded-xl p-4 border border-gray-800 transition-all duration-300 hover:scale-105">
+                <div className="absolute top-2 right-2 z-10 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                  SOLD OUT
+                </div>
+                <div className="w-40 h-40 bg-[#252525] rounded-lg overflow-hidden mb-3 flex items-center justify-center">
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-contain p-2 group-hover:scale-110 transition-transform duration-300"
+                    className="w-full h-full object-contain p-2 grayscale opacity-50"
                   />
                 </div>
-                <h3 className="text-cornsilk text-sm font-semibold truncate group-hover:text-[#CD853F] transition-colors">
+                <h3 className="text-gray-400 text-sm font-semibold truncate">
                   {product.name}
                 </h3>
-                <p className="text-gray-400 text-xs truncate">
+                <p className="text-gray-600 text-xs truncate">
                   {product.category}
                 </p>
               </div>
@@ -136,7 +142,7 @@ export default function ProductCarousel() {
       <div className="text-center mt-10">
         <Link
           href="/shop/ebay"
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#CD853F] to-[#808000] text-cornsilk px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform shadow-lg"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-white px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform shadow-lg shadow-[#E8750A]/20"
         >
           View All Products
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

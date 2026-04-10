@@ -1,43 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 
-const DATA_FILE = path.join(process.cwd(), '.data', 'users.json');
+export const dynamic = 'force-dynamic';
 
-async function ensureDataFile() {
-  try {
-    await fs.readFile(DATA_FILE, 'utf-8');
-  } catch {
-    const dir = path.dirname(DATA_FILE);
-    try {
-      await fs.mkdir(dir, { recursive: true });
-    } catch (err) {
-      // Dir might already exist
-    }
-    await fs.writeFile(DATA_FILE, '[]', 'utf-8');
-  }
-}
 
 export async function POST(request: NextRequest) {
   try {
-    await ensureDataFile();
-    
     // Create test user with password "test123"
     const hashedPassword = await bcrypt.hash('test123', 10);
     
-    const testUser = {
-      id: Date.now().toString(),
-      email: 'test@gmail.com',
-      password: hashedPassword,
-      fullName: 'Test Kullanıcı',
-      platform: 'amazon',
-      monthlyOrders: 'high',
-      createdAt: new Date().toISOString(),
-      emailVerified: true,
-    };
-
-    await fs.writeFile(DATA_FILE, JSON.stringify([testUser], null, 2), 'utf-8');
+    // Use upsert to avoid duplicate email errors if setup is run multiple times
+    const testUser = await prisma.user.upsert({
+      where: { email: 'test@gmail.com' },
+      update: {},
+      create: {
+        email: 'test@gmail.com',
+        password: hashedPassword,
+        fullName: 'Test Kullanıcı',
+        platform: 'amazon',
+        monthlyOrders: 'high',
+        emailVerified: true,
+      }
+    });
 
     return NextResponse.json({
       success: true,

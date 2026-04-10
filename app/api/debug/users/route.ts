@@ -1,35 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { prisma } from '@/lib/prisma';
 
-const DATA_FILE = path.join(process.cwd(), '.data', 'users.json');
-
-async function getUsers() {
-  const dir = path.dirname(DATA_FILE);
-  try {
-    const content = await fs.readFile(DATA_FILE, 'utf-8');
-    return JSON.parse(content || '[]');
-  } catch (error) {
-    console.error('Error reading users:', error);
-    return [];
-  }
-}
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const users = await getUsers();
-    const filePath = DATA_FILE;
+    const users = await prisma.user.findMany();
     
     return NextResponse.json({
       success: true,
-      filePath,
+      database: 'PostgreSQL (Prisma)',
       userCount: users.length,
-      users: users.map((u: any) => ({
+      users: users.map((u) => ({
         email: u.email,
         id: u.id,
         fullName: u.fullName,
       })),
-      fileExists: true,
+      databaseConnected: true,
     });
   } catch (error) {
     console.error('Debug error:', error);

@@ -1,48 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const DATA_FILE = path.join('/tmp', 'users.json');
-
-async function ensureDataFile() {
-  try {
-    await fs.readFile(DATA_FILE, 'utf-8');
-  } catch {
-    const dir = path.dirname(DATA_FILE);
-    try {
-      await fs.mkdir(dir, { recursive: true });
-    } catch (err) {
-      // Dir might already exist
-    }
-    try {
-      // Seed the test user so login always works demo-wise
-      const hash = await bcrypt.hash('test123', 10);
-      const mockUsers = [{ email: 'test@gmail.com', password: hash, id: 'demo1' }];
-      await fs.writeFile(DATA_FILE, JSON.stringify(mockUsers), 'utf-8');
-    } catch (e) {
-      console.error('Could not write to /tmp', e);
-    }
-  }
-}
-
-async function getUsers() {
-  await ensureDataFile();
-  const content = await fs.readFile(DATA_FILE, 'utf-8');
-  return JSON.parse(content || '[]');
-}
-
-async function saveUser(user: any) {
-  await ensureDataFile();
-  const users = await getUsers();
-  users.push({
-    ...user,
-    id: Date.now().toString(),
-    createdAt: new Date().toISOString(),
-  });
-  await fs.writeFile(DATA_FILE, JSON.stringify(users, null, 2), 'utf-8');
-}
+export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
   try {
@@ -58,10 +19,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const users = await getUsers();
-    console.log('📊 USERS IN DB:', users.map((u: any) => u.email));
+    const users = await prisma.user.findMany();
+    console.log('📊 USERS IN DB:', users.map((u) => u.email));
     
-    const user = users.find((u: any) => u.email === email);
+    const user = await prisma.user.findUnique({ where: { email } });
     console.log('🔍 FOUND USER:', user ? user.email : 'NOT FOUND');
 
     if (!user) {

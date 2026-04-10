@@ -1,57 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import { promises as fs } from 'fs';
+import { prisma } from '@/lib/prisma';
 import path from 'path';
 import bcrypt from 'bcryptjs';
 
+export const dynamic = 'force-dynamic';
+
+
 const resend = new Resend(process.env.RESEND_API_KEY);
-const DATA_FILE = path.join('/tmp', 'users.json');
-
-async function ensureDataFile() {
-  try {
-    await fs.readFile(DATA_FILE, 'utf-8');
-  } catch {
-    const dir = path.dirname(DATA_FILE);
-    try {
-      await fs.mkdir(dir, { recursive: true });
-    } catch (err) {
-      // Dir might already exist
-    }
-    await fs.writeFile(DATA_FILE, '[]', 'utf-8');
-  }
-}
-
-async function getUsers() {
-  await ensureDataFile();
-  const content = await fs.readFile(DATA_FILE, 'utf-8');
-  return JSON.parse(content || '[]');
-}
-
-async function saveUserData(userData: any) {
-  await ensureDataFile();
-  const users = await getUsers();
-  
-  // Check if user already exists
-  const existingIndex = users.findIndex((u: any) => u.email === userData.email);
-  
-  if (existingIndex >= 0) {
-    // Update existing user
-    users[existingIndex] = {
-      ...users[existingIndex],
-      ...userData,
-      updatedAt: new Date().toISOString(),
-    };
-  } else {
-    // Add new user
-    users.push({
-      ...userData,
-      id: Date.now().toString(),
-      createdAt: new Date().toISOString(),
-    });
-  }
-  
-  await fs.writeFile(DATA_FILE, JSON.stringify(users, null, 2), 'utf-8');
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -127,13 +83,24 @@ export async function POST(request: NextRequest) {
       html: adminHtmlContent,
     });
 
-    // User verisini JSON dosyaya kaydet
-    await saveUserData({
-      email,
-      platform,
-      monthlyOrders,
-      fullName,
-      password: hashedPassword, // Hashed password
+    // Save user data to Postgres DB using Prisma
+    await prisma.user.upsert({
+      where: { email },
+      update: {
+        platform,
+        monthlyOrders,
+        fullName,
+        password: hashedPassword,
+        emailVerified: true
+      },
+      create: {
+        email,
+        platform,
+        monthlyOrders,
+        fullName,
+        password: hashedPassword,
+        emailVerified: true
+      }
     });
 
     return NextResponse.json({

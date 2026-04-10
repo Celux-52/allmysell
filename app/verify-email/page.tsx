@@ -42,18 +42,18 @@ export default function VerifyEmailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#808000] to-[#808000] flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#E8750A] to-[#E8750A] flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-md">
-        <div className="bg-cornsilk rounded-2xl shadow-2xl p-8 animate-scaleIn">
+        <div className="bg-[#1A1A1A] rounded-2xl shadow-2xl p-8 animate-scaleIn">
           {!verified ? (
             <>
               {/* Checking */}
               <div className="text-center animate-slideInUp">
                 <div className="w-16 h-16 bg-olive rounded-full flex items-center justify-center mx-auto mb-4 animate-bounceIn">
-                  <Mail className="text-[#808000]" size={32} />
+                  <Mail className="text-[#E8750A]" size={32} />
                 </div>
-                <h2 className="text-2xl font-bold text-black mb-2">Email Verification</h2>
-                <p className="text-gray-600 mb-6">
+                <h2 className="text-2xl font-bold text-cornsilk mb-2">Email Verification</h2>
+                <p className="text-gray-400 mb-6">
                   Verifying your email address...
                 </p>
 
@@ -65,7 +65,7 @@ export default function VerifyEmailPage() {
                 )}
 
                 <div className="bg-olive p-4 rounded-lg mb-6">
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-400">
                     You will be redirected here after clicking the verification link sent to <strong>{email}</strong>.
                   </p>
                 </div>
@@ -73,13 +73,13 @@ export default function VerifyEmailPage() {
                 <div className="space-y-3">
                   <button
                     onClick={handleResendEmail}
-                    className="w-full py-3 border-2 border-[#808000] text-[#808000] rounded-lg font-semibold hover:bg-olive transition-all"
+                    className="w-full py-3 border-2 border-[#E8750A] text-[#E8750A] rounded-lg font-semibold hover:bg-olive transition-all"
                   >
                     Resend Email
                   </button>
                   <Link
                     href="/register"
-                    className="block py-3 text-gray-600 hover:text-black text-sm"
+                    className="block py-3 text-gray-400 hover:text-cornsilk text-sm"
                   >
                     Change Email Address
                   </Link>
@@ -91,8 +91,8 @@ export default function VerifyEmailPage() {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="text-green-600" size={32} />
               </div>
-              <h3 className="text-xl font-bold text-black mb-2">Email Verified!</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-xl font-bold text-cornsilk mb-2">Email Verified!</h3>
+              <p className="text-gray-400 mb-4">
                 Redirecting to complete your profile...
               </p>
             </div>

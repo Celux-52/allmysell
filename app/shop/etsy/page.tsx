@@ -1,6 +1,6 @@
 export default function EtsyPage() {
   return (
-    <div className="bg-cornsilk min-h-screen">
+    <div className="bg-[#1A1A1A] min-h-screen">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-orange-400 to-peru text-cornsilk py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -22,32 +22,32 @@ export default function EtsyPage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-black mb-4">
+            <h2 className="text-4xl font-bold text-cornsilk mb-4">
               Coming Soon on Etsy
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-400">
               Special products we will offer when our Etsy store opens
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center p-8 bg-gradient-to-br from-orange-50 to-peru rounded-xl">
               <div className="text-5xl mb-4">✨</div>
-              <h3 className="text-2xl font-bold text-black mb-4">Handmade Products</h3>
-              <p className="text-gray-600">
+              <h3 className="text-2xl font-bold text-cornsilk mb-4">Handmade Products</h3>
+              <p className="text-gray-400">
                 Custom designs and handcrafted items
               </p>
             </div>
             <div className="text-center p-8 bg-gradient-to-br from-orange-50 to-peru rounded-xl">
               <div className="text-5xl mb-4">💝</div>
-              <h3 className="text-2xl font-bold text-black mb-4">Unique Collections</h3>
-              <p className="text-gray-600">
+              <h3 className="text-2xl font-bold text-cornsilk mb-4">Unique Collections</h3>
+              <p className="text-gray-400">
                 Exclusive designs you can only find here
               </p>
             </div>
             <div className="text-center p-8 bg-gradient-to-br from-orange-50 to-peru rounded-xl">
               <div className="text-5xl mb-4">🎨</div>
-              <h3 className="text-2xl font-bold text-black mb-4">Personalized</h3>
-              <p className="text-gray-600">
+              <h3 className="text-2xl font-bold text-cornsilk mb-4">Personalized</h3>
+              <p className="text-gray-400">
                 Customization options upon request
               </p>
             </div>
@@ -66,7 +66,7 @@ export default function EtsyPage() {
           </p>
           <a
             href="/shop/ebay"
-            className="inline-flex items-center space-x-2 bg-cornsilk text-peru px-8 py-4 rounded-full font-semibold text-lg hover:bg-orange-50 transition-all hover:scale-105 shadow-lg"
+            className="inline-flex items-center space-x-2 bg-[#1A1A1A] text-peru px-8 py-4 rounded-full font-semibold text-lg hover:bg-orange-50 transition-all hover:scale-105 shadow-lg"
           >
             <span>Visit Our eBay Store</span>
           </a>

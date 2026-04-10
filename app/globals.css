@@ -3,13 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0; /* #000000 */
-  --background-start-rgb: 255, 248, 220; /* #FFF8DC */
-  --background-end-rgb: 255, 248, 220; /* #FFF8DC */
-  --primary-olive: #808000;
-  --primary-peru: #CD853F;
-  --primary-black: #000000;
-  --soft-cream: #FFF8DC;
+  --foreground-rgb: 255, 247, 237; /* #FFF7ED warm white */
+  --background-start-rgb: 10, 10, 10; /* #0A0A0A deep black */
+  --background-end-rgb: 15, 15, 15; /* #0F0F0F */
+  --primary-orange: #E8750A;
+  --primary-amber: #F59E0B;
+  --primary-black: #0A0A0A;
+  --soft-cream: #FFF7ED;
+  --burnt-orange: #C2410C;
 }
 
 /* Product Carousel Animation */
@@ -32,12 +33,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: #0A0A0A;
 }
 
 /* Form inputs için font fix */

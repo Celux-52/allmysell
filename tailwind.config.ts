@@ -9,17 +9,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        olive: '#808000',
-        peru: '#CD853F',
-        cornsilk: '#FFF8DC',
+        // New Orange-Black Palette
+        olive: '#E8750A',       // Was #808000, now vibrant orange (primary)
+        peru: '#F59E0B',        // Was #CD853F, now amber/gold (secondary)
+        cornsilk: '#FFF7ED',    // Was #FFF8DC, now warm white
         black: '#000000',
         primary: {
-          500: '#808000',
-          600: '#666600',
+          500: '#E8750A',       // Vibrant orange
+          600: '#C2410C',       // Burnt/deep orange
         },
         secondary: {
-          500: '#CD853F',
-          600: '#A0522D',
+          500: '#F59E0B',       // Amber gold
+          600: '#D97706',       // Darker amber
+        },
+        accent: {
+          orange: '#FF8C00',    // Dark orange accent
+          burnt: '#C2410C',     // Burnt orange
+          amber: '#F59E0B',     // Amber
+          honey: '#EA580C',     // Honey orange
         },
       },
       keyframes: {
@@ -54,8 +61,8 @@ const config: Config = {
           '50%': { transform: 'translateY(-10px)' },
         },
         glow: {
-          '0%, 100%': { boxShadow: '0 0 5px rgba(224, 122, 44, 0.3)' },
-          '50%': { boxShadow: '0 0 20px rgba(224, 122, 44, 0.6)' },
+          '0%, 100%': { boxShadow: '0 0 5px rgba(232, 117, 10, 0.3)' },
+          '50%': { boxShadow: '0 0 20px rgba(232, 117, 10, 0.6)' },
         },
       },
       animation: {

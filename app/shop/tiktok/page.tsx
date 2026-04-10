@@ -1,6 +1,6 @@
 export default function TikTokPage() {
   return (
-    <div className="bg-cornsilk min-h-screen">
+    <div className="bg-[#1A1A1A] min-h-screen">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-cyan-500 to-peru text-cornsilk py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -22,32 +22,32 @@ export default function TikTokPage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-black mb-4">
+            <h2 className="text-4xl font-bold text-cornsilk mb-4">
               Coming Soon on TikTok Shop
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-400">
               Features we will offer when our TikTok Shop store opens
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center p-8 bg-gradient-to-br from-cyan-50 to-peru rounded-xl">
               <div className="text-5xl mb-4">🔴</div>
-              <h3 className="text-2xl font-bold text-black mb-4">Live Streams</h3>
-              <p className="text-gray-600">
+              <h3 className="text-2xl font-bold text-cornsilk mb-4">Live Streams</h3>
+              <p className="text-gray-400">
                 Live shopping events and special offers
               </p>
             </div>
             <div className="text-center p-8 bg-gradient-to-br from-cyan-50 to-peru rounded-xl">
               <div className="text-5xl mb-4">📹</div>
-              <h3 className="text-2xl font-bold text-black mb-4">Video Shopping</h3>
-              <p className="text-gray-600">
+              <h3 className="text-2xl font-bold text-cornsilk mb-4">Video Shopping</h3>
+              <p className="text-gray-400">
                 Discover products through videos and purchase
               </p>
             </div>
             <div className="text-center p-8 bg-gradient-to-br from-cyan-50 to-peru rounded-xl">
               <div className="text-5xl mb-4">🔥</div>
-              <h3 className="text-2xl font-bold text-black mb-4">Viral Products</h3>
-              <p className="text-gray-600">
+              <h3 className="text-2xl font-bold text-cornsilk mb-4">Viral Products</h3>
+              <p className="text-gray-400">
                 Be the first to discover trending products
               </p>
             </div>
@@ -66,7 +66,7 @@ export default function TikTokPage() {
           </p>
           <a
             href="/shop/ebay"
-            className="inline-flex items-center space-x-2 bg-cornsilk text-peru px-8 py-4 rounded-full font-semibold text-lg hover:bg-cyan-50 transition-all hover:scale-105 shadow-lg"
+            className="inline-flex items-center space-x-2 bg-[#1A1A1A] text-peru px-8 py-4 rounded-full font-semibold text-lg hover:bg-cyan-50 transition-all hover:scale-105 shadow-lg"
           >
             <span>Visit Our eBay Store</span>
           </a>

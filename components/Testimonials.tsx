@@ -49,21 +49,21 @@ export default function Testimonials() {
 
   if (isSubmitted) {
     return (
-      <section className="py-20 bg-cornsilk">
+      <section className="py-20 bg-[#0A0A0A]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-12 text-center shadow-xl">
-            <CheckCircle className="w-20 h-20 text-green-600 mx-auto mb-6" />
-            <h2 className="text-3xl font-bold text-black mb-4">
+          <div className="bg-gradient-to-br from-[#1A1A1A] to-[#111111] rounded-2xl p-12 text-center shadow-xl border border-green-500/20">
+            <CheckCircle className="w-20 h-20 text-green-500 mx-auto mb-6" />
+            <h2 className="text-3xl font-bold text-cornsilk mb-4">
               Thank You for Your Feedback!
             </h2>
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-lg text-gray-400 mb-6">
               Your review has been successfully received. Your valuable feedback is very important to us.
               <br />
               We will review and publish it shortly.
             </p>
             <button
               onClick={() => setIsSubmitted(false)}
-              className="bg-gradient-to-r from-olive to-peru text-cornsilk px-8 py-3 rounded-lg font-semibold hover:from-olive hover:to-peru transition-all"
+              className="bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-white px-8 py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-[#E8750A]/20 transition-all"
             >
               Submit Another Review
             </button>
@@ -74,24 +74,24 @@ export default function Testimonials() {
   }
 
   return (
-    <section className="py-20 bg-cornsilk">
+    <section className="py-20 bg-[#0A0A0A]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <MessageSquare className="w-16 h-16 text-olive mx-auto mb-4" />
-          <h2 className="text-4xl font-bold text-black mb-4">
+          <MessageSquare className="w-16 h-16 text-[#E8750A] mx-auto mb-4" />
+          <h2 className="text-4xl font-bold text-cornsilk mb-4">
             Share Your Experience
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-gray-400">
             Have you purchased from us? We'd love to hear about your experience!
           </p>
         </div>
 
         {/* Review Form */}
-        <div className="bg-gradient-to-br from-olive to-peru rounded-2xl p-8 shadow-xl">
+        <div className="bg-gradient-to-br from-[#1A1A1A] to-[#111111] rounded-2xl p-8 shadow-xl border border-[#E8750A]/10">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name */}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-black mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
                 Your Name *
               </label>
               <input
@@ -99,14 +99,14 @@ export default function Testimonials() {
                 id="name"
                 name="name"
                 required
-                className="w-full px-4 py-3 bg-cornsilk border border-gray-300 rounded-lg focus:ring-2 focus:ring-olive focus:border-transparent transition-all text-black placeholder-gray-400"
+                className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#E8750A]/20 rounded-lg focus:ring-2 focus:ring-[#E8750A] focus:border-transparent transition-all text-cornsilk placeholder-gray-600"
                 placeholder="John Doe"
               />
             </div>
 
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-black mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                 Email Address *
               </label>
               <input
@@ -114,28 +114,28 @@ export default function Testimonials() {
                 id="email"
                 name="email"
                 required
-                className="w-full px-4 py-3 bg-cornsilk border border-gray-300 rounded-lg focus:ring-2 focus:ring-olive focus:border-transparent transition-all text-black placeholder-gray-400"
+                className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#E8750A]/20 rounded-lg focus:ring-2 focus:ring-[#E8750A] focus:border-transparent transition-all text-cornsilk placeholder-gray-600"
                 placeholder="john@example.com"
               />
             </div>
 
             {/* Product */}
             <div>
-              <label htmlFor="product" className="block text-sm font-medium text-black mb-2">
+              <label htmlFor="product" className="block text-sm font-medium text-gray-300 mb-2">
                 Product Purchased
               </label>
               <input
                 type="text"
                 id="product"
                 name="product"
-                className="w-full px-4 py-3 bg-cornsilk border border-gray-300 rounded-lg focus:ring-2 focus:ring-olive focus:border-transparent transition-all text-black placeholder-gray-400"
+                className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#E8750A]/20 rounded-lg focus:ring-2 focus:ring-[#E8750A] focus:border-transparent transition-all text-cornsilk placeholder-gray-600"
                 placeholder="e.g., Magnetic Power Bank 10000mAh"
               />
             </div>
 
             {/* Rating */}
             <div>
-              <label className="block text-sm font-medium text-black mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Your Rating *
               </label>
               <div className="flex space-x-2">
@@ -151,8 +151,8 @@ export default function Testimonials() {
                     <Star
                       className={`w-10 h-10 ${
                         star <= (hoverRating || rating)
-                          ? 'fill-yellow-400 text-yellow-400'
-                          : 'text-gray-300'
+                          ? 'fill-[#F59E0B] text-[#F59E0B]'
+                          : 'text-gray-600'
                       }`}
                     />
                   </button>
@@ -162,7 +162,7 @@ export default function Testimonials() {
 
             {/* Review */}
             <div>
-              <label htmlFor="review" className="block text-sm font-medium text-black mb-2">
+              <label htmlFor="review" className="block text-sm font-medium text-gray-300 mb-2">
                 Your Review *
               </label>
               <textarea
@@ -170,7 +170,7 @@ export default function Testimonials() {
                 name="review"
                 rows={6}
                 required
-                className="w-full px-4 py-3 bg-cornsilk border border-gray-300 rounded-lg focus:ring-2 focus:ring-olive focus:border-transparent transition-all resize-none text-black placeholder-gray-400"
+                className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#E8750A]/20 rounded-lg focus:ring-2 focus:ring-[#E8750A] focus:border-transparent transition-all resize-none text-cornsilk placeholder-gray-600"
                 placeholder="Tell us about your experience with our product and service..."
               />
             </div>
@@ -179,7 +179,7 @@ export default function Testimonials() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-olive to-peru text-cornsilk font-semibold py-4 rounded-lg hover:from-olive hover:to-peru transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-white font-semibold py-4 rounded-lg hover:shadow-lg hover:shadow-[#E8750A]/20 transition-all transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Submitting...' : 'Submit Review'}
             </button>
@@ -194,23 +194,23 @@ export default function Testimonials() {
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
           <div className="text-center">
             <div className="text-4xl mb-2">🛍️</div>
-            <p className="text-black font-semibold mb-1">eBay Store</p>
-            <p className="text-gray-600 text-sm">Active Seller</p>
+            <p className="text-cornsilk font-semibold mb-1">eBay Store</p>
+            <p className="text-gray-500 text-sm">Active Seller</p>
           </div>
           <div className="text-center">
             <div className="text-4xl mb-2">⭐</div>
-            <p className="text-black font-semibold mb-1">Quality Products</p>
-            <p className="text-gray-600 text-sm">Tech Accessories</p>
+            <p className="text-cornsilk font-semibold mb-1">Quality Products</p>
+            <p className="text-gray-500 text-sm">Tech Accessories</p>
           </div>
           <div className="text-center">
             <div className="text-4xl mb-2">📞</div>
-            <p className="text-black font-semibold mb-1">Customer Support</p>
-            <p className="text-gray-600 text-sm">We're Here to Help</p>
+            <p className="text-cornsilk font-semibold mb-1">Customer Support</p>
+            <p className="text-gray-500 text-sm">We're Here to Help</p>
           </div>
           <div className="text-center">
             <div className="text-4xl mb-2">🚚</div>
-            <p className="text-black font-semibold mb-1">Worldwide Shipping</p>
-            <p className="text-gray-600 text-sm">Reliable Delivery</p>
+            <p className="text-cornsilk font-semibold mb-1">Worldwide Shipping</p>
+            <p className="text-gray-500 text-sm">Reliable Delivery</p>
           </div>
         </div>
       </div>

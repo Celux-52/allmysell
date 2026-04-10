@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import TrackedLink from '@/components/TrackedLink';
 
 export const metadata: Metadata = {
-  title: 'Our eBay Store - AllMySell | 13 Active Tech Products',
+  title: 'Our eBay Store - AllMySell | Tech Products',
   keywords: ['eBay store', 'tech accessories', 'mobile accessories', 'chargers', 'power banks', 'car accessories', 'phone cases', 'USB hubs', 'MagSafe', 'Bluetooth adapter', 'iPhone cases'],
 };
 
@@ -15,6 +15,7 @@ const products = [
     category: 'Computer Accessories',
     image: 'https://i.ebayimg.com/images/g/-pgAAeSw93dpbDuO/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206006630493',
+    soldOut: true,
   },
   {
     name: '360° Rotating Phone Holder',
@@ -22,6 +23,7 @@ const products = [
     category: 'Car Accessories',
     image: 'https://i.ebayimg.com/images/g/qCsAAeSwVyNpbDte/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206006629452',
+    soldOut: true,
   },
   {
     name: '8 in 2 USB Hub',
@@ -29,6 +31,7 @@ const products = [
     category: 'Computer Accessories',
     image: 'https://i.ebayimg.com/images/g/Gx8AAeSw~eVpWc1Q/s-l1600.webp',
     link: 'https://www.ebay.com/itm/205970305941',
+    soldOut: true,
   },
   {
     name: 'Magnetic Power Bank 10000mAh',
@@ -36,6 +39,7 @@ const products = [
     category: 'Chargers',
     image: 'https://i.ebayimg.com/images/g/eloAAeSwe2FpY56W/s-l1600.webp',
     link: 'https://www.ebay.com/itm/205990599969',
+    soldOut: true,
   },
   {
     name: '20000mAh 45W Portable Charger',
@@ -43,6 +47,7 @@ const products = [
     category: 'Chargers',
     image: 'https://i.ebayimg.com/images/g/V-4AAeSwRJZpWcdu/s-l1600.webp',
     link: 'https://www.ebay.com/itm/205970285393',
+    soldOut: true,
   },
   {
     name: 'Wired Earphones Lightning',
@@ -50,13 +55,15 @@ const products = [
     category: 'Audio',
     image: 'https://i.ebayimg.com/images/g/OBsAAeSwgb9paZsz/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206002163067',
+    soldOut: true,
   },
   {
-    name: 'MagSafe Sticker 360 Manyetik Halkalı 2 Paket',
-    description: 'Evrensel Kablosuz Şarj Adaptörü Kiti',
+    name: 'MagSafe Sticker 360 Magnetic Ring 2 Pack',
+    description: 'Universal Wireless Charging Adapter Kit',
     category: 'Phone Accessories',
     image: 'https://i.ebayimg.com/images/g/euIAAeSwTh5p0SZ5/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206189596772',
+    soldOut: true,
   },
   {
     name: 'Magnetic Phone Grip Ring Holder for MagSafe',
@@ -64,6 +71,7 @@ const products = [
     category: 'Phone Accessories',
     image: 'https://i.ebayimg.com/images/g/nSoAAeSw-2Bp0VQE/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206189855409',
+    soldOut: true,
   },
   {
     name: '8PCS WebCam Cover Slide Camera Privacy',
@@ -71,6 +79,7 @@ const products = [
     category: 'Phone Accessories',
     image: 'https://i.ebayimg.com/images/g/nZEAAeSwLydp0V5y/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206189917643',
+    soldOut: true,
   },
   {
     name: '3Black for MagSafe Ring Sticker',
@@ -78,6 +87,7 @@ const products = [
     category: 'Phone Accessories',
     image: 'https://i.ebayimg.com/images/g/JyUAAeSwLeFp0WHH/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206189931472',
+    soldOut: true,
   },
   {
     name: 'Bluetooth 5.0 USB Audio Adapter',
@@ -85,6 +95,7 @@ const products = [
     category: 'Audio Accessories',
     image: 'https://i.ebayimg.com/images/g/4zIAAeSwzypp0aFP/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206190278629',
+    soldOut: true,
   },
   {
     name: 'For iPhone 17 Pro Max Case',
@@ -92,6 +103,7 @@ const products = [
     category: 'Phone Accessories',
     image: 'https://i.ebayimg.com/images/g/VlcAAeSwbSBp0ZL1/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206190239980',
+    soldOut: true,
   },
   {
     name: 'Magnetic Phone Case For iPhone 16',
@@ -99,6 +111,7 @@ const products = [
     category: 'Phone Accessories',
     image: 'https://i.ebayimg.com/images/g/buoAAeSwlcZp0aA3/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206190264444',
+    soldOut: true,
   },
 ];
 
@@ -106,29 +119,29 @@ const categories = [
   {
     name: 'Chargers & Power Banks',
     description: 'Fast chargers, power banks and charging cables',
-    productCount: '6',
-    subtext: 'active products on eBay',
+    productCount: '0',
+    subtext: 'currently in stock',
     icon: '🔋',
   },
   {
     name: 'Car Accessories',
     description: 'Car chargers, AI Box and dash cameras',
-    productCount: '3',
-    subtext: 'active products on eBay',
+    productCount: '0',
+    subtext: 'currently in stock',
     icon: '🚗',
   },
   {
     name: 'Phone & Tablet Accessories',
     description: 'Cases, tripods and mobile accessories',
-    productCount: '7',
-    subtext: 'active products on eBay',
+    productCount: '0',
+    subtext: 'currently in stock',
     icon: '📱',
   },
   {
     name: 'Computer Accessories',
     description: 'USB hubs and connectivity products',
-    productCount: '2',
-    subtext: 'active products on eBay',
+    productCount: '0',
+    subtext: 'currently in stock',
     icon: '💻',
   },
 ];
@@ -147,13 +160,13 @@ const features = [
   {
     icon: Package,
     title: 'Wide Product Range',
-    description: '2000+ different product varieties',
+    description: 'New products coming soon',
   },
 ];
 
 export default function EbayPage() {
   return (
-    <div className="bg-cornsilk">
+    <div className="bg-[#0A0A0A]">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-peru to-olive text-cornsilk py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -163,17 +176,24 @@ export default function EbayPage() {
               <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-slideInLeft">
                 Our eBay Store
               </h1>
-              <p className="text-xl md:text-2xl text-peru mb-8 animate-slideInLeft" style={{animationDelay: '0.1s'}}>
+              <p className="text-xl md:text-2xl text-peru mb-4 animate-slideInLeft" style={{animationDelay: '0.1s'}}>
                 Serving you with technology and mobile accessory products. 
                 You can safely purchase all our products on eBay.
               </p>
+              {/* Sold Out Notice */}
+              <div className="bg-red-500/20 border border-red-500/40 rounded-xl p-4 mb-8 animate-slideInLeft" style={{animationDelay: '0.15s'}}>
+                <p className="text-red-300 font-semibold flex items-center gap-2">
+                  <span className="text-xl">⚠️</span>
+                  All products are currently sold out. New stock coming soon!
+                </p>
+              </div>
               <TrackedLink
                 href="https://www.ebay.com/usr/ymglobal"
                 target="_blank"
                 rel="noopener noreferrer"
                 buttonId="ebay_store_hero_btn"
                 eventName="visit_ebay_store"
-                className="inline-flex items-center space-x-2 bg-cornsilk text-olive px-8 py-4 rounded-full font-semibold text-lg hover:bg-olive transition-all hover:scale-105 shadow-lg animate-slideInLeft"
+                className="inline-flex items-center space-x-2 bg-[#1A1A1A] text-olive px-8 py-4 rounded-full font-semibold text-lg hover:bg-olive transition-all hover:scale-105 shadow-lg animate-slideInLeft"
                 style={{animationDelay: '0.2s'}}
               >
                 <span>Visit eBay Store</span>
@@ -197,10 +217,10 @@ export default function EbayPage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-16 animate-slideInUp">
-            <h2 className="text-4xl font-bold text-black mb-6">
+            <h2 className="text-4xl font-bold text-cornsilk mb-6">
               AllMySell on eBay
             </h2>
-            <p className="text-lg text-gray-700">
+            <p className="text-lg text-gray-300">
               As AllMySell, we offer technology and mobile accessory products through eBay. 
               From chargers to car accessories, phone cases to USB hubs, we serve you with 
               a wide range of products. All our products can be purchased safely under 
@@ -210,72 +230,77 @@ export default function EbayPage() {
 
           {/* Stats */}
           <div className="grid md:grid-cols-4 gap-8 mb-16">
-            <div className="text-center p-6 bg-gradient-to-br from-yellow-50 to-red-50 rounded-xl">
-              <div className="text-4xl font-bold text-red-600 mb-2">13</div>
-              <div className="text-gray-700 font-medium">Active Products</div>
+            <div className="text-center p-6 bg-[#1A1A1A] rounded-xl border border-[#E8750A]/10">
+              <div className="text-4xl font-bold text-red-500 mb-2">13</div>
+              <div className="text-gray-400 font-medium">Total Products</div>
+              <div className="text-xs text-red-400 mt-1">All Sold Out</div>
             </div>
-            <div className="text-center p-6 bg-gradient-to-br from-yellow-50 to-red-50 rounded-xl">
-              <div className="text-4xl font-bold text-red-600 mb-2">100%</div>
-              <div className="text-gray-700 font-medium">Customer Satisfaction</div>
+            <div className="text-center p-6 bg-[#1A1A1A] rounded-xl border border-[#E8750A]/10">
+              <div className="text-4xl font-bold text-[#E8750A] mb-2">100%</div>
+              <div className="text-gray-400 font-medium">Customer Satisfaction</div>
             </div>
-            <div className="text-center p-6 bg-gradient-to-br from-yellow-50 to-red-50 rounded-xl">
-              <div className="text-4xl font-bold text-red-600 mb-2">Fast</div>
-              <div className="text-gray-700 font-medium">Shipping & Delivery</div>
+            <div className="text-center p-6 bg-[#1A1A1A] rounded-xl border border-[#E8750A]/10">
+              <div className="text-4xl font-bold text-[#E8750A] mb-2">Fast</div>
+              <div className="text-gray-400 font-medium">Shipping & Delivery</div>
             </div>
-            <div className="text-center p-6 bg-gradient-to-br from-yellow-50 to-red-50 rounded-xl">
-              <div className="text-4xl font-bold text-red-600 mb-2">24/7</div>
-              <div className="text-gray-700 font-medium">Support</div>
+            <div className="text-center p-6 bg-[#1A1A1A] rounded-xl border border-[#E8750A]/10">
+              <div className="text-4xl font-bold text-[#E8750A] mb-2">24/7</div>
+              <div className="text-gray-400 font-medium">Support</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="py-20 bg-gray-50">
+      {/* Featured Products - ALL SOLD OUT */}
+      <section className="py-20 bg-[#111111]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-slideInUp">
-            <h2 className="text-4xl font-bold text-black mb-4">
+            <h2 className="text-4xl font-bold text-cornsilk mb-4">
               Featured Products
             </h2>
-            <p className="text-xl text-gray-600">
-              Popular products on sale in our eBay store
+            <p className="text-xl text-gray-400 mb-4">
+              Our eBay store product catalog
             </p>
+            <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 text-red-400 px-6 py-3 rounded-full font-semibold">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+              All products are currently sold out — New stock arriving soon!
+            </div>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {products.map((product, index) => (
-              <TrackedLink
+              <div
                 key={index}
-                href={product.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                eventName="ebay_product_click"
-                buttonId={`ebay_product_${index}`}
-                payload={{
-                  item_name: product.name,
-                  item_category: product.category
-                }}
-                className="bg-cornsilk rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden block group border border-gray-100 animate-scaleIn"
+                className="relative bg-[#1A1A1A] rounded-xl shadow-lg overflow-hidden border border-gray-800 animate-scaleIn opacity-75"
                 style={{ animationDelay: `${(index % 8) * 0.1}s` }}
               >
-                <div className="relative w-full h-52 bg-gray-50 flex items-center justify-center p-4">
+                {/* Sold Out Overlay */}
+                <div className="absolute inset-0 bg-black/40 z-10 flex items-center justify-center">
+                  <div className="bg-red-600 text-white px-6 py-2 rounded-full font-bold text-lg transform -rotate-12 shadow-lg">
+                    SOLD OUT
+                  </div>
+                </div>
+
+                <div className="relative w-full h-52 bg-[#111111] flex items-center justify-center p-4">
                   <img 
                     src={product.image} 
                     alt={product.name}
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-contain grayscale opacity-60"
                   />
                 </div>
                 <div className="p-5">
-                  <div className="text-xs text-olive font-semibold mb-2 uppercase tracking-wide">{product.category}</div>
-                  <h3 className="text-lg font-bold text-black mb-2 line-clamp-2 group-hover:text-olive transition-colors">
+                  <div className="text-xs text-gray-500 font-semibold mb-2 uppercase tracking-wide">{product.category}</div>
+                  <h3 className="text-lg font-bold text-gray-400 mb-2 line-clamp-2">
                     {product.name}
                   </h3>
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed">{product.description}</p>
-                  <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-                    <span className="text-olive font-semibold text-sm">View on eBay</span>
-                    <ExternalLink className="text-olive group-hover:translate-x-1 transition-transform" size={18} />
+                  <p className="text-gray-500 text-sm mb-4 line-clamp-2 leading-relaxed">{product.description}</p>
+                  <div className="flex items-center justify-between pt-3 border-t border-gray-800">
+                    <span className="text-red-500 font-semibold text-sm">Sold Out</span>
+                    <span className="text-gray-600 text-xs">Temporarily Unavailable</span>
                   </div>
                 </div>
-              </TrackedLink>
+              </div>
             ))}
           </div>
         </div>
@@ -285,11 +310,11 @@ export default function EbayPage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-black mb-4">
+            <h2 className="text-4xl font-bold text-cornsilk mb-4">
               Product Categories
             </h2>
-            <p className="text-xl text-gray-600">
-              Currently available products from our eBay store
+            <p className="text-xl text-gray-400">
+              All categories currently out of stock — restocking soon
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -302,15 +327,15 @@ export default function EbayPage() {
                 eventName="ebay_category_click"
                 buttonId={`ebay_category_${index}`}
                 payload={{ category_name: category.name }}
-                className="bg-gradient-to-br from-olive to-peru p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-olive group block"
+                className="bg-gradient-to-br from-[#1A1A1A] to-[#111111] p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-[#E8750A]/10 group block"
               >
-                <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">{category.icon}</div>
-                <h3 className="text-xl font-bold text-black mb-3 group-hover:text-red-600 transition-colors">
+                <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300 grayscale opacity-60">{category.icon}</div>
+                <h3 className="text-xl font-bold text-cornsilk mb-3 group-hover:text-[#E8750A] transition-colors">
                   {category.name}
                 </h3>
-                <p className="text-gray-600 mb-6 leading-relaxed text-sm">{category.description}</p>
-                <div className="pt-4 border-t border-yellow-200">
-                  <p className="text-red-600 font-semibold text-base">
+                <p className="text-gray-500 mb-6 leading-relaxed text-sm">{category.description}</p>
+                <div className="pt-4 border-t border-gray-800">
+                  <p className="text-red-500 font-semibold text-base">
                     {category.productCount} {category.subtext}
                   </p>
                 </div>
@@ -321,13 +346,13 @@ export default function EbayPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-yellow-500 to-red-500 text-cornsilk py-16">
+      <section className="bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-white py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Visit Our eBay Store
           </h2>
-          <p className="text-xl mb-8 text-peru">
-            Find the best one for you among thousands of products
+          <p className="text-xl mb-8 text-orange-100">
+            Stay tuned! New products are being restocked soon.
           </p>
           <TrackedLink
             href="https://www.ebay.com/usr/ymglobal"
@@ -335,9 +360,9 @@ export default function EbayPage() {
             rel="noopener noreferrer"
             buttonId="ebay_store_bottom_cta"
             eventName="visit_ebay_store_footer"
-            className="inline-flex items-center space-x-2 bg-cornsilk text-red-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-yellow-50 transition-all hover:scale-105 shadow-lg"
+            className="inline-flex items-center space-x-2 bg-[#0A0A0A] text-[#E8750A] px-8 py-4 rounded-full font-semibold text-lg hover:bg-[#1A1A1A] transition-all hover:scale-105 shadow-lg"
           >
-            <span>Start Shopping Now</span>
+            <span>Check eBay Store</span>
             <ExternalLink size={20} />
           </TrackedLink>
         </div>

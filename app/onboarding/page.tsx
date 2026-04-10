@@ -129,7 +129,7 @@ export default function ProfileSetupPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#808000] to-[#808000] flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#E8750A] to-[#E8750A] flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-2xl">
         {/* Back Button */}
         <div className="mb-6">
@@ -139,15 +139,15 @@ export default function ProfileSetupPage() {
         </div>
 
         {/* Card */}
-        <div className="bg-cornsilk rounded-2xl shadow-2xl p-8 animate-scaleIn">
+        <div className="bg-[#1A1A1A] rounded-2xl shadow-2xl p-8 animate-scaleIn">
           {!success ? (
             <>
               {/* Header */}
               <div className="mb-8">
-                <h2 className="text-3xl font-bold text-black mb-2">
+                <h2 className="text-3xl font-bold text-cornsilk mb-2">
                   {step === 1 ? 'Hello!' : step === 2 ? 'Where do you sell?' : 'Monthly Volume?'}
                 </h2>
-                <p className="text-gray-600">
+                <p className="text-gray-400">
                   {step === 1 && 'Can we get your name?'}
                   {step === 2 && 'To help you better, which platform are you selling on?'}
                   {step === 3 && 'How many orders do you process monthly on average?'}
@@ -167,12 +167,12 @@ export default function ProfileSetupPage() {
                   <div className="animate-slideInUp space-y-4">
                     {email && (
                       <div className="p-3 bg-peru border border-peru rounded-lg">
-                        <p className="text-sm text-gray-600">Your Email</p>
-                        <p className="text-base font-semibold text-black">{email}</p>
+                        <p className="text-sm text-gray-400">Your Email</p>
+                        <p className="text-base font-semibold text-cornsilk">{email}</p>
                       </div>
                     )}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
                         Full Name
                       </label>
                       <input
@@ -180,11 +180,11 @@ export default function ProfileSetupPage() {
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                         placeholder="John Doe"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#808000] focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E8750A] focus:border-transparent"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
                         Password
                       </label>
                       <input
@@ -192,7 +192,7 @@ export default function ProfileSetupPage() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="At least 6 characters"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#808000] focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E8750A] focus:border-transparent"
                       />
                       <p className="text-xs text-gray-500 mt-1">Minimum 6 characters</p>
                     </div>
@@ -210,12 +210,12 @@ export default function ProfileSetupPage() {
                           onClick={() => setPlatform(p.id)}
                           className={`p-4 rounded-lg border-2 transition-all ${
                             platform === p.id
-                              ? 'border-[#808000] bg-olive'
-                              : 'border-gray-200 hover:border-[#808000]/50'
+                              ? 'border-[#E8750A] bg-olive'
+                              : 'border-gray-200 hover:border-[#E8750A]/50'
                           }`}
                         >
                           <div className="text-3xl mb-2">{p.icon}</div>
-                          <div className="font-semibold text-black">{p.name}</div>
+                          <div className="font-semibold text-cornsilk">{p.name}</div>
                         </button>
                       ))}
                     </div>
@@ -232,11 +232,11 @@ export default function ProfileSetupPage() {
                         onClick={() => setMonthlyOrders(volume.id)}
                         className={`w-full p-4 rounded-lg border-2 text-left transition-all ${
                           monthlyOrders === volume.id
-                            ? 'border-[#808000] bg-olive'
-                            : 'border-gray-200 hover:border-[#808000]/50'
+                            ? 'border-[#E8750A] bg-olive'
+                            : 'border-gray-200 hover:border-[#E8750A]/50'
                         }`}
                       >
-                        <div className="font-semibold text-black">{volume.label}</div>
+                        <div className="font-semibold text-cornsilk">{volume.label}</div>
                       </button>
                     ))}
                   </div>
@@ -248,7 +248,7 @@ export default function ProfileSetupPage() {
                     <button
                       type="button"
                       onClick={() => setStep(step - 1)}
-                      className="flex-1 py-3 border-2 border-gray-300 rounded-lg font-semibold text-gray-700 hover:bg-gray-50 transition-all"
+                      className="flex-1 py-3 border-2 border-gray-300 rounded-lg font-semibold text-gray-300 hover:bg-[#111111] transition-all"
                     >
                       Back
                     </button>
@@ -257,7 +257,7 @@ export default function ProfileSetupPage() {
                     <button
                       type="button"
                       onClick={handleNextStep}
-                      className="flex-1 bg-gradient-to-r from-[#808000] to-[#CD853F] text-cornsilk py-3 rounded-lg font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                      className="flex-1 bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-cornsilk py-3 rounded-lg font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2"
                     >
                       Next <ArrowRight size={20} />
                     </button>
@@ -266,7 +266,7 @@ export default function ProfileSetupPage() {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="flex-1 bg-gradient-to-r from-[#808000] to-[#CD853F] text-cornsilk py-3 rounded-lg font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      className="flex-1 bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-cornsilk py-3 rounded-lg font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
                       {loading ? 'Saving...' : 'Complete'} <ArrowRight size={20} />
                     </button>
@@ -279,8 +279,8 @@ export default function ProfileSetupPage() {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="text-green-600" size={32} />
               </div>
-              <h3 className="text-2xl font-bold text-black mb-2">Success!</h3>
-              <p className="text-gray-600 mb-2">Profile saved, {fullName}!</p>
+              <h3 className="text-2xl font-bold text-cornsilk mb-2">Success!</h3>
+              <p className="text-gray-400 mb-2">Profile saved, {fullName}!</p>
               <p className="text-sm text-gray-500">Redirecting...</p>
             </div>
           )}
@@ -288,21 +288,21 @@ export default function ProfileSetupPage() {
           {/* Step Indicator */}
           <div className="mt-8 flex justify-center gap-2">
             <div className={`flex items-center gap-2 ${step >= 1 ? '' : ''}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${step >= 1 ? 'bg-[#808000] text-cornsilk' : 'bg-gray-200 text-gray-600'}`}>1</div>
-              <p className={`text-sm font-medium ${step >= 1 ? 'text-black' : 'text-gray-500'}`}>Name</p>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${step >= 1 ? 'bg-[#E8750A] text-cornsilk' : 'bg-gray-200 text-gray-400'}`}>1</div>
+              <p className={`text-sm font-medium ${step >= 1 ? 'text-cornsilk' : 'text-gray-500'}`}>Name</p>
             </div>
-            <div className={`border-t-2 w-12 mt-4 ${step >= 2 ? 'border-[#808000]' : 'border-gray-300'}`}></div>
+            <div className={`border-t-2 w-12 mt-4 ${step >= 2 ? 'border-[#E8750A]' : 'border-gray-300'}`}></div>
             <div>
               <div className={`flex items-center gap-2`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${step >= 2 ? 'bg-[#808000] text-cornsilk' : 'bg-gray-200 text-gray-600'}`}>2</div>
-                <p className={`text-sm font-medium ${step >= 2 ? 'text-black' : 'text-gray-500'}`}>Platform</p>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${step >= 2 ? 'bg-[#E8750A] text-cornsilk' : 'bg-gray-200 text-gray-400'}`}>2</div>
+                <p className={`text-sm font-medium ${step >= 2 ? 'text-cornsilk' : 'text-gray-500'}`}>Platform</p>
               </div>
             </div>
-            <div className={`border-t-2 w-12 mt-4 ${step >= 3 ? 'border-[#808000]' : 'border-gray-300'}`}></div>
+            <div className={`border-t-2 w-12 mt-4 ${step >= 3 ? 'border-[#E8750A]' : 'border-gray-300'}`}></div>
             <div>
               <div className={`flex items-center gap-2`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${step >= 3 ? 'bg-[#808000] text-cornsilk' : 'bg-gray-200 text-gray-600'}`}>3</div>
-                <p className={`text-sm font-medium ${step >= 3 ? 'text-black' : 'text-gray-500'}`}>Volume</p>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${step >= 3 ? 'bg-[#E8750A] text-cornsilk' : 'bg-gray-200 text-gray-400'}`}>3</div>
+                <p className={`text-sm font-medium ${step >= 3 ? 'text-cornsilk' : 'text-gray-500'}`}>Volume</p>
               </div>
             </div>
           </div>
