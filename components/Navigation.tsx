@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, ChevronDown } from 'lucide-react';
-
+import { Menu, X, ChevronDown, Instagram } from 'lucide-react';
 const navigation = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
@@ -94,8 +93,18 @@ export default function Navigation() {
           </div>
 
 
-          {/* Auth Buttons */}
+          {/* Social Links & Auth */}
           <div className="hidden md:flex items-center gap-3">
+            <a 
+              href="https://www.instagram.com/allmysell/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-[#E8750A] transition-colors p-2"
+              aria-label="Instagram"
+            >
+              <Instagram size={24} />
+            </a>
+            <div className="w-px h-6 bg-gray-800 mx-1"></div>
             <Link
               href="/login"
               className="px-6 py-2 rounded-lg text-[#E8750A] hover:bg-[#E8750A]/10 transition-colors font-medium"
@@ -110,8 +119,17 @@ export default function Navigation() {
             </Link>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile menu button & Icons */}
           <div className="md:hidden flex items-center gap-3">
+            <a 
+              href="https://www.instagram.com/allmysell/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-[#E8750A] transition-colors p-1"
+              aria-label="Instagram"
+            >
+              <Instagram size={22} />
+            </a>
             <Link
               href="/register"
               className="px-3 py-1.5 bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-white rounded text-sm hover:shadow-lg transition-all font-medium"
