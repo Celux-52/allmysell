@@ -225,7 +225,7 @@ export default function AboutPage() {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <div className="bg-[#1A1A1A] p-8 rounded-xl shadow-lg border border-[#E8750A]/10">
               <div className="flex items-center space-x-4 mb-6">
                 <div className="bg-gradient-to-br from-[#E8750A] to-[#F59E0B] text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">
@@ -266,28 +266,6 @@ export default function AboutPage() {
                 <div className="flex items-center space-x-3 text-gray-300">
                   <Mail size={20} className="text-[#F59E0B]" />
                   <span>yunussukur7@gmail.com</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-[#1A1A1A] p-8 rounded-xl shadow-lg border border-[#E8750A]/10">
-              <div className="flex items-center space-x-4 mb-6">
-                <div className="bg-gradient-to-br from-[#C2410C] to-[#E8750A] text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">
-                  F
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-cornsilk">Ferit Berke Gündüz</h3>
-                  <p className="text-gray-400">Social Media Manager</p>
-                </div>
-              </div>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3 text-gray-300">
-                  <Phone size={20} className="text-[#C2410C]" />
-                  <span>+90 530 890 69 23</span>
-                </div>
-                <div className="flex items-center space-x-3 text-gray-300">
-                  <Mail size={20} className="text-[#C2410C]" />
-                  <span>feritberke2334@gmail.com</span>
                 </div>
               </div>
             </div>
