@@ -5,6 +5,52 @@ import TrackedLink from '@/components/TrackedLink';
 
 // eBay Products - Only active products
 const products = [
+  // NEW TRIANGLES-3
+  {
+    id: 'universal-car-hud-gps',
+    name: 'Universal Car HUD Head Up Display Digital GPS Speedometer',
+    description: 'Windshield Projector',
+    category: 'Car Accessories',
+    image: 'https://i.ebayimg.com/images/g/MJ0AAeSwwatp2E4Y/s-l1600.webp',
+    platform: 'eBay - Triangles-3',
+    platformLink: 'https://www.ebay.com/itm/318130123471',
+  },
+  {
+    id: 'hidden-camera-car-dvr',
+    name: 'Hidden Camera Car DVR Dash Cam',
+    description: 'USB / WIFI Driving Video Recorder G-sensor',
+    category: 'Car Accessories',
+    image: 'https://i.ebayimg.com/images/g/XcIAAeSw-dNp2Vn0/s-l1600.webp',
+    platform: 'eBay - Triangles-3',
+    platformLink: 'https://www.ebay.com/itm/318132495681',
+  },
+  {
+    id: 'wall-mounted-pegboard',
+    name: 'Wall Mounted Pegboard Tool Organizer',
+    description: 'Rack Kit w/ Storage Bins',
+    category: 'Office & Tools',
+    image: 'https://i.ebayimg.com/images/g/61kAAeSwzLlp2V1p/s-l960.webp',
+    platform: 'eBay - Triangles-3',
+    platformLink: 'https://www.ebay.com/itm/318132518371',
+  },
+  {
+    id: 'air-pressure-gauge-tester',
+    name: 'Air Pressure Gauge Meter Tester',
+    description: 'Digital Tire Bike Car Truck LCD Display',
+    category: 'Car Accessories',
+    image: 'https://i.ebayimg.com/images/g/2I4AAeSwHFFp2V6A/s-l1600.webp',
+    platform: 'eBay - Triangles-3',
+    platformLink: 'https://www.ebay.com/itm/318132548596',
+  },
+  {
+    id: 'phone-repair-silicone-pad',
+    name: 'Phone Repair Silicone Pad',
+    description: 'Desk Heat Insulation Magnetic Work Mat Soldering Iron',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/NScAAeSwnxZp2V~y/s-l1600.webp',
+    platform: 'eBay - Triangles-3',
+    platformLink: 'https://www.ebay.com/itm/318132562539',
+  },
   // NEW IN-STOCK
   {
     id: 'led-wireless-charger-3in1',

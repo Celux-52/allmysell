@@ -2,6 +2,7 @@ import { ExternalLink, Package, Shield, Zap } from 'lucide-react';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import TrackedLink from '@/components/TrackedLink';
+import EbayClient from './EbayClient';
 
 export const metadata: Metadata = {
   title: 'Our eBay Store - AllMySell | Tech Products',
@@ -9,7 +10,53 @@ export const metadata: Metadata = {
 };
 
 const products = [
-  // NEW IN-STOCK PRODUCTS
+  // NEW TRIANGLES-3 PRODUCTS
+  {
+    name: 'Universal Car HUD Head Up Display Digital GPS Speedometer',
+    description: 'Windshield Projector',
+    category: 'Car Accessories',
+    image: 'https://i.ebayimg.com/images/g/MJ0AAeSwwatp2E4Y/s-l1600.webp',
+    link: 'https://www.ebay.com/itm/318130123471',
+    soldOut: false,
+    store: 'triangles-3',
+  },
+  {
+    name: 'Hidden Camera Car DVR Dash Cam',
+    description: 'USB / WIFI Driving Video Recorder G-sensor',
+    category: 'Car Accessories',
+    image: 'https://i.ebayimg.com/images/g/XcIAAeSw-dNp2Vn0/s-l1600.webp',
+    link: 'https://www.ebay.com/itm/318132495681',
+    soldOut: false,
+    store: 'triangles-3',
+  },
+  {
+    name: 'Wall Mounted Pegboard Tool Organizer',
+    description: 'Rack Kit w/ Storage Bins',
+    category: 'Office & Tools',
+    image: 'https://i.ebayimg.com/images/g/61kAAeSwzLlp2V1p/s-l960.webp',
+    link: 'https://www.ebay.com/itm/318132518371',
+    soldOut: false,
+    store: 'triangles-3',
+  },
+  {
+    name: 'Air Pressure Gauge Meter Tester',
+    description: 'Digital Tire Bike Car Truck LCD Display',
+    category: 'Car Accessories',
+    image: 'https://i.ebayimg.com/images/g/2I4AAeSwHFFp2V6A/s-l1600.webp',
+    link: 'https://www.ebay.com/itm/318132548596',
+    soldOut: false,
+    store: 'triangles-3',
+  },
+  {
+    name: 'Phone Repair Silicone Pad',
+    description: 'Desk Heat Insulation Magnetic Work Mat Soldering Iron',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/NScAAeSwnxZp2V~y/s-l1600.webp',
+    link: 'https://www.ebay.com/itm/318132562539',
+    soldOut: false,
+    store: 'triangles-3',
+  },
+  // NEW IN-STOCK PRODUCTS (YMGlobal)
   {
     name: '3 in 1 LED Wireless Charger Stand Foldable',
     description: 'Foldable Wireless Charger for iPhone 15 14 13, Watch & AirPods Pro',
@@ -17,6 +64,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/ZqoAAeSwiT9p2Eox/s-l1600.webp',
     link: 'https://www.ebay.com/usr/ymglobal',
     soldOut: false,
+    store: 'ymglobal',
   },
   {
     name: 'Magnetic MagSafe Wireless Power Bank 5000mAh',
@@ -25,6 +73,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/oIAAAeSwg6Bp2EeD/s-l1600.webp',
     link: 'https://www.ebay.com/usr/ymglobal',
     soldOut: false,
+    store: 'ymglobal',
   },
   {
     name: '360° Rotate Metal Desk Phone Holder',
@@ -33,6 +82,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/XBsAAeSwDWtp2EXb/s-l1600.webp',
     link: 'https://www.ebay.com/usr/ymglobal',
     soldOut: false,
+    store: 'ymglobal',
   },
   {
     name: 'Car Phone Holder Vent Dashboard',
@@ -41,6 +91,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/mYkAAeSw4G1p2ETh/s-l1600.webp',
     link: 'https://www.ebay.com/usr/ymglobal',
     soldOut: false,
+    store: 'ymglobal',
   },
   {
     name: 'MagSafe Magnetic Luxury Leather Card Holder Wallet Case',
@@ -49,6 +100,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/bsYAAeSwICVp2EMe/s-l1600.webp',
     link: 'https://www.ebay.com/usr/ymglobal',
     soldOut: false,
+    store: 'ymglobal',
   },
   {
     name: '9H HD Tempered Glass Screen Protector',
@@ -57,6 +109,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/7HYAAeSwi0Vp2Djv/s-l1600.webp',
     link: 'https://www.ebay.com/usr/ymglobal',
     soldOut: false,
+    store: 'ymglobal',
   },
   // SOLD OUT PRODUCTS
   {
@@ -66,6 +119,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/-pgAAeSw93dpbDuO/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206006630493',
     soldOut: true,
+    store: 'ymglobal',
   },
   {
     name: '360° Rotating Phone Holder',
@@ -74,6 +128,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/qCsAAeSwVyNpbDte/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206006629452',
     soldOut: true,
+    store: 'ymglobal',
   },
   {
     name: '8 in 2 USB Hub',
@@ -82,6 +137,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/Gx8AAeSw~eVpWc1Q/s-l1600.webp',
     link: 'https://www.ebay.com/itm/205970305941',
     soldOut: true,
+    store: 'ymglobal',
   },
   {
     name: 'Magnetic Power Bank 10000mAh',
@@ -90,6 +146,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/eloAAeSwe2FpY56W/s-l1600.webp',
     link: 'https://www.ebay.com/itm/205990599969',
     soldOut: true,
+    store: 'ymglobal',
   },
   {
     name: '20000mAh 45W Portable Charger',
@@ -98,6 +155,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/V-4AAeSwRJZpWcdu/s-l1600.webp',
     link: 'https://www.ebay.com/itm/205970285393',
     soldOut: true,
+    store: 'ymglobal',
   },
   {
     name: 'Wired Earphones Lightning',
@@ -106,6 +164,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/OBsAAeSwgb9paZsz/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206002163067',
     soldOut: true,
+    store: 'ymglobal',
   },
   {
     name: 'MagSafe Sticker 360 Magnetic Ring 2 Pack',
@@ -114,6 +173,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/euIAAeSwTh5p0SZ5/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206189596772',
     soldOut: true,
+    store: 'ymglobal',
   },
   {
     name: 'Magnetic Phone Grip Ring Holder for MagSafe',
@@ -122,6 +182,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/nSoAAeSw-2Bp0VQE/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206189855409',
     soldOut: true,
+    store: 'ymglobal',
   },
   {
     name: '8PCS WebCam Cover Slide Camera Privacy',
@@ -130,6 +191,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/nZEAAeSwLydp0V5y/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206189917643',
     soldOut: true,
+    store: 'ymglobal',
   },
   {
     name: '3Black for MagSafe Ring Sticker',
@@ -138,6 +200,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/JyUAAeSwLeFp0WHH/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206189931472',
     soldOut: true,
+    store: 'ymglobal',
   },
   {
     name: 'Bluetooth 5.0 USB Audio Adapter',
@@ -146,6 +209,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/4zIAAeSwzypp0aFP/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206190278629',
     soldOut: true,
+    store: 'ymglobal',
   },
   {
     name: 'For iPhone 17 Pro Max Case',
@@ -154,6 +218,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/VlcAAeSwbSBp0ZL1/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206190239980',
     soldOut: true,
+    store: 'ymglobal',
   },
   {
     name: 'Magnetic Phone Case For iPhone 16',
@@ -162,6 +227,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/buoAAeSwlcZp0aA3/s-l1600.webp',
     link: 'https://www.ebay.com/itm/206190264444',
     soldOut: true,
+    store: 'ymglobal',
   },
 ];
 
@@ -315,64 +381,9 @@ export default function EbayPage() {
               🔥 6 new products in stock — Shop now!
             </div>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {products.map((product, index) => (
-              product.soldOut ? (
-                <div
-                  key={index}
-                  className="relative bg-[#1A1A1A] rounded-xl shadow-lg overflow-hidden border border-gray-800 animate-scaleIn opacity-75"
-                  style={{ animationDelay: `${(index % 8) * 0.1}s` }}
-                >
-                  <div className="absolute inset-0 bg-black/40 z-10 flex items-center justify-center">
-                    <div className="bg-red-600 text-white px-6 py-2 rounded-full font-bold text-lg transform -rotate-12 shadow-lg">
-                      SOLD OUT
-                    </div>
-                  </div>
-                  <div className="relative w-full h-52 bg-[#111111] flex items-center justify-center p-4">
-                    <img src={product.image} alt={product.name} className="w-full h-full object-contain grayscale opacity-60" />
-                  </div>
-                  <div className="p-5">
-                    <div className="text-xs text-gray-500 font-semibold mb-2 uppercase tracking-wide">{product.category}</div>
-                    <h3 className="text-lg font-bold text-gray-400 mb-2 line-clamp-2">{product.name}</h3>
-                    <p className="text-gray-500 text-sm mb-4 line-clamp-2 leading-relaxed">{product.description}</p>
-                    <div className="flex items-center justify-between pt-3 border-t border-gray-800">
-                      <span className="text-red-500 font-semibold text-sm">Sold Out</span>
-                      <span className="text-gray-600 text-xs">Temporarily Unavailable</span>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <TrackedLink
-                  key={index}
-                  href={product.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  eventName="ebay_product_click"
-                  buttonId={`ebay_product_${index}`}
-                  payload={{ item_name: product.name, item_category: product.category }}
-                  className="bg-[#1A1A1A] rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden block group border border-[#E8750A]/20 hover:border-[#E8750A]/50 animate-scaleIn"
-                  style={{ animationDelay: `${(index % 8) * 0.1}s` }}
-                >
-                  <div className="absolute top-3 right-3 z-10 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">IN STOCK</div>
-                  <div className="relative w-full h-52 bg-[#111111] flex items-center justify-center p-4">
-                    <img src={product.image} alt={product.name} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
-                  </div>
-                  <div className="p-5">
-                    <div className="text-xs text-[#E8750A] font-semibold mb-2 uppercase tracking-wide">{product.category}</div>
-                    <h3 className="text-lg font-bold text-cornsilk mb-2 line-clamp-2 group-hover:text-[#E8750A] transition-colors">{product.name}</h3>
-                    <p className="text-gray-400 text-sm mb-4 line-clamp-2 leading-relaxed">{product.description}</p>
-                    <div className="flex items-center justify-between pt-3 border-t border-gray-800">
-                      <span className="text-[#E8750A] font-semibold text-sm">View on eBay</span>
-                      <ExternalLink className="text-[#E8750A] group-hover:translate-x-1 transition-transform" size={18} />
-                    </div>
-                  </div>
-                </TrackedLink>
-              )
-            ))}
           </div>
-        </div>
+          <EbayClient products={products} />
       </section>
-
       {/* Categories */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

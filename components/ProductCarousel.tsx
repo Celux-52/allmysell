@@ -3,6 +3,43 @@
 import Link from 'next/link';
 
 const products = [
+
+  // NEW TRIANGLES-3
+  {
+    id: 'universal-car-hud-gps',
+    name: 'Universal Car HUD GPS Speedometer',
+    image: 'https://i.ebayimg.com/images/g/MJ0AAeSwwatp2E4Y/s-l1600.webp',
+    category: 'Car Accessories',
+    soldOut: false,
+  },
+  {
+    id: 'hidden-camera-car-dvr',
+    name: 'Hidden Camera Car DVR Dash Cam',
+    image: 'https://i.ebayimg.com/images/g/XcIAAeSw-dNp2Vn0/s-l1600.webp',
+    category: 'Car Accessories',
+    soldOut: false,
+  },
+  {
+    id: 'wall-mounted-pegboard',
+    name: 'Wall Mounted Pegboard Tool Organizer',
+    image: 'https://i.ebayimg.com/images/g/61kAAeSwzLlp2V1p/s-l960.webp',
+    category: 'Office & Tools',
+    soldOut: false,
+  },
+  {
+    id: 'air-pressure-gauge-tester',
+    name: 'Air Pressure Gauge Meter',
+    image: 'https://i.ebayimg.com/images/g/2I4AAeSwHFFp2V6A/s-l1600.webp',
+    category: 'Car Accessories',
+    soldOut: false,
+  },
+  {
+    id: 'phone-repair-silicone-pad',
+    name: 'Phone Repair Silicone Pad',
+    image: 'https://i.ebayimg.com/images/g/NScAAeSwnxZp2V~y/s-l1600.webp',
+    category: 'Phone Accessories',
+    soldOut: false,
+  },
   // NEW IN-STOCK
   {
     id: 'led-wireless-charger-3in1',

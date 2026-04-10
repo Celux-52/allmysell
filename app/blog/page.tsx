@@ -4,6 +4,47 @@ import Image from 'next/image';
 
 // eBay Products - active + previous
 const ebayProducts = [
+  // NEW TRIANGLES-3
+  {
+    id: 'universal-car-hud-gps',
+    name: 'Universal Car HUD Head Up Display Digital GPS Speedometer',
+    description: 'Windshield Projector',
+    category: 'Car Accessories',
+    image: 'https://i.ebayimg.com/images/g/MJ0AAeSwwatp2E4Y/s-l1600.webp',
+    platform: 'eBay - Triangles-3',
+  },
+  {
+    id: 'hidden-camera-car-dvr',
+    name: 'Hidden Camera Car DVR Dash Cam',
+    description: 'USB / WIFI Driving Video Recorder G-sensor',
+    category: 'Car Accessories',
+    image: 'https://i.ebayimg.com/images/g/XcIAAeSw-dNp2Vn0/s-l1600.webp',
+    platform: 'eBay - Triangles-3',
+  },
+  {
+    id: 'wall-mounted-pegboard',
+    name: 'Wall Mounted Pegboard Tool Organizer',
+    description: 'Rack Kit w/ Storage Bins',
+    category: 'Office & Tools',
+    image: 'https://i.ebayimg.com/images/g/61kAAeSwzLlp2V1p/s-l960.webp',
+    platform: 'eBay - Triangles-3',
+  },
+  {
+    id: 'air-pressure-gauge-tester',
+    name: 'Air Pressure Gauge Meter Tester',
+    description: 'Digital Tire Bike Car Truck LCD Display',
+    category: 'Car Accessories',
+    image: 'https://i.ebayimg.com/images/g/2I4AAeSwHFFp2V6A/s-l1600.webp',
+    platform: 'eBay - Triangles-3',
+  },
+  {
+    id: 'phone-repair-silicone-pad',
+    name: 'Phone Repair Silicone Pad',
+    description: 'Desk Heat Insulation Magnetic Work Mat Soldering Iron',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/NScAAeSwnxZp2V~y/s-l1600.webp',
+    platform: 'eBay - Triangles-3',
+  },
   // NEW IN-STOCK
   {
     id: 'led-wireless-charger-3in1',
@@ -161,6 +202,62 @@ const ebayProducts = [
 ];
 
 const blogPosts = [
+  // NEW TRIANGLES-3 BLOG POSTS
+  {
+    id: 'universal-car-hud-gps',
+    title: 'Upgrade Your Drive with a Universal Car HUD GPS',
+    excerpt: 'Keep your eyes on the road. This digital GPS speedometer projects your speed directly onto your windshield for a safer driving experience.',
+    category: 'Car Accessories',
+    platform: 'eBay - Triangles-3',
+    image: 'https://i.ebayimg.com/images/g/MJ0AAeSwwatp2E4Y/s-l1600.webp',
+    date: '2024-04-10',
+    readTime: '3 min read',
+    tags: ['Car Gadgets', 'Safety', 'HUD'],
+  },
+  {
+    id: 'hidden-camera-car-dvr',
+    title: 'Why You Need a Hidden Dash Cam in 2024',
+    excerpt: 'Protect yourself on the road with this Wifi Dash Cam DVR. Comes with G-sensor recording, hidden design, and clear video playback.',
+    category: 'Car Accessories',
+    platform: 'eBay - Triangles-3',
+    image: 'https://i.ebayimg.com/images/g/XcIAAeSw-dNp2Vn0/s-l1600.webp',
+    date: '2024-04-09',
+    readTime: '5 min read',
+    tags: ['Dash Cam', 'Car Safety', 'DVR'],
+  },
+  {
+    id: 'wall-mounted-pegboard',
+    title: 'Organize Your Workspace: The Wall Mounted Pegboard Kit',
+    excerpt: 'From tools to office supplies, clear your desk clutter with this modular wall-mounted pegboard organizer and storage bins.',
+    category: 'Office & Tools',
+    platform: 'eBay - Triangles-3',
+    image: 'https://i.ebayimg.com/images/g/61kAAeSwzLlp2V1p/s-l960.webp',
+    date: '2024-04-08',
+    readTime: '4 min read',
+    tags: ['Organization', 'Workspace', 'Tools'],
+  },
+  {
+    id: 'air-pressure-gauge-tester',
+    title: 'The Importance of Checking Tire Pressure (and the Best Tool for It)',
+    excerpt: 'A digital LCD tire pressure gauge is essential for your cars health and your safety. Learn why you need to keep one in your glovebox.',
+    category: 'Car Accessories',
+    platform: 'eBay - Triangles-3',
+    image: 'https://i.ebayimg.com/images/g/2I4AAeSwHFFp2V6A/s-l1600.webp',
+    date: '2024-04-07',
+    readTime: '3 min read',
+    tags: ['Car Maintenance', 'Tire Pressure', 'Tools'],
+  },
+  {
+    id: 'phone-repair-silicone-pad',
+    title: 'Must-Have Tech Tool: Magnetic Silicone Phone Repair Pad',
+    excerpt: 'If you solder, repair phones, or just tinker with tech, this heat resistant magnetic work mat will save your desk and your sanity.',
+    category: 'Phone Accessories',
+    platform: 'eBay - Triangles-3',
+    image: 'https://i.ebayimg.com/images/g/NScAAeSwnxZp2V~y/s-l1600.webp',
+    date: '2024-04-06',
+    readTime: '4 min read',
+    tags: ['Repair', 'Tech Tools', 'Soldering'],
+  },
   {
     id: 'led-wireless-charger-3in1',
     title: 'Why a 3-in-1 LED Wireless Charger is the Ultimate Desk Buddy',
