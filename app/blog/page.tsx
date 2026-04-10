@@ -2,8 +2,58 @@ import Link from 'next/link';
 import { Calendar, Clock, ArrowRight, TrendingUp } from 'lucide-react';
 import Image from 'next/image';
 
-// eBay Products - 10 aktif ürün
+// eBay Products - active + previous
 const ebayProducts = [
+  // NEW IN-STOCK
+  {
+    id: 'led-wireless-charger-3in1',
+    name: '3 in 1 LED Wireless Charger Stand Foldable',
+    description: 'Foldable Wireless Charger for iPhone 15 14 13, Watch & AirPods Pro',
+    category: 'Chargers',
+    image: 'https://i.ebayimg.com/images/g/ZqoAAeSwiT9p2Eox/s-l1600.webp',
+    platform: 'eBay',
+  },
+  {
+    id: 'magsafe-power-bank-5000',
+    name: 'Magnetic MagSafe Wireless Power Bank 5000mAh',
+    description: 'Fast Charger for iPhone 17 16 15',
+    category: 'Chargers',
+    image: 'https://i.ebayimg.com/images/g/oIAAAeSwg6Bp2EeD/s-l1600.webp',
+    platform: 'eBay',
+  },
+  {
+    id: 'metal-desk-phone-holder-360',
+    name: '360° Rotate Metal Desk Phone Holder',
+    description: 'Adjustable Stand For Phone & Pad',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/XBsAAeSwDWtp2EXb/s-l1600.webp',
+    platform: 'eBay',
+  },
+  {
+    id: 'car-phone-holder-vent',
+    name: 'Car Phone Holder Vent Dashboard',
+    description: 'Universal Car Mount for All Phones',
+    category: 'Car Accessories',
+    image: 'https://i.ebayimg.com/images/g/mYkAAeSw4G1p2ETh/s-l1600.webp',
+    platform: 'eBay',
+  },
+  {
+    id: 'magsafe-leather-wallet-case',
+    name: 'MagSafe Magnetic Luxury Leather Card Holder Wallet Case',
+    description: 'For iPhone 14 Pro Max 13 12',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/bsYAAeSwICVp2EMe/s-l1600.webp',
+    platform: 'eBay',
+  },
+  {
+    id: 'tempered-glass-screen-protector',
+    name: '9H HD Tempered Glass Screen Protector',
+    description: 'For iPhone 16 15 14 13 12 11 Pro Max Clear',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/7HYAAeSwi0Vp2Djv/s-l1600.webp',
+    platform: 'eBay',
+  },
+  // PREVIOUS PRODUCTS
   {
     id: 'laptop-stand-rotating',
     name: 'Adjustable 360° Rotating Laptop Stand',
@@ -54,8 +104,8 @@ const ebayProducts = [
   },
   {
     id: 'magsafe-sticker-360-ring',
-    name: 'MagSafe Sticker 360 Manyetik Halkalı 2 Paket',
-    description: 'Evrensel Kablosuz Şarj Adaptörü Kiti',
+    name: 'MagSafe Sticker 360 Magnetic Ring 2 Pack',
+    description: 'Universal Wireless Charging Adapter Kit',
     category: 'Phone Accessories',
     image: 'https://i.ebayimg.com/images/g/euIAAeSwTh5p0SZ5/s-l1600.webp',
     platform: 'eBay',
@@ -112,6 +162,39 @@ const ebayProducts = [
 
 const blogPosts = [
   {
+    id: 'led-wireless-charger-3in1',
+    title: 'Why a 3-in-1 LED Wireless Charger is the Ultimate Desk Buddy',
+    excerpt: 'Charge your iPhone, Apple Watch, and AirPods all at once with this foldable LED stand. Sleek, compact, and incredibly convenient.',
+    category: 'Chargers',
+    platform: 'eBay',
+    image: 'https://i.ebayimg.com/images/g/ZqoAAeSwiT9p2Eox/s-l1600.webp',
+    date: '2024-04-08',
+    readTime: '4 min read',
+    tags: ['Wireless Charging', 'iPhone', 'Desk Setup'],
+  },
+  {
+    id: 'magsafe-power-bank-5000',
+    title: 'MagSafe Power Bank 5000mAh: Compact Charging On the Go',
+    excerpt: 'Never run out of battery again. This magnetic power bank snaps onto your iPhone and delivers fast wireless charging wherever you are.',
+    category: 'Chargers',
+    platform: 'eBay',
+    image: 'https://i.ebayimg.com/images/g/oIAAAeSwg6Bp2EeD/s-l1600.webp',
+    date: '2024-04-06',
+    readTime: '5 min read',
+    tags: ['MagSafe', 'Power Bank', 'Travel'],
+  },
+  {
+    id: 'tempered-glass-screen-protector',
+    title: '9H Tempered Glass: The Screen Protector Your iPhone Deserves',
+    excerpt: 'Crystal clear protection with 9H hardness rating. Compatible with iPhone 16 through iPhone 11 Pro Max.',
+    category: 'Phone Accessories',
+    platform: 'eBay',
+    image: 'https://i.ebayimg.com/images/g/7HYAAeSwi0Vp2Djv/s-l1600.webp',
+    date: '2024-04-04',
+    readTime: '3 min read',
+    tags: ['Screen Protection', 'iPhone', 'Durability'],
+  },
+  {
     id: 'laptop-stand-rotating',
     title: 'Why a 360° Rotating Laptop Stand is a Must-Have for Remote Work',
     excerpt: 'Ergonomics in a home office are essential. Discover how a simple aluminum stand can instantly upgrade your posture, cooling efficiency, and desk aesthetic.',
@@ -134,12 +217,12 @@ const blogPosts = [
     tags: ['Power Delivery', 'iPhone 15', 'Travel'],
   },
   {
-    id: 'phone-holder-rotating',
-    title: 'The Ultimate Guide to Safe Driving with Car Phone Mounts',
-    excerpt: 'From GPS navigation to hands-free calling, a sturdy car mount is a life saver. We review the 360° Sun Visor Phone Holder and see how it performs.',
+    id: 'car-phone-holder-vent',
+    title: 'Best Car Phone Holders for Safe Driving in 2024',
+    excerpt: 'Mount your phone securely on your vent or dashboard. This universal holder keeps your device accessible and your hands on the wheel.',
     category: 'Car Accessories',
     platform: 'eBay',
-    image: 'https://i.ebayimg.com/images/g/qCsAAeSwVyNpbDte/s-l1600.webp',
+    image: 'https://i.ebayimg.com/images/g/mYkAAeSw4G1p2ETh/s-l1600.webp',
     date: '2024-01-20',
     readTime: '5 min read',
     tags: ['Road Trip', 'Safety', 'Car Gadgets'],
@@ -154,7 +237,7 @@ const blogPosts = [
     date: '2024-02-14',
     readTime: '3 min read',
     tags: ['Audio Tech', 'Bluetooth 5.0', 'PC Build'],
-  }
+  },
 ];
 
 const featuredPost = blogPosts[0];

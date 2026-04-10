@@ -5,6 +5,62 @@ import TrackedLink from '@/components/TrackedLink';
 
 // eBay Products - Only active products
 const products = [
+  // NEW IN-STOCK
+  {
+    id: 'led-wireless-charger-3in1',
+    name: '3 in 1 LED Wireless Charger Stand Foldable',
+    description: 'Foldable Wireless Charger for iPhone 15 14 13, Watch & AirPods Pro',
+    category: 'Chargers',
+    image: 'https://i.ebayimg.com/images/g/ZqoAAeSwiT9p2Eox/s-l1600.webp',
+    platform: 'eBay',
+    platformLink: 'https://www.ebay.com/usr/ymglobal',
+  },
+  {
+    id: 'magsafe-power-bank-5000',
+    name: 'Magnetic MagSafe Wireless Power Bank 5000mAh',
+    description: 'Fast Charger for iPhone 17 16 15',
+    category: 'Chargers',
+    image: 'https://i.ebayimg.com/images/g/oIAAAeSwg6Bp2EeD/s-l1600.webp',
+    platform: 'eBay',
+    platformLink: 'https://www.ebay.com/usr/ymglobal',
+  },
+  {
+    id: 'metal-desk-phone-holder-360',
+    name: '360° Rotate Metal Desk Phone Holder',
+    description: 'Adjustable Stand For Phone & Pad',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/XBsAAeSwDWtp2EXb/s-l1600.webp',
+    platform: 'eBay',
+    platformLink: 'https://www.ebay.com/usr/ymglobal',
+  },
+  {
+    id: 'car-phone-holder-vent',
+    name: 'Car Phone Holder Vent Dashboard',
+    description: 'Universal Car Mount for All Phones',
+    category: 'Car Accessories',
+    image: 'https://i.ebayimg.com/images/g/mYkAAeSw4G1p2ETh/s-l1600.webp',
+    platform: 'eBay',
+    platformLink: 'https://www.ebay.com/usr/ymglobal',
+  },
+  {
+    id: 'magsafe-leather-wallet-case',
+    name: 'MagSafe Magnetic Luxury Leather Card Holder Wallet Case',
+    description: 'For iPhone 14 Pro Max 13 12',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/bsYAAeSwICVp2EMe/s-l1600.webp',
+    platform: 'eBay',
+    platformLink: 'https://www.ebay.com/usr/ymglobal',
+  },
+  {
+    id: 'tempered-glass-screen-protector',
+    name: '9H HD Tempered Glass Screen Protector',
+    description: 'For iPhone 16 15 14 13 12 11 Pro Max Clear',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/7HYAAeSwi0Vp2Djv/s-l1600.webp',
+    platform: 'eBay',
+    platformLink: 'https://www.ebay.com/usr/ymglobal',
+  },
+  // PREVIOUS PRODUCTS
   {
     id: 'magsafe-sticker-360-ring',
     name: 'MagSafe Sticker 360 Manyetik Halkalı 2 Paket',

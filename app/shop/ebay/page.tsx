@@ -9,6 +9,56 @@ export const metadata: Metadata = {
 };
 
 const products = [
+  // NEW IN-STOCK PRODUCTS
+  {
+    name: '3 in 1 LED Wireless Charger Stand Foldable',
+    description: 'Foldable Wireless Charger for iPhone 15 14 13, Watch & AirPods Pro',
+    category: 'Chargers',
+    image: 'https://i.ebayimg.com/images/g/ZqoAAeSwiT9p2Eox/s-l1600.webp',
+    link: 'https://www.ebay.com/usr/ymglobal',
+    soldOut: false,
+  },
+  {
+    name: 'Magnetic MagSafe Wireless Power Bank 5000mAh',
+    description: 'Fast Charger for iPhone 17 16 15',
+    category: 'Chargers',
+    image: 'https://i.ebayimg.com/images/g/oIAAAeSwg6Bp2EeD/s-l1600.webp',
+    link: 'https://www.ebay.com/usr/ymglobal',
+    soldOut: false,
+  },
+  {
+    name: '360° Rotate Metal Desk Phone Holder',
+    description: 'Adjustable Stand For Phone & Pad',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/XBsAAeSwDWtp2EXb/s-l1600.webp',
+    link: 'https://www.ebay.com/usr/ymglobal',
+    soldOut: false,
+  },
+  {
+    name: 'Car Phone Holder Vent Dashboard',
+    description: 'Universal Car Mount for All Phones',
+    category: 'Car Accessories',
+    image: 'https://i.ebayimg.com/images/g/mYkAAeSw4G1p2ETh/s-l1600.webp',
+    link: 'https://www.ebay.com/usr/ymglobal',
+    soldOut: false,
+  },
+  {
+    name: 'MagSafe Magnetic Luxury Leather Card Holder Wallet Case',
+    description: 'For iPhone 14 Pro Max 13 12',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/bsYAAeSwICVp2EMe/s-l1600.webp',
+    link: 'https://www.ebay.com/usr/ymglobal',
+    soldOut: false,
+  },
+  {
+    name: '9H HD Tempered Glass Screen Protector',
+    description: 'For iPhone 16 15 14 13 12 11 Pro Max Clear',
+    category: 'Phone Accessories',
+    image: 'https://i.ebayimg.com/images/g/7HYAAeSwi0Vp2Djv/s-l1600.webp',
+    link: 'https://www.ebay.com/usr/ymglobal',
+    soldOut: false,
+  },
+  // SOLD OUT PRODUCTS
   {
     name: 'Adjustable 360° Rotating Laptop Stand',
     description: 'Aluminum Laptop Stand and Hub for Gaming, Gray',
@@ -180,11 +230,11 @@ export default function EbayPage() {
                 Serving you with technology and mobile accessory products. 
                 You can safely purchase all our products on eBay.
               </p>
-              {/* Sold Out Notice */}
-              <div className="bg-red-500/20 border border-red-500/40 rounded-xl p-4 mb-8 animate-slideInLeft" style={{animationDelay: '0.15s'}}>
-                <p className="text-red-300 font-semibold flex items-center gap-2">
-                  <span className="text-xl">⚠️</span>
-                  All products are currently sold out. New stock coming soon!
+              {/* New Stock Notice */}
+              <div className="bg-green-500/20 border border-green-500/40 rounded-xl p-4 mb-8 animate-slideInLeft" style={{animationDelay: '0.15s'}}>
+                <p className="text-green-300 font-semibold flex items-center gap-2">
+                  <span className="text-xl">🔥</span>
+                  6 new products just arrived! Shop now while stocks last.
                 </p>
               </div>
               <TrackedLink
@@ -231,9 +281,9 @@ export default function EbayPage() {
           {/* Stats */}
           <div className="grid md:grid-cols-4 gap-8 mb-16">
             <div className="text-center p-6 bg-[#1A1A1A] rounded-xl border border-[#E8750A]/10">
-              <div className="text-4xl font-bold text-red-500 mb-2">13</div>
-              <div className="text-gray-400 font-medium">Total Products</div>
-              <div className="text-xs text-red-400 mt-1">All Sold Out</div>
+              <div className="text-4xl font-bold text-green-500 mb-2">6</div>
+              <div className="text-gray-400 font-medium">In Stock</div>
+              <div className="text-xs text-green-400 mt-1">Available Now</div>
             </div>
             <div className="text-center p-6 bg-[#1A1A1A] rounded-xl border border-[#E8750A]/10">
               <div className="text-4xl font-bold text-[#E8750A] mb-2">100%</div>
@@ -251,7 +301,7 @@ export default function EbayPage() {
         </div>
       </section>
 
-      {/* Featured Products - ALL SOLD OUT */}
+      {/* Featured Products */}
       <section className="py-20 bg-[#111111]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-slideInUp">
@@ -261,46 +311,63 @@ export default function EbayPage() {
             <p className="text-xl text-gray-400 mb-4">
               Our eBay store product catalog
             </p>
-            <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 text-red-400 px-6 py-3 rounded-full font-semibold">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
-              </svg>
-              All products are currently sold out — New stock arriving soon!
+            <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/30 text-green-400 px-6 py-3 rounded-full font-semibold">
+              🔥 6 new products in stock — Shop now!
             </div>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {products.map((product, index) => (
-              <div
-                key={index}
-                className="relative bg-[#1A1A1A] rounded-xl shadow-lg overflow-hidden border border-gray-800 animate-scaleIn opacity-75"
-                style={{ animationDelay: `${(index % 8) * 0.1}s` }}
-              >
-                {/* Sold Out Overlay */}
-                <div className="absolute inset-0 bg-black/40 z-10 flex items-center justify-center">
-                  <div className="bg-red-600 text-white px-6 py-2 rounded-full font-bold text-lg transform -rotate-12 shadow-lg">
-                    SOLD OUT
+              product.soldOut ? (
+                <div
+                  key={index}
+                  className="relative bg-[#1A1A1A] rounded-xl shadow-lg overflow-hidden border border-gray-800 animate-scaleIn opacity-75"
+                  style={{ animationDelay: `${(index % 8) * 0.1}s` }}
+                >
+                  <div className="absolute inset-0 bg-black/40 z-10 flex items-center justify-center">
+                    <div className="bg-red-600 text-white px-6 py-2 rounded-full font-bold text-lg transform -rotate-12 shadow-lg">
+                      SOLD OUT
+                    </div>
+                  </div>
+                  <div className="relative w-full h-52 bg-[#111111] flex items-center justify-center p-4">
+                    <img src={product.image} alt={product.name} className="w-full h-full object-contain grayscale opacity-60" />
+                  </div>
+                  <div className="p-5">
+                    <div className="text-xs text-gray-500 font-semibold mb-2 uppercase tracking-wide">{product.category}</div>
+                    <h3 className="text-lg font-bold text-gray-400 mb-2 line-clamp-2">{product.name}</h3>
+                    <p className="text-gray-500 text-sm mb-4 line-clamp-2 leading-relaxed">{product.description}</p>
+                    <div className="flex items-center justify-between pt-3 border-t border-gray-800">
+                      <span className="text-red-500 font-semibold text-sm">Sold Out</span>
+                      <span className="text-gray-600 text-xs">Temporarily Unavailable</span>
+                    </div>
                   </div>
                 </div>
-
-                <div className="relative w-full h-52 bg-[#111111] flex items-center justify-center p-4">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-full object-contain grayscale opacity-60"
-                  />
-                </div>
-                <div className="p-5">
-                  <div className="text-xs text-gray-500 font-semibold mb-2 uppercase tracking-wide">{product.category}</div>
-                  <h3 className="text-lg font-bold text-gray-400 mb-2 line-clamp-2">
-                    {product.name}
-                  </h3>
-                  <p className="text-gray-500 text-sm mb-4 line-clamp-2 leading-relaxed">{product.description}</p>
-                  <div className="flex items-center justify-between pt-3 border-t border-gray-800">
-                    <span className="text-red-500 font-semibold text-sm">Sold Out</span>
-                    <span className="text-gray-600 text-xs">Temporarily Unavailable</span>
+              ) : (
+                <TrackedLink
+                  key={index}
+                  href={product.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  eventName="ebay_product_click"
+                  buttonId={`ebay_product_${index}`}
+                  payload={{ item_name: product.name, item_category: product.category }}
+                  className="bg-[#1A1A1A] rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden block group border border-[#E8750A]/20 hover:border-[#E8750A]/50 animate-scaleIn"
+                  style={{ animationDelay: `${(index % 8) * 0.1}s` }}
+                >
+                  <div className="absolute top-3 right-3 z-10 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">IN STOCK</div>
+                  <div className="relative w-full h-52 bg-[#111111] flex items-center justify-center p-4">
+                    <img src={product.image} alt={product.name} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
                   </div>
-                </div>
-              </div>
+                  <div className="p-5">
+                    <div className="text-xs text-[#E8750A] font-semibold mb-2 uppercase tracking-wide">{product.category}</div>
+                    <h3 className="text-lg font-bold text-cornsilk mb-2 line-clamp-2 group-hover:text-[#E8750A] transition-colors">{product.name}</h3>
+                    <p className="text-gray-400 text-sm mb-4 line-clamp-2 leading-relaxed">{product.description}</p>
+                    <div className="flex items-center justify-between pt-3 border-t border-gray-800">
+                      <span className="text-[#E8750A] font-semibold text-sm">View on eBay</span>
+                      <ExternalLink className="text-[#E8750A] group-hover:translate-x-1 transition-transform" size={18} />
+                    </div>
+                  </div>
+                </TrackedLink>
+              )
             ))}
           </div>
         </div>
