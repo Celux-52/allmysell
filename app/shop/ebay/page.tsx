@@ -401,7 +401,7 @@ export default function EbayPage() {
           {/* Stats */}
           <div className="grid md:grid-cols-4 gap-8 mb-16">
             <div className="text-center p-6 bg-[#1A1A1A] rounded-xl border border-[#E8750A]/10">
-              <div className="text-4xl font-bold text-green-500 mb-2">6</div>
+              <div className="text-4xl font-bold text-green-500 mb-2">{products.filter(p => !p.soldOut).length}</div>
               <div className="text-gray-400 font-medium">In Stock</div>
               <div className="text-xs text-green-400 mt-1">Available Now</div>
             </div>
@@ -432,7 +432,7 @@ export default function EbayPage() {
               Our eBay store product catalog
             </p>
             <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/30 text-green-400 px-6 py-3 rounded-full font-semibold">
-              🔥 6 new products in stock — Shop now!
+              🔥 {products.filter(p => !p.soldOut).length} new products in stock — Shop now!
             </div>
           </div>
           </div>
