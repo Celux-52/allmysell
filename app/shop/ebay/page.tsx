@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'gaming keyboard and mouse',
+    description: 'gaming keyboard and mouse',
+    category: 'Yeni Eklenenler',
+    image: 'https://i.ebayimg.com/images/g/LHUAAeSwzANp250P/s-l1600.webp',
+    link: 'https://www.ebay.com/itm/206206055435',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Magnetic Phone Holder For Car, Dashboard Car Phone Holder Mount Magnetic Stainless Steel Car Phone Holder - Dashboard Mount, Water-resistant, Rotatable ',
     description: 'Material Others Product Attributes Ordinary Package Size 56*40*40(mm) Our normal...',
     category: 'Yeni Eklenenler',
