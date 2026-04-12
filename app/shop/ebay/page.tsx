@@ -12,6 +12,15 @@ export const metadata: Metadata = {
 const products = [
   {
     name: '\"Premium Quality\"Suitable For IPhone13promax Carbon Fiber Phone Case ',
+    description: 'Material Plastic, Others Product Attributes Magnetic Contains Package Size 200*1...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/a2cd2c42-f77a-4f65-9a1f-3b8bc0159f59.jpg',
+    link: 'https://www.ebay.com/itm/206206506012',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: '\"Premium Quality\"Suitable For IPhone13promax Carbon Fiber Phone Case ',
     description: 'Material',
     category: 'Yeni Eklenenler',
     image: 'https://cf.cjdropshipping.com/a2cd2c42-f77a-4f65-9a1f-3b8bc0159f59.jpg',
