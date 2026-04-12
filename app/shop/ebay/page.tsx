@@ -11,15 +11,6 @@ export const metadata: Metadata = {
 
 const products = [
   {
-    name: '\"Premium Quality\" Usb Mini-portable Digital Display Bladeless Halter Fan ',
-    description: 'Material Plastic Product Attributes Battery Contains Package Size 250*200*100(mm...',
-    category: 'Yeni Eklenenler',
-    image: 'https://oss-cf.cjdropshipping.com/product/2024/06/15/07/84c62333-c531-4c59-bc3e-5523f217e283_trans.jpeg',
-    link: 'https://www.ebay.com/itm/206206547352',
-    soldOut: false,
-    store: 'ymglobal',
-  },
-  {
     name: '\"Premium Quality\"Suitable For IPhone13promax Carbon Fiber Phone Case ',
     description: 'Material Plastic, Others Product Attributes Magnetic Contains Package Size 200*1...',
     category: 'Yeni Eklenenler',
@@ -92,6 +83,15 @@ const products = [
     store: 'ymglobal',
   },
   // NEW TRIANGLES-3 PRODUCTS
+  {
+    name: 'Grass-Fed Hydrolyzed Collagen Peptides',
+    description: 'Hydrolyzed collagen is more readily absorbed, utilizing the amino acids it contains to enhance bodily functions.',
+    category: 'Health & Beauty',
+    image: 'https://i.ebayimg.com/images/g/Nq8AAeSwM~Rp3BfB/s-l1600.webp',
+    link: 'https://www.ebay.com/itm/318141361492',
+    soldOut: false,
+    store: 'triangles-3',
+  },
   {
     name: 'Universal Car HUD Head Up Display Digital GPS Speedometer',
     description: 'Windshield Projector',
@@ -314,6 +314,13 @@ const products = [
 
 const categories = [
   {
+    name: 'Health & Beauty',
+    description: 'Vitamins, supplements and personal care products',
+    productCount: '1',
+    subtext: 'currently in stock',
+    icon: '🧘',
+  },
+  {
     name: 'Chargers & Power Banks',
     description: 'Fast chargers, power banks and charging cables',
     productCount: '0',
@@ -381,7 +388,7 @@ export default function EbayPage() {
               <div className="bg-green-500/20 border border-green-500/40 rounded-xl p-4 mb-8 animate-slideInLeft" style={{animationDelay: '0.15s'}}>
                 <p className="text-green-300 font-semibold flex items-center gap-2">
                   <span className="text-xl">🔥</span>
-                  6 new products just arrived! Shop now while stocks last.
+                  7 new products just arrived! Shop now while stocks last.
                 </p>
               </div>
               <TrackedLink
@@ -462,8 +469,8 @@ export default function EbayPage() {
               🔥 {products.filter(p => !p.soldOut).length} new products in stock — Shop now!
             </div>
           </div>
+          </div>
           <EbayClient products={products} />
-        </div>
       </section>
       {/* Categories */}
       <section className="py-20">
@@ -473,7 +480,7 @@ export default function EbayPage() {
               Product Categories
             </h2>
             <p className="text-xl text-gray-400">
-              All categories currently out of stock — restocking soon
+              New categories being added - start shopping today
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
