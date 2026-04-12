@@ -14,8 +14,10 @@ function getPrismaClient() {
   
   if (!globalForPrisma.prisma) {
     globalForPrisma.prisma = new PrismaClient({
-      datasource: {
-        url: dbUrl
+      datasources: {
+        db: {
+          url: dbUrl
+        }
       }
     } as any);
   }
