@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Waterproof Floating Pouch Dry Bag Case Cover For iPhone Cell Phone Touchscreen',
+    description: 'Material Plastic Product Attributes Ordinary Package Size 180*100*30(mm) Product...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/quick/product/7df54fa7-8372-4889-80fb-265970d4ea7e.jpg',
+    link: 'https://www.ebay.com/itm/206206476060',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'gaming keyboard and mouse',
     description: 'gaming keyboard and mouse',
     category: 'Yeni Eklenenler',
