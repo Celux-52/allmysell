@@ -1,5 +1,4 @@
 # AllMySell - Multi-Platform E-Commerce Hub
-
 AllMySell, global e-ticaret platformlarındaki mağazalarınızı tek bir çatı altında toplayan merkezi bir web platformudur.
 
 **Şu an sadece eBay mağazası aktif olarak satış yapmaktadır.** Diğer platformlar (Amazon, Etsy, Shopify, TikTok Shop) yapım aşamasındadır ve çok yakında açılacaktır.
