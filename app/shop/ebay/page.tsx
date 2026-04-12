@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Car Detail Brush Soft Brush Interior Cleaning',
+    description: 'Description Material Plastic, Others Product Attributes Ordinary Package Size 24...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2024/06/02/01/c680b307-6d4f-4fcf-94d5-2d292a7868d6.jpg',
+    link: 'https://www.ebay.com/itm/206206381197',
+    soldOut: false,
+    store: 'triangles-3',
+  },
+  {
     name: 'Magnetic Cable Clip Under Desk Cable Management Adjustable Cord Holder Wire Organizer And Cable Management Wire Keeper',
     description: 'Description Material Plastic Product Attributes Magnetic Contains Package Size 1...',
     category: 'Yeni Eklenenler',
