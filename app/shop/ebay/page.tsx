@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: '\"Premium Quality\" Usb Mini-portable Digital Display Bladeless Halter Fan ',
+    description: 'Material Plastic Product Attributes Battery Contains Package Size 250*200*100(mm...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2024/06/15/07/84c62333-c531-4c59-bc3e-5523f217e283_trans.jpeg',
+    link: 'https://www.ebay.com/itm/206206547352',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: '\"Premium Quality\"Suitable For IPhone13promax Carbon Fiber Phone Case ',
     description: 'Material Plastic, Others Product Attributes Magnetic Contains Package Size 200*1...',
     category: 'Yeni Eklenenler',
