@@ -10,6 +10,15 @@ export const metadata: Metadata = {
 };
 
 const products = [
+  {
+    name: 'Magnetic Cable Clip Under Desk Cable Management Adjustable Cord Holder Wire Organizer And Cable Management Wire Keeper',
+    description: 'Description Material Plastic Product Attributes Magnetic Contains Package S...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2024/03/18/08/7ff788b5-f1d2-44c5-8a1e-fa8fff446737.jpg',
+    link: 'https://www.ebay.com/itm/206206354973',
+    soldOut: false,
+    store: 'triangles-3',
+  },
   // NEW TRIANGLES-3 PRODUCTS
   {
     name: 'Universal Car HUD Head Up Display Digital GPS Speedometer',
