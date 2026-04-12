@@ -453,8 +453,8 @@ export default function EbayPage() {
               🔥 {products.filter(p => !p.soldOut).length} new products in stock — Shop now!
             </div>
           </div>
-          </div>
           <EbayClient products={products} />
+        </div>
       </section>
       {/* Categories */}
       <section className="py-20">
