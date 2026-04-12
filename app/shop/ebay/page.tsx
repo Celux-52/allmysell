@@ -11,6 +11,16 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Magnetic Phone Holder For Car, Dashboard Car Phone Holder Mount Magnetic Stainless Steel Car Phone Holder - Dashboard Mount, Water-resistant, Rotatable
+',
+    description: 'Material Others Product Attributes Ordinary Package Size 56*40*40(mm) Our ...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/c8414421-384f-4c91-b47f-29f3f4f363f5.jpg',
+    link: 'https://www.ebay.com/itm/206206355342',
+    soldOut: false,
+    store: 'triangles-3',
+  },
+  {
     name: 'Professional Camera Tripod Stand Holder Mount For Cell Phone, Portable Tripod, Mobile Phone Live Stream Holder, Camera Tripod
 ',
     description: 'Material Others Product Attributes Ordinary Package Size 34*45*345(mm) Our norma...',
