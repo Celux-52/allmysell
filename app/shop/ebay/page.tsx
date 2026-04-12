@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: '\"Premium Quality\"Suitable For IPhone13promax Carbon Fiber Phone Case ',
+    description: 'Material',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/a2cd2c42-f77a-4f65-9a1f-3b8bc0159f59.jpg',
+    link: 'https://www.ebay.com/itm/206206494860',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Waterproof Floating Pouch Dry Bag Case Cover For iPhone Cell Phone Touchscreen',
     description: 'Material Plastic Product Attributes Ordinary Package Size 180*100*30(mm) Product...',
     category: 'Yeni Eklenenler',
