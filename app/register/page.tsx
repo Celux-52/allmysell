@@ -67,19 +67,6 @@ export default function RegisterPage() {
                 Start with just your email. You can add more info later.
               </p>
 
-              {/* Test Mode Info */}
-              <div className="mb-6 p-4 bg-[#E8750A]/10 border border-[#E8750A]/20 rounded-lg">
-                <p className="text-[#E8750A] text-sm font-medium">
-                  <strong>⚠️ Test Mode:</strong> Our email service only works with the following email addresses:
-                </p>
-                <p className="text-[#F59E0B] text-sm mt-2">
-                  test@gmail.com, demo@gmail.com, mehmetali@test.com
-                </p>
-                <p className="text-[#E8750A]/70 text-xs mt-2">
-                  Please use one of the emails above to complete registration.
-                </p>
-              </div>
-
               {error && (
                 <div className="mb-4 p-4 bg-red-500/10 border border-red-500/20 rounded-lg flex items-start gap-3 animate-slideInUp">
                   <AlertCircle className="text-red-500 flex-shrink-0 mt-0.5" size={20} />
