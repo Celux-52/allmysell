@@ -89,3 +89,4 @@ Diğer platformlar açıldığında buraya eklenecektir.
 ## 📄 Lisans
 
 © 2026 AllMySell. Tüm hakları saklıdır.
+
