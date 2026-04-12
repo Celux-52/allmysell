@@ -10,6 +10,15 @@ export const metadata: Metadata = {
 };
 
 const products = [
+  {
+    name: 'Car Detail Brush Soft Brush Interior Cleaning',
+    description: 'Description Material Plastic, Others Product Attributes Ordinary Package Size 24...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2024/06/02/01/c680b307-6d4f-4fcf-94d5-2d292a7868d6.jpg',
+    link: 'https://www.ebay.com/itm/206206401137',
+    soldOut: false,
+    store: 'ymglobal',
+  },
   // NEW TRIANGLES-3 PRODUCTS
   {
     name: 'Universal Car HUD Head Up Display Digital GPS Speedometer',
