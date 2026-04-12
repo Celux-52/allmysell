@@ -8,7 +8,8 @@ function getPrismaClient() {
   const dbUrl = process.env.DATABASE_URL || process.env.POSTGRES_PRISMA_URL || process.env.POSTGRES_URL;
   
   if (!dbUrl) {
-    throw new Error('Database connection URL is not set in environment variables');
+    const availableEnvVars = Object.keys(process.env).filter(key => key.includes('URL') || key.includes('POSTGRES')).join(', ');
+    throw new Error(`Veritabanı bağlantı linki (DATABASE_URL) bulunamadı. Mevcut değişkenler: ${availableEnvVars || 'Yok'}. Lütfen Vercel panelinden Environment Variables kısmını kontrol edin.`);
   }
   
   if (!globalForPrisma.prisma) {
