@@ -18,7 +18,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/MJ0AAeSwwatp2E4Y/s-l1600.webp',
     link: 'https://www.ebay.com/itm/318130123471',
     soldOut: false,
-    store: 'ymglobal',
+    store: 'triangles-3',
   },
   {
     name: 'Hidden Camera Car DVR Dash Cam',
@@ -27,7 +27,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/XcIAAeSw-dNp2Vn0/s-l1600.webp',
     link: 'https://www.ebay.com/itm/318132495681',
     soldOut: false,
-    store: 'ymglobal',
+    store: 'triangles-3',
   },
   {
     name: 'Wall Mounted Pegboard Tool Organizer',
@@ -36,7 +36,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/61kAAeSwzLlp2V1p/s-l960.webp',
     link: 'https://www.ebay.com/itm/318132518371',
     soldOut: false,
-    store: 'ymglobal',
+    store: 'triangles-3',
   },
   {
     name: 'Air Pressure Gauge Meter Tester',
@@ -45,7 +45,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/2I4AAeSwHFFp2V6A/s-l1600.webp',
     link: 'https://www.ebay.com/itm/318132548596',
     soldOut: false,
-    store: 'ymglobal',
+    store: 'triangles-3',
   },
   {
     name: 'Phone Repair Silicone Pad',
@@ -54,7 +54,7 @@ const products = [
     image: 'https://i.ebayimg.com/images/g/NScAAeSwnxZp2V~y/s-l1600.webp',
     link: 'https://www.ebay.com/itm/318132562539',
     soldOut: false,
-    store: 'ymglobal',
+    store: 'triangles-3',
   },
   // NEW IN-STOCK PRODUCTS (YMGlobal)
   {
