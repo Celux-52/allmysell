@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     `;
 
     const emailResponse = await resend.emails.send({
-      from: 'AllMySell <onboarding@resend.dev>',
+      from: 'AllMySell <hello@allmysell.com>',
       to: email,
       subject: 'AllMySell - Email Verification',
       html: htmlContent,

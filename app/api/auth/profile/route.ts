@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
     `;
 
     await resend.emails.send({
-      from: 'AllMySell <onboarding@resend.dev>',
+      from: 'AllMySell <hello@allmysell.com>',
       to: email,
       subject: 'AllMySell - Profiliniz Tamamlandı',
       html: htmlContent,
@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
     `;
 
     await resend.emails.send({
-      from: 'AllMySell <onboarding@resend.dev>',
+      from: 'AllMySell <hello@allmysell.com>',
       to: 'melihbicak@gmail.com',
       subject: `Yeni Profil: ${fullName || email}`,
       html: adminHtmlContent,
