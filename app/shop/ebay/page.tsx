@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Professional Camera Tripod Stand Holder Mount For Cell Phone, Portable Tripod, Mobile Phone Live Stream Holder, Camera Tripod ',
+    description: 'Material Others Product Attributes Ordinary Package Size 34*45*345(mm) Our norma...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/a57d6e8d-b93d-4b70-9fc5-f745fd1809a6.jpg',
+    link: 'https://www.ebay.com/itm/206206381367',
+    soldOut: false,
+    store: 'triangles-3',
+  },
+  {
     name: '360 Auto Face Tracking Gimbal AI Smart Gimbal Face Tracking Auto Phone Holder For Smartphone Video Vlog Live Stabilizer Tripod',
     description: 'Description Material Plastic Product Attributes Battery Contains Package Size 18...',
     category: 'Yeni Eklenenler',
