@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: '360 Auto Face Tracking Gimbal AI Smart Gimbal Face Tracking Auto Phone Holder For Smartphone Video Vlog Live Stabilizer Tripod',
+    description: 'Description Material Plastic Product Attributes Battery Contains Package Size 18...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2024/03/18/08/436215b7-79b6-4f55-8a6f-7eb9d470f45d.jpg',
+    link: 'https://www.ebay.com/itm/206206420005',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Car Detail Brush Soft Brush Interior Cleaning',
     description: 'Description Material Plastic, Others Product Attributes Ordinary Package Size 24...',
     category: 'Yeni Eklenenler',
