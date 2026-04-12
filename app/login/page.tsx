@@ -97,20 +97,6 @@ export default function LoginPage() {
             </div>
           )}
 
-          <div className="mb-6 bg-[#E8750A]/10 border border-[#E8750A]/20 rounded-xl p-4 text-sm text-[#E8750A] flex items-center justify-between">
-            <div>
-              <span className="block font-semibold mb-1">Demo Login</span>
-              <span className="opacity-80 block">test@gmail.com / test123</span>
-            </div>
-            <button 
-              onClick={() => { setEmail('test@gmail.com'); setPassword('test123'); }}
-              type="button" 
-              className="text-xs bg-[#E8750A]/20 hover:bg-[#E8750A]/40 text-[#E8750A] px-3 py-1.5 rounded-lg transition-colors"
-            >
-              Fill
-            </button>
-          </div>
-
           <form className="space-y-6" onSubmit={handleLogin}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
