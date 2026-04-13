@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'New 240W Dual Type-C Fast Charging Cables',
+    description: 'Material Others Product Attributes Ordinary Package Size 215*80*20(mm) The carri...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/66230f5d-472b-4766-80be-14b3f7dba831.jpg',
+    link: 'https://www.ebay.com/itm/206208086011',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'New Product Bending 180 Degrees Data Cable Android TYPEC3A Fast Charge Data Cable',
     description: 'Description Material Others Product Attributes Ordinary Package Size 100*100*40(...',
     category: 'Yeni Eklenenler',
