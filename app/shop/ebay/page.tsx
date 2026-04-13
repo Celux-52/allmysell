@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Compatible with Apple, iPad case',
+    description: 'Description Material Cloth Product Attributes Ordinary Package Size 300*225*40(m...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/15155136/3344408089_603543507.jpg',
+    link: 'https://www.ebay.com/itm/206208136477',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'New Product Bending 180 Degrees Data Cable Android TYPEC3A Fast Charge Data Cable',
     description: 'Description Material Others Product Attributes Ordinary Package Size 100*100*40(...',
     category: 'Yeni Eklenenler',
