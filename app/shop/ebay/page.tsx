@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Golf Travel Bag, Outdoors Soft-Sided Golf Travel Cover Case, Heavy Duty Nylon Wear-Resistant, Padded Golf Luggage Case Cover With Wheels, Foldable Golf Club Storage Bag For Airlines',
+    description: 'Material Others Product Attributes Ordinary Package Size 440*430*200(mm) Extra L...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/17658432/6eb248c8-b4fe-42b6-9eba-ac6b35a67bf9.jpg',
+    link: 'https://www.ebay.com/itm/206208182741',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: '38W Transparent Case Charging Adapter',
     description: 'Material Plastic Product Attributes Electronic Package Size 140*32*90(mm) Produc...',
     category: 'Yeni Eklenenler',
