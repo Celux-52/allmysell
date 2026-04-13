@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'E-ink Screen Phone Case Unlimited Screen Projection Personalized Phone Cover Battery Free New Designer Luxury Phone Case',
+    description: 'Material Plastic Product Attributes Magnetic Contains Package Size 180*150*30(mm...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2024/04/22/05/c87a36b6-7ed8-4734-adf7-2eb7d5a8fe17.jpg',
+    link: 'https://www.ebay.com/itm/206208016791',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: '\"Premium Quality\"Suitable For IPhone13promax Carbon Fiber Phone Case ',
     description: 'Material Plastic, Others Product Attributes Magnetic Contains Package Size 200*1...',
     category: 'Yeni Eklenenler',
