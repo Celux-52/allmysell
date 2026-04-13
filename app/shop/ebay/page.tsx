@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Alcohol Detector For Drunk Driving Detection For Professional Drivers. It Has High Sensitivity And Accurate Sensing Function. Fast Response And Precise Numerical Results',
+    description: 'Material Plastic Product Attributes Battery Contains Package Size 146*85*33(mm) ...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/242f9146-7ecc-4266-9076-3e0d8dd01271.png',
+    link: 'https://www.ebay.com/itm/206208065782',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'R70 LED Fast Charging Built-in Battery Bulb With Hook, Not Available For Weekend Shipping  ',
     description: 'Description Material Glass, Metal, Plastic Product Attributes Electronic Package...',
     category: 'Yeni Eklenenler',
