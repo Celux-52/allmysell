@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Super Fast Charging Usb Single Head Mobile Phone Data Cable',
+    description: 'Material Plastic Product Attributes Ordinary, Thin Package Size 100*60*40(mm) Pr...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/20200920/1009265501235.jpg',
+    link: 'https://www.ebay.com/itm/206208049530',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Karaoke Speaker Microphone',
     description: 'Material Plastic, Metal Product Attributes Battery Contains Package Size 80*210*...',
     category: 'Yeni Eklenenler',
