@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: '38W Transparent Case Charging Adapter',
+    description: 'Material Plastic Product Attributes Electronic Package Size 140*32*90(mm) Produc...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/quick/product/d60587d7-2801-472d-a8c6-ae90263f186e.jpg',
+    link: 'https://www.ebay.com/itm/206208149550',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Leather Key Case Multifunctional Car Zipper',
     description: 'Description Material Leather Product Attributes Ordinary Package Size 140*45*95(...',
     category: 'Yeni Eklenenler',
