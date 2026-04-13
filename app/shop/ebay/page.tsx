@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'R70 LED Fast Charging Built-in Battery Bulb With Hook, Not Available For Weekend Shipping  ',
+    description: 'Description Material Glass, Metal, Plastic Product Attributes Electronic Package...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/af0e3bb8-1d9e-4299-9be4-88a19c07bea3.jpg',
+    link: 'https://www.ebay.com/itm/206208064985',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'UV For Gel Nails, Mini U V LED Nail Light Handheld, With Bracket, Portable Nail Dryer, Rechargeable USB Wireless, For Fast Drying, Black',
     description: 'Material Plastic Product Attributes Ordinary Package Size 150*80*40(mm) [2 Timer...',
     category: 'Yeni Eklenenler',
