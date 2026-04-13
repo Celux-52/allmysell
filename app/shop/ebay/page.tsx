@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Karaoke Speaker Microphone',
+    description: 'Material Plastic, Metal Product Attributes Battery Contains Package Size 80*210*...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/57a22a5e-8105-404a-bbe2-53df53e5174f.jpg',
+    link: 'https://www.ebay.com/itm/206208044309',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: '540 Degree Rotating Magnetic Suction Charging Line For Android Type C ',
     description: 'Material Metal, Others Product Attributes Magnetic Contains Package Size 150*130...',
     category: 'Yeni Eklenenler',
