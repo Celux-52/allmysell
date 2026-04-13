@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'UV For Gel Nails, Mini U V LED Nail Light Handheld, With Bracket, Portable Nail Dryer, Rechargeable USB Wireless, For Fast Drying, Black',
+    description: 'Material Plastic Product Attributes Ordinary Package Size 150*80*40(mm) [2 Timer...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/2569bf9a-78fd-405d-8a3d-f0e71bda1a1e.jpg',
+    link: 'https://www.ebay.com/itm/206208049680',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Super Fast Charging Usb Single Head Mobile Phone Data Cable',
     description: 'Material Plastic Product Attributes Ordinary, Thin Package Size 100*60*40(mm) Pr...',
     category: 'Yeni Eklenenler',
