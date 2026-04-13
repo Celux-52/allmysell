@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: '540 Degree Rotating Magnetic Suction Charging Line For Android Type C ',
+    description: 'Material Metal, Others Product Attributes Magnetic Contains Package Size 150*130...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/7cf57f20-eb97-414c-92b5-b139109eb43a.jpg',
+    link: 'https://www.ebay.com/itm/206208044161',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Strap Lanyard 9 Colors Soft Rope For Cell Phone Hanging Cord',
     description: 'Material Metal, Others Product Attributes Ordinary Package Size 100*100*80(mm); ...',
     category: 'Yeni Eklenenler',
