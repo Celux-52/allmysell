@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'New Product Bending 180 Degrees Data Cable Android TYPEC3A Fast Charge Data Cable',
+    description: 'Description Material Others Product Attributes Ordinary Package Size 100*100*40(...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2024/01/17/06/bed8aa56-cbbd-4955-98f1-4c8479e42c0f.jpg',
+    link: 'https://www.ebay.com/itm/206208085893',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Alcohol Detector For Drunk Driving Detection For Professional Drivers. It Has High Sensitivity And Accurate Sensing Function. Fast Response And Precise Numerical Results',
     description: 'Material Plastic Product Attributes Battery Contains Package Size 146*85*33(mm) ...',
     category: 'Yeni Eklenenler',
