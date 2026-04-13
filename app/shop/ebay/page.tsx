@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Strap Lanyard 9 Colors Soft Rope For Cell Phone Hanging Cord',
+    description: 'Material Metal, Others Product Attributes Ordinary Package Size 100*100*80(mm); ...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/dda091ea-5d6b-4853-a569-4f7012275e9d.jpg',
+    link: 'https://www.ebay.com/itm/206208017387',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'E-ink Screen Phone Case Unlimited Screen Projection Personalized Phone Cover Battery Free New Designer Luxury Phone Case',
     description: 'Material Plastic Product Attributes Magnetic Contains Package Size 180*150*30(mm...',
     category: 'Yeni Eklenenler',
