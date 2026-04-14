@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Traceless ear-sensitive Bluetooth Headset-Mi-white-PC+ABS-1 pair ',
+    description: 'Material Plastic Product Attributes Ordinary Package Size 95*95*35(mm) Traceless...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/17761248/1857492f-c489-4715-94d5-f585246e88b5.jpg',
+    link: 'https://www.ebay.com/itm/206210211684',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'In-ear Bluetooth headset-off-white-PC+ABS-1 pair',
     description: 'Material Plastic Product Attributes Ordinary Package Size 90*30*125(mm) In-ear B...',
     category: 'Yeni Eklenenler',
