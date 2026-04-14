@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Magnetic ring mobile phone holder-purple-zinc alloy-1 piece',
+    description: 'Material Metal Product Attributes Ordinary Package Size 280*180*95(mm) Magnetic ...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/17761248/4f044b46-8959-498f-97c3-f938e2e7167d.jpg',
+    link: 'https://www.ebay.com/itm/206210210235',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Headset Bluetooth Earphones TPU Transparent Silicone Case Airpodsmax',
     description: 'Description Material Plastic Product Attributes Ordinary Package Size 120*100*40...',
     category: 'Yeni Eklenenler',
