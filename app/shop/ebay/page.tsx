@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Headset Bluetooth Earphones TPU Transparent Silicone Case Airpodsmax',
+    description: 'Description Material Plastic Product Attributes Ordinary Package Size 120*100*40...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/quick/product/aaabb523-a81d-4a0f-b76b-65c4079b553f.jpg',
+    link: 'https://www.ebay.com/itm/206209089957',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Wristband Mouse Pad-Round Model-Black-1 piece',
     description: 'Description Material Others Product Attributes Ordinary Package Size 250*230*250...',
     category: 'Yeni Eklenenler',
