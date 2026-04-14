@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Instagram-style Plush Wrist-mounted Phone Lanyard',
+    description: 'Material Cloth Product Attributes Ordinary Package Size 120*100*50(mm) Product i...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2026/04/14/01/5897b714-cfc1-4744-bc08-d8e32e7aecb4.jpg',
+    link: 'https://www.ebay.com/itm/206210210427',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Braided Phone Lanyardwrist Strap Sturdy And Anti-loss Phone Case Accessory With Clipwomens Style',
     description: 'Description Material Cloth Product Attributes Ordinary Package Size 120*100*50(m...',
     category: 'Yeni Eklenenler',
