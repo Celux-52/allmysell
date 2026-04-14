@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'In-ear Bluetooth headset-off-white-PC+ABS-1 pair',
+    description: 'Material Plastic Product Attributes Ordinary Package Size 90*30*125(mm) In-ear B...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/17761248/dfb3237a-cee0-473a-8aa4-6c184e4aa012.jpg',
+    link: 'https://www.ebay.com/itm/206210211542',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Noise reduction Bluetooth headset-black-PC+ABS-1 pair',
     description: 'Material Plastic Product Attributes Ordinary Package Size 90*34*134(mm) Noise re...',
     category: 'Yeni Eklenenler',
