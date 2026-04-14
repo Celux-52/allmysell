@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Dopamine Flower Woven Phone Lanyard',
+    description: 'Material Cloth Product Attributes Ordinary Package Size 120*10*50(mm) Product in...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2026/04/14/01/9595b185-d817-415e-bf3d-b6662751cee9.jpg',
+    link: 'https://www.ebay.com/itm/206210210522',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Instagram-style Plush Wrist-mounted Phone Lanyard',
     description: 'Material Cloth Product Attributes Ordinary Package Size 120*100*50(mm) Product i...',
     category: 'Yeni Eklenenler',
