@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Ear-clip Bluetooth Headset-Purple-PC+ABS-1 Pair',
+    description: 'Material Others Product Attributes Ordinary Package Size 40*30*20(mm) Wireless B...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/17761248/eb51ed35-6426-4d25-92d9-6dc238399314.jpg',
+    link: 'https://www.ebay.com/itm/206210210898',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Wireless Bluetooth Headset-S03 Flat Ear-White-1 pcs',
     description: 'Material Others Product Attributes Ordinary Package Size 40*30*20(mm) Wireless B...',
     category: 'Yeni Eklenenler',
