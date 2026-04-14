@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Wireless Bluetooth Headset-S03 Flat Ear-White-1 pcs',
+    description: 'Material Others Product Attributes Ordinary Package Size 40*30*20(mm) Wireless B...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/17761248/9e21edf7-4d1f-4edb-b2e5-ba47466bc261.jpg.',
+    link: 'https://www.ebay.com/itm/206210210786',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: '8mm Braided Adjustable Wrist Lanyard For Phones',
     description: 'Material Cloth Product Attributes Ordinary Package Size 120*100*30(mm) Product i...',
     category: 'Yeni Eklenenler',
