@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Noise reduction Bluetooth headset-black-PC+ABS-1 pair',
+    description: 'Material Plastic Product Attributes Ordinary Package Size 90*34*134(mm) Noise re...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/17760384/022156e4-1dae-49a5-88ba-597fafb383e8.jpg',
+    link: 'https://www.ebay.com/itm/206210211248',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Magnetic Wireless Power Bank Ah 20W Portable',
     description: 'Material Plastic, Others Product Attributes Pure Battery, Magnetic Contains Pack...',
     category: 'Yeni Eklenenler',
