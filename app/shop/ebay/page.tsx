@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: '8mm Braided Adjustable Wrist Lanyard For Phones',
+    description: 'Material Cloth Product Attributes Ordinary Package Size 120*100*30(mm) Product i...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/quick/product/44ac8154-b443-4f61-819b-0dee69d35c87.jpg',
+    link: 'https://www.ebay.com/itm/206210210654',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Cartoon Plush Doll Phone Lanyard Anti-loss',
     description: 'Product information: Type: Phone Lanyard Color: Multicolor Specifications: [Upgr...',
     category: 'Yeni Eklenenler',
