@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Wristband Mouse Pad-Round Model-Black-1 piece',
+    description: 'Description Material Others Product Attributes Ordinary Package Size 250*230*250...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/17760384/9a10c30f-b291-48a9-b4e0-fd61e129b81a.jpg',
+    link: 'https://www.ebay.com/itm/206209089892',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Golf Travel Bag, Outdoors Soft-Sided Golf Travel Cover Case, Heavy Duty Nylon Wear-Resistant, Padded Golf Luggage Case Cover With Wheels, Foldable Golf Club Storage Bag For Airlines',
     description: 'Material Others Product Attributes Ordinary Package Size 440*430*200(mm) Extra L...',
     category: 'Yeni Eklenenler',
