@@ -16,7 +16,7 @@ const products = [
     category: 'Yeni Eklenenler',
     image: 'https://cf.cjdropshipping.com/quick/product/aaabb523-a81d-4a0f-b76b-65c4079b553f.jpg',
     link: 'https://www.ebay.com/itm/206209089957',
-    soldOut: false,
+    soldOut: true,
     store: 'ymglobal',
   },
   {
@@ -25,7 +25,7 @@ const products = [
     category: 'Yeni Eklenenler',
     image: 'https://cf.cjdropshipping.com/17760384/9a10c30f-b291-48a9-b4e0-fd61e129b81a.jpg',
     link: 'https://www.ebay.com/itm/206209089892',
-    soldOut: false,
+    soldOut: true,
     store: 'ymglobal',
   },
   {
