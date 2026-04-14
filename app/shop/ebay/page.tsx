@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Magnetic Wireless Power Bank Ah 20W Portable',
+    description: 'Material Plastic, Others Product Attributes Pure Battery, Magnetic Contains Pack...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2026/04/08/08/d41724f1-9a43-4df9-a8e3-4fdfa9d1b564.jpg',
+    link: 'https://www.ebay.com/itm/206210211056',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Ear-clip Bluetooth Headset-Purple-PC+ABS-1 Pair',
     description: 'Material Others Product Attributes Ordinary Package Size 40*30*20(mm) Wireless B...',
     category: 'Yeni Eklenenler',
