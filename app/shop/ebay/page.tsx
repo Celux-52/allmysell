@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Braided Phone Lanyardwrist Strap Sturdy And Anti-loss Phone Case Accessory With Clipwomens Style',
+    description: 'Description Material Cloth Product Attributes Ordinary Package Size 120*100*50(m...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2026/04/14/01/4f82775e-0276-4cf9-9a5b-5dda6c6ba427.jpg',
+    link: 'https://www.ebay.com/itm/206210210325',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Magnetic ring mobile phone holder-purple-zinc alloy-1 piece',
     description: 'Material Metal Product Attributes Ordinary Package Size 280*180*95(mm) Magnetic ...',
     category: 'Yeni Eklenenler',
