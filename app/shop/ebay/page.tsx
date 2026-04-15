@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'LED Modern Wall Lighting Up Down Cube Bedroom Sconce Lamp Fixture Light Indoor',
+    description: 'Material Plastic Product Attributes Ordinary, Oversize Package Size 300*120*120(...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2026/04/14/02/ba1ea7b1-c432-494f-9036-61a239eac1dd_water.jpeg',
+    link: 'https://www.ebay.com/itm/206212329320',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'Traceless ear-sensitive Bluetooth Headset-Mi-white-PC+ABS-1 pair ',
     description: 'Material Plastic Product Attributes Ordinary Package Size 95*95*35(mm) Traceless...',
     category: 'Yeni Eklenenler',
