@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const products = [
   {
+    name: 'Long-lasting LED Spotlight Flashlight For Home Use ',
+    description: 'Material Plastic Product Attributes Battery Contains Package Size 50*50*175(mm) ...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2026/03/04/02/fbfab04c-6595-4e13-8120-ec190dc2804f_trans.jpeg',
+    link: 'https://www.ebay.com/itm/206212329573',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
     name: 'LED Modern Wall Lighting Up Down Cube Bedroom Sconce Lamp Fixture Light Indoor',
     description: 'Material Plastic Product Attributes Ordinary, Oversize Package Size 300*120*120(...',
     category: 'Yeni Eklenenler',
