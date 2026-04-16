@@ -11,11 +11,281 @@ export const metadata: Metadata = {
 
 const products = [
   {
-    name: '\"Premium Quality\" Usb Mini-portable Digital Display Bladeless Halter Fan ',
-    description: 'Material Plastic Product Attributes Battery Contains Package Size 250*200*100(mm...',
+    name: 'Long-lasting LED Spotlight Flashlight For Home Use ',
+    description: 'Material Plastic Product Attributes Battery Contains Package Size 50*50*175(mm) ...',
     category: 'Yeni Eklenenler',
-    image: 'https://oss-cf.cjdropshipping.com/product/2024/06/15/07/84c62333-c531-4c59-bc3e-5523f217e283_trans.jpeg',
-    link: 'https://www.ebay.com/itm/206206547352',
+    image: 'https://oss-cf.cjdropshipping.com/product/2026/03/04/02/fbfab04c-6595-4e13-8120-ec190dc2804f_trans.jpeg',
+    link: 'https://www.ebay.com/itm/206212329573',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'LED Modern Wall Lighting Up Down Cube Bedroom Sconce Lamp Fixture Light Indoor',
+    description: 'Material Plastic Product Attributes Ordinary, Oversize Package Size 300*120*120(...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2026/04/14/02/ba1ea7b1-c432-494f-9036-61a239eac1dd_water.jpeg',
+    link: 'https://www.ebay.com/itm/206212329320',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Traceless ear-sensitive Bluetooth Headset-Mi-white-PC+ABS-1 pair ',
+    description: 'Material Plastic Product Attributes Ordinary Package Size 95*95*35(mm) Traceless...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/17761248/1857492f-c489-4715-94d5-f585246e88b5.jpg',
+    link: 'https://www.ebay.com/itm/206210211684',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'In-ear Bluetooth headset-off-white-PC+ABS-1 pair',
+    description: 'Material Plastic Product Attributes Ordinary Package Size 90*30*125(mm) In-ear B...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/17761248/dfb3237a-cee0-473a-8aa4-6c184e4aa012.jpg',
+    link: 'https://www.ebay.com/itm/206210211542',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Noise reduction Bluetooth headset-black-PC+ABS-1 pair',
+    description: 'Material Plastic Product Attributes Ordinary Package Size 90*34*134(mm) Noise re...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/17760384/022156e4-1dae-49a5-88ba-597fafb383e8.jpg',
+    link: 'https://www.ebay.com/itm/206210211248',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Magnetic Wireless Power Bank Ah 20W Portable',
+    description: 'Material Plastic, Others Product Attributes Pure Battery, Magnetic Contains Pack...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2026/04/08/08/d41724f1-9a43-4df9-a8e3-4fdfa9d1b564.jpg',
+    link: 'https://www.ebay.com/itm/206210211056',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Ear-clip Bluetooth Headset-Purple-PC+ABS-1 Pair',
+    description: 'Material Others Product Attributes Ordinary Package Size 40*30*20(mm) Wireless B...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/17761248/eb51ed35-6426-4d25-92d9-6dc238399314.jpg',
+    link: 'https://www.ebay.com/itm/206210210898',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Wireless Bluetooth Headset-S03 Flat Ear-White-1 pcs',
+    description: 'Material Others Product Attributes Ordinary Package Size 40*30*20(mm) Wireless B...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/17761248/9e21edf7-4d1f-4edb-b2e5-ba47466bc261.jpg.',
+    link: 'https://www.ebay.com/itm/206210210786',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: '8mm Braided Adjustable Wrist Lanyard For Phones',
+    description: 'Material Cloth Product Attributes Ordinary Package Size 120*100*30(mm) Product i...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/quick/product/44ac8154-b443-4f61-819b-0dee69d35c87.jpg',
+    link: 'https://www.ebay.com/itm/206210210654',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Cartoon Plush Doll Phone Lanyard Anti-loss',
+    description: 'Product information: Type: Phone Lanyard Color: Multicolor Specifications: [Upgr...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2026/04/14/01/b20e2a17-9c57-4ec0-aefa-eb0fa95171db_trans.jpeg',
+    link: 'https://www.ebay.com/itm/206210210576',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Dopamine Flower Woven Phone Lanyard',
+    description: 'Material Cloth Product Attributes Ordinary Package Size 120*10*50(mm) Product in...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2026/04/14/01/9595b185-d817-415e-bf3d-b6662751cee9.jpg',
+    link: 'https://www.ebay.com/itm/206210210522',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Instagram-style Plush Wrist-mounted Phone Lanyard',
+    description: 'Material Cloth Product Attributes Ordinary Package Size 120*100*50(mm) Product i...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2026/04/14/01/5897b714-cfc1-4744-bc08-d8e32e7aecb4.jpg',
+    link: 'https://www.ebay.com/itm/206210210427',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Braided Phone Lanyardwrist Strap Sturdy And Anti-loss Phone Case Accessory With Clipwomens Style',
+    description: 'Description Material Cloth Product Attributes Ordinary Package Size 120*100*50(m...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2026/04/14/01/4f82775e-0276-4cf9-9a5b-5dda6c6ba427.jpg',
+    link: 'https://www.ebay.com/itm/206210210325',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Magnetic ring mobile phone holder-purple-zinc alloy-1 piece',
+    description: 'Material Metal Product Attributes Ordinary Package Size 280*180*95(mm) Magnetic ...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/17761248/4f044b46-8959-498f-97c3-f938e2e7167d.jpg',
+    link: 'https://www.ebay.com/itm/206210210235',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Headset Bluetooth Earphones TPU Transparent Silicone Case Airpodsmax',
+    description: 'Description Material Plastic Product Attributes Ordinary Package Size 120*100*40...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/quick/product/aaabb523-a81d-4a0f-b76b-65c4079b553f.jpg',
+    link: 'https://www.ebay.com/itm/206209089957',
+    soldOut: true,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Wristband Mouse Pad-Round Model-Black-1 piece',
+    description: 'Description Material Others Product Attributes Ordinary Package Size 250*230*250...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/17760384/9a10c30f-b291-48a9-b4e0-fd61e129b81a.jpg',
+    link: 'https://www.ebay.com/itm/206209089892',
+    soldOut: true,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Golf Travel Bag, Outdoors Soft-Sided Golf Travel Cover Case, Heavy Duty Nylon Wear-Resistant, Padded Golf Luggage Case Cover With Wheels, Foldable Golf Club Storage Bag For Airlines',
+    description: 'Material Others Product Attributes Ordinary Package Size 440*430*200(mm) Extra L...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/17658432/6eb248c8-b4fe-42b6-9eba-ac6b35a67bf9.jpg',
+    link: 'https://www.ebay.com/itm/206208182741',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: '38W Transparent Case Charging Adapter',
+    description: 'Material Plastic Product Attributes Electronic Package Size 140*32*90(mm) Produc...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/quick/product/d60587d7-2801-472d-a8c6-ae90263f186e.jpg',
+    link: 'https://www.ebay.com/itm/206208149550',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Leather Key Case Multifunctional Car Zipper',
+    description: 'Description Material Leather Product Attributes Ordinary Package Size 140*45*95(...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/1612765646961.jpg',
+    link: 'https://www.ebay.com/itm/206208144512',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Compatible with Apple, iPad case',
+    description: 'Description Material Cloth Product Attributes Ordinary Package Size 300*225*40(m...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/15155136/3344408089_603543507.jpg',
+    link: 'https://www.ebay.com/itm/206208136477',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'New Product Bending 180 Degrees Data Cable Android TYPEC3A Fast Charge Data Cable',
+    description: 'Description Material Others Product Attributes Ordinary Package Size 100*100*40(...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2024/01/17/06/bed8aa56-cbbd-4955-98f1-4c8479e42c0f.jpg',
+    link: 'https://www.ebay.com/itm/206208096031',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'New 240W Dual Type-C Fast Charging Cables',
+    description: 'Material Others Product Attributes Ordinary Package Size 215*80*20(mm) The carri...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/66230f5d-472b-4766-80be-14b3f7dba831.jpg',
+    link: 'https://www.ebay.com/itm/206208086011',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'New Product Bending 180 Degrees Data Cable Android TYPEC3A Fast Charge Data Cable',
+    description: 'Description Material Others Product Attributes Ordinary Package Size 100*100*40(...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2024/01/17/06/bed8aa56-cbbd-4955-98f1-4c8479e42c0f.jpg',
+    link: 'https://www.ebay.com/itm/206208085893',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Alcohol Detector For Drunk Driving Detection For Professional Drivers. It Has High Sensitivity And Accurate Sensing Function. Fast Response And Precise Numerical Results',
+    description: 'Material Plastic Product Attributes Battery Contains Package Size 146*85*33(mm) ...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/242f9146-7ecc-4266-9076-3e0d8dd01271.png',
+    link: 'https://www.ebay.com/itm/206208065782',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'R70 LED Fast Charging Built-in Battery Bulb With Hook, Not Available For Weekend Shipping  ',
+    description: 'Description Material Glass, Metal, Plastic Product Attributes Electronic Package...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/af0e3bb8-1d9e-4299-9be4-88a19c07bea3.jpg',
+    link: 'https://www.ebay.com/itm/206208064985',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'UV For Gel Nails, Mini U V LED Nail Light Handheld, With Bracket, Portable Nail Dryer, Rechargeable USB Wireless, For Fast Drying, Black',
+    description: 'Material Plastic Product Attributes Ordinary Package Size 150*80*40(mm) [2 Timer...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/2569bf9a-78fd-405d-8a3d-f0e71bda1a1e.jpg',
+    link: 'https://www.ebay.com/itm/206208049680',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Super Fast Charging Usb Single Head Mobile Phone Data Cable',
+    description: 'Material Plastic Product Attributes Ordinary, Thin Package Size 100*60*40(mm) Pr...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/20200920/1009265501235.jpg',
+    link: 'https://www.ebay.com/itm/206208049530',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Karaoke Speaker Microphone',
+    description: 'Material Plastic, Metal Product Attributes Battery Contains Package Size 80*210*...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/57a22a5e-8105-404a-bbe2-53df53e5174f.jpg',
+    link: 'https://www.ebay.com/itm/206208044309',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: '540 Degree Rotating Magnetic Suction Charging Line For Android Type C ',
+    description: 'Material Metal, Others Product Attributes Magnetic Contains Package Size 150*130...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/7cf57f20-eb97-414c-92b5-b139109eb43a.jpg',
+    link: 'https://www.ebay.com/itm/206208044161',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'Strap Lanyard 9 Colors Soft Rope For Cell Phone Hanging Cord',
+    description: 'Material Metal, Others Product Attributes Ordinary Package Size 100*100*80(mm); ...',
+    category: 'Yeni Eklenenler',
+    image: 'https://cf.cjdropshipping.com/dda091ea-5d6b-4853-a569-4f7012275e9d.jpg',
+    link: 'https://www.ebay.com/itm/206208017387',
+    soldOut: false,
+    store: 'ymglobal',
+  },
+  {
+    name: 'E-ink Screen Phone Case Unlimited Screen Projection Personalized Phone Cover Battery Free New Designer Luxury Phone Case',
+    description: 'Material Plastic Product Attributes Magnetic Contains Package Size 180*150*30(mm...',
+    category: 'Yeni Eklenenler',
+    image: 'https://oss-cf.cjdropshipping.com/product/2024/04/22/05/c87a36b6-7ed8-4734-adf7-2eb7d5a8fe17.jpg',
+    link: 'https://www.ebay.com/itm/206208016791',
     soldOut: false,
     store: 'ymglobal',
   },
@@ -92,6 +362,15 @@ const products = [
     store: 'ymglobal',
   },
   // NEW TRIANGLES-3 PRODUCTS
+  {
+    name: 'Grass-Fed Hydrolyzed Collagen Peptides',
+    description: 'Hydrolyzed collagen is more readily absorbed, utilizing the amino acids it contains to enhance bodily functions.',
+    category: 'Health & Beauty',
+    image: 'https://i.ebayimg.com/images/g/Nq8AAeSwM~Rp3BfB/s-l1600.webp',
+    link: 'https://www.ebay.com/itm/318141361492',
+    soldOut: false,
+    store: 'triangles-3',
+  },
   {
     name: 'Universal Car HUD Head Up Display Digital GPS Speedometer',
     description: 'Windshield Projector',
@@ -314,6 +593,13 @@ const products = [
 
 const categories = [
   {
+    name: 'Health & Beauty',
+    description: 'Vitamins, supplements and personal care products',
+    productCount: '1',
+    subtext: 'currently in stock',
+    icon: '🧘',
+  },
+  {
     name: 'Chargers & Power Banks',
     description: 'Fast chargers, power banks and charging cables',
     productCount: '0',
@@ -381,7 +667,7 @@ export default function EbayPage() {
               <div className="bg-green-500/20 border border-green-500/40 rounded-xl p-4 mb-8 animate-slideInLeft" style={{animationDelay: '0.15s'}}>
                 <p className="text-green-300 font-semibold flex items-center gap-2">
                   <span className="text-xl">🔥</span>
-                  6 new products just arrived! Shop now while stocks last.
+                  7 new products just arrived! Shop now while stocks last.
                 </p>
               </div>
               <TrackedLink
@@ -462,8 +748,8 @@ export default function EbayPage() {
               🔥 {products.filter(p => !p.soldOut).length} new products in stock — Shop now!
             </div>
           </div>
+          </div>
           <EbayClient products={products} />
-        </div>
       </section>
       {/* Categories */}
       <section className="py-20">
@@ -473,7 +759,7 @@ export default function EbayPage() {
               Product Categories
             </h2>
             <p className="text-xl text-gray-400">
-              All categories currently out of stock — restocking soon
+              New categories being added - start shopping today
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
