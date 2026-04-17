@@ -1,158 +1,98 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { LogOut, User, Mail, Store, TrendingUp } from 'lucide-react';
+import { Search, TrendingUp, Bookmark, Clock, Sparkles, ArrowRight, Zap } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { createClient } from '@/lib/supabase/client';
 
-export default function DashboardPage() {
-  const router = useRouter();
+export default function DashboardOverview() {
   const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Get user data from sessionStorage or localStorage
-    const userStr = sessionStorage.getItem('user') || localStorage.getItem('user');
-    if (userStr) {
-      try {
-        setUser(JSON.parse(userStr));
-      } catch (err) {
-        console.error('Failed to parse user data:', err);
-      }
+    async function getUser() {
+      const supabase = createClient();
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      if (authUser) setUser(authUser);
     }
-    setLoading(false);
+    getUser();
   }, []);
 
-  const handleLogout = () => {
-    // Clear auth data
-    sessionStorage.removeItem('user');
-    localStorage.removeItem('user');
-    
-    // Call logout API to clear cookie
-    fetch('/api/auth/logout', {
-      method: 'POST',
-    }).catch(console.error);
-
-    // Redirect to home
-    router.push('/');
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0A0A0A] via-[#111111] to-[#0A0A0A] flex items-center justify-center">
-        <div className="text-cornsilk">Loading...</div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0A0A0A] via-[#111111] to-[#0A0A0A] flex items-center justify-center px-4">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-cornsilk mb-4">Not Logged In</h1>
-          <p className="text-gray-400 mb-6">Please log in first</p>
-          <Link
-            href="/login"
-            className="inline-block bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-white px-6 py-3 rounded-lg font-bold hover:shadow-lg hover:shadow-[#E8750A]/20 transition-all"
-          >
-            Log In
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  const quickActions = [
+    { name: 'AI Product Research', description: 'Find winning products with AI', icon: Search, href: '/dashboard/research', color: 'from-[#E8750A] to-[#F59E0B]' },
+    { name: 'Trend Analysis', description: 'Discover what\'s trending now', icon: TrendingUp, href: '/dashboard/trends', color: 'from-emerald-600 to-emerald-400' },
+    { name: 'Saved Products', description: 'Your curated product list', icon: Bookmark, href: '/dashboard/saved', color: 'from-blue-600 to-blue-400' },
+    { name: 'Search History', description: 'Past searches and results', icon: Clock, href: '/dashboard/history', color: 'from-purple-600 to-purple-400' },
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0A0A0A] via-[#111111] to-[#0A0A0A] py-12 px-4">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-[#E8750A] to-[#F59E0B] bg-clip-text text-transparent mb-2">
-              Dashboard
-            </h1>
-            <p className="text-gray-400">Welcome, {user.fullName}!</p>
+    <div className="p-6 lg:p-8">
+      {/* Welcome */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-cornsilk mb-2">
+          Welcome back{user?.user_metadata?.full_name ? `, ${user.user_metadata.full_name.split(' ')[0]}` : ''} 👋
+        </h1>
+        <p className="text-gray-400">Here&apos;s your product research dashboard</p>
+      </div>
+
+      {/* AI Search Hero */}
+      <div className="relative bg-gradient-to-br from-[#1A1A1A] to-[#111111] rounded-2xl p-6 lg:p-8 border border-[#E8750A]/20 mb-8 overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#E8750A]/5 rounded-full blur-3xl"></div>
+        <div className="relative">
+          <div className="flex items-center gap-2 mb-3">
+            <Sparkles className="text-[#F59E0B]" size={20} />
+            <span className="text-sm font-semibold text-[#F59E0B]">AI-Powered Research</span>
           </div>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 px-4 py-2 rounded-lg transition-colors"
-          >
-            <LogOut size={20} />
-            Log Out
-          </button>
-        </div>
-
-        {/* User Profile Card */}
-        <div className="bg-[#1A1A1A] rounded-2xl shadow-2xl p-8 border border-[#E8750A]/20 mb-8">
-          <h2 className="text-2xl font-bold text-cornsilk mb-6">Profile Information</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Full Name */}
-            <div className="flex items-start gap-4">
-              <div className="bg-[#E8750A]/20 p-3 rounded-lg">
-                <User className="text-[#E8750A]" size={24} />
-              </div>
-              <div>
-                <p className="text-gray-400 text-sm">Full Name</p>
-                <p className="text-cornsilk font-semibold">{user.fullName || 'Not Specified'}</p>
-              </div>
-            </div>
-
-            {/* Email */}
-            <div className="flex items-start gap-4">
-              <div className="bg-[#E8750A]/20 p-3 rounded-lg">
-                <Mail className="text-[#E8750A]" size={24} />
-              </div>
-              <div>
-                <p className="text-gray-400 text-sm">Email Address</p>
-                <p className="text-cornsilk font-semibold">{user.email}</p>
-              </div>
-            </div>
-
-            {/* Platform */}
-            <div className="flex items-start gap-4">
-              <div className="bg-[#E8750A]/20 p-3 rounded-lg">
-                <Store className="text-[#E8750A]" size={24} />
-              </div>
-              <div>
-                <p className="text-gray-400 text-sm">Platform</p>
-                <p className="text-cornsilk font-semibold">{user.platform || 'Not Specified'}</p>
-              </div>
-            </div>
-
-            {/* Monthly Orders */}
-            <div className="flex items-start gap-4">
-              <div className="bg-[#E8750A]/20 p-3 rounded-lg">
-                <TrendingUp className="text-[#E8750A]" size={24} />
-              </div>
-              <div>
-                <p className="text-gray-400 text-sm">Monthly Order Volume</p>
-                <p className="text-cornsilk font-semibold">{user.monthlyOrders || 'Not Specified'}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <h2 className="text-2xl font-bold text-cornsilk mb-3">What problem does your customer have?</h2>
+          <p className="text-gray-400 text-sm mb-5 max-w-lg">
+            Describe a problem, niche, or category — our AI will find winning products with profit analysis, competition data, and supplier recommendations.
+          </p>
           <Link
-            href="/shop"
-            className="bg-[#1A1A1A] rounded-2xl shadow-2xl p-6 border border-[#E8750A]/20 hover:border-[#E8750A]/50 transition-all group"
+            href="/dashboard/research"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-[#E8750A]/20 transition-all hover:scale-[1.02]"
           >
-            <Store className="text-[#E8750A] mb-4 group-hover:scale-110 transition-transform" size={32} />
-            <h3 className="text-xl font-bold text-cornsilk mb-2">Stores</h3>
-            <p className="text-gray-400">Access Amazon, eBay, Etsy and more</p>
-          </Link>
-
-          <Link
-            href="/contact"
-            className="bg-[#1A1A1A] rounded-2xl shadow-2xl p-6 border border-[#E8750A]/20 hover:border-[#E8750A]/50 transition-all group"
-          >
-            <Mail className="text-[#E8750A] mb-4 group-hover:scale-110 transition-transform" size={32} />
-            <h3 className="text-xl font-bold text-cornsilk mb-2">Contact</h3>
-            <p className="text-gray-400">Get in touch, we're here for your questions</p>
+            <Zap size={18} />
+            Start Researching
+            <ArrowRight size={16} />
           </Link>
         </div>
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {[
+          { label: 'AI Searches', value: '0', sub: 'this month' },
+          { label: 'Saved Products', value: '0', sub: 'total' },
+          { label: 'Trends Found', value: '0', sub: 'active' },
+          { label: 'Plan', value: 'Free', sub: 'upgrade for more' },
+        ].map((stat) => (
+          <div key={stat.label} className="bg-[#1A1A1A] rounded-xl p-4 border border-white/5">
+            <p className="text-2xl font-bold text-cornsilk">{stat.value}</p>
+            <p className="text-sm text-gray-400">{stat.label}</p>
+            <p className="text-[10px] text-gray-600 mt-0.5">{stat.sub}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Quick Actions */}
+      <h3 className="text-lg font-semibold text-cornsilk mb-4">Quick Actions</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {quickActions.map((action) => (
+          <Link
+            key={action.name}
+            href={action.href}
+            className="bg-[#1A1A1A] rounded-xl p-5 border border-white/5 hover:border-[#E8750A]/20 transition-all group"
+          >
+            <div className="flex items-start gap-4">
+              <div className={`w-11 h-11 bg-gradient-to-br ${action.color} rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
+                <action.icon className="text-white" size={20} />
+              </div>
+              <div>
+                <h4 className="font-semibold text-cornsilk mb-0.5 group-hover:text-[#E8750A] transition-colors">{action.name}</h4>
+                <p className="text-sm text-gray-500">{action.description}</p>
+              </div>
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );

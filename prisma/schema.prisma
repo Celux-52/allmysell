@@ -1,15 +1,75 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
+// AllMySell SaaS Platform - Database Schema
+// Supabase PostgreSQL via Prisma ORM
 
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
 }
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum SubscriptionStatus {
+  FREE
+  TRIAL
+  PRO
+  ENTERPRISE
+}
+
+enum BlogPostStatus {
+  DRAFT
+  PUBLISHED
+  SCHEDULED
+  ARCHIVED
+}
+
+// ============================================
+// CORE TABLES
+// ============================================
+
+/// User profile linked to Supabase auth.users
+/// The id field matches the Supabase auth user UUID
+model Profile {
+  id                 String             @id @db.Uuid
+  email              String             @unique
+  fullName           String?            @map("full_name")
+  avatarUrl          String?            @map("avatar_url")
+  role               Role               @default(USER)
+  subscriptionStatus SubscriptionStatus @default(FREE) @map("subscription_status")
+  platform           String?
+  monthlyOrders      String?            @map("monthly_orders")
+  bio                String?
+  website            String?
+  trialEndsAt        DateTime?          @map("trial_ends_at")
+  lastLoginAt        DateTime?          @map("last_login_at")
+  createdAt          DateTime           @default(now()) @map("created_at")
+  updatedAt          DateTime           @updatedAt @map("updated_at")
+
+  // Gamification
+  experiencePoints   Int                @default(0) @map("experience_points")
+  level              Int                @default(1)
+
+  // Relations
+  savedProducts SavedProduct[]
+  searchHistory SearchHistory[]
+  blogPosts     BlogPost[]     @relation("AuthorPosts")
+  achievements  UserAchievement[]
+
+  @@map("profiles")
+}
+
+// ============================================
+// LEGACY USER TABLE (kept for migration, will be deprecated)
+// ============================================
 
 model User {
   id            String   @id @default(cuid())
@@ -21,4 +81,179 @@ model User {
   emailVerified Boolean  @default(false)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+
+  @@map("User")
+}
+
+// ============================================
+// CONTENT MANAGEMENT
+// ============================================
+
+/// Blog posts for the admin CMS
+model BlogPost {
+  id          String         @id @default(cuid())
+  title       String
+  slug        String         @unique
+  content     String         @db.Text
+  excerpt     String?
+  coverImage  String?        @map("cover_image")
+  status      BlogPostStatus @default(DRAFT)
+  publishedAt DateTime?      @map("published_at")
+  tags        String[]       @default([])
+  viewCount   Int            @default(0) @map("view_count")
+  authorId    String         @map("author_id") @db.Uuid
+  author      Profile        @relation("AuthorPosts", fields: [authorId], references: [id])
+  createdAt   DateTime       @default(now()) @map("created_at")
+  updatedAt   DateTime       @updatedAt @map("updated_at")
+
+  @@index([slug])
+  @@index([status])
+  @@index([publishedAt])
+  @@map("blog_posts")
+}
+
+// ============================================
+// PRODUCT RESEARCH
+// ============================================
+
+/// Products saved/bookmarked by users from AI research
+model SavedProduct {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id") @db.Uuid
+  user        Profile  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productName String   @map("product_name")
+  platform    String   // AliExpress, CJ, Amazon, Etsy, etc.
+  price       Float?
+  imageUrl    String?  @map("image_url")
+  sourceUrl   String?  @map("source_url")
+  notes       String?  @db.Text
+  aiScore     Float?   @map("ai_score")
+  category    String?
+  profitMargin Float?  @map("profit_margin")
+  competition  String? // low, medium, high
+  status      String   @default("saved") // saved, listed, sold, archived
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@index([category])
+  @@index([platform])
+  @@map("saved_products")
+}
+
+/// User's AI search history for learning loop
+model SearchHistory {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id") @db.Uuid
+  user      Profile  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  query     String
+  queryType String   @default("product") @map("query_type") // product, trend, competitor
+  results   Json?    // cached AI response
+  resultCount Int    @default(0) @map("result_count")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("search_history")
+}
+
+// ============================================
+// DIGITAL PRODUCTS & SUBSCRIPTIONS
+// ============================================
+
+/// Digital products/packages available for purchase
+model DigitalProduct {
+  id          String   @id @default(cuid())
+  name        String
+  description String   @db.Text
+  price       Float
+  currency    String   @default("USD")
+  features    String[] @default([])
+  category    String?  // tool, course, template, etc.
+  active      Boolean  @default(true)
+  sortOrder   Int      @default(0) @map("sort_order")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  subscriptions Subscription[]
+
+  @@map("digital_products")
+}
+
+/// User subscriptions (for future Stripe integration)
+model Subscription {
+  id               String    @id @default(cuid())
+  userId           String    @map("user_id") @db.Uuid
+  productId        String    @map("product_id")
+  product          DigitalProduct @relation(fields: [productId], references: [id])
+  status           String    @default("active") // active, cancelled, expired, paused
+  stripeCustomerId String?   @map("stripe_customer_id")
+  stripeSubId      String?   @map("stripe_subscription_id")
+  currentPeriodStart DateTime? @map("current_period_start")
+  currentPeriodEnd   DateTime? @map("current_period_end")
+  cancelledAt      DateTime? @map("cancelled_at")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@index([status])
+  @@map("subscriptions")
+}
+
+// ============================================
+// GAMIFICATION
+// ============================================
+
+/// Achievement definitions
+model Achievement {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  title       String
+  description String
+  icon        String   // emoji or icon name
+  category    String   // onboarding, research, sales, engagement
+  points      Int      @default(10)
+  requirement Json     // { type: "search_count", value: 5 }
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  users UserAchievement[]
+
+  @@map("achievements")
+}
+
+/// User's earned achievements
+model UserAchievement {
+  id            String      @id @default(cuid())
+  userId        String      @map("user_id") @db.Uuid
+  user          Profile     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievementId String      @map("achievement_id")
+  achievement   Achievement @relation(fields: [achievementId], references: [id])
+  earnedAt      DateTime    @default(now()) @map("earned_at")
+
+  @@unique([userId, achievementId])
+  @@index([userId])
+  @@map("user_achievements")
+}
+
+// ============================================
+// ANALYTICS
+// ============================================
+
+/// Platform-wide analytics events
+model AnalyticsEvent {
+  id        String   @id @default(cuid())
+  userId    String?  @map("user_id") @db.Uuid
+  eventType String   @map("event_type") // page_view, search, product_save, etc.
+  eventData Json?    @map("event_data")
+  page      String?
+  sessionId String?  @map("session_id")
+  userAgent String?  @map("user_agent")
+  ip        String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([eventType])
+  @@index([createdAt])
+  @@map("analytics_events")
 }

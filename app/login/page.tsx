@@ -1,23 +1,42 @@
 'use client';
 
-import { useState, FormEvent, useEffect } from 'react';
-import { Mail, Lock, AlertCircle, ArrowRight, LogIn, CheckCircle2 } from 'lucide-react';
+import { useState, FormEvent, useEffect, Suspense } from 'react';
+import { Mail, Lock, AlertCircle, LogIn, CheckCircle2, Github } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { createClient } from '@/lib/supabase/client';
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-[#E8750A]/30 border-t-[#E8750A] rounded-full animate-spin"></div>
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
+  );
+}
+
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState<string | null>(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    // Check for error from callback
+    const callbackError = searchParams.get('error');
+    if (callbackError) {
+      setError('Authentication failed. Please try again.');
+    }
+  }, [searchParams]);
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
@@ -25,40 +44,65 @@ export default function LoginPage() {
       setError('Please fill in all fields.');
       return;
     }
-    
+
     setLoading(true);
     setError('');
 
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+      const supabase = createClient();
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
       });
 
-      const data = await response.json();
+      if (authError) {
+        setError(authError.message === 'Invalid login credentials' 
+          ? 'Invalid email or password. Please try again.' 
+          : authError.message);
+        return;
+      }
 
-      if (response.ok && data.success) {
+      if (data.user) {
         setSuccess(true);
-        sessionStorage.setItem('user', JSON.stringify(data.user));
-        localStorage.setItem('authToken', data.token);
-        
-        // Add a small delay for the success animation
+        const redirect = searchParams.get('redirect') || '/dashboard';
         setTimeout(() => {
-          router.push('/dashboard');
-        }, 1000);
-      } else {
-        setError(data.message || 'Login failed. Please check your credentials.');
+          router.push(redirect);
+          router.refresh();
+        }, 800);
       }
     } catch (err) {
-      setError('Connection error occurred. Please check your internet connection and try again.');
+      setError('Connection error. Please check your internet and try again.');
       console.error('Login error:', err);
     } finally {
       if (!success) setLoading(false);
     }
   };
 
-  if (!mounted) return null; // Avoid hydration mismatch
+  const handleSocialLogin = async (provider: 'google' | 'github') => {
+    setSocialLoading(provider);
+    setError('');
+
+    try {
+      const supabase = createClient();
+      const { error: authError } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+
+      if (authError) {
+        setError(authError.message);
+        setSocialLoading(null);
+      }
+    } catch (err) {
+      setError('Social login failed. Please try again.');
+      setSocialLoading(null);
+      console.error('Social login error:', err);
+    }
+  };
+
+  if (!mounted) return null;
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] relative flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -67,7 +111,6 @@ export default function LoginPage() {
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-[#F59E0B]/15 blur-[120px] animate-pulse" style={{ animationDelay: '2s' }}></div>
 
       <div className="max-w-md w-full space-y-8 relative z-10">
-        
         {/* Header */}
         <div className="text-center">
           <div className="mx-auto h-20 w-20 bg-gradient-to-tr from-[#E8750A] to-[#F59E0B] rounded-2xl flex items-center justify-center shadow-2xl shadow-[#E8750A]/20 mb-6 transform hover:scale-105 transition-transform duration-300">
@@ -97,6 +140,56 @@ export default function LoginPage() {
             </div>
           )}
 
+          {/* Social Login Buttons */}
+          <div className="space-y-3 mb-6">
+            <button
+              onClick={() => handleSocialLogin('google')}
+              disabled={!!socialLoading || loading}
+              className="w-full flex items-center justify-center gap-3 py-3.5 px-4 border border-white/10 rounded-xl bg-[#0A0A0A] text-gray-300 hover:bg-[#1A1A1A] hover:border-[#E8750A]/30 transition-all duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {socialLoading === 'google' ? (
+                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v2.97h3.86c2.26-2.09 3.56-5.17 3.56-8.79z"/>
+                  <path fill="#34A853" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-2.97c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.06C3.555 21.31 7.565 24 12.255 24z"/>
+                  <path fill="#FBBC05" d="M5.525 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.65h-3.98a11.86 11.86 0 000 10.7l3.98-3.06z"/>
+                  <path fill="#EA4335" d="M12.255 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C18.205 1.19 15.495 0 12.255 0c-4.69 0-8.7 2.69-10.68 6.65l3.98 3.06c.95-2.85 3.6-4.96 6.73-4.96z"/>
+                </svg>
+              )}
+              <span>{socialLoading === 'google' ? 'Connecting...' : 'Continue with Google'}</span>
+            </button>
+
+            <button
+              onClick={() => handleSocialLogin('github')}
+              disabled={!!socialLoading || loading}
+              className="w-full flex items-center justify-center gap-3 py-3.5 px-4 border border-white/10 rounded-xl bg-[#0A0A0A] text-gray-300 hover:bg-[#1A1A1A] hover:border-[#E8750A]/30 transition-all duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {socialLoading === 'github' ? (
+                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              ) : (
+                <Github className="w-5 h-5" />
+              )}
+              <span>{socialLoading === 'github' ? 'Connecting...' : 'Continue with GitHub'}</span>
+            </button>
+          </div>
+
+          {/* Divider */}
+          <div className="relative mb-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-white/10" />
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-4 bg-[#151515] text-gray-500 text-xs">or sign in with email</span>
+            </div>
+          </div>
+
           <form className="space-y-6" onSubmit={handleLogin}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
@@ -125,8 +218,8 @@ export default function LoginPage() {
                 <label htmlFor="password" className="block text-sm font-medium text-gray-300">
                   Password
                 </label>
-                <Link href="#" className="text-xs font-medium text-[#E8750A] hover:text-[#F59E0B] transition-colors">
-                  Forgot Password
+                <Link href="/forgot-password" className="text-xs font-medium text-[#E8750A] hover:text-[#F59E0B] transition-colors">
+                  Forgot Password?
                 </Link>
               </div>
               <div className="relative group">
@@ -152,8 +245,8 @@ export default function LoginPage() {
                 type="submit"
                 disabled={loading || success}
                 className={`relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-xl text-white ${
-                  loading || success 
-                    ? 'bg-[#E8750A]/50 cursor-not-allowed' 
+                  loading || success
+                    ? 'bg-[#E8750A]/50 cursor-not-allowed'
                     : 'bg-gradient-to-r from-[#E8750A] to-[#F59E0B] hover:shadow-lg hover:shadow-[#E8750A]/25 transform hover:-translate-y-0.5'
                 } transition-all duration-200 overflow-hidden group`}
               >
@@ -175,16 +268,6 @@ export default function LoginPage() {
               </button>
             </div>
           </form>
-
-          {/* Divider */}
-          <div className="mt-8 relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/10" />
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-[#151515] text-gray-500 text-xs">or</span>
-            </div>
-          </div>
 
           <div className="mt-8 text-center">
             <p className="text-sm text-gray-400">

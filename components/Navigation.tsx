@@ -1,8 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, ChevronDown, Instagram } from 'lucide-react';
+import { Menu, X, ChevronDown, Instagram, User, LogOut } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
+
 const navigation = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
@@ -24,9 +27,61 @@ const shops = [
   { name: 'TikTok Shop', href: '/shop/tiktok' },
 ];
 
+interface AuthUser {
+  email: string;
+  fullName: string | null;
+  avatarUrl: string | null;
+}
+
 export default function Navigation() {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState(false);
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    // Get initial session
+    async function getUser() {
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      if (authUser) {
+        setUser({
+          email: authUser.email || '',
+          fullName: authUser.user_metadata?.full_name || null,
+          avatarUrl: authUser.user_metadata?.avatar_url || null,
+        });
+      }
+      setAuthLoading(false);
+    }
+    getUser();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUser({
+          email: session.user.email || '',
+          fullName: session.user.user_metadata?.full_name || null,
+          avatarUrl: session.user.user_metadata?.avatar_url || null,
+        });
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    setUser(null);
+    setUserMenuOpen(false);
+    router.push('/');
+    router.refresh();
+  };
 
   return (
     <nav className="bg-[#0A0A0A] shadow-lg shadow-black/50 sticky top-0 z-50 border-b border-[#E8750A]/10">
@@ -92,12 +147,11 @@ export default function Navigation() {
             </div>
           </div>
 
-
           {/* Social Links & Auth */}
           <div className="hidden md:flex items-center gap-3">
-            <a 
-              href="https://www.instagram.com/allmysell/" 
-              target="_blank" 
+            <a
+              href="https://www.instagram.com/allmysell/"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-[#E8750A] transition-colors p-2"
               aria-label="Instagram"
@@ -105,37 +159,112 @@ export default function Navigation() {
               <Instagram size={24} />
             </a>
             <div className="w-px h-6 bg-gray-800 mx-1"></div>
-            <Link
-              href="/login"
-              className="px-6 py-2 rounded-lg text-[#E8750A] hover:bg-[#E8750A]/10 transition-colors font-medium"
-            >
-              Log In
-            </Link>
-            <Link
-              href="/register"
-              className="px-6 py-2 bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-white rounded-lg hover:shadow-lg hover:shadow-[#E8750A]/20 transition-all font-medium"
-            >
-              Get Started
-            </Link>
+
+            {authLoading ? (
+              <div className="w-20 h-9 bg-[#1A1A1A] rounded-lg animate-pulse"></div>
+            ) : user ? (
+              /* Logged in state */
+              <div className="relative">
+                <button
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-[#E8750A]/10 transition-colors"
+                >
+                  {user.avatarUrl ? (
+                    <img
+                      src={user.avatarUrl}
+                      alt={user.fullName || 'User'}
+                      className="w-8 h-8 rounded-full object-cover border border-[#E8750A]/30"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 bg-gradient-to-br from-[#E8750A] to-[#F59E0B] rounded-full flex items-center justify-center text-white font-bold text-sm">
+                      {(user.fullName || user.email)[0].toUpperCase()}
+                    </div>
+                  )}
+                  <span className="text-cornsilk text-sm font-medium max-w-[120px] truncate">
+                    {user.fullName || user.email.split('@')[0]}
+                  </span>
+                  <ChevronDown size={14} className={`text-gray-400 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {userMenuOpen && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setUserMenuOpen(false)}></div>
+                    <div className="absolute right-0 mt-2 w-56 bg-[#1A1A1A] rounded-xl shadow-xl shadow-black/50 z-50 border border-[#E8750A]/10 overflow-hidden">
+                      <div className="px-4 py-3 border-b border-white/5">
+                        <p className="text-sm font-medium text-cornsilk truncate">{user.fullName || 'User'}</p>
+                        <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                      </div>
+                      <Link
+                        href="/dashboard"
+                        className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-[#E8750A]/20 hover:text-[#E8750A] transition-colors"
+                        onClick={() => setUserMenuOpen(false)}
+                      >
+                        <User size={16} />
+                        Dashboard
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-3 w-full px-4 py-3 text-red-400 hover:bg-red-500/10 transition-colors"
+                      >
+                        <LogOut size={16} />
+                        Log Out
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            ) : (
+              /* Not logged in */
+              <>
+                <Link
+                  href="/login"
+                  className="px-6 py-2 rounded-lg text-[#E8750A] hover:bg-[#E8750A]/10 transition-colors font-medium"
+                >
+                  Log In
+                </Link>
+                <Link
+                  href="/register"
+                  className="px-6 py-2 bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-white rounded-lg hover:shadow-lg hover:shadow-[#E8750A]/20 transition-all font-medium"
+                >
+                  Get Started
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button & Icons */}
           <div className="md:hidden flex items-center gap-3">
-            <a 
-              href="https://www.instagram.com/allmysell/" 
-              target="_blank" 
+            <a
+              href="https://www.instagram.com/allmysell/"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-[#E8750A] transition-colors p-1"
               aria-label="Instagram"
             >
               <Instagram size={22} />
             </a>
-            <Link
-              href="/register"
-              className="px-3 py-1.5 bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-white rounded text-sm hover:shadow-lg transition-all font-medium"
-            >
-              Sign Up
-            </Link>
+            {!authLoading && !user && (
+              <Link
+                href="/register"
+                className="px-3 py-1.5 bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-white rounded text-sm hover:shadow-lg transition-all font-medium"
+              >
+                Sign Up
+              </Link>
+            )}
+            {!authLoading && user && (
+              <Link
+                href="/dashboard"
+                className="p-1.5"
+              >
+                {user.avatarUrl ? (
+                  <img src={user.avatarUrl} alt="" className="w-8 h-8 rounded-full object-cover border border-[#E8750A]/30" />
+                ) : (
+                  <div className="w-8 h-8 bg-gradient-to-br from-[#E8750A] to-[#F59E0B] rounded-full flex items-center justify-center text-white font-bold text-sm">
+                    {(user.fullName || user.email)[0].toUpperCase()}
+                  </div>
+                )}
+              </Link>
+            )}
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 rounded-lg text-gray-300 hover:bg-[#E8750A]/20"
@@ -199,6 +328,40 @@ export default function Navigation() {
                 🌐 Web Solutions
               </Link>
             </div>
+
+            {/* Mobile Auth Links */}
+            {!authLoading && (
+              <div className="px-2 pt-2 border-t border-white/5">
+                {user ? (
+                  <>
+                    <Link
+                      href="/dashboard"
+                      className="block px-2 py-3 rounded-lg text-cornsilk hover:bg-[#E8750A]/20 transition-colors font-medium"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      📊 Dashboard
+                    </Link>
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        setIsOpen(false);
+                      }}
+                      className="w-full text-left px-2 py-3 rounded-lg text-red-400 hover:bg-red-500/10 transition-colors font-medium"
+                    >
+                      🚪 Log Out
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="block px-2 py-3 rounded-lg text-cornsilk hover:bg-[#E8750A]/20 transition-colors font-medium"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    🔑 Log In
+                  </Link>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}
