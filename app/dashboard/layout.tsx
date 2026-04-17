@@ -77,7 +77,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   const isAdmin = user?.role === 'admin' ||
                   user?.email === 'melih@allmysell.com' ||
-                  user?.email === 'yunus@allmysell.com';
+                  user?.email === 'yunus@allmysell.com' ||
+                  user?.email === 'yunussukur7@gmail.com' ||
+                  user?.email === 'melih20052005gs@gmail.com';
 
   const SidebarContent = () => (
     <>
