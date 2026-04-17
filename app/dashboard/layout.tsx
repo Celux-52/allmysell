@@ -17,7 +17,7 @@ const sidebarItems = [
   { name: 'Saved Products', href: '/dashboard/saved', icon: Bookmark },
   { name: 'History', href: '/dashboard/history', icon: Clock },
   { name: 'Achievements', href: '/dashboard/achievements', icon: Trophy },
-  { name: 'Bot Automation', href: '/dashboard/automation', icon: Bot },
+  // { name: 'Bot Automation', href: '/dashboard/automation', icon: Bot }, // Temporarily disabled (Under Construction)
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ];
 
