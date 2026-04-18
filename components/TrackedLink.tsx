@@ -20,12 +20,12 @@ export default function TrackedLink({
   ...props
 }: TrackedLinkProps) {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // 1. Standart Buton/Link Tıklaması
+    // Track button click
     if (buttonId) {
       trackButtonClick(buttonId, payload);
     }
     
-    // 2. Özel Event
+    // Track custom event
     if (eventName) {
       trackEvent(eventName, payload);
     }

@@ -15,12 +15,12 @@ export default function Testimonials() {
 
     const formData = new FormData(e.currentTarget);
     
-    // Web3Forms API'sine gönder
+    // Submit to Web3Forms API
     formData.append('access_key', '34abe918-5ec6-4eee-9d32-dac28484c901');
     formData.append('subject', `New Review - ${rating} Stars`);
     formData.append('from_name', 'AllMySell Website');
     
-    // Rating'i formData'ya ekle
+    // Add rating to formData
     formData.append('rating', `${rating} Stars (${'⭐'.repeat(rating)})`);
 
     try {

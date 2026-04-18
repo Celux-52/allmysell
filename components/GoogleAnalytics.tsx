@@ -6,7 +6,7 @@ import { useEffect, useRef, Suspense } from 'react';
 import { pageView, trackEvent } from '@/lib/tracking';
 
 const GA_TRACKING_ID = 'G-C505L0F3B8';
-// const GADS_CONVERSION_ID = 'AW-XXXXXXX'; // Ads kodunu alınca buraya ekleyeceğiz
+
 
 function AnalyticsTracker() {
   const pathname = usePathname();

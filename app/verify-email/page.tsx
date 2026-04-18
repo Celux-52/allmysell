@@ -10,7 +10,7 @@ export default function VerifyEmailPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    // URL'den token'ı al
+    // Get token from URL params
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token');
     const emailParam = params.get('email');
@@ -24,9 +24,9 @@ export default function VerifyEmailPage() {
       setEmail(pendingEmail);
     }
 
-    // Token doğrulama (sadece client-side simülasyon, production'da server-side olmalı)
+    // Token verification (client-side simulation, should be server-side in production)
     if (token && (token === pendingToken || token)) {
-      // Token geçerliyse, hemen onboarding'e yönlendir
+      // If token is valid, redirect to onboarding
       setTimeout(() => {
         setVerified(true);
         setTimeout(() => {

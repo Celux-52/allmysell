@@ -1,5 +1,5 @@
 export const GA_TRACKING_ID = 'G-C505L0F3B8';
-// export const GADS_CONVERSION_ID = 'AW-XXXXXXXXXX'; // İlerde eklenecek
+
 
 type WindowWithDataLayer = Window & {
   dataLayer: Record<string, any>[];

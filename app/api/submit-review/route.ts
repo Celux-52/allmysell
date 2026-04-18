@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { name, email, product, rating, review } = body;
 
-    // Email içeriği
+    // Email content
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #7c3aed;">New Customer Review</h2>
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
       </div>
     `;
 
-    // Resend ile email gönder (sadece sana bildirim)
+    // Send notification email via Resend
     const resend = getResend();
     if (!resend) {
       console.error('Resend is not initialized. Check RESEND_API_KEY environment variable.');
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     const { data, error } = await resend.emails.send({
       from: 'AllMySell <onboarding@resend.dev>',
       to: 'melihbicak@gmail.com',
-      replyTo: email, // Müşterinin emaili reply-to'da olacak
+      replyTo: email,
       subject: `New Review: ${name} - ${rating} Stars`,
       html: htmlContent,
     });

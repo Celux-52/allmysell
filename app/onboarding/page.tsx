@@ -16,7 +16,7 @@ export default function ProfileSetupPage() {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    // URL parametrelerinden email'i al, yoksa sessionStorage'dan
+    // Get email from URL params or sessionStorage
     const params = new URLSearchParams(window.location.search);
     const emailParam = params.get('email');
     
@@ -83,7 +83,7 @@ export default function ProfileSetupPage() {
 
       setSuccess(true);
       
-      // sessionStorage'ı temizle ve user data'sını kaydet
+      // Clear sessionStorage and save user data
       sessionStorage.removeItem('pendingEmail');
       sessionStorage.removeItem('verificationToken');
       sessionStorage.setItem('user', JSON.stringify({
