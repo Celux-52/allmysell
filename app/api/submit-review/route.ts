@@ -1,7 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend only when needed or with a fallback to avoid build errors
+const getResend = () => {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.warn('RESEND_API_KEY is missing. Email features will not work.');
+    return null;
+  }
+  return new Resend(apiKey);
+};
 
 export async function POST(request: NextRequest) {
   try {
@@ -33,6 +41,15 @@ export async function POST(request: NextRequest) {
     `;
 
     // Resend ile email gönder (sadece sana bildirim)
+    const resend = getResend();
+    if (!resend) {
+      console.error('Resend is not initialized. Check RESEND_API_KEY environment variable.');
+      return NextResponse.json(
+        { success: false, message: 'Email service is currently unavailable. Please contact the administrator.' },
+        { status: 500 }
+      );
+    }
+
     const { data, error } = await resend.emails.send({
       from: 'AllMySell <onboarding@resend.dev>',
       to: 'melihbicak@gmail.com',
