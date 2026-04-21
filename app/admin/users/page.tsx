@@ -52,27 +52,27 @@ export default function AdminUsersPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-cornsilk mb-1">Users</h1>
-          <p className="text-gray-400 text-sm">{users.length} registered users</p>
+          <h1 className="text-3xl font-bold text-stone-900 mb-1">Users</h1>
+          <p className="text-stone-500 text-sm">{users.length} registered users</p>
         </div>
       </div>
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3 mb-6">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" size={18} />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by name or email..."
-            className="w-full pl-10 pr-4 py-2.5 bg-[#1A1A1A] border border-white/10 rounded-lg text-cornsilk placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500/50 text-sm"
+            className="w-full pl-10 pr-4 py-2.5 bg-stone-50 border border-white/10 rounded-lg text-stone-900 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500/50 text-sm"
           />
         </div>
         <select
           value={filterRole}
           onChange={(e) => setFilterRole(e.target.value)}
-          className="px-4 py-2.5 bg-[#1A1A1A] border border-white/10 rounded-lg text-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30"
+          className="px-4 py-2.5 bg-stone-50 border border-white/10 rounded-lg text-stone-600 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30"
         >
           <option value="all">All Roles</option>
           <option value="admin">Admins</option>
@@ -82,7 +82,7 @@ export default function AdminUsersPage() {
 
       {/* Table */}
       {loading ? (
-        <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-8">
+        <div className="bg-stone-50 rounded-xl border border-white/5 p-8">
           <div className="space-y-4">
             {Array.from({ length: 5 }).map((_, i) => (
               <div key={i} className="flex items-center gap-4">
@@ -96,25 +96,25 @@ export default function AdminUsersPage() {
           </div>
         </div>
       ) : filteredUsers.length === 0 ? (
-        <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-12 text-center">
+        <div className="bg-stone-50 rounded-xl border border-white/5 p-12 text-center">
           <Users className="mx-auto text-gray-600 mb-3" size={40} />
-          <p className="text-gray-400 mb-1">No users found</p>
+          <p className="text-stone-500 mb-1">No users found</p>
           <p className="text-gray-600 text-sm">
             {search ? 'Try a different search term' : 'Users will appear here after they register'}
           </p>
         </div>
       ) : (
-        <div className="bg-[#1A1A1A] rounded-xl border border-white/5 overflow-hidden">
+        <div className="bg-stone-50 rounded-xl border border-white/5 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-[#111111]">
+              <thead className="bg-white">
                 <tr>
-                  <th className="px-5 py-3.5 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">User</th>
-                  <th className="px-5 py-3.5 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Provider</th>
-                  <th className="px-5 py-3.5 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Role</th>
-                  <th className="px-5 py-3.5 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Email Status</th>
-                  <th className="px-5 py-3.5 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Last Sign In</th>
-                  <th className="px-5 py-3.5 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Joined</th>
+                  <th className="px-5 py-3.5 text-left text-xs font-semibold text-stone-500 uppercase tracking-wider">User</th>
+                  <th className="px-5 py-3.5 text-left text-xs font-semibold text-stone-500 uppercase tracking-wider">Provider</th>
+                  <th className="px-5 py-3.5 text-left text-xs font-semibold text-stone-500 uppercase tracking-wider">Role</th>
+                  <th className="px-5 py-3.5 text-left text-xs font-semibold text-stone-500 uppercase tracking-wider">Email Status</th>
+                  <th className="px-5 py-3.5 text-left text-xs font-semibold text-stone-500 uppercase tracking-wider">Last Sign In</th>
+                  <th className="px-5 py-3.5 text-left text-xs font-semibold text-stone-500 uppercase tracking-wider">Joined</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
@@ -125,20 +125,20 @@ export default function AdminUsersPage() {
                         {user.avatarUrl ? (
                           <img src={user.avatarUrl} alt="" className="w-9 h-9 rounded-full object-cover" />
                         ) : (
-                          <div className="w-9 h-9 bg-gradient-to-br from-purple-600 to-purple-400 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                          <div className="w-9 h-9 bg-gradient-to-br from-purple-600 to-purple-400 rounded-full flex items-center justify-center text-stone-900 text-sm font-bold">
                             {(user.fullName || user.email)[0].toUpperCase()}
                           </div>
                         )}
                         <div>
-                          <p className="text-sm font-medium text-cornsilk">{user.fullName || 'No Name'}</p>
-                          <p className="text-xs text-gray-500">{user.email}</p>
+                          <p className="text-sm font-medium text-stone-900">{user.fullName || 'No Name'}</p>
+                          <p className="text-xs text-stone-400">{user.email}</p>
                         </div>
                       </div>
                     </td>
                     <td className="px-5 py-3.5">
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         user.provider === 'google' ? 'bg-blue-500/10 text-blue-400' :
-                        user.provider === 'github' ? 'bg-gray-500/10 text-gray-400' :
+                        user.provider === 'github' ? 'bg-gray-500/10 text-stone-500' :
                         'bg-purple-500/10 text-purple-400'
                       }`}>
                         {user.provider}
@@ -146,7 +146,7 @@ export default function AdminUsersPage() {
                     </td>
                     <td className="px-5 py-3.5">
                       <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        user.role === 'admin' ? 'bg-amber-500/10 text-amber-400' : 'bg-gray-500/10 text-gray-400'
+                        user.role === 'admin' ? 'bg-amber-500/10 text-amber-400' : 'bg-gray-500/10 text-stone-500'
                       }`}>
                         {user.role === 'admin' && <Shield size={10} />}
                         {user.role}
@@ -163,7 +163,7 @@ export default function AdminUsersPage() {
                         </span>
                       )}
                     </td>
-                    <td className="px-5 py-3.5 text-xs text-gray-500">
+                    <td className="px-5 py-3.5 text-xs text-stone-400">
                       {user.lastSignIn ? (
                         <span className="flex items-center gap-1">
                           <Clock size={12} />
@@ -171,7 +171,7 @@ export default function AdminUsersPage() {
                         </span>
                       ) : 'Never'}
                     </td>
-                    <td className="px-5 py-3.5 text-xs text-gray-500">
+                    <td className="px-5 py-3.5 text-xs text-stone-400">
                       {new Date(user.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                     </td>
                   </tr>
