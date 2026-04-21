@@ -133,13 +133,13 @@ export default function AutomationDashboard() {
     <div className="p-6 lg:p-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-cornsilk mb-1">Automation Bots</h1>
-          <p className="text-gray-400 text-sm">Control Python web scrapers and auto-listers</p>
+          <h1 className="text-3xl font-bold text-stone-900 mb-1">Automation Bots</h1>
+          <p className="text-stone-500 text-sm">Control Python web scrapers and auto-listers</p>
         </div>
         <button 
           onClick={fetchBotStatus}
           disabled={refreshing}
-          className="flex items-center gap-2 px-4 py-2 bg-[#1A1A1A] border border-white/10 rounded-lg text-gray-300 hover:bg-white/5 transition-colors text-sm"
+          className="flex items-center gap-2 px-4 py-2 bg-stone-50 border border-white/10 rounded-lg text-stone-600 hover:bg-white/5 transition-colors text-sm"
         >
           <RefreshCw size={16} className={refreshing ? "animate-spin" : ""} />
           Refresh Status
@@ -163,8 +163,8 @@ export default function AutomationDashboard() {
         {/* Bot Cards */}
         <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
           {bots.map(bot => (
-            <div key={bot.id} className="bg-[#1A1A1A] rounded-xl border border-white/5 overflow-hidden flex flex-col">
-              <div className="p-5 border-b border-white/5 bg-[#111111]">
+            <div key={bot.id} className="bg-stone-50 rounded-xl border border-white/5 overflow-hidden flex flex-col">
+              <div className="p-5 border-b border-white/5 bg-white">
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex items-center gap-3">
                     <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
@@ -174,37 +174,37 @@ export default function AutomationDashboard() {
                       <Bot size={20} />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-cornsilk">{bot.name}</h3>
+                      <h3 className="font-semibold text-stone-900">{bot.name}</h3>
                       <div className="flex items-center gap-1.5 mt-0.5">
                         <div className={`w-2 h-2 rounded-full ${
                           bot.status === 'running' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]' : 
                           bot.status === 'error' ? 'bg-red-500' : 'bg-gray-500'
                         }`} />
-                        <p className="text-[10px] text-gray-500 uppercase tracking-wider">{bot.status}</p>
+                        <p className="text-[10px] text-stone-400 uppercase tracking-wider">{bot.status}</p>
                       </div>
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-gray-400 line-clamp-2">{bot.description}</p>
+                <p className="text-xs text-stone-500 line-clamp-2">{bot.description}</p>
               </div>
               
               <div className="p-5 flex-1 flex flex-col justify-between">
                 <div className="grid grid-cols-2 gap-4 mb-5">
-                  <div className="bg-[#0A0A0A] rounded-lg p-3">
+                  <div className="bg-[#FAFAF9] rounded-lg p-3">
                     <div className="flex items-center gap-1.5 mb-1.5">
                       <Clock size={12} className="text-purple-400" />
-                      <span className="text-[10px] text-gray-500 uppercase">Last Run</span>
+                      <span className="text-[10px] text-stone-400 uppercase">Last Run</span>
                     </div>
-                    <p className="text-xs text-cornsilk font-medium">
+                    <p className="text-xs text-stone-900 font-medium">
                       {bot.lastRun ? new Date(bot.lastRun).toLocaleString() : 'Never'}
                     </p>
                   </div>
-                  <div className="bg-[#0A0A0A] rounded-lg p-3">
+                  <div className="bg-[#FAFAF9] rounded-lg p-3">
                     <div className="flex items-center gap-1.5 mb-1.5">
-                      <Activity size={12} className="text-[#E8750A]" />
-                      <span className="text-[10px] text-gray-500 uppercase">Processed</span>
+                      <Activity size={12} className="text-stone-800" />
+                      <span className="text-[10px] text-stone-400 uppercase">Processed</span>
                     </div>
-                    <p className="text-xs text-cornsilk font-medium">{bot.itemsProcessed} items</p>
+                    <p className="text-xs text-stone-900 font-medium">{bot.itemsProcessed} items</p>
                   </div>
                 </div>
 
@@ -224,7 +224,7 @@ export default function AutomationDashboard() {
                       <Play size={16} /> Launch Bot
                     </button>
                   )}
-                  <button className="p-2.5 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 transition-colors">
+                  <button className="p-2.5 bg-white/5 text-stone-500 rounded-lg hover:bg-white/10 transition-colors">
                     <Settings size={18} />
                   </button>
                 </div>
@@ -234,13 +234,13 @@ export default function AutomationDashboard() {
         </div>
 
         {/* Terminal/Logs */}
-        <div className="bg-[#0A0A0A] rounded-xl border border-white/10 flex flex-col h-[500px] overflow-hidden font-mono">
-          <div className="px-4 py-3 border-b border-white/5 bg-[#111111] flex justify-between items-center">
+        <div className="bg-[#FAFAF9] rounded-xl border border-white/10 flex flex-col h-[500px] overflow-hidden font-mono">
+          <div className="px-4 py-3 border-b border-white/5 bg-white flex justify-between items-center">
             <div className="flex items-center gap-2">
-              <Terminal size={16} className="text-gray-400" />
-              <span className="text-xs font-semibold text-gray-300">Terminal Output</span>
+              <Terminal size={16} className="text-stone-500" />
+              <span className="text-xs font-semibold text-stone-600">Terminal Output</span>
             </div>
-            <button onClick={() => setLogs([])} className="text-gray-500 hover:text-red-400" title="Clear logs">
+            <button onClick={() => setLogs([])} className="text-stone-400 hover:text-red-400" title="Clear logs">
               <Trash2 size={14} />
             </button>
           </div>
@@ -254,7 +254,7 @@ export default function AutomationDashboard() {
                     <span className="text-gray-600 mr-2">[{new Date(log.time).toLocaleTimeString()}]</span>
                     <span className={`
                       ${log.type === 'error' ? 'text-red-400' : 
-                        log.type === 'success' ? 'text-emerald-400' : 'text-gray-300'}
+                        log.type === 'success' ? 'text-emerald-400' : 'text-stone-600'}
                     `}>
                       {log.message}
                     </span>
