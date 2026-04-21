@@ -296,11 +296,11 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   const post = generateBlogContent(product);
 
   return (
-    <div className="bg-[#1A1A1A] min-h-screen">
+    <div className="bg-stone-50 min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-olive via-peru to-peru text-cornsilk py-20">
+      <section className="relative bg-gradient-to-br from-olive via-peru to-peru text-stone-900 py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link href="/blog" className="text-cornsilk/80 hover:text-cornsilk mb-6 inline-flex items-center gap-2 text-sm font-medium">
+          <Link href="/blog" className="text-stone-900/80 hover:text-stone-900 mb-6 inline-flex items-center gap-2 text-sm font-medium">
             ← Back to Blog
           </Link>
           
@@ -318,7 +318,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             </span>
           </div>
 
-          <span className="text-olive font-semibold text-sm uppercase tracking-wider mb-4 block">
+          <span className="text-stone-800 font-semibold text-sm uppercase tracking-wider mb-4 block">
             {product.category}
           </span>
           
@@ -326,16 +326,16 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             {post.title}
           </h1>
           
-          <p className="text-xl text-olive leading-relaxed">
+          <p className="text-xl text-stone-800 leading-relaxed">
             {post.excerpt}
           </p>
         </div>
       </section>
 
       {/* Product Image */}
-      <section className="py-12 bg-[#111111]">
+      <section className="py-12 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#1A1A1A] rounded-2xl shadow-xl overflow-hidden">
+          <div className="bg-stone-50 rounded-2xl shadow-xl overflow-hidden">
             <img
               src={product.image}
               alt={product.name}
@@ -350,19 +350,19 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Introduction */}
           <div className="prose prose-lg max-w-none mb-12">
-            <p className="text-xl text-gray-300 leading-relaxed first-letter:text-6xl first-letter:font-bold first-letter:text-olive first-letter:mr-3 first-letter:float-left">
+            <p className="text-xl text-stone-600 leading-relaxed first-letter:text-6xl first-letter:font-bold first-letter:text-stone-800 first-letter:mr-3 first-letter:float-left">
               {post.introduction}
             </p>
           </div>
 
           {/* Product Specifications */}
           <div className="bg-gradient-to-br from-olive to-peru rounded-2xl p-8 mb-12">
-            <h2 className="text-3xl font-bold text-cornsilk mb-6">Product Specifications</h2>
+            <h2 className="text-3xl font-bold text-stone-900 mb-6">Product Specifications</h2>
             <div className="grid md:grid-cols-2 gap-4">
               {post.specifications.map((spec, index) => (
-                <div key={index} className="bg-[#1A1A1A] rounded-lg p-4 flex justify-between items-center">
-                  <span className="font-semibold text-gray-300">{spec.label}</span>
-                  <span className="text-olive font-medium">{spec.value}</span>
+                <div key={index} className="bg-stone-50 rounded-lg p-4 flex justify-between items-center">
+                  <span className="font-semibold text-stone-600">{spec.label}</span>
+                  <span className="text-stone-800 font-medium">{spec.value}</span>
                 </div>
               ))}
             </div>
@@ -370,12 +370,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
           {/* Key Features */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-cornsilk mb-6">Key Features</h2>
+            <h2 className="text-3xl font-bold text-stone-900 mb-6">Key Features</h2>
             <div className="grid md:grid-cols-2 gap-4">
               {post.features.map((feature, index) => (
-                <div key={index} className="flex items-start gap-3 bg-[#1A1A1A] p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                <div key={index} className="flex items-start gap-3 bg-stone-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                   <CheckCircle className="text-green-500 flex-shrink-0 mt-1" size={20} />
-                  <span className="text-gray-300">{feature}</span>
+                  <span className="text-stone-600">{feature}</span>
                 </div>
               ))}
             </div>
@@ -383,9 +383,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
           {/* Why Choose This Product */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-cornsilk mb-6">Why Choose This Product?</h2>
+            <h2 className="text-3xl font-bold text-stone-900 mb-6">Why Choose This Product?</h2>
             <div className="prose prose-lg max-w-none">
-              <p className="text-gray-300 leading-relaxed whitespace-pre-line">
+              <p className="text-stone-600 leading-relaxed whitespace-pre-line">
                 {post.whyChoose}
               </p>
             </div>
@@ -393,9 +393,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
           {/* Customer Experience */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-cornsilk mb-6">Customer Experience</h2>
+            <h2 className="text-3xl font-bold text-stone-900 mb-6">Customer Experience</h2>
             <div className="prose prose-lg max-w-none">
-              <p className="text-gray-300 leading-relaxed whitespace-pre-line">
+              <p className="text-stone-600 leading-relaxed whitespace-pre-line">
                 {post.customerExperience}
               </p>
             </div>
@@ -403,13 +403,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
           {/* Pros and Cons */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-cornsilk mb-6">Pros & Cons</h2>
+            <h2 className="text-3xl font-bold text-stone-900 mb-6">Pros & Cons</h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-green-50 rounded-xl p-6">
                 <h3 className="text-xl font-bold text-green-800 mb-4">✓ Pros</h3>
                 <ul className="space-y-2">
                   {post.prosAndCons.pros.map((pro, index) => (
-                    <li key={index} className="flex items-start gap-2 text-gray-300">
+                    <li key={index} className="flex items-start gap-2 text-stone-600">
                       <CheckCircle className="text-green-600 flex-shrink-0 mt-1" size={18} />
                       <span>{pro}</span>
                     </li>
@@ -420,7 +420,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 <h3 className="text-xl font-bold text-orange-800 mb-4">⚠ Cons</h3>
                 <ul className="space-y-2">
                   {post.prosAndCons.cons.map((con, index) => (
-                    <li key={index} className="flex items-start gap-2 text-gray-300">
+                    <li key={index} className="flex items-start gap-2 text-stone-600">
                       <span className="text-orange-600 flex-shrink-0 mt-1">•</span>
                       <span>{con}</span>
                     </li>
@@ -432,9 +432,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
           {/* Buying Guide */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-cornsilk mb-6">Buying Guide</h2>
-            <div className="prose prose-lg max-w-none bg-[#111111] rounded-xl p-8">
-              <p className="text-gray-300 leading-relaxed whitespace-pre-line">
+            <h2 className="text-3xl font-bold text-stone-900 mb-6">Buying Guide</h2>
+            <div className="prose prose-lg max-w-none bg-white rounded-xl p-8">
+              <p className="text-stone-600 leading-relaxed whitespace-pre-line">
                 {post.buyingGuide}
               </p>
             </div>
@@ -442,18 +442,18 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
           {/* Conclusion */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-cornsilk mb-6">Final Verdict</h2>
+            <h2 className="text-3xl font-bold text-stone-900 mb-6">Final Verdict</h2>
             <div className="prose prose-lg max-w-none">
-              <p className="text-gray-300 leading-relaxed whitespace-pre-line">
+              <p className="text-stone-600 leading-relaxed whitespace-pre-line">
                 {post.conclusion}
               </p>
             </div>
           </div>
 
           {/* CTA Button */}
-          <div className="bg-gradient-to-r from-olive to-peru rounded-2xl p-8 text-center text-cornsilk mb-12">
+          <div className="bg-stone-100 rounded-2xl p-8 text-center text-stone-900 mb-12">
             <h3 className="text-2xl font-bold mb-4">Ready to Purchase?</h3>
-            <p className="text-olive mb-6">
+            <p className="text-stone-800 mb-6">
               Get this product now from our verified {product.platform} store
             </p>
             <TrackedLink
@@ -469,7 +469,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 item_category: product.category,
                 platform: product.platform
               }}
-              className="inline-flex items-center gap-2 bg-[#1A1A1A] text-olive px-8 py-4 rounded-full font-semibold text-lg hover:bg-peru transition-all hover:scale-105 shadow-lg"
+              className="inline-flex items-center gap-2 bg-stone-50 text-stone-800 px-8 py-4 rounded-full font-semibold text-lg hover:bg-peru transition-all hover:scale-105 shadow-lg"
             >
               <span>View on {product.platform}</span>
               <ExternalLink size={20} />
@@ -479,11 +479,11 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           {/* Related Products */}
           {post.relatedProducts.length > 0 && (
             <div>
-              <h2 className="text-3xl font-bold text-cornsilk mb-8">Related Products</h2>
+              <h2 className="text-3xl font-bold text-stone-900 mb-8">Related Products</h2>
               <div className="grid md:grid-cols-3 gap-6">
                 {post.relatedProducts.map((related) => (
                   <Link key={related.id} href={`/blog/${related.id}`}>
-                    <div className="bg-[#1A1A1A] rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 overflow-hidden group cursor-pointer">
+                    <div className="bg-stone-50 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 overflow-hidden group cursor-pointer">
                       <div className="relative h-48">
                         <img
                           src={related.image}
@@ -492,8 +492,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                         />
                       </div>
                       <div className="p-4">
-                        <span className="text-olive text-xs font-semibold uppercase">{related.category}</span>
-                        <h3 className="text-lg font-bold text-cornsilk mt-1 line-clamp-2 group-hover:text-olive transition-colors">
+                        <span className="text-stone-800 text-xs font-semibold uppercase">{related.category}</span>
+                        <h3 className="text-lg font-bold text-stone-900 mt-1 line-clamp-2 group-hover:text-stone-800 transition-colors">
                           {related.name}
                         </h3>
                       </div>
