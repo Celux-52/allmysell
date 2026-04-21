@@ -3,8 +3,8 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'About Us - AllMySell | Our Story & Multi-Platform Vision',
-  description: 'Learn about AllMySell\'s journey from two university students to a multi-platform e-commerce brand. Our vision for global marketplace presence.',
+  title: 'About Us | The AllMySell Story',
+  description: 'Discover the story behind AllMySell, a fast-growing global e-commerce brand specializing in technology and mobile accessories. Learn about our mission and multi-platform approach.',
   keywords: ['about AllMySell', 'e-commerce brand', 'tech accessories seller', 'multi-platform strategy'],
 };
 
