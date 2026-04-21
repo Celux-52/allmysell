@@ -8,8 +8,8 @@ import TrackedLink from '@/components/TrackedLink';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'AllMySell - Multi-Platform E-Commerce | Tech & Mobile Accessories',
-  description: 'Shop quality tech products and mobile accessories on eBay. Expanding to Amazon, Etsy, Shopify, and TikTok Shop. Fast shipping worldwide.',
+  title: 'AllMySell | Tech Products & Mobile Accessories Store',
+  description: 'Discover the best tech products and mobile accessories at AllMySell. We offer premium power banks, car accessories, and chargers with fast global shipping.',
   keywords: ['tech accessories', 'mobile accessories', 'eBay store', 'chargers', 'power banks', 'car accessories', 'phone cases'],
 };
 
@@ -70,7 +70,7 @@ const features = [
   {
     icon: TrendingUp,
     title: 'Growth Focused',
-    description: 'Continuously expanding our product catalog',
+    description: 'Steadily growing our product catalog',
   },
   {
     icon: Award,
@@ -182,10 +182,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-slideInUp">
             <h2 className="text-4xl font-bold text-cornsilk mb-4">
-              Why AllMySell?
+              The AllMySell Advantage
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Multi-platform strategy for global marketplace presence
+              Building a sustainable global retail presence
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
