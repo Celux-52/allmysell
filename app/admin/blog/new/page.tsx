@@ -113,20 +113,20 @@ export default function NewBlogPostPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/admin/blog"
-            className="p-2 rounded-lg hover:bg-white/5 text-gray-400 hover:text-cornsilk transition-colors"
+            className="p-2 rounded-lg hover:bg-white/5 text-stone-500 hover:text-stone-900 transition-colors"
           >
             <ArrowLeft size={20} />
           </Link>
           <div>
-            <h1 className="text-2xl font-bold text-cornsilk">New Blog Post</h1>
-            <p className="text-gray-500 text-sm">Create and publish content</p>
+            <h1 className="text-2xl font-bold text-stone-900">New Blog Post</h1>
+            <p className="text-stone-400 text-sm">Create and publish content</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={() => handleSave('DRAFT')}
             disabled={saving}
-            className="flex items-center gap-2 px-4 py-2 border border-white/10 rounded-lg text-gray-300 hover:bg-white/5 transition-colors text-sm disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 border border-white/10 rounded-lg text-stone-600 hover:bg-white/5 transition-colors text-sm disabled:opacity-50"
           >
             <Save size={16} />
             Save Draft
@@ -134,7 +134,7 @@ export default function NewBlogPostPage() {
           <button
             onClick={() => handleSave('PUBLISHED')}
             disabled={saving}
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white rounded-lg hover:shadow-lg transition-all text-sm disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-600 to-emerald-500 text-stone-900 rounded-lg hover:shadow-lg transition-all text-sm disabled:opacity-50"
           >
             <Eye size={16} />
             {saving ? 'Publishing...' : 'Publish'}
@@ -162,12 +162,12 @@ export default function NewBlogPostPage() {
               onChange={(e) => setAiTopic(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleAIGenerate()}
               placeholder='Enter topic: "Top 5 dropshipping trends 2026"'
-              className="flex-1 px-3 py-2 bg-[#0A0A0A] border border-white/10 rounded-lg text-cornsilk text-sm placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500/30"
+              className="flex-1 px-3 py-2 bg-[#FAFAF9] border border-white/10 rounded-lg text-stone-900 text-sm placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500/30"
             />
             <button
               onClick={handleAIGenerate}
               disabled={generating || !aiTopic.trim()}
-              className="px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-lg text-sm font-medium hover:shadow-lg transition-all disabled:opacity-50 flex items-center gap-2 whitespace-nowrap"
+              className="px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-500 text-stone-900 rounded-lg text-sm font-medium hover:shadow-lg transition-all disabled:opacity-50 flex items-center gap-2 whitespace-nowrap"
             >
               {generating ? <><Loader2 className="animate-spin" size={14} /> Generating...</> : <><Sparkles size={14} /> Generate</>}
             </button>
@@ -181,13 +181,13 @@ export default function NewBlogPostPage() {
             value={title}
             onChange={(e) => handleTitleChange(e.target.value)}
             placeholder="Post title..."
-            className="w-full px-0 py-3 bg-transparent text-3xl font-bold text-cornsilk placeholder-gray-600 border-none focus:outline-none focus:ring-0"
+            className="w-full px-0 py-3 bg-transparent text-3xl font-bold text-stone-900 placeholder-gray-600 border-none focus:outline-none focus:ring-0"
           />
         </div>
 
         {/* Slug */}
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">URL Slug</label>
+          <label className="block text-xs font-medium text-stone-400 mb-1.5 uppercase tracking-wider">URL Slug</label>
           <div className="flex items-center gap-2">
             <span className="text-gray-600 text-sm">/blog/</span>
             <input
@@ -195,14 +195,14 @@ export default function NewBlogPostPage() {
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
               placeholder="post-url-slug"
-              className="flex-1 px-3 py-2 bg-[#1A1A1A] border border-white/10 rounded-lg text-cornsilk text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30"
+              className="flex-1 px-3 py-2 bg-stone-50 border border-white/10 rounded-lg text-stone-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30"
             />
           </div>
         </div>
 
         {/* Cover Image */}
         <div>
-          <label className="flex items-center gap-2 text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">
+          <label className="flex items-center gap-2 text-xs font-medium text-stone-400 mb-1.5 uppercase tracking-wider">
             <Image size={14} /> Cover Image URL
           </label>
           <input
@@ -210,7 +210,7 @@ export default function NewBlogPostPage() {
             value={coverImage}
             onChange={(e) => setCoverImage(e.target.value)}
             placeholder="https://example.com/image.jpg"
-            className="w-full px-3 py-2 bg-[#1A1A1A] border border-white/10 rounded-lg text-cornsilk text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 placeholder-gray-600"
+            className="w-full px-3 py-2 bg-stone-50 border border-white/10 rounded-lg text-stone-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 placeholder-gray-600"
           />
           {coverImage && (
             <div className="mt-2 rounded-lg overflow-hidden border border-white/5">
@@ -221,19 +221,19 @@ export default function NewBlogPostPage() {
 
         {/* Excerpt */}
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Excerpt / Summary</label>
+          <label className="block text-xs font-medium text-stone-400 mb-1.5 uppercase tracking-wider">Excerpt / Summary</label>
           <textarea
             value={excerpt}
             onChange={(e) => setExcerpt(e.target.value)}
             rows={2}
             placeholder="Brief description for search results and social sharing..."
-            className="w-full px-3 py-2 bg-[#1A1A1A] border border-white/10 rounded-lg text-cornsilk text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 placeholder-gray-600 resize-none"
+            className="w-full px-3 py-2 bg-stone-50 border border-white/10 rounded-lg text-stone-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 placeholder-gray-600 resize-none"
           />
         </div>
 
         {/* Content */}
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Content (Markdown)</label>
+          <label className="block text-xs font-medium text-stone-400 mb-1.5 uppercase tracking-wider">Content (Markdown)</label>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
@@ -251,13 +251,13 @@ export default function NewBlogPostPage() {
 > Blockquote
 
 ```code block```"
-            className="w-full px-4 py-3 bg-[#1A1A1A] border border-white/10 rounded-lg text-cornsilk text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 placeholder-gray-600 resize-y font-mono leading-relaxed"
+            className="w-full px-4 py-3 bg-stone-50 border border-white/10 rounded-lg text-stone-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 placeholder-gray-600 resize-y font-mono leading-relaxed"
           />
         </div>
 
         {/* Tags */}
         <div>
-          <label className="flex items-center gap-2 text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">
+          <label className="flex items-center gap-2 text-xs font-medium text-stone-400 mb-1.5 uppercase tracking-wider">
             <Tag size={14} /> Tags (comma separated)
           </label>
           <input
@@ -265,13 +265,13 @@ export default function NewBlogPostPage() {
             value={tags}
             onChange={(e) => setTags(e.target.value)}
             placeholder="e-commerce, dropshipping, trends"
-            className="w-full px-3 py-2 bg-[#1A1A1A] border border-white/10 rounded-lg text-cornsilk text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 placeholder-gray-600"
+            className="w-full px-3 py-2 bg-stone-50 border border-white/10 rounded-lg text-stone-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 placeholder-gray-600"
           />
         </div>
 
         {/* Schedule */}
         <div>
-          <label className="flex items-center gap-2 text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">
+          <label className="flex items-center gap-2 text-xs font-medium text-stone-400 mb-1.5 uppercase tracking-wider">
             <Calendar size={14} /> Schedule Publication
           </label>
           <input
@@ -281,7 +281,7 @@ export default function NewBlogPostPage() {
               setScheduledDate(e.target.value);
               if (e.target.value) setStatus('SCHEDULED');
             }}
-            className="px-3 py-2 bg-[#1A1A1A] border border-white/10 rounded-lg text-cornsilk text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30"
+            className="px-3 py-2 bg-stone-50 border border-white/10 rounded-lg text-stone-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30"
           />
         </div>
       </div>
