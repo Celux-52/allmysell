@@ -2,14 +2,14 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0A0A0A] text-gray-300 border-t border-[#E8750A]/10">
+    <footer className="bg-[#FAFAF9] text-stone-600 border-t border-stone-200/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-5 gap-8">
           <div className="md:col-span-2">
-            <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-[#E8750A] to-[#F59E0B] bg-clip-text text-transparent">
+            <h3 className="text-2xl font-bold mb-4 bg-stone-900 !text-white hover:bg-stone-800 bg-clip-text text-transparent">
               AllMySell
             </h3>
-            <p className="text-gray-500 mb-4">
+            <p className="text-stone-400 mb-4">
               Central digital platform bringing together our stores across global 
               e-commerce marketplaces. Serving you through eBay, Amazon, Etsy, 
               Shopify, and TikTok Shop stores.
@@ -17,30 +17,30 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4 text-cornsilk">Our Stores</h4>
+            <h4 className="text-lg font-semibold mb-4 text-stone-900">Our Stores</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/shop/ebay" className="text-gray-500 hover:text-[#E8750A] transition-colors">
+                <Link href="/shop/ebay" className="text-stone-400 hover:text-stone-800 transition-colors">
                   eBay Store
                 </Link>
               </li>
               <li>
-                <Link href="/shop/amazon" className="text-gray-500 hover:text-[#E8750A] transition-colors">
+                <Link href="/shop/amazon" className="text-stone-400 hover:text-stone-800 transition-colors">
                   Amazon Store
                 </Link>
               </li>
               <li>
-                <Link href="/shop/etsy" className="text-gray-500 hover:text-[#E8750A] transition-colors">
+                <Link href="/shop/etsy" className="text-stone-400 hover:text-stone-800 transition-colors">
                   Etsy Store
                 </Link>
               </li>
               <li>
-                <Link href="/shop/shopify" className="text-gray-500 hover:text-[#E8750A] transition-colors">
+                <Link href="/shop/shopify" className="text-stone-400 hover:text-stone-800 transition-colors">
                   Shopify Store
                 </Link>
               </li>
               <li>
-                <Link href="/shop/tiktok" className="text-gray-500 hover:text-[#E8750A] transition-colors">
+                <Link href="/shop/tiktok" className="text-stone-400 hover:text-stone-800 transition-colors">
                   TikTok Shop
                 </Link>
               </li>
@@ -48,25 +48,25 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4 text-cornsilk">Company</h4>
+            <h4 className="text-lg font-semibold mb-4 text-stone-900">Company</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/about" className="text-gray-500 hover:text-[#E8750A] transition-colors">
+                <Link href="/about" className="text-stone-400 hover:text-stone-800 transition-colors">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-gray-500 hover:text-[#E8750A] transition-colors">
+                <Link href="/contact" className="text-stone-400 hover:text-stone-800 transition-colors">
                   Contact
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="text-gray-500 hover:text-[#E8750A] transition-colors">
+                <Link href="/blog" className="text-stone-400 hover:text-stone-800 transition-colors">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="text-gray-500 hover:text-[#E8750A] transition-colors">
+                <Link href="/faq" className="text-stone-400 hover:text-stone-800 transition-colors">
                   FAQ
                 </Link>
               </li>
@@ -74,15 +74,15 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4 text-cornsilk">Legal</h4>
+            <h4 className="text-lg font-semibold mb-4 text-stone-900">Legal</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/privacy-policy" className="text-gray-500 hover:text-[#E8750A] transition-colors">
+                <Link href="/privacy-policy" className="text-stone-400 hover:text-stone-800 transition-colors">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-gray-500 hover:text-[#E8750A] transition-colors">
+                <Link href="/terms" className="text-stone-400 hover:text-stone-800 transition-colors">
                   Terms of Service
                 </Link>
               </li>
@@ -91,9 +91,9 @@ export default function Footer() {
         </div>
 
         {/* Social Media Links */}
-        <div className="border-t border-[#E8750A]/10 mt-8 pt-8">
+        <div className="border-t border-stone-200/60 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-500 text-center md:text-left">
+            <p className="text-stone-400 text-center md:text-left">
               &copy; {new Date().getFullYear()} AllMySell. All rights reserved.
             </p>
             <div className="flex space-x-6">
@@ -101,7 +101,7 @@ export default function Footer() {
                 href="https://www.facebook.com/allmysell" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-500 hover:text-[#E8750A] transition-colors"
+                className="text-stone-400 hover:text-stone-800 transition-colors"
                 aria-label="Facebook"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -112,7 +112,7 @@ export default function Footer() {
                 href="https://www.instagram.com/allmysell" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-500 hover:text-[#E8750A] transition-colors"
+                className="text-stone-400 hover:text-stone-800 transition-colors"
                 aria-label="Instagram"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -123,7 +123,7 @@ export default function Footer() {
                 href="https://twitter.com/allmysell" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-500 hover:text-[#E8750A] transition-colors"
+                className="text-stone-400 hover:text-stone-800 transition-colors"
                 aria-label="Twitter"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -134,7 +134,7 @@ export default function Footer() {
                 href="https://www.linkedin.com/company/allmysell" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-500 hover:text-[#E8750A] transition-colors"
+                className="text-stone-400 hover:text-stone-800 transition-colors"
                 aria-label="LinkedIn"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -145,7 +145,7 @@ export default function Footer() {
                 href="https://www.youtube.com/@allmysell" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-500 hover:text-[#E8750A] transition-colors"
+                className="text-stone-400 hover:text-stone-800 transition-colors"
                 aria-label="YouTube"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
