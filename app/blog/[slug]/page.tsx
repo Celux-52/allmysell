@@ -450,61 +450,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             </div>
           </div>
 
-          {/* CTA Button */}
-          <div className="bg-stone-100 rounded-2xl p-8 text-center text-stone-900 mb-12">
-            <h3 className="text-2xl font-bold mb-4">Ready to Purchase?</h3>
-            <p className="text-stone-800 mb-6">
-              Get this product now from our verified {product.platform} store
-            </p>
-            <TrackedLink
-              href={product.platformLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              buttonId={`blog_buy_now_${product.id}`}
-              eventName="blog_purchase_click"
-              funnelStep="add_to_cart"
-              payload={{
-                item_id: product.id,
-                item_name: product.name,
-                item_category: product.category,
-                platform: product.platform
-              }}
-              className="inline-flex items-center gap-2 bg-stone-50 text-stone-800 px-8 py-4 rounded-full font-semibold text-lg hover:bg-peru transition-all hover:scale-105 shadow-lg"
-            >
-              <span>View on {product.platform}</span>
-              <ExternalLink size={20} />
-            </TrackedLink>
-          </div>
-
-          {/* Related Products */}
-          {post.relatedProducts.length > 0 && (
-            <div>
-              <h2 className="text-3xl font-bold text-stone-900 mb-8">Related Products</h2>
-              <div className="grid md:grid-cols-3 gap-6">
-                {post.relatedProducts.map((related) => (
-                  <Link key={related.id} href={`/blog/${related.id}`}>
-                    <div className="bg-stone-50 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 overflow-hidden group cursor-pointer">
-                      <div className="relative h-48">
-                        <img
-                          src={related.image}
-                          alt={related.name}
-                          className="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform"
-                        />
-                      </div>
-                      <div className="p-4">
-                        <span className="text-stone-800 text-xs font-semibold uppercase">{related.category}</span>
-                        <h3 className="text-lg font-bold text-stone-900 mt-1 line-clamp-2 group-hover:text-stone-800 transition-colors">
-                          {related.name}
-                        </h3>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </article>
+          
+        </article>
     </div>
   );
 }
