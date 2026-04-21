@@ -113,13 +113,13 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
         onClick={() => setIsOpen(!isOpen)}
         className="w-full py-5 px-6 text-left flex justify-between items-center hover:bg-olive transition-colors rounded-lg"
       >
-        <span className="font-semibold text-cornsilk pr-4">{question}</span>
+        <span className="font-semibold text-stone-900 pr-4">{question}</span>
         <ChevronDown 
-          className={`w-5 h-5 text-olive flex-shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          className={`w-5 h-5 text-stone-800 flex-shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`}
         />
       </button>
       {isOpen && (
-        <div className="px-6 pb-5 text-gray-400 leading-relaxed">
+        <div className="px-6 pb-5 text-stone-500 leading-relaxed">
           {answer}
         </div>
       )}
@@ -133,10 +133,10 @@ export default function FAQPage() {
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-olive to-peru bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-stone-100 bg-clip-text text-transparent">
             Frequently Asked Questions
           </h1>
-          <p className="text-gray-400 text-lg">
+          <p className="text-stone-500 text-lg">
             Find answers to common questions about shopping with AllMySell
           </p>
         </div>
@@ -144,9 +144,9 @@ export default function FAQPage() {
         {/* FAQ Categories */}
         <div className="space-y-8">
           {faqCategories.map((category, index) => (
-            <div key={index} className="bg-[#1A1A1A] rounded-2xl shadow-xl overflow-hidden">
-              <div className="bg-gradient-to-r from-olive to-peru px-6 py-4">
-                <h2 className="text-2xl font-bold text-cornsilk">{category.category}</h2>
+            <div key={index} className="bg-stone-50 rounded-2xl shadow-xl overflow-hidden">
+              <div className="bg-stone-100 px-6 py-4">
+                <h2 className="text-2xl font-bold text-stone-900">{category.category}</h2>
               </div>
               <div className="divide-y divide-gray-200">
                 {category.questions.map((item, qIndex) => (
@@ -158,16 +158,16 @@ export default function FAQPage() {
         </div>
 
         {/* Still Have Questions */}
-        <div className="mt-12 bg-[#1A1A1A] rounded-2xl shadow-xl p-8 text-center">
-          <h2 className="text-2xl font-bold text-cornsilk mb-4">
+        <div className="mt-12 bg-stone-50 rounded-2xl shadow-xl p-8 text-center">
+          <h2 className="text-2xl font-bold text-stone-900 mb-4">
             Still have questions?
           </h2>
-          <p className="text-gray-400 mb-6">
+          <p className="text-stone-500 mb-6">
             Can't find the answer you're looking for? Our customer support team is here to help.
           </p>
           <a
             href="/contact"
-            className="inline-block bg-gradient-to-r from-olive to-peru text-cornsilk px-8 py-3 rounded-lg font-semibold hover:from-olive hover:to-peru transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            className="inline-block bg-stone-100 text-stone-900 px-8 py-3 rounded-lg font-semibold hover:from-olive hover:to-peru transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
             Contact Us
           </a>
