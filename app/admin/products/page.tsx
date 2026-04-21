@@ -50,10 +50,10 @@ export default function AdminProductsPage() {
     <div className="p-6 lg:p-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-cornsilk mb-1">Digital Products</h1>
-          <p className="text-gray-400 text-sm">Manage SaaS subscription packages</p>
+          <h1 className="text-3xl font-bold text-stone-900 mb-1">Digital Products</h1>
+          <p className="text-stone-500 text-sm">Manage SaaS subscription packages</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-lg hover:shadow-lg hover:shadow-purple-500/20 transition-all font-medium text-sm opacity-50 cursor-not-allowed" disabled>
+        <button className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-600 to-purple-500 text-stone-900 rounded-lg hover:shadow-lg hover:shadow-purple-500/20 transition-all font-medium text-sm opacity-50 cursor-not-allowed" disabled>
           <Plus size={18} />
           Add Product (Coming Soon)
         </button>
@@ -61,7 +61,7 @@ export default function AdminProductsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {products.map((product) => (
-          <div key={product.id} className={`bg-[#1A1A1A] rounded-xl border ${product.active ? 'border-purple-500/20' : 'border-white/5 opacity-60'} p-6 relative overflow-hidden`}>
+          <div key={product.id} className={`bg-stone-50 rounded-xl border ${product.active ? 'border-purple-500/20' : 'border-white/5 opacity-60'} p-6 relative overflow-hidden`}>
             {product.name === 'Pro Plan' && (
               <div className="absolute top-3 right-3 px-2 py-0.5 bg-gradient-to-r from-amber-500 to-amber-400 text-black text-xs font-bold rounded-full">
                 POPULAR
@@ -79,18 +79,18 @@ export default function AdminProductsPage() {
               )}
             </div>
 
-            <h3 className="text-xl font-bold text-cornsilk mb-2">{product.name}</h3>
-            <p className="text-gray-400 text-sm mb-4 line-clamp-2">{product.description}</p>
+            <h3 className="text-xl font-bold text-stone-900 mb-2">{product.name}</h3>
+            <p className="text-stone-500 text-sm mb-4 line-clamp-2">{product.description}</p>
             
             <div className="flex items-baseline gap-1 mb-6">
               <DollarSign className="text-purple-400" size={18} />
-              <span className="text-3xl font-bold text-cornsilk">{product.price}</span>
-              <span className="text-gray-500 text-sm">/{product.currency}/mo</span>
+              <span className="text-3xl font-bold text-stone-900">{product.price}</span>
+              <span className="text-stone-400 text-sm">/{product.currency}/mo</span>
             </div>
 
             <div className="space-y-2">
               {product.features.map((feature, i) => (
-                <div key={i} className="flex items-center gap-2 text-sm text-gray-300">
+                <div key={i} className="flex items-center gap-2 text-sm text-stone-600">
                   <div className="w-1.5 h-1.5 bg-purple-400 rounded-full flex-shrink-0"></div>
                   {feature}
                 </div>
@@ -100,8 +100,8 @@ export default function AdminProductsPage() {
         ))}
       </div>
 
-      <div className="mt-8 p-6 bg-[#1A1A1A] rounded-xl border border-white/5 text-center">
-        <p className="text-gray-400 text-sm mb-2">💳 Payment integration will be available after Stripe setup</p>
+      <div className="mt-8 p-6 bg-stone-50 rounded-xl border border-white/5 text-center">
+        <p className="text-stone-500 text-sm mb-2">💳 Payment integration will be available after Stripe setup</p>
         <p className="text-gray-600 text-xs">Products shown above are templates. They will be stored in the database once connected.</p>
       </div>
     </div>
