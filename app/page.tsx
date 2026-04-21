@@ -3,7 +3,6 @@ import { ShoppingBag, TrendingUp, Award, Globe } from 'lucide-react';
 import Newsletter from '@/components/Newsletter';
 import Testimonials from '@/components/Testimonials';
 import TrustBadges from '@/components/TrustBadges';
-import ProductCarousel from '@/components/ProductCarousel';
 import TrackedLink from '@/components/TrackedLink';
 import type { Metadata } from 'next';
 
@@ -112,8 +111,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Product Carousel - FEATURED PRODUCTS */}
-      <ProductCarousel />
+
 
       {/* Our Store Section */}
       <section className="py-20 bg-gradient-to-b from-[#0A0A0A] to-[#111111]">
