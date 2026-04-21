@@ -66,10 +66,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
+      <div className="min-h-screen bg-[#FAFAF9] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-[#E8750A]/30 border-t-[#E8750A] rounded-full animate-spin"></div>
-          <p className="text-gray-400 animate-pulse">Loading dashboard...</p>
+          <p className="text-stone-500 animate-pulse">Loading dashboard...</p>
         </div>
       </div>
     );
@@ -86,12 +86,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Logo */}
       <div className="p-4 border-b border-white/5">
         <Link href="/" className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-[#E8750A] to-[#F59E0B] rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg shadow-[#E8750A]/20">
-            <span className="text-white font-bold text-lg">A</span>
+          <div className="w-10 h-10 bg-stone-900 !text-white hover:bg-stone-800 rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg shadow-stone-200/50">
+            <span className="text-stone-900 font-bold text-lg">A</span>
           </div>
           {!collapsed && (
             <div>
-              <h1 className="text-lg font-bold bg-gradient-to-r from-[#E8750A] to-[#F59E0B] bg-clip-text text-transparent">AllMySell</h1>
+              <h1 className="text-lg font-bold bg-stone-900 !text-white hover:bg-stone-800 bg-clip-text text-transparent">AllMySell</h1>
               <p className="text-[10px] text-gray-600 -mt-0.5">Product Research Platform</p>
             </div>
           )}
@@ -100,12 +100,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* AI Badge */}
       {!collapsed && (
-        <div className="mx-3 mt-4 p-3 bg-gradient-to-r from-[#E8750A]/10 to-[#F59E0B]/5 rounded-xl border border-[#E8750A]/10">
+        <div className="mx-3 mt-4 p-3 bg-gradient-to-r from-[#E8750A]/10 to-[#F59E0B]/5 rounded-xl border border-stone-200/60">
           <div className="flex items-center gap-2 mb-1">
-            <Sparkles className="text-[#F59E0B]" size={14} />
-            <span className="text-xs font-semibold text-[#F59E0B]">Free Plan</span>
+            <Sparkles className="text-stone-500" size={14} />
+            <span className="text-xs font-semibold text-stone-500">Free Plan</span>
           </div>
-          <p className="text-[10px] text-gray-500">Upgrade for unlimited AI searches</p>
+          <p className="text-[10px] text-stone-400">Upgrade for unlimited AI searches</p>
         </div>
       )}
 
@@ -120,12 +120,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               onClick={() => setMobileOpen(false)}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${
                 isActive
-                  ? 'bg-[#E8750A]/15 text-[#E8750A] border border-[#E8750A]/20'
-                  : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
+                  ? 'bg-[#E8750A]/15 text-stone-800 border border-[#E8750A]/20'
+                  : 'text-stone-500 hover:bg-white/5 hover:text-gray-200'
               }`}
               title={collapsed ? item.name : undefined}
             >
-              <item.icon size={20} className={`flex-shrink-0 ${isActive ? 'text-[#E8750A]' : 'group-hover:text-[#E8750A]'}`} />
+              <item.icon size={20} className={`flex-shrink-0 ${isActive ? 'text-stone-800' : 'group-hover:text-stone-800'}`} />
               {!collapsed && <span className="text-sm font-medium">{item.name}</span>}
             </Link>
           );
@@ -154,7 +154,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </button>
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="hidden md:flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-500 hover:bg-white/5 hover:text-gray-300 transition-all w-full"
+          className="hidden md:flex items-center gap-3 px-3 py-2.5 rounded-lg text-stone-400 hover:bg-white/5 hover:text-stone-600 transition-all w-full"
         >
           {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
           {!collapsed && <span className="text-sm">Collapse</span>}
@@ -168,13 +168,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             {user.avatarUrl ? (
               <img src={user.avatarUrl} alt="" className="w-9 h-9 rounded-full object-cover border border-[#E8750A]/20 flex-shrink-0" />
             ) : (
-              <div className="w-9 h-9 bg-gradient-to-br from-[#E8750A] to-[#F59E0B] rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+              <div className="w-9 h-9 bg-stone-900 !text-white hover:bg-stone-800 rounded-full flex items-center justify-center text-stone-900 text-sm font-bold flex-shrink-0">
                 {(user.fullName || user.email)[0].toUpperCase()}
               </div>
             )}
             <div className="min-w-0">
-              <p className="text-xs font-medium text-cornsilk truncate">{user.fullName || 'User'}</p>
-              <p className="text-[10px] text-gray-500 truncate">{user.email}</p>
+              <p className="text-xs font-medium text-stone-900 truncate">{user.fullName || 'User'}</p>
+              <p className="text-[10px] text-stone-400 truncate">{user.email}</p>
             </div>
           </div>
         </div>
@@ -183,21 +183,21 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   );
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex">
+    <div className="min-h-screen bg-[#FAFAF9] flex">
       {/* Desktop Sidebar */}
-      <aside className={`hidden md:flex ${collapsed ? 'w-20' : 'w-64'} bg-[#111111] border-r border-white/5 flex-col transition-all duration-300 sticky top-0 h-screen`}>
+      <aside className={`hidden md:flex ${collapsed ? 'w-20' : 'w-64'} bg-white border-r border-white/5 flex-col transition-all duration-300 sticky top-0 h-screen`}>
         <SidebarContent />
       </aside>
 
       {/* Mobile Header */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-[#111111] border-b border-white/5 px-4 py-3 flex items-center justify-between">
+      <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-white/5 px-4 py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-[#E8750A] to-[#F59E0B] rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">A</span>
+          <div className="w-8 h-8 bg-stone-900 !text-white hover:bg-stone-800 rounded-lg flex items-center justify-center">
+            <span className="text-stone-900 font-bold text-sm">A</span>
           </div>
-          <span className="font-bold bg-gradient-to-r from-[#E8750A] to-[#F59E0B] bg-clip-text text-transparent">AllMySell</span>
+          <span className="font-bold bg-stone-900 !text-white hover:bg-stone-800 bg-clip-text text-transparent">AllMySell</span>
         </Link>
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 rounded-lg text-gray-300 hover:bg-white/5">
+        <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 rounded-lg text-stone-600 hover:bg-white/5">
           {mobileOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
@@ -205,8 +205,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Mobile Sidebar Overlay */}
       {mobileOpen && (
         <>
-          <div className="md:hidden fixed inset-0 bg-black/60 z-40" onClick={() => setMobileOpen(false)} />
-          <aside className="md:hidden fixed left-0 top-0 bottom-0 w-64 bg-[#111111] z-50 flex flex-col">
+          <div className="md:hidden fixed inset-0 bg-transparent/60 z-40" onClick={() => setMobileOpen(false)} />
+          <aside className="md:hidden fixed left-0 top-0 bottom-0 w-64 bg-white z-50 flex flex-col">
             <SidebarContent />
           </aside>
         </>
