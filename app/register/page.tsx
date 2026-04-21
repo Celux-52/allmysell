@@ -114,7 +114,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0A0A0A] via-[#1A0A00] to-[#0A0A0A] flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen bg-[#FAFAF9] flex items-center justify-center py-12 px-4">
       {/* Background Effects */}
       <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-[#E8750A]/10 blur-[120px] animate-pulse"></div>
       <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-[#F59E0B]/10 blur-[120px] animate-pulse" style={{ animationDelay: '2s' }}></div>
@@ -122,15 +122,15 @@ export default function RegisterPage() {
       <div className="w-full max-w-md relative z-10">
         {/* Logo */}
         <div className="text-center mb-8 animate-slideInUp">
-          <div className="w-16 h-16 bg-gradient-to-br from-[#E8750A] to-[#F59E0B] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-2xl shadow-[#E8750A]/20">
-            <span className="text-white font-bold text-3xl">A</span>
+          <div className="w-16 h-16 bg-stone-900 !text-white hover:bg-stone-800 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-2xl shadow-stone-200/50">
+            <span className="text-stone-900 font-bold text-3xl">A</span>
           </div>
-          <h1 className="text-4xl font-bold text-cornsilk mb-2">AllMySell</h1>
-          <p className="text-[#F59E0B]">Create Your Account</p>
+          <h1 className="text-4xl font-bold text-stone-900 mb-2">AllMySell</h1>
+          <p className="text-stone-500">Create Your Account</p>
         </div>
 
         {/* Form Card */}
-        <div className="bg-[#151515]/80 backdrop-blur-xl rounded-3xl shadow-2xl p-8 animate-scaleIn border border-[#E8750A]/10">
+        <div className="bg-[#151515]/80 backdrop-blur-xl rounded-3xl shadow-2xl p-8 animate-scaleIn border border-stone-200/60">
           {!success ? (
             <>
               {/* Social Login Buttons */}
@@ -140,10 +140,10 @@ export default function RegisterPage() {
                     <button
                       onClick={() => handleSocialLogin('google')}
                       disabled={!!socialLoading}
-                      className="w-full flex items-center justify-center gap-3 py-3.5 px-4 border border-white/10 rounded-xl bg-[#0A0A0A] text-gray-300 hover:bg-[#1A1A1A] hover:border-[#E8750A]/30 transition-all duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full flex items-center justify-center gap-3 py-3.5 px-4 border border-white/10 rounded-xl bg-[#FAFAF9] text-stone-600 hover:bg-stone-50 hover:border-[#E8750A]/30 transition-all duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {socialLoading === 'google' ? (
-                        <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <svg className="animate-spin h-5 w-5 text-stone-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
@@ -165,16 +165,16 @@ export default function RegisterPage() {
                       <div className="w-full border-t border-white/10" />
                     </div>
                     <div className="relative flex justify-center text-sm">
-                      <span className="px-4 bg-[#151515] text-gray-500 text-xs">or sign up with email</span>
+                      <span className="px-4 bg-[#151515] text-stone-400 text-xs">or sign up with email</span>
                     </div>
                   </div>
                 </>
               )}
 
-              <h2 className="text-2xl font-bold text-cornsilk mb-2">
+              <h2 className="text-2xl font-bold text-stone-900 mb-2">
                 {step === 1 ? 'Get Started' : 'Create Password'}
               </h2>
-              <p className="text-gray-400 mb-6">
+              <p className="text-stone-500 mb-6">
                 {step === 1 ? 'Enter your name and email to begin.' : 'Choose a secure password for your account.'}
               </p>
 
@@ -189,11 +189,11 @@ export default function RegisterPage() {
                 {step === 1 ? (
                   <>
                     <div>
-                      <label htmlFor="fullName" className="block text-sm font-medium text-gray-300 mb-2">
+                      <label htmlFor="fullName" className="block text-sm font-medium text-stone-600 mb-2">
                         Full Name
                       </label>
                       <div className="relative group">
-                        <User className="absolute left-3 top-3.5 text-gray-500 group-focus-within:text-[#E8750A] transition-colors" size={20} />
+                        <User className="absolute left-3 top-3.5 text-stone-400 group-focus-within:text-stone-800 transition-colors" size={20} />
                         <input
                           id="fullName"
                           type="text"
@@ -201,17 +201,17 @@ export default function RegisterPage() {
                           onChange={(e) => setFullName(e.target.value)}
                           placeholder="John Doe"
                           required
-                          className="w-full pl-10 pr-4 py-3 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E8750A]/50 focus:border-[#E8750A] bg-[#0A0A0A] text-cornsilk placeholder-gray-600 transition-all"
+                          className="w-full pl-10 pr-4 py-3 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E8750A]/50 focus:border-[#E8750A] bg-[#FAFAF9] text-stone-900 placeholder-gray-600 transition-all"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                      <label htmlFor="email" className="block text-sm font-medium text-stone-600 mb-2">
                         Email Address
                       </label>
                       <div className="relative group">
-                        <Mail className="absolute left-3 top-3.5 text-gray-500 group-focus-within:text-[#E8750A] transition-colors" size={20} />
+                        <Mail className="absolute left-3 top-3.5 text-stone-400 group-focus-within:text-stone-800 transition-colors" size={20} />
                         <input
                           id="email"
                           type="email"
@@ -219,7 +219,7 @@ export default function RegisterPage() {
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="example@email.com"
                           required
-                          className="w-full pl-10 pr-4 py-3 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E8750A]/50 focus:border-[#E8750A] bg-[#0A0A0A] text-cornsilk placeholder-gray-600 transition-all"
+                          className="w-full pl-10 pr-4 py-3 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E8750A]/50 focus:border-[#E8750A] bg-[#FAFAF9] text-stone-900 placeholder-gray-600 transition-all"
                         />
                       </div>
                     </div>
@@ -227,11 +227,11 @@ export default function RegisterPage() {
                 ) : (
                   <>
                     <div>
-                      <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+                      <label htmlFor="password" className="block text-sm font-medium text-stone-600 mb-2">
                         Password
                       </label>
                       <div className="relative group">
-                        <Lock className="absolute left-3 top-3.5 text-gray-500 group-focus-within:text-[#E8750A] transition-colors" size={20} />
+                        <Lock className="absolute left-3 top-3.5 text-stone-400 group-focus-within:text-stone-800 transition-colors" size={20} />
                         <input
                           id="password"
                           type="password"
@@ -240,17 +240,17 @@ export default function RegisterPage() {
                           placeholder="Min. 6 characters"
                           required
                           minLength={6}
-                          className="w-full pl-10 pr-4 py-3 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E8750A]/50 focus:border-[#E8750A] bg-[#0A0A0A] text-cornsilk placeholder-gray-600 transition-all"
+                          className="w-full pl-10 pr-4 py-3 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E8750A]/50 focus:border-[#E8750A] bg-[#FAFAF9] text-stone-900 placeholder-gray-600 transition-all"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
+                      <label htmlFor="confirmPassword" className="block text-sm font-medium text-stone-600 mb-2">
                         Confirm Password
                       </label>
                       <div className="relative group">
-                        <Lock className="absolute left-3 top-3.5 text-gray-500 group-focus-within:text-[#E8750A] transition-colors" size={20} />
+                        <Lock className="absolute left-3 top-3.5 text-stone-400 group-focus-within:text-stone-800 transition-colors" size={20} />
                         <input
                           id="confirmPassword"
                           type="password"
@@ -259,7 +259,7 @@ export default function RegisterPage() {
                           placeholder="Re-enter your password"
                           required
                           minLength={6}
-                          className="w-full pl-10 pr-4 py-3 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E8750A]/50 focus:border-[#E8750A] bg-[#0A0A0A] text-cornsilk placeholder-gray-600 transition-all"
+                          className="w-full pl-10 pr-4 py-3 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E8750A]/50 focus:border-[#E8750A] bg-[#FAFAF9] text-stone-900 placeholder-gray-600 transition-all"
                         />
                       </div>
                     </div>
@@ -271,7 +271,7 @@ export default function RegisterPage() {
                     <button
                       type="button"
                       onClick={() => { setStep(1); setError(''); }}
-                      className="flex-1 py-3 px-4 border border-white/10 rounded-xl text-gray-300 hover:bg-[#1A1A1A] transition-all font-medium"
+                      className="flex-1 py-3 px-4 border border-white/10 rounded-xl text-stone-600 hover:bg-stone-50 transition-all font-medium"
                     >
                       Back
                     </button>
@@ -279,11 +279,11 @@ export default function RegisterPage() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="flex-1 bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-white py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-[#E8750A]/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="flex-1 bg-stone-900 !text-white hover:bg-stone-800 text-stone-900 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-stone-200/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {loading ? (
                       <>
-                        <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <svg className="animate-spin h-5 w-5 text-stone-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
@@ -298,9 +298,9 @@ export default function RegisterPage() {
                 </div>
               </form>
 
-              <p className="text-center text-gray-400 text-sm mt-6">
+              <p className="text-center text-stone-500 text-sm mt-6">
                 Already have an account?{' '}
-                <Link href="/login" className="text-[#E8750A] hover:underline font-semibold">
+                <Link href="/login" className="text-stone-800 hover:underline font-semibold">
                   Log in
                 </Link>
               </p>
@@ -310,14 +310,14 @@ export default function RegisterPage() {
               <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="text-green-500" size={32} />
               </div>
-              <h3 className="text-xl font-bold text-cornsilk mb-2">Account Created!</h3>
-              <p className="text-gray-400 mb-4">
-                Please check your email <span className="text-cornsilk font-medium">{email}</span> to verify your account.
+              <h3 className="text-xl font-bold text-stone-900 mb-2">Account Created!</h3>
+              <p className="text-stone-500 mb-4">
+                Please check your email <span className="text-stone-900 font-medium">{email}</span> to verify your account.
               </p>
-              <p className="text-sm text-gray-500">You&apos;ll be redirected automatically after verification.</p>
+              <p className="text-sm text-stone-400">You&apos;ll be redirected automatically after verification.</p>
               <Link
                 href="/login"
-                className="inline-block mt-6 text-[#E8750A] hover:underline font-semibold"
+                className="inline-block mt-6 text-stone-800 hover:underline font-semibold"
               >
                 Go to Login
               </Link>
@@ -329,13 +329,13 @@ export default function RegisterPage() {
         {!success && (
           <div className="mt-8 flex justify-center gap-2">
             <div className="flex items-center gap-2">
-              <div className={`w-8 h-8 ${step >= 1 ? 'bg-[#E8750A]' : 'bg-[#1A1A1A]'} text-white rounded-full flex items-center justify-center font-semibold text-sm transition-colors`}>1</div>
-              <p className={`text-sm font-medium ${step >= 1 ? 'text-cornsilk' : 'text-gray-500'}`}>Info</p>
+              <div className={`w-8 h-8 ${step >= 1 ? 'bg-[#E8750A]' : 'bg-stone-50'} text-stone-900 rounded-full flex items-center justify-center font-semibold text-sm transition-colors`}>1</div>
+              <p className={`text-sm font-medium ${step >= 1 ? 'text-stone-900' : 'text-stone-400'}`}>Info</p>
             </div>
             <div className="border-t-2 border-white/20 w-12 mt-4"></div>
             <div className="flex items-center gap-2">
-              <div className={`w-8 h-8 ${step >= 2 ? 'bg-[#E8750A]' : 'bg-[#1A1A1A]'} ${step >= 2 ? 'text-white' : 'text-gray-400'} rounded-full flex items-center justify-center font-semibold text-sm transition-colors`}>2</div>
-              <p className={`text-sm ${step >= 2 ? 'text-cornsilk font-medium' : 'text-gray-500'}`}>Password</p>
+              <div className={`w-8 h-8 ${step >= 2 ? 'bg-[#E8750A]' : 'bg-stone-50'} ${step >= 2 ? 'text-stone-900' : 'text-stone-500'} rounded-full flex items-center justify-center font-semibold text-sm transition-colors`}>2</div>
+              <p className={`text-sm ${step >= 2 ? 'text-stone-900 font-medium' : 'text-stone-400'}`}>Password</p>
             </div>
           </div>
         )}
