@@ -185,10 +185,10 @@ export default function ProductCarousel() {
     <section className="py-16 bg-gradient-to-b from-[#0A0A0A] to-[#111111] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <div className="text-center">
-          <h2 className="text-4xl font-bold text-cornsilk mb-4">
+          <h2 className="text-4xl font-bold text-stone-900 mb-4">
             Our Products
           </h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-3">
+          <p className="text-xl text-stone-500 max-w-2xl mx-auto mb-3">
             Tech & mobile accessories from our eBay store
           </p>
           <span className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/30 text-green-400 px-4 py-2 rounded-full text-sm font-medium">
@@ -210,13 +210,13 @@ export default function ProductCarousel() {
               href={`/blog/${product.id}`}
               className="flex-shrink-0 w-48 mx-3 group"
             >
-              <div className={`relative bg-[#1A1A1A] backdrop-blur-sm rounded-xl p-4 border transition-all duration-300 hover:scale-105 ${product.soldOut ? 'border-gray-800' : 'border-[#E8750A]/20 hover:border-[#E8750A]/50'}`}>
+              <div className={`relative bg-stone-50 backdrop-blur-sm rounded-xl p-4 border transition-all duration-300 hover:scale-105 ${product.soldOut ? 'border-stone-200' : 'border-[#E8750A]/20 hover:border-[#E8750A]/50'}`}>
                 {product.soldOut ? (
-                  <div className="absolute top-2 right-2 z-10 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                  <div className="absolute top-2 right-2 z-10 bg-red-600 text-stone-900 text-[10px] font-bold px-2 py-0.5 rounded-full">
                     SOLD OUT
                   </div>
                 ) : (
-                  <div className="absolute top-2 right-2 z-10 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                  <div className="absolute top-2 right-2 z-10 bg-green-500 text-stone-900 text-[10px] font-bold px-2 py-0.5 rounded-full">
                     IN STOCK
                   </div>
                 )}
@@ -227,10 +227,10 @@ export default function ProductCarousel() {
                     className={`w-full h-full object-contain p-2 ${product.soldOut ? 'grayscale opacity-50' : 'opacity-100'}`}
                   />
                 </div>
-                <h3 className={`text-sm font-semibold truncate ${product.soldOut ? 'text-gray-400' : 'text-cornsilk group-hover:text-[#E8750A]'}`}>
+                <h3 className={`text-sm font-semibold truncate ${product.soldOut ? 'text-stone-500' : 'text-stone-900 group-hover:text-stone-800'}`}>
                   {product.name}
                 </h3>
-                <p className={`text-xs truncate ${product.soldOut ? 'text-gray-600' : 'text-[#E8750A]/70'}`}>
+                <p className={`text-xs truncate ${product.soldOut ? 'text-gray-600' : 'text-stone-800/70'}`}>
                   {product.category}
                 </p>
               </div>
@@ -242,7 +242,7 @@ export default function ProductCarousel() {
       <div className="text-center mt-10">
         <Link
           href="/shop/ebay"
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-white px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform shadow-lg shadow-[#E8750A]/20"
+          className="inline-flex items-center gap-2 bg-stone-900 !text-white hover:bg-stone-800 text-stone-900 px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform shadow-lg shadow-stone-200/50"
         >
           View All Products
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
