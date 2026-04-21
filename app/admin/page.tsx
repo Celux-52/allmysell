@@ -55,8 +55,8 @@ export default function AdminDashboardPage() {
     <div className="p-6 lg:p-8">
       {/* Page Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-cornsilk mb-2">Dashboard</h1>
-        <p className="text-gray-400">Welcome to the AllMySell Admin Panel</p>
+        <h1 className="text-3xl font-bold text-stone-900 mb-2">Dashboard</h1>
+        <p className="text-stone-500">Welcome to the AllMySell Admin Panel</p>
       </div>
 
       {/* Stats Grid */}
@@ -65,22 +65,22 @@ export default function AdminDashboardPage() {
           <Link
             key={card.label}
             href={card.href}
-            className="bg-[#1A1A1A] rounded-xl p-5 border border-white/5 hover:border-purple-500/30 transition-all group"
+            className="bg-stone-50 rounded-xl p-5 border border-white/5 hover:border-purple-500/30 transition-all group"
           >
             <div className="flex items-center justify-between mb-4">
               <div className={`w-10 h-10 bg-gradient-to-br ${card.color} rounded-lg flex items-center justify-center`}>
-                <card.icon className="text-white" size={20} />
+                <card.icon className="text-stone-900" size={20} />
               </div>
               <TrendingUp className="text-gray-600 group-hover:text-purple-400 transition-colors" size={16} />
             </div>
-            <p className="text-2xl font-bold text-cornsilk mb-1">
+            <p className="text-2xl font-bold text-stone-900 mb-1">
               {loading ? (
                 <span className="inline-block w-12 h-7 bg-white/5 rounded animate-pulse"></span>
               ) : (
                 card.value.toLocaleString()
               )}
             </p>
-            <p className="text-sm text-gray-500">{card.label}</p>
+            <p className="text-sm text-stone-400">{card.label}</p>
           </Link>
         ))}
       </div>
@@ -88,9 +88,9 @@ export default function AdminDashboardPage() {
       {/* Two Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Users */}
-        <div className="bg-[#1A1A1A] rounded-xl border border-white/5 overflow-hidden">
+        <div className="bg-stone-50 rounded-xl border border-white/5 overflow-hidden">
           <div className="flex items-center justify-between px-5 py-4 border-b border-white/5">
-            <h2 className="font-semibold text-cornsilk flex items-center gap-2">
+            <h2 className="font-semibold text-stone-900 flex items-center gap-2">
               <Users size={18} className="text-purple-400" />
               Recent Users
             </h2>
@@ -110,18 +110,18 @@ export default function AdminDashboardPage() {
                 </div>
               ))
             ) : stats.recentUsers.length === 0 ? (
-              <div className="px-5 py-8 text-center text-gray-500 text-sm">
+              <div className="px-5 py-8 text-center text-stone-400 text-sm">
                 No users registered yet
               </div>
             ) : (
               stats.recentUsers.map((user) => (
                 <div key={user.id} className="px-5 py-3 flex items-center gap-3 hover:bg-white/[0.02] transition-colors">
-                  <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-purple-400 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                  <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-purple-400 rounded-full flex items-center justify-center text-stone-900 text-xs font-bold">
                     {(user.fullName || user.email)[0].toUpperCase()}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-cornsilk truncate">{user.fullName || 'No Name'}</p>
-                    <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                    <p className="text-sm font-medium text-stone-900 truncate">{user.fullName || 'No Name'}</p>
+                    <p className="text-xs text-stone-400 truncate">{user.email}</p>
                   </div>
                   <p className="text-xs text-gray-600">
                     {new Date(user.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
@@ -133,9 +133,9 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-[#1A1A1A] rounded-xl border border-white/5 overflow-hidden">
+        <div className="bg-stone-50 rounded-xl border border-white/5 overflow-hidden">
           <div className="px-5 py-4 border-b border-white/5">
-            <h2 className="font-semibold text-cornsilk flex items-center gap-2">
+            <h2 className="font-semibold text-stone-900 flex items-center gap-2">
               <Activity size={18} className="text-purple-400" />
               Quick Actions
             </h2>
@@ -143,40 +143,40 @@ export default function AdminDashboardPage() {
           <div className="p-5 space-y-3">
             <Link
               href="/admin/blog/new"
-              className="flex items-center gap-3 p-4 rounded-lg bg-[#0A0A0A] border border-white/5 hover:border-purple-500/30 transition-all group"
+              className="flex items-center gap-3 p-4 rounded-lg bg-[#FAFAF9] border border-white/5 hover:border-purple-500/30 transition-all group"
             >
               <div className="w-10 h-10 bg-emerald-600/20 rounded-lg flex items-center justify-center group-hover:bg-emerald-600/30 transition-colors">
                 <FileText className="text-emerald-400" size={20} />
               </div>
               <div>
-                <p className="text-sm font-medium text-cornsilk">Write New Blog Post</p>
-                <p className="text-xs text-gray-500">Create and publish content</p>
+                <p className="text-sm font-medium text-stone-900">Write New Blog Post</p>
+                <p className="text-xs text-stone-400">Create and publish content</p>
               </div>
             </Link>
 
             <Link
               href="/admin/users"
-              className="flex items-center gap-3 p-4 rounded-lg bg-[#0A0A0A] border border-white/5 hover:border-purple-500/30 transition-all group"
+              className="flex items-center gap-3 p-4 rounded-lg bg-[#FAFAF9] border border-white/5 hover:border-purple-500/30 transition-all group"
             >
               <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center group-hover:bg-blue-600/30 transition-colors">
                 <Users className="text-blue-400" size={20} />
               </div>
               <div>
-                <p className="text-sm font-medium text-cornsilk">Manage Users</p>
-                <p className="text-xs text-gray-500">View and manage user accounts</p>
+                <p className="text-sm font-medium text-stone-900">Manage Users</p>
+                <p className="text-xs text-stone-400">View and manage user accounts</p>
               </div>
             </Link>
 
             <Link
               href="/admin/products"
-              className="flex items-center gap-3 p-4 rounded-lg bg-[#0A0A0A] border border-white/5 hover:border-purple-500/30 transition-all group"
+              className="flex items-center gap-3 p-4 rounded-lg bg-[#FAFAF9] border border-white/5 hover:border-purple-500/30 transition-all group"
             >
               <div className="w-10 h-10 bg-amber-600/20 rounded-lg flex items-center justify-center group-hover:bg-amber-600/30 transition-colors">
                 <TrendingUp className="text-amber-400" size={20} />
               </div>
               <div>
-                <p className="text-sm font-medium text-cornsilk">Digital Products</p>
-                <p className="text-xs text-gray-500">Manage SaaS packages and pricing</p>
+                <p className="text-sm font-medium text-stone-900">Digital Products</p>
+                <p className="text-xs text-stone-400">Manage SaaS packages and pricing</p>
               </div>
             </Link>
           </div>
