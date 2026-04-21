@@ -16,11 +16,11 @@ export const metadata: Metadata = {
 const platforms = [
   {
     name: 'eBay',
-    description: 'Now Active! Tech & Mobile Accessories',
+    description: 'Under Construction',
     href: '/shop/ebay',
     color: 'from-[#E8750A] to-[#F59E0B]',
     icon: '🛍️',
-    active: true,
+    active: false,
   },
   {
     name: 'Amazon',
@@ -123,7 +123,7 @@ export default function HomePage() {
               Our Store
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Explore our active and upcoming marketplaces
+              All stores are currently under construction
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
