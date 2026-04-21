@@ -9,7 +9,7 @@ import { createClient } from '@/lib/supabase/client';
 export default function LoginPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
+      <div className="min-h-screen bg-[#FAFAF9] flex items-center justify-center">
         <div className="w-12 h-12 border-4 border-[#E8750A]/30 border-t-[#E8750A] rounded-full animate-spin"></div>
       </div>
     }>
@@ -105,7 +105,7 @@ function LoginForm() {
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] relative flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <div className="min-h-screen bg-[#FAFAF9] relative flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Dynamic Background Effects */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-[#E8750A]/15 blur-[120px] animate-pulse"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-[#F59E0B]/15 blur-[120px] animate-pulse" style={{ animationDelay: '2s' }}></div>
@@ -113,19 +113,19 @@ function LoginForm() {
       <div className="max-w-md w-full space-y-8 relative z-10">
         {/* Header */}
         <div className="text-center">
-          <div className="mx-auto h-20 w-20 bg-gradient-to-tr from-[#E8750A] to-[#F59E0B] rounded-2xl flex items-center justify-center shadow-2xl shadow-[#E8750A]/20 mb-6 transform hover:scale-105 transition-transform duration-300">
-            <span className="text-3xl font-extrabold text-white">AMS</span>
+          <div className="mx-auto h-20 w-20 bg-gradient-to-tr from-[#E8750A] to-[#F59E0B] rounded-2xl flex items-center justify-center shadow-2xl shadow-stone-200/50 mb-6 transform hover:scale-105 transition-transform duration-300">
+            <span className="text-3xl font-extrabold text-stone-900">AMS</span>
           </div>
-          <h2 className="mt-6 text-4xl font-extrabold text-cornsilk tracking-tight">
+          <h2 className="mt-6 text-4xl font-extrabold text-stone-900 tracking-tight">
             Sign In to Your Account
           </h2>
-          <p className="mt-3 text-sm text-gray-400">
+          <p className="mt-3 text-sm text-stone-500">
             Welcome to the world of technology and accessories
           </p>
         </div>
 
         {/* Form Container */}
-        <div className="mt-8 bg-[#151515]/80 backdrop-blur-xl py-10 px-8 shadow-2xl rounded-3xl border border-[#E8750A]/10">
+        <div className="mt-8 bg-[#151515]/80 backdrop-blur-xl py-10 px-8 shadow-2xl rounded-3xl border border-stone-200/60">
           {error && (
             <div className="mb-6 bg-red-500/10 border border-red-500/50 p-4 rounded-xl flex items-start gap-3 animate-fade-in">
               <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
@@ -145,10 +145,10 @@ function LoginForm() {
             <button
               onClick={() => handleSocialLogin('google')}
               disabled={!!socialLoading || loading}
-              className="w-full flex items-center justify-center gap-3 py-3.5 px-4 border border-white/10 rounded-xl bg-[#0A0A0A] text-gray-300 hover:bg-[#1A1A1A] hover:border-[#E8750A]/30 transition-all duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-3 py-3.5 px-4 border border-white/10 rounded-xl bg-[#FAFAF9] text-stone-600 hover:bg-stone-50 hover:border-[#E8750A]/30 transition-all duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {socialLoading === 'google' ? (
-                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <svg className="animate-spin h-5 w-5 text-stone-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
@@ -171,18 +171,18 @@ function LoginForm() {
               <div className="w-full border-t border-white/10" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-[#151515] text-gray-500 text-xs">or sign in with email</span>
+              <span className="px-4 bg-[#151515] text-stone-400 text-xs">or sign in with email</span>
             </div>
           </div>
 
           <form className="space-y-6" onSubmit={handleLogin}>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-stone-600 mb-2">
                 Email Address
               </label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-gray-500 group-focus-within:text-[#E8750A] transition-colors" />
+                  <Mail className="h-5 w-5 text-stone-400 group-focus-within:text-stone-800 transition-colors" />
                 </div>
                 <input
                   id="email"
@@ -192,7 +192,7 @@ function LoginForm() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-12 pr-4 py-3.5 border border-white/10 rounded-xl bg-[#0A0A0A] text-cornsilk placeholder-gray-600 focus:ring-2 focus:ring-[#E8750A]/50 focus:border-[#E8750A] transition-all sm:text-sm"
+                  className="block w-full pl-12 pr-4 py-3.5 border border-white/10 rounded-xl bg-[#FAFAF9] text-stone-900 placeholder-gray-600 focus:ring-2 focus:ring-[#E8750A]/50 focus:border-[#E8750A] transition-all sm:text-sm"
                   placeholder="example@email.com"
                 />
               </div>
@@ -200,16 +200,16 @@ function LoginForm() {
 
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-300">
+                <label htmlFor="password" className="block text-sm font-medium text-stone-600">
                   Password
                 </label>
-                <Link href="/forgot-password" className="text-xs font-medium text-[#E8750A] hover:text-[#F59E0B] transition-colors">
+                <Link href="/forgot-password" className="text-xs font-medium text-stone-800 hover:text-stone-500 transition-colors">
                   Forgot Password?
                 </Link>
               </div>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-500 group-focus-within:text-[#E8750A] transition-colors" />
+                  <Lock className="h-5 w-5 text-stone-400 group-focus-within:text-stone-800 transition-colors" />
                 </div>
                 <input
                   id="password"
@@ -219,7 +219,7 @@ function LoginForm() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-12 pr-4 py-3.5 border border-white/10 rounded-xl bg-[#0A0A0A] text-cornsilk placeholder-gray-600 focus:ring-2 focus:ring-[#E8750A]/50 focus:border-[#E8750A] transition-all sm:text-sm"
+                  className="block w-full pl-12 pr-4 py-3.5 border border-white/10 rounded-xl bg-[#FAFAF9] text-stone-900 placeholder-gray-600 focus:ring-2 focus:ring-[#E8750A]/50 focus:border-[#E8750A] transition-all sm:text-sm"
                   placeholder="••••••••"
                 />
               </div>
@@ -229,15 +229,15 @@ function LoginForm() {
               <button
                 type="submit"
                 disabled={loading || success}
-                className={`relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-xl text-white ${
+                className={`relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-xl text-stone-900 ${
                   loading || success
                     ? 'bg-[#E8750A]/50 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-[#E8750A] to-[#F59E0B] hover:shadow-lg hover:shadow-[#E8750A]/25 transform hover:-translate-y-0.5'
+                    : 'bg-stone-900 !text-white hover:bg-stone-800 hover:shadow-lg hover:shadow-stone-200/50 transform hover:-translate-y-0.5'
                 } transition-all duration-200 overflow-hidden group`}
               >
                 {loading ? (
                   <div className="flex items-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-stone-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
@@ -255,9 +255,9 @@ function LoginForm() {
           </form>
 
           <div className="mt-8 text-center">
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-stone-500">
               Don&apos;t have an account yet?{' '}
-              <Link href="/register" className="font-semibold text-cornsilk hover:text-[#E8750A] transition-colors border-b border-[#E8750A]/0 hover:border-[#E8750A]/50 pb-0.5">
+              <Link href="/register" className="font-semibold text-stone-900 hover:text-stone-800 transition-colors border-b border-[#E8750A]/0 hover:border-[#E8750A]/50 pb-0.5">
                 Sign Up Now
               </Link>
             </p>
