@@ -102,20 +102,20 @@ export default function ResearchPage() {
   return (
     <div className="p-6 lg:p-8">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-cornsilk mb-1">AI Product Research</h1>
-        <p className="text-gray-400 text-sm">Powered by OpenAI GPT-4o + Google Gemini</p>
+        <h1 className="text-3xl font-bold text-stone-900 mb-1">AI Product Research</h1>
+        <p className="text-stone-500 text-sm">Powered by OpenAI GPT-4o + Google Gemini</p>
       </div>
 
       {/* Search Box */}
-      <div className="bg-[#1A1A1A] rounded-2xl p-6 border border-[#E8750A]/20 mb-8">
+      <div className="bg-stone-50 rounded-2xl p-6 border border-[#E8750A]/20 mb-8">
         {/* Mode Toggle */}
         <div className="flex items-center gap-2 mb-4">
           <button
             onClick={() => setMode('product')}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               mode === 'product'
-                ? 'bg-[#E8750A]/20 text-[#E8750A] border border-[#E8750A]/30'
-                : 'text-gray-400 hover:text-gray-300 hover:bg-white/5'
+                ? 'bg-[#E8750A]/20 text-stone-800 border border-[#E8750A]/30'
+                : 'text-stone-500 hover:text-stone-600 hover:bg-white/5'
             }`}
           >
             <Search size={16} />
@@ -126,7 +126,7 @@ export default function ResearchPage() {
             className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               mode === 'problem'
                 ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
-                : 'text-gray-400 hover:text-gray-300 hover:bg-white/5'
+                : 'text-stone-500 hover:text-stone-600 hover:bg-white/5'
             }`}
           >
             <Lightbulb size={16} />
@@ -136,7 +136,7 @@ export default function ResearchPage() {
 
         <div className="flex gap-3">
           <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={20} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={20} />
             <input
               type="text"
               value={query}
@@ -146,13 +146,13 @@ export default function ResearchPage() {
                 ? 'Try: "kitchen gadgets", "pet travel", "car phone accessories"...'
                 : 'Try: "people lose their keys often", "pets scratch furniture"...'
               }
-              className="w-full pl-12 pr-4 py-4 bg-[#0A0A0A] border border-white/10 rounded-xl text-cornsilk placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#E8750A]/30 focus:border-[#E8750A]/50 text-sm"
+              className="w-full pl-12 pr-4 py-4 bg-[#FAFAF9] border border-white/10 rounded-xl text-stone-900 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#E8750A]/30 focus:border-[#E8750A]/50 text-sm"
             />
           </div>
           <button
             onClick={handleSearch}
             disabled={loading || !query.trim() || query.trim().length < 3}
-            className="px-6 py-4 bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-[#E8750A]/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap"
+            className="px-6 py-4 bg-stone-900 !text-white hover:bg-stone-800 text-stone-900 rounded-xl font-semibold hover:shadow-lg hover:shadow-stone-200/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap"
           >
             {loading ? (
               <span className="flex items-center gap-2"><Loader2 className="animate-spin" size={18} /> Analyzing...</span>
@@ -169,7 +169,7 @@ export default function ResearchPage() {
             <button
               key={tag}
               onClick={() => setQuery(tag)}
-              className="px-3 py-1 bg-white/5 rounded-full text-xs text-gray-400 hover:text-[#E8750A] hover:bg-[#E8750A]/10 transition-colors"
+              className="px-3 py-1 bg-white/5 rounded-full text-xs text-stone-500 hover:text-stone-800 hover:bg-[#E8750A]/10 transition-colors"
             >
               {tag}
             </button>
@@ -189,9 +189,9 @@ export default function ResearchPage() {
         <div className="flex flex-col items-center py-16">
           <div className="relative">
             <div className="w-16 h-16 border-4 border-[#E8750A]/20 border-t-[#E8750A] rounded-full animate-spin"></div>
-            <Sparkles className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[#F59E0B]" size={20} />
+            <Sparkles className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-stone-500" size={20} />
           </div>
-          <p className="text-gray-400 mt-4 animate-pulse">
+          <p className="text-stone-500 mt-4 animate-pulse">
             {mode === 'product' ? 'AI is analyzing markets, trends, and competition...' : 'AI is finding solutions to this problem...'}
           </p>
           <p className="text-gray-600 text-xs mt-1">This usually takes 5-15 seconds</p>
@@ -201,9 +201,9 @@ export default function ResearchPage() {
       {/* Summary */}
       {!loading && summary && (
         <div className="bg-[#E8750A]/5 border border-[#E8750A]/15 rounded-xl p-4 mb-6 flex items-start gap-3">
-          <Sparkles className="text-[#F59E0B] flex-shrink-0 mt-0.5" size={18} />
+          <Sparkles className="text-stone-500 flex-shrink-0 mt-0.5" size={18} />
           <div>
-            <p className="text-sm text-gray-300">{summary}</p>
+            <p className="text-sm text-stone-600">{summary}</p>
             {engine && <p className="text-[10px] text-gray-600 mt-1">Powered by {engine}</p>}
           </div>
         </div>
@@ -212,82 +212,82 @@ export default function ResearchPage() {
       {/* Product Results (OpenAI mode) */}
       {!loading && products.length > 0 && (
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-cornsilk">{products.length} Products Found</h2>
+          <h2 className="text-lg font-semibold text-stone-900">{products.length} Products Found</h2>
           {products.map((product, idx) => (
-            <div key={idx} className="bg-[#1A1A1A] rounded-xl border border-white/5 hover:border-[#E8750A]/20 transition-all overflow-hidden">
+            <div key={idx} className="bg-stone-50 rounded-xl border border-white/5 hover:border-[#E8750A]/20 transition-all overflow-hidden">
               <div className="p-5">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-lg font-semibold text-cornsilk">{product.name}</h3>
+                      <h3 className="text-lg font-semibold text-stone-900">{product.name}</h3>
                       <div className="flex items-center gap-1 px-2 py-0.5 bg-[#E8750A]/10 rounded-full">
-                        <Sparkles size={10} className="text-[#F59E0B]" />
-                        <span className="text-xs font-bold text-[#F59E0B]">{product.score}/100</span>
+                        <Sparkles size={10} className="text-stone-500" />
+                        <span className="text-xs font-bold text-stone-500">{product.score}/100</span>
                       </div>
                     </div>
-                    <p className="text-sm text-gray-500">{product.category}</p>
+                    <p className="text-sm text-stone-400">{product.category}</p>
                   </div>
-                  <button className="p-2 rounded-lg hover:bg-[#E8750A]/10 text-gray-400 hover:text-[#E8750A] transition-colors" title="Save product">
+                  <button className="p-2 rounded-lg hover:bg-[#E8750A]/10 text-stone-500 hover:text-stone-800 transition-colors" title="Save product">
                     <Bookmark size={18} />
                   </button>
                 </div>
 
-                <p className="text-sm text-gray-300 mb-4">{product.description}</p>
+                <p className="text-sm text-stone-600 mb-4">{product.description}</p>
 
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-                  <div className="bg-[#0A0A0A] rounded-lg p-3">
+                  <div className="bg-[#FAFAF9] rounded-lg p-3">
                     <div className="flex items-center gap-1.5 mb-1">
                       <DollarSign size={12} className="text-emerald-400" />
-                      <span className="text-[10px] text-gray-500 uppercase">Price Range</span>
+                      <span className="text-[10px] text-stone-400 uppercase">Price Range</span>
                     </div>
-                    <p className="text-xs text-cornsilk font-medium">
+                    <p className="text-xs text-stone-900 font-medium">
                       {product.wholesalePrice || ''} → {product.retailPrice || product.profitMargin}
                     </p>
                   </div>
-                  <div className="bg-[#0A0A0A] rounded-lg p-3">
+                  <div className="bg-[#FAFAF9] rounded-lg p-3">
                     <div className="flex items-center gap-1.5 mb-1">
                       <TrendingUp size={12} className="text-blue-400" />
-                      <span className="text-[10px] text-gray-500 uppercase">Profit Margin</span>
+                      <span className="text-[10px] text-stone-400 uppercase">Profit Margin</span>
                     </div>
-                    <p className="text-xs text-cornsilk font-medium">{product.profitMargin}</p>
+                    <p className="text-xs text-stone-900 font-medium">{product.profitMargin}</p>
                   </div>
-                  <div className="bg-[#0A0A0A] rounded-lg p-3">
+                  <div className="bg-[#FAFAF9] rounded-lg p-3">
                     <div className="flex items-center gap-1.5 mb-1">
                       <AlertTriangle size={12} className="text-amber-400" />
-                      <span className="text-[10px] text-gray-500 uppercase">Competition</span>
+                      <span className="text-[10px] text-stone-400 uppercase">Competition</span>
                     </div>
                     <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${competitionColor[product.competition] || ''}`}>
                       {product.competition}
                     </span>
                   </div>
-                  <div className="bg-[#0A0A0A] rounded-lg p-3">
+                  <div className="bg-[#FAFAF9] rounded-lg p-3">
                     <div className="flex items-center gap-1.5 mb-1">
-                      <TrendingUp size={12} className={trendColor[product.trend] || 'text-gray-400'} />
-                      <span className="text-[10px] text-gray-500 uppercase">Trend</span>
+                      <TrendingUp size={12} className={trendColor[product.trend] || 'text-stone-500'} />
+                      <span className="text-[10px] text-stone-400 uppercase">Trend</span>
                     </div>
-                    <span className={`text-xs font-medium ${trendColor[product.trend] || 'text-gray-400'}`}>{product.trend}</span>
+                    <span className={`text-xs font-medium ${trendColor[product.trend] || 'text-stone-500'}`}>{product.trend}</span>
                   </div>
                 </div>
 
-                <div className="bg-[#0A0A0A] rounded-lg p-3 mb-3">
-                  <p className="text-[10px] text-gray-500 uppercase mb-1">💡 Why It Works</p>
-                  <p className="text-xs text-gray-300">{product.whyItWorks}</p>
+                <div className="bg-[#FAFAF9] rounded-lg p-3 mb-3">
+                  <p className="text-[10px] text-stone-400 uppercase mb-1">💡 Why It Works</p>
+                  <p className="text-xs text-stone-600">{product.whyItWorks}</p>
                 </div>
 
                 {product.targetAudience && (
-                  <div className="flex items-center gap-2 mb-3 text-xs text-gray-400">
-                    <Target size={12} className="text-[#E8750A]" />
+                  <div className="flex items-center gap-2 mb-3 text-xs text-stone-500">
+                    <Target size={12} className="text-stone-800" />
                     <span className="font-medium">Target:</span> {product.targetAudience}
                   </div>
                 )}
 
                 {product.marketingTips && product.marketingTips.length > 0 && (
-                  <div className="bg-[#0A0A0A] rounded-lg p-3 mb-3">
-                    <p className="text-[10px] text-gray-500 uppercase mb-2">📢 Marketing Tips</p>
+                  <div className="bg-[#FAFAF9] rounded-lg p-3 mb-3">
+                    <p className="text-[10px] text-stone-400 uppercase mb-2">📢 Marketing Tips</p>
                     <ul className="space-y-1">
                       {product.marketingTips.map((tip, i) => (
-                        <li key={i} className="text-xs text-gray-300 flex items-start gap-2">
-                          <span className="text-[#E8750A] mt-0.5">•</span> {tip}
+                        <li key={i} className="text-xs text-stone-600 flex items-start gap-2">
+                          <span className="text-stone-800 mt-0.5">•</span> {tip}
                         </li>
                       ))}
                     </ul>
@@ -296,13 +296,13 @@ export default function ResearchPage() {
 
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] text-gray-500">Source:</span>
+                    <span className="text-[10px] text-stone-400">Source:</span>
                     {(product.platforms || []).map((p) => (
-                      <span key={p} className="text-[10px] px-2 py-0.5 bg-white/5 rounded-full text-gray-400">{p}</span>
+                      <span key={p} className="text-[10px] px-2 py-0.5 bg-white/5 rounded-full text-stone-500">{p}</span>
                     ))}
                   </div>
                   <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/5 mt-2">
-                    <span className="text-[10px] text-gray-500 font-bold uppercase">Gerçek Zamanlı Piyasa Testi:</span>
+                    <span className="text-[10px] text-stone-400 font-bold uppercase">Gerçek Zamanlı Piyasa Testi:</span>
                     <a href={`https://www.aliexpress.com/wholesale?SearchText=${encodeURIComponent(product.name)}`} target="_blank" rel="noopener noreferrer" className="text-[10px] px-3 py-1 bg-[#ff4747]/10 text-[#ff4747] rounded-full hover:bg-[#ff4747]/20 transition-colors flex items-center gap-1">
                       🛒 AliExpress'te Canlı Ara
                     </a>
@@ -320,36 +320,36 @@ export default function ResearchPage() {
       {/* Problem-Solution Results (Gemini mode) */}
       {!loading && solutions.length > 0 && (
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-cornsilk flex items-center gap-2">
+          <h2 className="text-lg font-semibold text-stone-900 flex items-center gap-2">
             <Lightbulb className="text-purple-400" size={20} />
             {solutions.length} Solutions Found
           </h2>
           {solutions.map((sol, idx) => (
-            <div key={idx} className="bg-[#1A1A1A] rounded-xl border border-white/5 hover:border-purple-500/20 transition-all p-5">
-              <h3 className="text-lg font-semibold text-cornsilk mb-2">{sol.product}</h3>
-              <p className="text-sm text-gray-300 mb-3">{sol.description}</p>
+            <div key={idx} className="bg-stone-50 rounded-xl border border-white/5 hover:border-purple-500/20 transition-all p-5">
+              <h3 className="text-lg font-semibold text-stone-900 mb-2">{sol.product}</h3>
+              <p className="text-sm text-stone-600 mb-3">{sol.description}</p>
 
               <div className="bg-purple-500/5 border border-purple-500/10 rounded-lg p-3 mb-3">
                 <p className="text-[10px] text-purple-400 uppercase mb-1">How It Solves The Problem</p>
-                <p className="text-xs text-gray-300">{sol.whyItSolves}</p>
+                <p className="text-xs text-stone-600">{sol.whyItSolves}</p>
               </div>
 
               <div className="grid grid-cols-3 gap-3 mb-3">
-                <div className="bg-[#0A0A0A] rounded-lg p-3 text-center">
-                  <p className="text-[10px] text-gray-500 uppercase mb-1">Demand</p>
-                  <p className={`text-sm font-bold ${sol.estimatedDemand === 'High' ? 'text-emerald-400' : sol.estimatedDemand === 'Medium' ? 'text-amber-400' : 'text-gray-400'}`}>{sol.estimatedDemand}</p>
+                <div className="bg-[#FAFAF9] rounded-lg p-3 text-center">
+                  <p className="text-[10px] text-stone-400 uppercase mb-1">Demand</p>
+                  <p className={`text-sm font-bold ${sol.estimatedDemand === 'High' ? 'text-emerald-400' : sol.estimatedDemand === 'Medium' ? 'text-amber-400' : 'text-stone-500'}`}>{sol.estimatedDemand}</p>
                 </div>
-                <div className="bg-[#0A0A0A] rounded-lg p-3 text-center">
-                  <p className="text-[10px] text-gray-500 uppercase mb-1">Competition</p>
+                <div className="bg-[#FAFAF9] rounded-lg p-3 text-center">
+                  <p className="text-[10px] text-stone-400 uppercase mb-1">Competition</p>
                   <p className={`text-sm font-bold ${sol.competitionLevel === 'Low' ? 'text-emerald-400' : sol.competitionLevel === 'Medium' ? 'text-amber-400' : 'text-red-400'}`}>{sol.competitionLevel}</p>
                 </div>
-                <div className="bg-[#0A0A0A] rounded-lg p-3 text-center">
-                  <p className="text-[10px] text-gray-500 uppercase mb-1">Price</p>
-                  <p className="text-sm font-bold text-cornsilk">{sol.suggestedPrice}</p>
+                <div className="bg-[#FAFAF9] rounded-lg p-3 text-center">
+                  <p className="text-[10px] text-stone-400 uppercase mb-1">Price</p>
+                  <p className="text-sm font-bold text-stone-900">{sol.suggestedPrice}</p>
                 </div>
               </div>
 
-              <p className="text-xs text-gray-500">📦 <span className="text-gray-400">{sol.sourcingTip}</span></p>
+              <p className="text-xs text-stone-400">📦 <span className="text-stone-500">{sol.sourcingTip}</span></p>
             </div>
           ))}
         </div>
@@ -359,7 +359,7 @@ export default function ResearchPage() {
       {!loading && searched && products.length === 0 && solutions.length === 0 && !error && (
         <div className="text-center py-16">
           <Search className="mx-auto text-gray-600 mb-3" size={40} />
-          <p className="text-gray-400">No results found. Try a different search term.</p>
+          <p className="text-stone-500">No results found. Try a different search term.</p>
         </div>
       )}
     </div>
