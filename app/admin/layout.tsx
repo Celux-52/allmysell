@@ -60,29 +60,29 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
+      <div className="min-h-screen bg-[#FAFAF9] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></div>
-          <p className="text-gray-400">Loading Admin Panel...</p>
+          <p className="text-stone-500">Loading Admin Panel...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex">
+    <div className="min-h-screen bg-[#FAFAF9] flex">
       {/* Sidebar */}
-      <aside className={`${collapsed ? 'w-20' : 'w-64'} bg-[#111111] border-r border-white/5 flex flex-col transition-all duration-300 sticky top-0 h-screen`}>
+      <aside className={`${collapsed ? 'w-20' : 'w-64'} bg-white border-r border-white/5 flex flex-col transition-all duration-300 sticky top-0 h-screen`}>
         {/* Logo */}
         <div className="p-4 border-b border-white/5">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-400 rounded-lg flex items-center justify-center flex-shrink-0">
-              <Shield className="text-white" size={20} />
+              <Shield className="text-stone-900" size={20} />
             </div>
             {!collapsed && (
               <div>
-                <h1 className="text-lg font-bold text-cornsilk">Admin</h1>
-                <p className="text-xs text-gray-500">AllMySell</p>
+                <h1 className="text-lg font-bold text-stone-900">Admin</h1>
+                <p className="text-xs text-stone-400">AllMySell</p>
               </div>
             )}
           </div>
@@ -100,7 +100,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${
                   isActive
                     ? 'bg-purple-600/20 text-purple-400 border border-purple-500/20'
-                    : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
+                    : 'text-stone-500 hover:bg-white/5 hover:text-gray-200'
                 }`}
                 title={collapsed ? item.name : undefined}
               >
@@ -115,7 +115,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="p-2 border-t border-white/5 space-y-1">
           <Link
             href="/"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:bg-white/5 hover:text-gray-200 transition-all"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-stone-500 hover:bg-white/5 hover:text-gray-200 transition-all"
             title={collapsed ? 'Back to Site' : undefined}
           >
             <Home size={20} className="flex-shrink-0" />
@@ -133,7 +133,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           {/* Collapse Toggle */}
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-500 hover:bg-white/5 hover:text-gray-300 transition-all w-full"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-stone-400 hover:bg-white/5 hover:text-stone-600 transition-all w-full"
           >
             {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
             {!collapsed && <span className="text-sm">Collapse</span>}
@@ -144,12 +144,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {!collapsed && user && (
           <div className="p-4 border-t border-white/5">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-purple-400 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+              <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-purple-400 rounded-full flex items-center justify-center text-stone-900 text-xs font-bold flex-shrink-0">
                 {(user.email || 'A')[0].toUpperCase()}
               </div>
               <div className="min-w-0">
-                <p className="text-xs font-medium text-cornsilk truncate">{user.user_metadata?.full_name || 'Admin'}</p>
-                <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                <p className="text-xs font-medium text-stone-900 truncate">{user.user_metadata?.full_name || 'Admin'}</p>
+                <p className="text-xs text-stone-400 truncate">{user.email}</p>
               </div>
             </div>
           </div>
