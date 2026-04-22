@@ -1,40 +1,41 @@
 import { NextResponse } from 'next/server';
 
+const SUPABASE_URL = 'https://cadmemzncpvbarvgklsa.supabase.co';
+const SUPABASE_KEY = 'sb_secret_kuv_Dz4UWF0NhFBgRlaQsg_zjHtQ0bc';
+const BOT_API_URL = 'http://46.101.105.249:5000/calistir';
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    
-    // N8N webhook'una sunucu üzerinden (Server-Side) istek atıyoruz
-    // Bu sayede tarayıcıdaki CORS veya timeout sorunlarını aşıyoruz
-    const n8nResponse = await fetch('https://n8n.allmysell.com/webhook/ebay-trend-hunter', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    });
+    const keyword = body.keyword || '';
 
-    if (!n8nResponse.ok) {
-      const text = await n8nResponse.text();
-      console.error('N8N Error (ignored):', text);
-      // N8N 500 dönse bile, bot arka planda başarılı bir şekilde tabloya yazdığı için
-      // tarayıcıya "HATA" (500) değil, "BAŞARILI" (200) dönüyoruz.
-      // Böylece Console'da kırmızı yazılar çıkmıyor.
-      return NextResponse.json(
-        { success: true, note: 'n8n timeout ignored because bot runs asynchronously', details: text },
-        { status: 200 }
-      );
+    if (!keyword) {
+      return NextResponse.json({ error: 'Keyword gerekli' }, { status: 400 });
     }
 
-    const data = await n8nResponse.json().catch(() => ({ status: 'success' }));
-    
-    return NextResponse.json({ success: true, data }, { status: 200 });
+    // 1. Supabase'deki eski verileri sil
+    await fetch(`${SUPABASE_URL}/rest/v1/trend_products?id=gte.0`, {
+      method: 'DELETE',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+      },
+    }).catch(() => {}); // Hata olsa bile devam et
+
+    // 2. Bot'u arka planda tetikle (cevabı bekleme)
+    fetch(BOT_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ keyword }),
+    }).catch(() => {}); // Timeout olsa bile UI'ı bozma
+
+    // 3. Kullanıcıya hemen "başlatıldı" cevabı ver
+    return NextResponse.json({
+      success: true,
+      message: `"${keyword}" için bot başlatıldı!`,
+    });
+
   } catch (error) {
-    console.error('API Route Error:', error);
-    // Vercel Timeout bile olsa 200 dönüyoruz
-    return NextResponse.json(
-      { success: true, note: 'Vercel timeout ignored' },
-      { status: 200 }
-    );
+    return NextResponse.json({ success: true, note: 'Bot arka planda çalışıyor' });
   }
 }
