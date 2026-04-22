@@ -1,79 +1,104 @@
 'use client';
 
-import { useState } from 'react';
-import { Bot, Search, Loader2, CheckCircle2, AlertCircle, Zap } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Bot, Search, Loader2, CheckCircle2, AlertCircle, Zap, TrendingUp, Package, ExternalLink, RefreshCw } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
+
+interface TrendProduct {
+  id: number;
+  product_name: string;
+  cj_price: number;
+  shipping_cost: number;
+  total_cost: number;
+  ebay_avg_price: number;
+  sell_price: number;
+  net_profit_percent: number;
+  competition: number;
+  stock_status: string;
+  category: string;
+  supplier_link: string;
+  image_urls: string;
+  keyword: string;
+  created_at: string;
+}
 
 export default function AutomationPage() {
   const [keyword, setKeyword] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [products, setProducts] = useState<TrendProduct[]>([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
+  const supabase = createClient();
+
+  const fetchProducts = async () => {
+    setLoadingProducts(true);
+    const { data, error } = await supabase
+      .from('trend_products')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(50);
+
+    if (!error && data) {
+      setProducts(data);
+    }
+    setLoadingProducts(false);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   const handleRunBot = async () => {
     if (!keyword.trim()) {
       alert('Lütfen aramak için İngilizce bir kelime girin!');
       return;
     }
-
     setLoading(true);
     setResult(null);
 
-    try {
-      // API'ye istek atıp sonucu beklemeden hemen başarılı diyoruz,
-      // çünkü arka planda sunucu çalışmaya devam ediyor ve Google Sheets'e yazıyor.
-      fetch('/api/run-bot', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ keyword: keyword.trim() }),
-      }).catch(console.error); // Hataları arka planda yakala, UI'ı bozma
+    fetch('/api/run-bot', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ keyword: keyword.trim() }),
+    }).catch(console.error);
 
-      // Kullanıcıyı bekletmemek için 2 saniye sonra başarılı mesajı göster
-      setTimeout(() => {
-        setResult({ 
-          type: 'success', 
-          message: `"${keyword}" için arama arka planda başlatıldı! Yaklaşık 30-40 saniye içinde Google Sheets tablonuza eklenecektir.` 
-        });
-        setKeyword('');
-        setLoading(false);
-      }, 2000);
-      
-    } catch (err) {
-      setResult({ type: 'error', message: 'Bağlantı hatası oluştu.' });
+    setTimeout(() => {
+      setResult({
+        type: 'success',
+        message: `"${keyword}" için arama başlatıldı! ~40 saniye sonra aşağıdaki tabloya eklenecek.`,
+      });
+      setKeyword('');
       setLoading(false);
-    }
+      // 45 saniye sonra tabloyu yenile
+      setTimeout(() => fetchProducts(), 45000);
+    }, 2000);
   };
 
   return (
-    <div className="p-6 lg:p-8 max-w-3xl mx-auto">
+    <div className="p-6 lg:p-8 max-w-7xl mx-auto space-y-8">
       {/* Header */}
-      <div className="flex items-center gap-4 mb-8">
+      <div className="flex items-center gap-4">
         <div className="w-14 h-14 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 rounded-2xl flex items-center justify-center border border-emerald-500/20">
           <Bot className="text-emerald-600" size={28} />
         </div>
         <div>
           <h1 className="text-3xl font-bold text-stone-900 tracking-tight">Trend Hunter Bot</h1>
-          <p className="text-stone-500 text-sm mt-0.5">eBay trend ürünlerini otomatik bul ve analiz et</p>
+          <p className="text-stone-500 text-sm mt-0.5">eBay trend ürünlerini otomatik bul, CJ ile eşleştir, kâr analizi yap</p>
         </div>
       </div>
 
-      {/* Bot Card */}
+      {/* Bot Trigger Card */}
       <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
-        {/* Info */}
-        <div className="p-6 border-b border-stone-100">
+        <div className="p-5 border-b border-stone-100 bg-amber-50/50">
           <div className="flex items-start gap-3">
             <Zap className="text-amber-500 mt-0.5 flex-shrink-0" size={18} />
             <p className="text-sm text-stone-600 leading-relaxed">
-              Bu bot, belirlediğiniz İngilizce kelimeyi eBay&apos;de aratır, en çok satan ürünleri tespit eder,
-              CJ Dropshipping üzerinde eşleştirir ve kâr marjlarını hesaplayarak Google Sheets tablonuza aktarır.
-              İşlem yaklaşık <strong>30 saniye</strong> sürer.
+              İngilizce bir kelime girin. Bot eBay'de en çok satanları arar, CJ Dropshipping ile eşleştirir,
+              kâr marjlarını hesaplar ve sonuçları aşağıdaki tabloya kaydeder. <strong>~40 saniye</strong> sürer.
             </p>
           </div>
         </div>
-
-        {/* Search Input */}
         <div className="p-6">
-          <label className="block text-sm font-semibold text-stone-700 mb-2">
-            Aranacak Kelime (İngilizce)
-          </label>
           <div className="flex gap-3">
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" size={18} />
@@ -91,32 +116,112 @@ export default function AutomationPage() {
               type="button"
               onClick={handleRunBot}
               disabled={loading || !keyword.trim()}
-              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-semibold rounded-xl flex items-center gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-sm hover:shadow-md cursor-pointer"
+              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl flex items-center gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-sm cursor-pointer"
             >
               {loading ? (
-                <>
-                  <Loader2 size={18} className="animate-spin" />
-                  <span>Taranıyor...</span>
-                </>
+                <><Loader2 size={18} className="animate-spin" /><span>Başlatılıyor...</span></>
               ) : (
-                <>
-                  <Bot size={18} />
-                  <span>Botu Çalıştır</span>
-                </>
+                <><Bot size={18} /><span>Botu Çalıştır</span></>
               )}
             </button>
           </div>
+
+          {result && (
+            <div className={`mt-4 p-4 rounded-xl flex items-start gap-3 ${
+              result.type === 'success'
+                ? 'bg-emerald-50 border border-emerald-200 text-emerald-700'
+                : 'bg-red-50 border border-red-200 text-red-700'
+            }`}>
+              {result.type === 'success'
+                ? <CheckCircle2 size={20} className="mt-0.5 flex-shrink-0" />
+                : <AlertCircle size={20} className="mt-0.5 flex-shrink-0" />}
+              <p className="text-sm">{result.message}</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Products Table */}
+      <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
+        <div className="p-5 border-b border-stone-100 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <TrendingUp className="text-emerald-600" size={20} />
+            <h2 className="font-semibold text-stone-800">Bulunan Kârlı Ürünler</h2>
+            <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-medium">
+              {products.length} ürün
+            </span>
+          </div>
+          <button
+            onClick={fetchProducts}
+            className="flex items-center gap-1.5 text-sm text-stone-500 hover:text-emerald-600 transition-colors cursor-pointer"
+          >
+            <RefreshCw size={15} className={loadingProducts ? 'animate-spin' : ''} />
+            Yenile
+          </button>
         </div>
 
-        {/* Result */}
-        {result && (
-          <div className={`mx-6 mb-6 p-4 rounded-xl flex items-start gap-3 ${
-            result.type === 'success'
-              ? 'bg-emerald-50 border border-emerald-200 text-emerald-700'
-              : 'bg-red-50 border border-red-200 text-red-700'
-          }`}>
-            {result.type === 'success' ? <CheckCircle2 size={20} className="mt-0.5 flex-shrink-0" /> : <AlertCircle size={20} className="mt-0.5 flex-shrink-0" />}
-            <p className="text-sm">{result.message}</p>
+        {loadingProducts ? (
+          <div className="p-12 text-center text-stone-400">
+            <Loader2 size={24} className="animate-spin mx-auto mb-2" />
+            <p className="text-sm">Yükleniyor...</p>
+          </div>
+        ) : products.length === 0 ? (
+          <div className="p-12 text-center text-stone-400">
+            <Package size={32} className="mx-auto mb-3 opacity-40" />
+            <p className="text-sm">Henüz ürün bulunamadı. Botu çalıştırarak başlayın!</p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-stone-50 text-stone-500 text-xs uppercase tracking-wide">
+                  <th className="text-left px-4 py-3 font-medium">Ürün Adı</th>
+                  <th className="text-center px-4 py-3 font-medium">Maliyet</th>
+                  <th className="text-center px-4 py-3 font-medium">Satış</th>
+                  <th className="text-center px-4 py-3 font-medium">Kâr %</th>
+                  <th className="text-center px-4 py-3 font-medium">Rekabet</th>
+                  <th className="text-center px-4 py-3 font-medium">Kelime</th>
+                  <th className="text-center px-4 py-3 font-medium">Link</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-stone-100">
+                {products.map((p) => (
+                  <tr key={p.id} className="hover:bg-stone-50 transition-colors">
+                    <td className="px-4 py-3 max-w-xs">
+                      <p className="font-medium text-stone-800 truncate">{p.product_name}</p>
+                      <p className="text-xs text-stone-400 mt-0.5">{p.category}</p>
+                    </td>
+                    <td className="px-4 py-3 text-center text-stone-600">${p.total_cost}</td>
+                    <td className="px-4 py-3 text-center font-semibold text-stone-800">${p.sell_price}</td>
+                    <td className="px-4 py-3 text-center">
+                      <span className={`font-bold px-2 py-0.5 rounded-full text-xs ${
+                        p.net_profit_percent >= 100
+                          ? 'bg-emerald-100 text-emerald-700'
+                          : p.net_profit_percent >= 50
+                          ? 'bg-amber-100 text-amber-700'
+                          : 'bg-red-100 text-red-700'
+                      }`}>
+                        %{p.net_profit_percent}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-center text-stone-500">{p.competition}</td>
+                    <td className="px-4 py-3 text-center">
+                      <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">{p.keyword}</span>
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      <a
+                        href={p.supplier_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-emerald-600 hover:text-emerald-700 transition-colors"
+                      >
+                        <ExternalLink size={14} />
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
