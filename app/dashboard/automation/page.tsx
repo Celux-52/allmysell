@@ -18,7 +18,7 @@ export default function AutomationPage() {
     setResult(null);
 
     try {
-      const response = await fetch('https://n8n.allmysell.com/webhook/ebay-trend-hunter', {
+      const response = await fetch('/api/run-bot', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ keyword: keyword.trim() }),
