@@ -449,9 +449,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               </p>
             </div>
           </div>
-
-          
-        </article>
+        </div>
+      </article>
     </div>
   );
 }
