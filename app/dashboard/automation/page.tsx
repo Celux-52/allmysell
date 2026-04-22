@@ -24,21 +24,12 @@ export default function AutomationDashboard() {
     {
       id: 'trend_hunter',
       name: 'Trend Hunter Bot',
-      description: 'Scrapes AliExpress and CJ Dropshipping for trending products with high margins.',
+      description: 'eBay\'de en çok satan ürünleri bulur, CJ Dropshipping ile eşleştirir ve kâr marjlarını hesaplayarak Google Sheets tablonuza aktarır.',
       icon: ExternalLink,
       status: 'idle',
       lastRun: null,
       itemsProcessed: 0,
     },
-    {
-      id: 'ebay_sync',
-      name: 'eBay Auto-Lister',
-      description: 'Synchronizes winning products directly to your connected eBay seller account.',
-      icon: Download,
-      status: 'idle',
-      lastRun: null,
-      itemsProcessed: 0,
-    }
   ]);
 
   const [logs, setLogs] = useState([
