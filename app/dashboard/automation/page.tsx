@@ -88,6 +88,34 @@ export default function AutomationDashboard() {
   };
 
   const handleStartBot = async (botId: string) => {
+    if (botId === 'trend_hunter') {
+      const keyword = prompt('Aramak istediğiniz İngilizce kelimeyi girin (Örn: necklace, mug, shoes):');
+      if (!keyword || !keyword.trim()) return;
+      
+      addLog(`Trend Hunter Bot başlatılıyor: "${keyword}"...`, 'info');
+      setBots(prev => prev.map(b => b.id === botId ? { ...b, status: 'running' } : b));
+      
+      try {
+        const res = await fetch('https://n8n.allmysell.com/webhook/ebay-trend-hunter', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ keyword: keyword.trim() }),
+        });
+        
+        if (res.ok) {
+          addLog(`"${keyword}" için arama tamamlandı! Sonuçlar Google Sheets'e eklendi.`, 'success');
+          setBots(prev => prev.map(b => b.id === botId ? { ...b, status: 'idle', lastRun: new Date().toISOString(), itemsProcessed: b.itemsProcessed + 1 } : b));
+        } else {
+          addLog(`Bot hatası: n8n workflow'un Active olduğundan emin olun.`, 'error');
+          setBots(prev => prev.map(b => b.id === botId ? { ...b, status: 'error' } : b));
+        }
+      } catch (err) {
+        addLog(`Bağlantı hatası: Sunucu veya n8n'e ulaşılamıyor.`, 'error');
+        setBots(prev => prev.map(b => b.id === botId ? { ...b, status: 'error' } : b));
+      }
+      return;
+    }
+    
     addLog(`Sending launch command to ${botId}...`, 'info');
     setBots(prev => prev.map(b => b.id === botId ? { ...b, status: 'running' } : b));
     

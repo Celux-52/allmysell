@@ -10,14 +10,14 @@ import {
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 
-const sidebarItems = [
+const sidebarItems: { name: string; href: string; icon: any; adminOnly?: boolean }[] = [
   { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
   { name: 'AI Research', href: '/dashboard/research', icon: Search },
   { name: 'Trends', href: '/dashboard/trends', icon: TrendingUp },
   { name: 'Saved Products', href: '/dashboard/saved', icon: Bookmark },
   { name: 'History', href: '/dashboard/history', icon: Clock },
   { name: 'Achievements', href: '/dashboard/achievements', icon: Trophy },
-  // { name: 'Bot Automation', href: '/dashboard/automation', icon: Bot }, // Temporarily disabled (Under Construction)
+  { name: 'Bot Automation', href: '/dashboard/automation', icon: Bot, adminOnly: true },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ];
 
@@ -111,7 +111,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Navigation */}
       <nav className="flex-1 py-4 px-2 space-y-1">
-        {sidebarItems.map((item) => {
+        {sidebarItems.filter(item => !item.adminOnly || isAdmin).map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link
