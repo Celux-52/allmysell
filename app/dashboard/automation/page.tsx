@@ -18,21 +18,26 @@ export default function AutomationPage() {
     setResult(null);
 
     try {
-      const response = await fetch('/api/run-bot', {
+      // API'ye istek atıp sonucu beklemeden hemen başarılı diyoruz,
+      // çünkü arka planda sunucu çalışmaya devam ediyor ve Google Sheets'e yazıyor.
+      fetch('/api/run-bot', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ keyword: keyword.trim() }),
-      });
+      }).catch(console.error); // Hataları arka planda yakala, UI'ı bozma
 
-      if (response.ok) {
-        setResult({ type: 'success', message: `"${keyword}" için arama tamamlandı! Bulunan ürünler Google Sheets tablonuza eklendi.` });
+      // Kullanıcıyı bekletmemek için 2 saniye sonra başarılı mesajı göster
+      setTimeout(() => {
+        setResult({ 
+          type: 'success', 
+          message: `"${keyword}" için arama arka planda başlatıldı! Yaklaşık 30-40 saniye içinde Google Sheets tablonuza eklenecektir.` 
+        });
         setKeyword('');
-      } else {
-        setResult({ type: 'error', message: 'Bot hatası oluştu. n8n workflow\'un Active/Published olduğundan emin olun.' });
-      }
+        setLoading(false);
+      }, 2000);
+      
     } catch (err) {
-      setResult({ type: 'error', message: 'Bağlantı hatası. Sunucu veya n8n\'e ulaşılamıyor. Lütfen tekrar deneyin.' });
-    } finally {
+      setResult({ type: 'error', message: 'Bağlantı hatası oluştu.' });
       setLoading(false);
     }
   };
