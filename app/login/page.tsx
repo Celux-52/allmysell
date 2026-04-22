@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, FormEvent, useEffect, Suspense } from 'react';
-import { Mail, Lock, AlertCircle, LogIn, CheckCircle2, Github } from 'lucide-react';
+import { Mail, Lock, AlertCircle, LogIn, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';

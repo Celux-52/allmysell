@@ -1,5 +1,4 @@
 import { ExternalLink, Package, Shield, Zap } from 'lucide-react';
-import Image from 'next/image';
 import type { Metadata } from 'next';
 import TrackedLink from '@/components/TrackedLink';
 import EbayClient from './EbayClient';

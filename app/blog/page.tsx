@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Calendar, Clock, ArrowRight, TrendingUp } from 'lucide-react';
-import Image from 'next/image';
+
 
 // eBay Products - active + previous
 const ebayProducts = [
@@ -451,7 +451,7 @@ export default function BlogPage() {
                     <p className="text-gray-400 text-sm mb-4 line-clamp-3 leading-relaxed flex-1">
                       {post.excerpt}
                     </p>
-                    <div className="flex items-center text-olive font-semibold text-sm group-hover:gap-2 gap-1 transition-all pt-4 border-t border-gray-100">
+                    <div className="flex items-center text-olive font-semibold text-sm group-hover:gap-2 gap-1 transition-all pt-4 border-t border-white/10">
                       <span>Read More</span>
                       <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                     </div>
