@@ -37,26 +37,26 @@ export default function CountdownTimer({ targetDate, title }: CountdownTimerProp
   }, [targetDate]);
 
   return (
-    <div className="bg-gradient-to-r from-[#E8750A] to-[#F59E0B] rounded-2xl p-8 text-center text-white">
+    <div className="bg-stone-900 !text-white hover:bg-stone-800 rounded-2xl p-8 text-center text-stone-900">
       <h3 className="text-2xl font-bold mb-2">{title}</h3>
-      <p className="text-orange-100 mb-6">We're launching soon!</p>
+      <p className="text-stone-600 mb-6">We're launching soon!</p>
       
       <div className="grid grid-cols-4 gap-4 max-w-md mx-auto">
-        <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4">
+        <div className="bg-transparent/20 backdrop-blur-sm rounded-lg p-4">
           <div className="text-3xl font-bold">{timeLeft.days}</div>
-          <div className="text-sm text-orange-100">Days</div>
+          <div className="text-sm text-stone-600">Days</div>
         </div>
-        <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4">
+        <div className="bg-transparent/20 backdrop-blur-sm rounded-lg p-4">
           <div className="text-3xl font-bold">{timeLeft.hours}</div>
-          <div className="text-sm text-orange-100">Hours</div>
+          <div className="text-sm text-stone-600">Hours</div>
         </div>
-        <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4">
+        <div className="bg-transparent/20 backdrop-blur-sm rounded-lg p-4">
           <div className="text-3xl font-bold">{timeLeft.minutes}</div>
-          <div className="text-sm text-orange-100">Minutes</div>
+          <div className="text-sm text-stone-600">Minutes</div>
         </div>
-        <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4">
+        <div className="bg-transparent/20 backdrop-blur-sm rounded-lg p-4">
           <div className="text-3xl font-bold">{timeLeft.seconds}</div>
-          <div className="text-sm text-orange-100">Seconds</div>
+          <div className="text-sm text-stone-600">Seconds</div>
         </div>
       </div>
     </div>

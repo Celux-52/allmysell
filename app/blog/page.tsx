@@ -1,5 +1,12 @@
 import Link from 'next/link';
 import { Calendar, Clock, ArrowRight, TrendingUp } from 'lucide-react';
+import Image from 'next/image';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Blog | AllMySell Tech Reviews & Guides',
+  description: 'Read the latest product reviews, buying guides, and technology news from the AllMySell team. Make informed choices on mobile accessories and gadgets.',
+};
 
 
 // eBay Products - active + previous
@@ -342,15 +349,15 @@ const recentPosts = blogPosts.slice(1);
 
 export default function BlogPage() {
   return (
-    <div className="bg-[#1A1A1A] min-h-screen">
+    <div className="bg-stone-50 min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-olive via-peru to-peru text-cornsilk py-20">
+      <section className="bg-gradient-to-br from-olive via-peru to-peru text-stone-900 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
               AllMySell Blog
             </h1>
-            <p className="text-xl md:text-2xl text-olive max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-stone-800 max-w-3xl mx-auto">
               Product reviews, buying guides, and latest tech news from eBay, Amazon, and Shopify
             </p>
           </div>
@@ -358,15 +365,15 @@ export default function BlogPage() {
       </section>
 
       {/* Featured Post */}
-      <section className="py-20 bg-[#111111]">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <h2 className="text-4xl font-bold text-cornsilk mb-2">Featured Article</h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-olive to-peru rounded-full"></div>
+            <h2 className="text-4xl font-bold text-stone-900 mb-2">Featured Article</h2>
+            <div className="w-20 h-1 bg-stone-100 rounded-full"></div>
           </div>
           
           <Link href={`/blog/${featuredPost.id}`}>
-            <div className="bg-[#1A1A1A] rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-300 hover:-translate-y-2 cursor-pointer group">
+            <div className="bg-stone-50 rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-300 hover:-translate-y-2 cursor-pointer group">
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="relative h-80 md:h-full">
                   <img
@@ -374,12 +381,12 @@ export default function BlogPage() {
                     alt={featuredPost.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-4 left-4 bg-gradient-to-r from-olive to-peru text-cornsilk px-4 py-2 rounded-full text-sm font-semibold">
+                  <div className="absolute top-4 left-4 bg-stone-100 text-stone-900 px-4 py-2 rounded-full text-sm font-semibold">
                     {featuredPost.platform}
                   </div>
                 </div>
                 <div className="p-8 md:p-12 flex flex-col justify-center">
-                  <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
+                  <div className="flex items-center gap-4 mb-4 text-sm text-stone-400">
                     <span className="flex items-center gap-1">
                       <Calendar size={16} />
                       {new Date(featuredPost.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
@@ -389,16 +396,16 @@ export default function BlogPage() {
                       {featuredPost.readTime}
                     </span>
                   </div>
-                  <span className="text-olive font-semibold text-sm uppercase tracking-wider mb-3">
+                  <span className="text-stone-800 font-semibold text-sm uppercase tracking-wider mb-3">
                     {featuredPost.category}
                   </span>
-                  <h3 className="text-3xl font-bold text-cornsilk mb-4 group-hover:text-olive transition-colors">
+                  <h3 className="text-3xl font-bold text-stone-900 mb-4 group-hover:text-stone-800 transition-colors">
                     {featuredPost.title}
                   </h3>
-                  <p className="text-gray-400 text-lg mb-6 leading-relaxed">
+                  <p className="text-stone-500 text-lg mb-6 leading-relaxed">
                     {featuredPost.excerpt}
                   </p>
-                  <div className="flex items-center text-olive font-semibold group-hover:gap-3 gap-2 transition-all">
+                  <div className="flex items-center text-stone-800 font-semibold group-hover:gap-3 gap-2 transition-all">
                     <span>Read Full Article</span>
                     <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -413,26 +420,26 @@ export default function BlogPage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <h2 className="text-4xl font-bold text-cornsilk mb-2">Latest Articles</h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-olive to-peru rounded-full"></div>
+            <h2 className="text-4xl font-bold text-stone-900 mb-2">Latest Articles</h2>
+            <div className="w-20 h-1 bg-stone-100 rounded-full"></div>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {recentPosts.map((post) => (
               <Link key={post.id} href={`/blog/${post.id}`}>
-                <div className="bg-[#1A1A1A] rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden group cursor-pointer h-full flex flex-col">
+                <div className="bg-stone-50 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden group cursor-pointer h-full flex flex-col">
                   <div className="relative h-56">
                     <img
                       src={post.image}
                       alt={post.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className="absolute top-3 right-3 bg-cornsilk/95 backdrop-blur-sm text-olive px-3 py-1 rounded-full text-xs font-bold">
+                    <div className="absolute top-3 right-3 bg-cornsilk/95 backdrop-blur-sm text-stone-800 px-3 py-1 rounded-full text-xs font-bold">
                       {post.platform}
                     </div>
                   </div>
                   <div className="p-6 flex-1 flex flex-col">
-                    <div className="flex items-center gap-3 mb-3 text-xs text-gray-500">
+                    <div className="flex items-center gap-3 mb-3 text-xs text-stone-400">
                       <span className="flex items-center gap-1">
                         <Calendar size={14} />
                         {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
@@ -442,16 +449,16 @@ export default function BlogPage() {
                         {post.readTime}
                       </span>
                     </div>
-                    <span className="text-olive font-semibold text-xs uppercase tracking-wider mb-2">
+                    <span className="text-stone-800 font-semibold text-xs uppercase tracking-wider mb-2">
                       {post.category}
                     </span>
-                    <h3 className="text-xl font-bold text-cornsilk mb-3 line-clamp-2 group-hover:text-olive transition-colors">
+                    <h3 className="text-xl font-bold text-stone-900 mb-3 line-clamp-2 group-hover:text-stone-800 transition-colors">
                       {post.title}
                     </h3>
-                    <p className="text-gray-400 text-sm mb-4 line-clamp-3 leading-relaxed flex-1">
+                    <p className="text-stone-500 text-sm mb-4 line-clamp-3 leading-relaxed flex-1">
                       {post.excerpt}
                     </p>
-                    <div className="flex items-center text-olive font-semibold text-sm group-hover:gap-2 gap-1 transition-all pt-4 border-t border-white/10">
+                    <div className="flex items-center text-stone-800 font-semibold text-sm group-hover:gap-2 gap-1 transition-all pt-4 border-t border-gray-100">
                       <span>Read More</span>
                       <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                     </div>
@@ -464,23 +471,23 @@ export default function BlogPage() {
       </section>
 
       {/* Categories Section */}
-      <section className="py-20 bg-[#111111]">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-cornsilk mb-4">Browse by Category</h2>
-            <p className="text-xl text-gray-400">Explore articles by product category and platform</p>
+            <h2 className="text-4xl font-bold text-stone-900 mb-4">Browse by Category</h2>
+            <p className="text-xl text-stone-500">Explore articles by product category and platform</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {['Chargers', 'Car Accessories', 'Audio & Earbuds', 'Computer Accessories'].map((cat) => (
-              <div key={cat} className="bg-[#1A1A1A] p-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer group">
-                <h3 className="text-xl font-bold text-cornsilk mb-2 group-hover:text-olive transition-colors">
+              <div key={cat} className="bg-stone-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer group">
+                <h3 className="text-xl font-bold text-stone-900 mb-2 group-hover:text-stone-800 transition-colors">
                   {cat}
                 </h3>
-                <p className="text-gray-400 text-sm mb-4">
+                <p className="text-stone-500 text-sm mb-4">
                   {blogPosts.filter(p => p.category === cat).length} articles
                 </p>
-                <div className="flex items-center text-olive font-semibold text-sm">
+                <div className="flex items-center text-stone-800 font-semibold text-sm">
                   <span>View All</span>
                   <ArrowRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -494,52 +501,52 @@ export default function BlogPage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-cornsilk mb-4">Shop by Platform</h2>
-            <p className="text-xl text-gray-400">Find reviews from your favorite marketplace</p>
+            <h2 className="text-4xl font-bold text-stone-900 mb-4">Shop by Platform</h2>
+            <p className="text-xl text-stone-500">Find reviews from your favorite marketplace</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-gradient-to-br from-yellow-50 to-red-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer group">
+            <div className="bg-stone-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer group">
               <div className="text-5xl mb-4">🛍️</div>
-              <h3 className="text-2xl font-bold text-cornsilk mb-2 group-hover:text-red-600 transition-colors">
+              <h3 className="text-2xl font-bold text-stone-900 mb-2 group-hover:text-red-600 transition-colors">
                 eBay Reviews
               </h3>
-              <p className="text-gray-400 mb-4">{blogPosts.filter(p => p.platform === 'eBay').length} active articles</p>
+              <p className="text-stone-500 mb-4">{blogPosts.filter(p => p.platform === 'eBay').length} active articles</p>
               <div className="flex items-center text-red-600 font-semibold">
                 <span>Explore eBay</span>
                 <TrendingUp size={18} className="ml-2" />
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-orange-50 to-yellow-50 p-8 rounded-2xl shadow-lg opacity-60">
+            <div className="bg-stone-50 p-8 rounded-2xl shadow-lg opacity-60">
               <div className="text-5xl mb-4">📦</div>
-              <h3 className="text-2xl font-bold text-cornsilk mb-2">Amazon Reviews</h3>
-              <p className="text-gray-400 mb-4">Coming soon</p>
-              <div className="text-gray-500 font-semibold">Under development</div>
+              <h3 className="text-2xl font-bold text-stone-900 mb-2">Amazon Reviews</h3>
+              <p className="text-stone-500 mb-4">Coming soon</p>
+              <div className="text-stone-400 font-semibold">Under development</div>
             </div>
 
-            <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-2xl shadow-lg opacity-60">
+            <div className="bg-stone-50 p-8 rounded-2xl shadow-lg opacity-60">
               <div className="text-5xl mb-4">🏪</div>
-              <h3 className="text-2xl font-bold text-cornsilk mb-2">Shopify Reviews</h3>
-              <p className="text-gray-400 mb-4">Coming soon</p>
-              <div className="text-gray-500 font-semibold">Under development</div>
+              <h3 className="text-2xl font-bold text-stone-900 mb-2">Shopify Reviews</h3>
+              <p className="text-stone-500 mb-4">Coming soon</p>
+              <div className="text-stone-400 font-semibold">Under development</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-olive to-peru text-cornsilk py-16">
+      <section className="bg-stone-100 text-stone-900 py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Stay Updated with Latest Reviews
           </h2>
-          <p className="text-xl mb-8 text-olive">
+          <p className="text-xl mb-8 text-stone-800">
             Subscribe to get the newest product reviews and tech guides
           </p>
           <Link
             href="/#newsletter"
-            className="inline-block bg-[#1A1A1A] text-olive px-8 py-4 rounded-full font-semibold text-lg hover:bg-peru transition-all hover:scale-105 shadow-lg"
+            className="inline-block bg-stone-50 text-stone-800 px-8 py-4 rounded-full font-semibold text-lg hover:bg-peru transition-all hover:scale-105 shadow-lg"
           >
             Subscribe to Newsletter
           </Link>

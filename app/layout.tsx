@@ -11,13 +11,13 @@ import GoogleAnalytics from '@/components/GoogleAnalytics';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'AllMySell - Technology & Mobile Accessories E-Commerce',
-  description: 'Technology and mobile accessory products on eBay. Chargers, power banks, car accessories, phone cases and more. Our Amazon, Etsy, Shopify and TikTok Shop stores coming soon!',
-  keywords: 'e-commerce, eBay, technology, mobile accessories, chargers, power bank, car accessories, online shopping',
+  title: { default: 'AllMySell | Premium Tech & Mobile Accessories', template: '%s | AllMySell' },
+  description: 'Shop premium technology products and mobile accessories at AllMySell. Discover high-quality chargers, power banks, car accessories, and phone cases with fast worldwide shipping.',
+  keywords: ['buy tech accessories online', 'mobile accessories store', 'car phone holders', 'wireless power banks', 'AllMySell', 'premium phone cases', 'durable charging cables'],
   metadataBase: new URL('https://allmysell.com'),
   openGraph: {
-    title: 'AllMySell - Technology & Mobile Accessories E-Commerce',
-    description: 'Technology and mobile accessory products on eBay. Chargers, power banks, car accessories, phone cases and more.',
+    title: { default: 'AllMySell | Premium Tech & Mobile Accessories', template: '%s | AllMySell' },
+    description: 'Shop premium technology products and mobile accessories at AllMySell. Discover high-quality chargers, power banks, and car accessories.',
     url: 'https://allmysell.com',
     siteName: 'AllMySell',
     images: [
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AllMySell - Technology & Mobile Accessories E-Commerce',
-    description: 'Technology and mobile accessory products on eBay. Chargers, power banks, car accessories, phone cases and more.',
+    title: { default: 'AllMySell | Premium Tech & Mobile Accessories', template: '%s | AllMySell' },
+    description: 'Shop premium technology products and mobile accessories at AllMySell. Discover high-quality chargers, power banks, and car accessories.',
     images: ['https://i.ebayimg.com/images/g/cf0AAeSwvQ5pXfAv/s-l1600.webp'],
   },
   verification: {

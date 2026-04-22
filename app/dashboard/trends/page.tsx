@@ -69,28 +69,28 @@ export default function TrendsPage() {
     <div className="p-6 lg:p-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-cornsilk mb-1">Trend Analysis</h1>
-          <p className="text-gray-400 text-sm">AI-powered real-time market trend detection</p>
+          <h1 className="text-3xl font-bold text-stone-900 mb-1">Trend Analysis</h1>
+          <p className="text-stone-500 text-sm">AI-powered real-time market trend detection</p>
         </div>
       </div>
 
       {/* Search / Niche Filter */}
-      <div className="bg-[#1A1A1A] rounded-xl p-4 border border-white/5 mb-6 flex gap-3">
+      <div className="bg-stone-50 rounded-xl p-4 border border-white/5 mb-6 flex gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" size={18} />
           <input
             type="text"
             value={niche}
             onChange={(e) => setNiche(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && fetchTrends(niche)}
             placeholder="Enter a niche (optional) or leave empty for general trends..."
-            className="w-full pl-10 pr-4 py-3 bg-[#0A0A0A] border border-white/10 rounded-lg text-cornsilk placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 text-sm"
+            className="w-full pl-10 pr-4 py-3 bg-[#FAFAF9] border border-white/10 rounded-lg text-stone-900 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 text-sm"
           />
         </div>
         <button
           onClick={() => fetchTrends(niche)}
           disabled={loading}
-          className="px-5 py-3 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white rounded-lg font-medium hover:shadow-lg transition-all disabled:opacity-50 flex items-center gap-2 whitespace-nowrap text-sm"
+          className="px-5 py-3 bg-gradient-to-r from-emerald-600 to-emerald-500 text-stone-900 rounded-lg font-medium hover:shadow-lg transition-all disabled:opacity-50 flex items-center gap-2 whitespace-nowrap text-sm"
         >
           {loading ? (
             <span className="flex items-center gap-2"><Loader2 className="animate-spin" size={16} /> Loading...</span>
@@ -109,7 +109,7 @@ export default function TrendsPage() {
             <button
               key={n}
               onClick={() => { setNiche(n); fetchTrends(n); }}
-              className="px-3 py-1.5 bg-[#1A1A1A] border border-white/5 rounded-full text-xs text-gray-400 hover:text-emerald-400 hover:border-emerald-500/30 transition-colors"
+              className="px-3 py-1.5 bg-stone-50 border border-white/5 rounded-full text-xs text-stone-500 hover:text-emerald-400 hover:border-emerald-500/30 transition-colors"
             >
               {n}
             </button>
@@ -129,7 +129,7 @@ export default function TrendsPage() {
             <div className="w-16 h-16 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin"></div>
             <Flame className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-emerald-400" size={20} />
           </div>
-          <p className="text-gray-400 mt-4 animate-pulse">Analyzing market trends with AI...</p>
+          <p className="text-stone-500 mt-4 animate-pulse">Analyzing market trends with AI...</p>
         </div>
       )}
 
@@ -139,15 +139,15 @@ export default function TrendsPage() {
           <Sparkles className="text-emerald-400 flex-shrink-0 mt-0.5" size={18} />
           <div>
             <p className="text-xs font-semibold text-emerald-400 uppercase mb-1">🏆 Top Opportunity</p>
-            <p className="text-sm text-gray-300">{topOpportunity}</p>
+            <p className="text-sm text-stone-600">{topOpportunity}</p>
           </div>
         </div>
       )}
 
       {/* Summary */}
       {!loading && summary && (
-        <div className="bg-[#1A1A1A] rounded-xl p-4 border border-white/5 mb-6">
-          <p className="text-sm text-gray-300">{summary}</p>
+        <div className="bg-stone-50 rounded-xl p-4 border border-white/5 mb-6">
+          <p className="text-sm text-stone-600">{summary}</p>
         </div>
       )}
 
@@ -156,14 +156,14 @@ export default function TrendsPage() {
         <div className="space-y-8">
           {categories.map((category) => (
             <div key={category.name}>
-              <h2 className="text-xl font-semibold text-cornsilk mb-4">
+              <h2 className="text-xl font-semibold text-stone-900 mb-4">
                 {category.emoji} {category.name}
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {(category.trends || []).map((trend) => (
                   <div
                     key={trend.keyword}
-                    className="bg-[#1A1A1A] rounded-xl p-4 border border-white/5 hover:border-emerald-500/20 transition-all group"
+                    className="bg-stone-50 rounded-xl p-4 border border-white/5 hover:border-emerald-500/20 transition-all group"
                   >
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
@@ -176,8 +176,8 @@ export default function TrendsPage() {
                            <ArrowDownRight className="text-red-400" size={18} />}
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-cornsilk group-hover:text-emerald-400 transition-colors">{trend.keyword}</p>
-                          <p className="text-xs text-gray-500">Volume: {trend.volume}/mo</p>
+                          <p className="text-sm font-medium text-stone-900 group-hover:text-emerald-400 transition-colors">{trend.keyword}</p>
+                          <p className="text-xs text-stone-400">Volume: {trend.volume}/mo</p>
                         </div>
                       </div>
                       <div className="text-right">
@@ -191,12 +191,12 @@ export default function TrendsPage() {
                     </div>
                     {trend.insight && (
                       <div className="mt-2 pl-[52px]">
-                        <p className="text-xs text-gray-500 mb-2">{trend.insight}</p>
+                        <p className="text-xs text-stone-400 mb-2">{trend.insight}</p>
                         <div className="flex flex-wrap gap-2">
-                          <a href={`https://www.aliexpress.com/wholesale?SearchText=${encodeURIComponent(trend.keyword)}`} target="_blank" rel="noopener noreferrer" className="text-[9px] px-2 py-1 bg-[#1A1A1A] border border-white/10 hover:border-[#ff4747]/50 hover:text-[#ff4747] text-gray-400 rounded transition-all">
+                          <a href={`https://www.aliexpress.com/wholesale?SearchText=${encodeURIComponent(trend.keyword)}`} target="_blank" rel="noopener noreferrer" className="text-[9px] px-2 py-1 bg-stone-50 border border-white/10 hover:border-[#ff4747]/50 hover:text-[#ff4747] text-stone-500 rounded transition-all">
                             AliExpress Ara
                           </a>
-                          <a href={`https://trends.google.com/trends/explore?q=${encodeURIComponent(trend.keyword)}`} target="_blank" rel="noopener noreferrer" className="text-[9px] px-2 py-1 bg-[#1A1A1A] border border-white/10 hover:border-[#4285F4]/50 hover:text-[#4285F4] text-gray-400 rounded transition-all">
+                          <a href={`https://trends.google.com/trends/explore?q=${encodeURIComponent(trend.keyword)}`} target="_blank" rel="noopener noreferrer" className="text-[9px] px-2 py-1 bg-stone-50 border border-white/10 hover:border-[#4285F4]/50 hover:text-[#4285F4] text-stone-500 rounded transition-all">
                             Google Trends
                           </a>
                         </div>
@@ -214,8 +214,8 @@ export default function TrendsPage() {
       {!loading && !fetched && !error && (
         <div className="text-center py-12">
           <TrendingUp className="mx-auto text-gray-600 mb-4" size={48} />
-          <h3 className="text-xl font-semibold text-cornsilk mb-2">Discover Market Trends</h3>
-          <p className="text-gray-400 text-sm max-w-md mx-auto">
+          <h3 className="text-xl font-semibold text-stone-900 mb-2">Discover Market Trends</h3>
+          <p className="text-stone-500 text-sm max-w-md mx-auto">
             Click &quot;Discover Trends&quot; to get AI-powered analysis of current market trends, or enter a specific niche to focus on.
           </p>
         </div>

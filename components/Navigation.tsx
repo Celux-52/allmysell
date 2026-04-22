@@ -85,14 +85,14 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="bg-[#0A0A0A] shadow-lg shadow-black/50 sticky top-0 z-50 border-b border-[#E8750A]/10">
+    <nav className="bg-[#FAFAF9] shadow-lg shadow-black/50 sticky top-0 z-50 border-b border-stone-200/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-[#E8750A] to-[#F59E0B] rounded-lg flex items-center justify-center shadow-lg shadow-[#E8750A]/20">
-              <span className="text-white font-bold text-xl">A</span>
+            <div className="w-10 h-10 bg-stone-900 !text-white hover:bg-stone-800 rounded-lg flex items-center justify-center shadow-lg shadow-stone-200/50">
+              <span className="text-stone-900 font-bold text-xl">A</span>
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-[#E8750A] to-[#F59E0B] bg-clip-text text-transparent">
+            <span className="text-2xl font-bold bg-stone-900 !text-white hover:bg-stone-800 bg-clip-text text-transparent">
               AllMySell
             </span>
           </Link>
@@ -103,7 +103,7 @@ export default function Navigation() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="px-4 py-2 rounded-lg text-gray-300 hover:bg-[#E8750A]/20 hover:text-[#E8750A] transition-colors font-medium"
+                className="px-4 py-2 rounded-lg text-stone-600 hover:bg-[#E8750A]/20 hover:text-stone-800 transition-colors font-medium"
               >
                 {item.name}
               </Link>
@@ -111,16 +111,16 @@ export default function Navigation() {
 
             {/* Shop Dropdown */}
             <div className="relative group">
-              <button className="px-4 py-2 rounded-lg text-gray-300 hover:bg-[#E8750A]/20 hover:text-[#E8750A] transition-colors font-medium flex items-center gap-1">
+              <button className="px-4 py-2 rounded-lg text-stone-600 hover:bg-[#E8750A]/20 hover:text-stone-800 transition-colors font-medium flex items-center gap-1">
                 Shop
                 <ChevronDown size={16} className="group-hover:rotate-180 transition-transform" />
               </button>
-              <div className="absolute left-0 mt-0 w-48 bg-[#1A1A1A] rounded-lg shadow-xl shadow-black/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-[#E8750A]/10">
+              <div className="absolute left-0 mt-0 w-48 bg-stone-50 rounded-lg shadow-xl shadow-black/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-stone-200/60">
                 {shops.map((shop) => (
                   <Link
                     key={shop.name}
                     href={shop.href}
-                    className="block px-4 py-3 text-gray-300 hover:bg-[#E8750A]/20 hover:text-[#E8750A] transition-colors first:rounded-t-lg last:rounded-b-lg"
+                    className="block px-4 py-3 text-stone-600 hover:bg-[#E8750A]/20 hover:text-stone-800 transition-colors first:rounded-t-lg last:rounded-b-lg"
                   >
                     {shop.name}
                   </Link>
@@ -130,16 +130,16 @@ export default function Navigation() {
 
             {/* Web Solutions Dropdown */}
             <div className="relative group">
-              <button className="px-4 py-2 rounded-lg text-gray-300 hover:bg-[#E8750A]/20 hover:text-[#E8750A] transition-colors font-medium flex items-center gap-1">
+              <button className="px-4 py-2 rounded-lg text-stone-600 hover:bg-[#E8750A]/20 hover:text-stone-800 transition-colors font-medium flex items-center gap-1">
                 Web Solutions
                 <ChevronDown size={16} className="group-hover:rotate-180 transition-transform" />
               </button>
-              <div className="absolute left-0 mt-0 w-52 bg-[#1A1A1A] rounded-lg shadow-xl shadow-black/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-[#E8750A]/10">
+              <div className="absolute left-0 mt-0 w-52 bg-stone-50 rounded-lg shadow-xl shadow-black/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-stone-200/60">
                 {webServices.map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="block px-4 py-3 text-gray-300 hover:bg-[#E8750A]/20 hover:text-[#E8750A] transition-colors first:rounded-t-lg last:rounded-b-lg text-sm"
+                    className="block px-4 py-3 text-stone-600 hover:bg-[#E8750A]/20 hover:text-stone-800 transition-colors first:rounded-t-lg last:rounded-b-lg text-sm"
                   >
                     {item.name}
                   </Link>
@@ -154,15 +154,15 @@ export default function Navigation() {
               href="https://www.instagram.com/allmysell/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-[#E8750A] transition-colors p-2"
+              className="text-stone-500 hover:text-stone-800 transition-colors p-2"
               aria-label="Instagram"
             >
               <Instagram size={24} />
             </a>
-            <div className="w-px h-6 bg-gray-800 mx-1"></div>
+            <div className="w-px h-6 bg-stone-100/50 mx-1"></div>
 
             {authLoading ? (
-              <div className="w-20 h-9 bg-[#1A1A1A] rounded-lg animate-pulse"></div>
+              <div className="w-20 h-9 bg-stone-50 rounded-lg animate-pulse"></div>
             ) : user ? (
               /* Logged in state */
               <div className="relative">
@@ -177,27 +177,27 @@ export default function Navigation() {
                       className="w-8 h-8 rounded-full object-cover border border-[#E8750A]/30"
                     />
                   ) : (
-                    <div className="w-8 h-8 bg-gradient-to-br from-[#E8750A] to-[#F59E0B] rounded-full flex items-center justify-center text-white font-bold text-sm">
+                    <div className="w-8 h-8 bg-stone-900 !text-white hover:bg-stone-800 rounded-full flex items-center justify-center text-stone-900 font-bold text-sm">
                       {(user.fullName || user.email)[0].toUpperCase()}
                     </div>
                   )}
-                  <span className="text-cornsilk text-sm font-medium max-w-[120px] truncate">
+                  <span className="text-stone-900 text-sm font-medium max-w-[120px] truncate">
                     {user.fullName || user.email.split('@')[0]}
                   </span>
-                  <ChevronDown size={14} className={`text-gray-400 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={14} className={`text-stone-500 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 {userMenuOpen && (
                   <>
                     <div className="fixed inset-0 z-40" onClick={() => setUserMenuOpen(false)}></div>
-                    <div className="absolute right-0 mt-2 w-56 bg-[#1A1A1A] rounded-xl shadow-xl shadow-black/50 z-50 border border-[#E8750A]/10 overflow-hidden">
+                    <div className="absolute right-0 mt-2 w-56 bg-stone-50 rounded-xl shadow-xl shadow-black/50 z-50 border border-stone-200/60 overflow-hidden">
                       <div className="px-4 py-3 border-b border-white/5">
-                        <p className="text-sm font-medium text-cornsilk truncate">{user.fullName || 'User'}</p>
-                        <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                        <p className="text-sm font-medium text-stone-900 truncate">{user.fullName || 'User'}</p>
+                        <p className="text-xs text-stone-400 truncate">{user.email}</p>
                       </div>
                       <Link
                         href="/dashboard"
-                        className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-[#E8750A]/20 hover:text-[#E8750A] transition-colors"
+                        className="flex items-center gap-3 px-4 py-3 text-stone-600 hover:bg-[#E8750A]/20 hover:text-stone-800 transition-colors"
                         onClick={() => setUserMenuOpen(false)}
                       >
                         <User size={16} />
@@ -219,13 +219,13 @@ export default function Navigation() {
               <>
                 <Link
                   href="/login"
-                  className="px-6 py-2 rounded-lg text-[#E8750A] hover:bg-[#E8750A]/10 transition-colors font-medium"
+                  className="px-6 py-2 rounded-lg text-stone-800 hover:bg-[#E8750A]/10 transition-colors font-medium"
                 >
                   Log In
                 </Link>
                 <Link
                   href="/register"
-                  className="px-6 py-2 bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-white rounded-lg hover:shadow-lg hover:shadow-[#E8750A]/20 transition-all font-medium"
+                  className="px-6 py-2 bg-stone-900 !text-white hover:bg-stone-800 text-stone-900 rounded-lg hover:shadow-lg hover:shadow-stone-200/50 transition-all font-medium"
                 >
                   Get Started
                 </Link>
@@ -239,7 +239,7 @@ export default function Navigation() {
               href="https://www.instagram.com/allmysell/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-[#E8750A] transition-colors p-1"
+              className="text-stone-500 hover:text-stone-800 transition-colors p-1"
               aria-label="Instagram"
             >
               <Instagram size={22} />
@@ -247,7 +247,7 @@ export default function Navigation() {
             {!authLoading && !user && (
               <Link
                 href="/register"
-                className="px-3 py-1.5 bg-gradient-to-r from-[#E8750A] to-[#F59E0B] text-white rounded text-sm hover:shadow-lg transition-all font-medium"
+                className="px-3 py-1.5 bg-stone-900 !text-white hover:bg-stone-800 text-stone-900 rounded text-sm hover:shadow-lg transition-all font-medium"
               >
                 Sign Up
               </Link>
@@ -260,7 +260,7 @@ export default function Navigation() {
                 {user.avatarUrl ? (
                   <img src={user.avatarUrl} alt="" className="w-8 h-8 rounded-full object-cover border border-[#E8750A]/30" />
                 ) : (
-                  <div className="w-8 h-8 bg-gradient-to-br from-[#E8750A] to-[#F59E0B] rounded-full flex items-center justify-center text-white font-bold text-sm">
+                  <div className="w-8 h-8 bg-stone-900 !text-white hover:bg-stone-800 rounded-full flex items-center justify-center text-stone-900 font-bold text-sm">
                     {(user.fullName || user.email)[0].toUpperCase()}
                   </div>
                 )}
@@ -268,7 +268,7 @@ export default function Navigation() {
             )}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg text-gray-300 hover:bg-[#E8750A]/20"
+              className="p-2 rounded-lg text-stone-600 hover:bg-[#E8750A]/20"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -278,13 +278,13 @@ export default function Navigation() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden bg-[#0A0A0A] border-t border-[#E8750A]/10">
+        <div className="md:hidden bg-[#FAFAF9] border-t border-stone-200/60">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="block px-4 py-3 rounded-lg text-gray-300 hover:bg-[#E8750A]/20 hover:text-[#E8750A] transition-colors font-medium"
+                className="block px-4 py-3 rounded-lg text-stone-600 hover:bg-[#E8750A]/20 hover:text-stone-800 transition-colors font-medium"
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
@@ -295,18 +295,18 @@ export default function Navigation() {
             <div className="px-2">
               <button
                 onClick={() => setShopOpen(!shopOpen)}
-                className="w-full text-left px-2 py-3 rounded-lg text-gray-300 hover:bg-[#E8750A]/20 hover:text-[#E8750A] transition-colors font-medium flex items-center justify-between"
+                className="w-full text-left px-2 py-3 rounded-lg text-stone-600 hover:bg-[#E8750A]/20 hover:text-stone-800 transition-colors font-medium flex items-center justify-between"
               >
                 Shop
                 <ChevronDown size={16} className={`transition-transform ${shopOpen ? 'rotate-180' : ''}`} />
               </button>
               {shopOpen && (
-                <div className="bg-[#1A1A1A] rounded-lg mt-2 space-y-1">
+                <div className="bg-stone-50 rounded-lg mt-2 space-y-1">
                   {shops.map((shop) => (
                     <Link
                       key={shop.name}
                       href={shop.href}
-                      className="block px-4 py-2 text-gray-300 hover:bg-[#E8750A]/20 hover:text-[#E8750A] transition-colors rounded"
+                      className="block px-4 py-2 text-stone-600 hover:bg-[#E8750A]/20 hover:text-stone-800 transition-colors rounded"
                       onClick={() => {
                         setIsOpen(false);
                         setShopOpen(false);
@@ -323,7 +323,7 @@ export default function Navigation() {
             <div className="px-2">
               <Link
                 href="/web-cozumleri"
-                className="block px-2 py-3 rounded-lg text-[#E8750A] hover:bg-[#E8750A]/20 transition-colors font-semibold"
+                className="block px-2 py-3 rounded-lg text-stone-800 hover:bg-[#E8750A]/20 transition-colors font-semibold"
                 onClick={() => setIsOpen(false)}
               >
                 🌐 Web Solutions
@@ -337,7 +337,7 @@ export default function Navigation() {
                   <>
                     <Link
                       href="/dashboard"
-                      className="block px-2 py-3 rounded-lg text-cornsilk hover:bg-[#E8750A]/20 transition-colors font-medium"
+                      className="block px-2 py-3 rounded-lg text-stone-900 hover:bg-[#E8750A]/20 transition-colors font-medium"
                       onClick={() => setIsOpen(false)}
                     >
                       📊 Dashboard
@@ -355,7 +355,7 @@ export default function Navigation() {
                 ) : (
                   <Link
                     href="/login"
-                    className="block px-2 py-3 rounded-lg text-cornsilk hover:bg-[#E8750A]/20 transition-colors font-medium"
+                    className="block px-2 py-3 rounded-lg text-stone-900 hover:bg-[#E8750A]/20 transition-colors font-medium"
                     onClick={() => setIsOpen(false)}
                   >
                     🔑 Log In

@@ -22,11 +22,11 @@ export default function Newsletter() {
     <div className="bg-gradient-to-r from-[#1A0A00] via-[#E8750A] to-[#F59E0B] py-16 px-4">
       <div className="max-w-4xl mx-auto text-center">
         <div className="mb-6">
-          <Mail className="w-16 h-16 text-white mx-auto mb-4 animate-bounce" />
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <Mail className="w-16 h-16 text-stone-900 mx-auto mb-4 animate-bounce" />
+          <h2 className="text-3xl md:text-4xl font-bold text-stone-900 mb-4">
             Stay Updated with AllMySell
           </h2>
-          <p className="text-orange-100 text-lg">
+          <p className="text-stone-600 text-lg">
             Be the first to know when our Amazon, Etsy, Shopify, and TikTok Shop stores go live! 
             Get exclusive deals and new product announcements.
           </p>
@@ -34,8 +34,8 @@ export default function Newsletter() {
 
         {status === 'success' ? (
           <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 flex items-center justify-center space-x-3 animate-fade-in">
-            <CheckCircle className="w-8 h-8 text-white" />
-            <span className="text-white text-lg font-semibold">
+            <CheckCircle className="w-8 h-8 text-stone-900" />
+            <span className="text-stone-900 text-lg font-semibold">
               Thank you! You've successfully subscribed to our newsletter.
             </span>
           </div>
@@ -52,18 +52,18 @@ export default function Newsletter() {
               />
               <button
                 type="submit"
-                className="px-8 py-4 bg-[#0A0A0A] text-[#E8750A] font-bold rounded-xl hover:bg-[#1A1A1A] transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 whitespace-nowrap"
+                className="px-8 py-4 bg-[#FAFAF9] text-stone-800 font-bold rounded-xl hover:bg-stone-50 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 whitespace-nowrap"
               >
                 Subscribe Now
               </button>
             </div>
-            <p className="text-orange-100 text-sm mt-4">
+            <p className="text-stone-600 text-sm mt-4">
               🎁 Subscribe now and get 10% off your first purchase!
             </p>
           </form>
         )}
 
-        <div className="mt-8 flex flex-wrap justify-center gap-6 text-white/90">
+        <div className="mt-8 flex flex-wrap justify-center gap-6 text-stone-900/90">
           <div className="flex items-center space-x-2">
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />

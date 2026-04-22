@@ -6,8 +6,8 @@ export default function AdminAnalyticsPage() {
   return (
     <div className="p-6 lg:p-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-cornsilk mb-1">Analytics</h1>
-        <p className="text-gray-400 text-sm">Platform performance and user insights</p>
+        <h1 className="text-3xl font-bold text-stone-900 mb-1">Analytics</h1>
+        <p className="text-stone-500 text-sm">Platform performance and user insights</p>
       </div>
 
       {/* Placeholder Stats */}
@@ -18,19 +18,19 @@ export default function AdminAnalyticsPage() {
           { label: 'Searches Today', value: '—', icon: BarChart3, color: 'from-purple-600 to-purple-400' },
           { label: 'Conversion Rate', value: '—', icon: TrendingUp, color: 'from-amber-600 to-amber-400' },
         ].map((stat) => (
-          <div key={stat.label} className="bg-[#1A1A1A] rounded-xl p-5 border border-white/5">
+          <div key={stat.label} className="bg-stone-50 rounded-xl p-5 border border-white/5">
             <div className={`w-10 h-10 bg-gradient-to-br ${stat.color} rounded-lg flex items-center justify-center mb-3`}>
-              <stat.icon className="text-white" size={20} />
+              <stat.icon className="text-stone-900" size={20} />
             </div>
-            <p className="text-2xl font-bold text-cornsilk mb-1">{stat.value}</p>
-            <p className="text-sm text-gray-500">{stat.label}</p>
+            <p className="text-2xl font-bold text-stone-900 mb-1">{stat.value}</p>
+            <p className="text-sm text-stone-400">{stat.label}</p>
           </div>
         ))}
       </div>
 
       {/* Chart Placeholder */}
-      <div className="bg-[#1A1A1A] rounded-xl border border-white/5 p-8">
-        <h2 className="text-lg font-semibold text-cornsilk mb-6">User Growth</h2>
+      <div className="bg-stone-50 rounded-xl border border-white/5 p-8">
+        <h2 className="text-lg font-semibold text-stone-900 mb-6">User Growth</h2>
         <div className="flex items-end justify-between h-48 gap-2 px-4">
           {Array.from({ length: 12 }).map((_, i) => {
             const height = Math.random() * 80 + 20;
