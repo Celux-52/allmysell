@@ -49,29 +49,59 @@ export default function AutomationPage() {
   }, []);
 
   const handleRunBot = async () => {
-    if (!keyword.trim()) {
+    const searchKeyword = keyword.trim();
+    if (!searchKeyword) {
       alert('Lütfen aramak için İngilizce bir kelime girin!');
       return;
     }
     setLoading(true);
     setResult(null);
+    setProducts([]); // Eski ürünleri ekrandan temizle
 
     fetch('/api/run-bot', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ keyword: keyword.trim() }),
+      body: JSON.stringify({ keyword: searchKeyword }),
     }).catch(console.error);
 
-    setTimeout(() => {
-      setResult({
-        type: 'success',
-        message: `"${keyword}" için arama başlatıldı! ~40 saniye sonra aşağıdaki tabloya eklenecek.`,
-      });
-      setKeyword('');
-      setLoading(false);
-      // 45 saniye sonra tabloyu yenile
-      setTimeout(() => fetchProducts(), 45000);
-    }, 2000);
+    setResult({
+      type: 'success',
+      message: `"${searchKeyword}" için arama arka planda devam ediyor... Lütfen bekleyin.`,
+    });
+
+    // Akıllı Bekleme (Polling): Her 5 saniyede bir yeni veri gelmiş mi diye kontrol et
+    let attempts = 0;
+    const pollInterval = setInterval(async () => {
+      attempts++;
+      
+      const { data } = await supabase
+        .from('trend_products')
+        .select('*')
+        .eq('keyword', searchKeyword)
+        .order('created_at', { ascending: false })
+        .limit(1);
+
+      // Eğer aradığımız kelimeyle eşleşen yeni bir ürün düştüyse
+      if (data && data.length > 0) {
+        clearInterval(pollInterval);
+        fetchProducts(); // Tabloyu tam güncelle
+        setResult({
+          type: 'success',
+          message: `Harika! "${searchKeyword}" için sonuçlar başarıyla yüklendi.`,
+        });
+        setKeyword('');
+        setLoading(false);
+      } 
+      // 3 dakika (36 deneme) geçtiyse pes et (Timeout)
+      else if (attempts >= 36) {
+        clearInterval(pollInterval);
+        setResult({
+          type: 'error',
+          message: `Zaman aşımı: "${searchKeyword}" için veri bulunamadı veya bot gecikti.`,
+        });
+        setLoading(false);
+      }
+    }, 5000); // 5 saniyede bir kontrol et
   };
 
   return (
