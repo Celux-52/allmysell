@@ -25,7 +25,7 @@ interface TrendProduct {
 export default function AutomationPage() {
   const [keyword, setKeyword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [result, setResult] = useState<{ type: 'success' | 'error'; message: string; note?: string } | null>(null);
   const [products, setProducts] = useState<TrendProduct[]>([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
   const supabase = createClient();
@@ -67,6 +67,7 @@ export default function AutomationPage() {
     setResult({
       type: 'success',
       message: `"${searchKeyword}" için arama arka planda devam ediyor... Lütfen bekleyin.`,
+      note: 'Not: "Airpods" gibi markalı kelimeler veya hatalı yazımlarda CJ Dropshipping sonuç vermez. Sonuç gelmesi 1 dakikadan uzun sürerse farklı (genel) bir kelime deneyin.',
     });
 
     // Akıllı Bekleme (Polling): Her 5 saniyede bir yeni veri gelmiş mi diye kontrol et
@@ -92,12 +93,13 @@ export default function AutomationPage() {
         setKeyword('');
         setLoading(false);
       } 
-      // 3 dakika (36 deneme) geçtiyse pes et (Timeout)
-      else if (attempts >= 36) {
+      // 1 dakika (12 deneme) geçtiyse pes et (Timeout)
+      else if (attempts >= 12) {
         clearInterval(pollInterval);
         setResult({
           type: 'error',
-          message: `Zaman aşımı: "${searchKeyword}" için veri bulunamadı veya bot gecikti.`,
+          message: `Zaman Aşımı: "${searchKeyword}" için ürün bulunamadı.`,
+          note: 'Muhtemelen ürün markalı (örn: Apple) veya kârlı değil. Lütfen "necklace, phone case, wallet" gibi genel kelimeler deneyin.',
         });
         setLoading(false);
       }
@@ -165,7 +167,10 @@ export default function AutomationPage() {
               {result.type === 'success'
                 ? <CheckCircle2 size={20} className="mt-0.5 flex-shrink-0" />
                 : <AlertCircle size={20} className="mt-0.5 flex-shrink-0" />}
-              <p className="text-sm">{result.message}</p>
+              <div>
+                <p className="text-sm font-medium">{result.message}</p>
+                {result.note && <p className="text-sm mt-1 opacity-90">{result.note}</p>}
+              </div>
             </div>
           )}
         </div>
