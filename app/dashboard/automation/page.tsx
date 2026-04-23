@@ -93,13 +93,13 @@ export default function AutomationPage() {
         setKeyword('');
         setLoading(false);
       } 
-      // 1 dakika (12 deneme) geçtiyse pes et (Timeout)
-      else if (attempts >= 12) {
+      // 3 dakika (36 deneme) geçtiyse pes et (Timeout)
+      else if (attempts >= 36) {
         clearInterval(pollInterval);
         setResult({
           type: 'error',
           message: `Zaman Aşımı: "${searchKeyword}" için ürün bulunamadı.`,
-          note: 'Muhtemelen ürün markalı (örn: Apple) veya kârlı değil. Lütfen "necklace, phone case, wallet" gibi genel kelimeler deneyin.',
+          note: 'Bot CJ Dropshipping, eBay ve AliExpress taramalarını 3 dakika boyunca yaptı ama kârlı ürün bulamadı. Muhtemelen marka kısıtlaması (örn: Apple) veya stok sorunu var. Lütfen farklı kelimeler deneyin.',
         });
         setLoading(false);
       }
