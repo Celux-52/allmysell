@@ -195,15 +195,27 @@ export default function AutomationPage() {
           </button>
         </div>
 
-        {loadingProducts ? (
+        {loading ? (
+          <div className="p-16 text-center">
+            <div className="relative w-20 h-20 mx-auto mb-6">
+              <div className="absolute inset-0 border-4 border-emerald-100 rounded-full"></div>
+              <div className="absolute inset-0 border-4 border-emerald-500 rounded-full border-t-transparent animate-spin"></div>
+              <Bot className="absolute inset-0 m-auto text-emerald-500" size={28} />
+            </div>
+            <h3 className="text-lg font-semibold text-stone-800 mb-1 animate-pulse">Bot Arka Planda Çalışıyor...</h3>
+            <p className="text-stone-500 text-sm max-w-sm mx-auto">
+               Lütfen bekleyin. eBay satış verileri analiz ediliyor ve en kârlı ürünler CJ Dropshipping ile eşleştiriliyor. Bu işlem yaklaşık 40-60 saniye sürebilir.
+            </p>
+          </div>
+        ) : loadingProducts ? (
           <div className="p-12 text-center text-stone-400">
             <Loader2 size={24} className="animate-spin mx-auto mb-2" />
-            <p className="text-sm">Yükleniyor...</p>
+            <p className="text-sm">Tablo güncelleniyor...</p>
           </div>
         ) : products.length === 0 ? (
           <div className="p-12 text-center text-stone-400">
             <Package size={32} className="mx-auto mb-3 opacity-40" />
-            <p className="text-sm">Henüz ürün bulunamadı. Botu çalıştırarak başlayın!</p>
+            <p className="text-sm">Henüz ürün bulunamadı. Aramaya başlamak için yukarıdan bir kelime girin!</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
