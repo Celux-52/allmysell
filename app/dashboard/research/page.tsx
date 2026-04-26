@@ -7,6 +7,19 @@ import { useState } from "react";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import { BorderBeam } from "@/components/ui/border-beam";
 
+interface SupplierLink {
+  name: string;
+  url: string;
+}
+
+interface GoogleTrendsData {
+  averageInterest: number;
+  peakInterest: number;
+  trendDirection: string;
+  relatedQueries: string[];
+  risingQueries: string[];
+}
+
 interface Product {
   name: string;
   category: string;
@@ -22,8 +35,9 @@ interface Product {
   targetAudience: string;
   marketingTips: string[];
   sources: string[];
-  suppliers: string[];
+  suppliers: SupplierLink[];
   googleTrendsInsight: string;
+  googleTrendsData: GoogleTrendsData | null;
 }
 
 interface ResearchResults {
@@ -270,13 +284,20 @@ export default function ResearchPage() {
                         </div>
                         <div className="space-y-1">
                           {product.suppliers.slice(0, expandedCard === i ? 10 : 3).map((s, j) => (
-                            <div key={j} className="flex items-center gap-2 text-xs text-slate-400 bg-white/[0.02] p-2 rounded-md border border-white/5">
-                              <ExternalLink className="h-3 w-3 text-slate-500 flex-shrink-0" />
-                              <span className="truncate">{s}</span>
-                            </div>
+                            <a 
+                              key={j} 
+                              href={s.url} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="flex items-center gap-2 text-xs text-slate-400 bg-white/[0.02] p-2 rounded-md border border-white/5 hover:bg-orange-500/10 hover:border-orange-500/20 hover:text-orange-400 transition-colors"
+                            >
+                              <ExternalLink className="h-3 w-3 flex-shrink-0" />
+                              <span className="truncate">{s.name}</span>
+                            </a>
                           ))}
                           {product.suppliers.length > 3 && expandedCard !== i && (
-                            <p className="text-xs text-orange-400 mt-1 cursor-pointer hover:underline">+{product.suppliers.length - 3} more suppliers — click to expand</p>
+                            <p className="text-xs text-orange-400 mt-1 cursor-pointer hover:underline">+{product.suppliers.length - 3} more — click to expand</p>
                           )}
                         </div>
                       </div>
@@ -286,6 +307,43 @@ export default function ResearchPage() {
                     <AnimatePresence>
                       {expandedCard === i && (
                         <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+                          {/* Real Google Trends Data */}
+                          {product.googleTrendsData && (
+                            <div className="mb-4 p-4 rounded-lg bg-blue-500/5 border border-blue-500/10">
+                              <p className="text-xs font-semibold text-blue-400 mb-3 uppercase tracking-wider flex items-center gap-2">
+                                <Globe2 className="h-3.5 w-3.5" />
+                                Real Google Trends Data
+                              </p>
+                              <div className="grid grid-cols-3 gap-3 mb-3">
+                                <div className="text-center p-2 rounded-md bg-white/[0.03]">
+                                  <p className="text-lg font-bold text-white">{product.googleTrendsData.averageInterest}</p>
+                                  <p className="text-xs text-slate-500">Avg Interest</p>
+                                </div>
+                                <div className="text-center p-2 rounded-md bg-white/[0.03]">
+                                  <p className="text-lg font-bold text-white">{product.googleTrendsData.peakInterest}</p>
+                                  <p className="text-xs text-slate-500">Peak</p>
+                                </div>
+                                <div className="text-center p-2 rounded-md bg-white/[0.03]">
+                                  <p className={`text-lg font-bold capitalize ${
+                                    product.googleTrendsData.trendDirection === 'rising' ? 'text-green-400' :
+                                    product.googleTrendsData.trendDirection === 'declining' ? 'text-red-400' : 'text-slate-300'
+                                  }`}>{product.googleTrendsData.trendDirection}</p>
+                                  <p className="text-xs text-slate-500">Direction</p>
+                                </div>
+                              </div>
+                              {product.googleTrendsData.risingQueries && product.googleTrendsData.risingQueries.length > 0 && (
+                                <div>
+                                  <p className="text-xs text-slate-400 mb-1.5">🔥 Rising Related Searches:</p>
+                                  <div className="flex flex-wrap gap-1.5">
+                                    {product.googleTrendsData.risingQueries.slice(0, 6).map((q, j) => (
+                                      <span key={j} className="text-xs bg-blue-500/10 text-blue-300 px-2 py-0.5 rounded-full border border-blue-500/20">{q}</span>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          )}
+
                           {/* Why It Works */}
                           <div className="mb-4 p-3 rounded-lg bg-white/[0.02] border border-white/5">
                             <p className="text-xs font-semibold text-slate-300 mb-1">Why It Works</p>

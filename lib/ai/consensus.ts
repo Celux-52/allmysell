@@ -1,8 +1,18 @@
 /**
- * Multi-AI Consensus Engine
- * Queries ALL available AI providers in parallel, then merges and ranks results.
- * Each provider contributes its analysis, and a final synthesis produces the best answer.
+ * Multi-AI Consensus Engine + Real Google Trends + Real Supplier Links
+ * 
+ * 1. Queries ALL AI providers in parallel for product ideas
+ * 2. Fetches REAL Google Trends data for each product
+ * 3. Generates REAL, clickable supplier search URLs
+ * 4. Merges and ranks everything into a consensus result
  */
+
+import { getGoogleTrendsData, buildSupplierLinks, type GoogleTrendsData } from './google-trends';
+
+interface SupplierLink {
+  name: string;
+  url: string;
+}
 
 interface ConsensusProduct {
   name: string;
@@ -19,8 +29,9 @@ interface ConsensusProduct {
   targetAudience: string;
   marketingTips: string[];
   sources: string[];
-  suppliers: string[];
+  suppliers: SupplierLink[];
   googleTrendsInsight: string;
+  googleTrendsData: GoogleTrendsData | null;
 }
 
 export interface ConsensusResult {
@@ -34,10 +45,10 @@ const RESEARCH_PROMPT = (query: string) => `You are a world-class e-commerce pro
 The user is researching: "${query}"
 
 CRITICAL INSTRUCTIONS:
-1. Cross-reference Google Trends data — mention search volume trends, seasonal patterns, and geographic interest.
-2. For EACH product, provide at least 3-4 real supplier sources (AliExpress links/stores, CJ Dropshipping, DHgate, 1688.com, Alibaba, specific supplier names).
-3. Provide realistic wholesale and retail pricing based on actual market data.
-4. Score each product 0-100 based on: demand (30%), margin (25%), competition (20%), trend momentum (15%), ease of sourcing (10%).
+1. Analyze this niche using your knowledge of current market data, Google Trends patterns, and e-commerce platforms.
+2. Provide realistic wholesale and retail pricing based on actual market data.
+3. Score each product 0-100 based on: demand (30%), margin (25%), competition (20%), trend momentum (15%), ease of sourcing (10%).
+4. For each product, give a short keyword that best represents it for supplier searches (in the "searchKeyword" field).
 
 Return ONLY valid JSON in this exact structure:
 {
@@ -45,23 +56,22 @@ Return ONLY valid JSON in this exact structure:
     {
       "name": "Product Name",
       "category": "Category",
+      "searchKeyword": "exact product search term for suppliers",
       "wholesalePrice": "$X-Y",
       "retailPrice": "$X-Y",
       "profitMargin": "XX-XX%",
       "competition": "Low|Medium|High",
       "trend": "Rising|Stable|Declining",
       "score": 85,
-      "description": "Detailed description of this product and its market position",
+      "description": "Detailed description",
       "platforms": ["eBay", "Etsy", "Amazon", "Shopify"],
-      "whyItWorks": "Deep market analysis of why this product has strong potential",
+      "whyItWorks": "Deep market analysis",
       "targetAudience": "Specific target demographic",
       "marketingTips": ["Actionable tip 1", "Tip 2", "Tip 3"],
-      "sources": ["Real data source URL 1", "Source 2"],
-      "suppliers": ["Supplier 1 with platform (e.g. AliExpress - StoreName)", "Supplier 2", "Supplier 3", "Supplier 4"],
-      "googleTrendsInsight": "Google Trends analysis: search volume trend, peak seasons, top regions"
+      "sources": ["Data source 1", "Source 2"]
     }
   ],
-  "summary": "Comprehensive market overview with Google Trends context"
+  "summary": "Comprehensive market overview"
 }
 
 Return 4-6 products. ONLY return valid JSON.`;
@@ -131,11 +141,13 @@ async function queryCline(query: string): Promise<{ products: any[]; summary: st
 }
 
 /**
- * Merge products from multiple AI providers.
- * If the same product appears from multiple providers, average their scores and merge data.
- * Then sort by score descending.
+ * Merge AI results, then enrich with REAL Google Trends data and REAL supplier links
  */
-function mergeResults(allResults: Array<{ products: any[]; summary: string } | null>, providers: string[]): ConsensusResult {
+async function mergeAndEnrich(
+  allResults: Array<{ products: any[]; summary: string } | null>, 
+  providers: string[],
+  query: string
+): Promise<ConsensusResult> {
   const activeProviders: string[] = [];
   const allProducts: any[] = [];
   const summaries: string[] = [];
@@ -166,65 +178,101 @@ function mergeResults(allResults: Array<{ products: any[]; summary: string } | n
     productMap.get(key)!.push(p);
   }
 
-  // Merge duplicates, average scores, combine suppliers
-  const merged: ConsensusProduct[] = [];
+  // Merge duplicates and average scores
+  const mergedRaw: any[] = [];
   for (const [, group] of productMap) {
     const base = group[0];
     const avgScore = Math.round(group.reduce((sum: number, p: any) => sum + (p.score || 70), 0) / group.length);
-    
-    // Combine unique suppliers from all providers
-    const allSuppliers = new Set<string>();
-    group.forEach((p: any) => {
-      if (p.suppliers) p.suppliers.forEach((s: string) => allSuppliers.add(s));
-      // Also pull from platforms/sources if suppliers is empty
-      if (!p.suppliers || p.suppliers.length === 0) {
-        if (p.sources) p.sources.forEach((s: string) => allSuppliers.add(s));
-      }
-    });
 
-    // Combine unique sources
     const allSources = new Set<string>();
-    group.forEach((p: any) => {
-      if (p.sources) p.sources.forEach((s: string) => allSources.add(s));
-    });
+    group.forEach((p: any) => { if (p.sources) p.sources.forEach((s: string) => allSources.add(s)); });
 
-    // Combine marketing tips
     const allTips = new Set<string>();
-    group.forEach((p: any) => {
-      if (p.marketingTips) p.marketingTips.forEach((t: string) => allTips.add(t));
-    });
+    group.forEach((p: any) => { if (p.marketingTips) p.marketingTips.forEach((t: string) => allTips.add(t)); });
 
-    merged.push({
+    mergedRaw.push({
       name: base.name,
+      searchKeyword: base.searchKeyword || base.name,
       category: base.category || 'General',
       wholesalePrice: base.wholesalePrice || 'N/A',
       retailPrice: base.retailPrice || 'N/A',
       profitMargin: base.profitMargin || 'N/A',
       competition: base.competition || 'Medium',
       trend: base.trend || 'Stable',
-      score: avgScore + (group.length > 1 ? 5 : 0), // Bonus for cross-provider agreement
+      score: Math.min(avgScore + (group.length > 1 ? 5 : 0), 100),
       description: base.description || '',
       platforms: [...new Set(group.flatMap((p: any) => p.platforms || []))],
       whyItWorks: base.whyItWorks || '',
       targetAudience: base.targetAudience || '',
       marketingTips: [...allTips].slice(0, 5),
       sources: [...allSources].slice(0, 5),
-      suppliers: [...allSuppliers].slice(0, 6),
-      googleTrendsInsight: base.googleTrendsInsight || group.find((p: any) => p.googleTrendsInsight)?.googleTrendsInsight || 'Data pending',
     });
   }
 
-  // Sort by score, cap at 100
-  merged.sort((a, b) => b.score - a.score);
-  merged.forEach(p => { if (p.score > 100) p.score = 100; });
+  // Sort by score
+  mergedRaw.sort((a, b) => b.score - a.score);
+  const topProducts = mergedRaw.slice(0, 8);
 
-  // Merge summaries
+  // ENRICH: Fetch real Google Trends data for each product (in parallel, max 4)
+  const enrichPromises = topProducts.slice(0, 4).map(async (product) => {
+    const keyword = product.searchKeyword || product.name;
+    const trendsData = await getGoogleTrendsData(keyword);
+    return { product, trendsData };
+  });
+
+  // For products 5+, skip Google Trends (to avoid rate limiting)
+  const enrichedResults = await Promise.allSettled(enrichPromises);
+  const trendsMap = new Map<string, GoogleTrendsData | null>();
+  
+  enrichedResults.forEach((result) => {
+    if (result.status === 'fulfilled') {
+      trendsMap.set(result.value.product.name, result.value.trendsData);
+    }
+  });
+
+  // Build final products with REAL supplier links and REAL Google Trends data
+  const finalProducts: ConsensusProduct[] = topProducts.map((product) => {
+    const keyword = product.searchKeyword || product.name;
+    const realSuppliers = buildSupplierLinks(keyword);
+    const realTrends = trendsMap.get(product.name) || null;
+
+    // Build Google Trends insight from real data
+    let googleTrendsInsight = 'Google Trends data not available for this product.';
+    if (realTrends) {
+      googleTrendsInsight = realTrends.summary;
+      // Override AI trend direction with real Google Trends direction
+      if (realTrends.trendDirection === 'rising') product.trend = 'Rising';
+      else if (realTrends.trendDirection === 'declining') product.trend = 'Declining';
+      else product.trend = 'Stable';
+    }
+
+    return {
+      name: product.name,
+      category: product.category,
+      wholesalePrice: product.wholesalePrice,
+      retailPrice: product.retailPrice,
+      profitMargin: product.profitMargin,
+      competition: product.competition,
+      trend: product.trend,
+      score: product.score,
+      description: product.description,
+      platforms: product.platforms,
+      whyItWorks: product.whyItWorks,
+      targetAudience: product.targetAudience,
+      marketingTips: product.marketingTips,
+      sources: product.sources,
+      suppliers: realSuppliers,
+      googleTrendsInsight,
+      googleTrendsData: realTrends,
+    };
+  });
+
   const combinedSummary = summaries.length > 1
-    ? `Cross-AI Consensus (${activeProviders.join(' + ')}): ${summaries[0]}` 
+    ? `Cross-AI Consensus (${activeProviders.join(' + ')}): ${summaries[0]}`
     : summaries[0] || 'Analysis complete.';
 
   return {
-    products: merged.slice(0, 8), // Top 8 products
+    products: finalProducts,
     summary: combinedSummary,
     aiProviders: activeProviders,
     consensusMethod: activeProviders.length > 1 ? 'multi-ai-consensus' : 'single-provider',
@@ -233,12 +281,14 @@ function mergeResults(allResults: Array<{ products: any[]; summary: string } | n
 
 /**
  * Main consensus research function.
- * Fires all AI providers in parallel and merges their results.
+ * 1. Fires all AI providers in parallel
+ * 2. Merges their product suggestions
+ * 3. Enriches with REAL Google Trends data
+ * 4. Attaches REAL, clickable supplier links
  */
 export async function consensusResearch(query: string): Promise<ConsensusResult> {
   const providers = ['Groq (Llama 3.3 70B)', 'Gemini 2.0 Flash', 'Cline AI'];
-  
-  // Fire all providers in parallel
+
   const [groqResult, geminiResult, clineResult] = await Promise.allSettled([
     queryGroq(query),
     queryGemini(query),
@@ -251,5 +301,5 @@ export async function consensusResearch(query: string): Promise<ConsensusResult>
     clineResult.status === 'fulfilled' ? clineResult.value : null,
   ];
 
-  return mergeResults(results, providers);
+  return mergeAndEnrich(results, providers, query);
 }
