@@ -1,3 +1,5 @@
+export const SAVED_LIMIT = 10; // Max free saved items (scarcity)
+
 export interface SavedProduct {
   id: string;
   name: string;
@@ -6,8 +8,15 @@ export interface SavedProduct {
   retailPrice: string;
   profitMargin: string;
   competition: string;
+  trend: string;
   score: number;
+  profitScore: number;
+  competitionScore: number;
+  opportunityScore: number;
   description: string;
+  whyItWorks: string;
+  targetAudience: string;
+  note: string; // user note
   savedAt: string; // ISO date string
 }
 
@@ -16,6 +25,7 @@ export interface SearchHistoryItem {
   query: string;
   timestamp: string; // ISO date string
   resultCount: number;
+  topScore: number; // best product score from that run
 }
 
 export const Storage = {
@@ -26,16 +36,19 @@ export const Storage = {
     return data ? JSON.parse(data) : [];
   },
 
-  saveProduct: (userEmail: string, product: Omit<SavedProduct, "id" | "savedAt">): boolean => {
+  saveProduct: (userEmail: string, product: Omit<SavedProduct, "id" | "savedAt" | "note">): boolean => {
     if (typeof window === "undefined") return false;
     const current = Storage.getSavedProducts(userEmail);
     // Prevent duplicates by name
     if (current.some(p => p.name === product.name)) return false;
+    // Enforce limit
+    if (current.length >= SAVED_LIMIT) return false;
 
     const newProduct: SavedProduct = {
       ...product,
       id: crypto.randomUUID(),
       savedAt: new Date().toISOString(),
+      note: "",
     };
 
     localStorage.setItem(`allmysell_saved_${userEmail}`, JSON.stringify([newProduct, ...current]));
@@ -48,6 +61,13 @@ export const Storage = {
     localStorage.setItem(`allmysell_saved_${userEmail}`, JSON.stringify(current.filter(p => p.id !== id)));
   },
 
+  updateNote: (userEmail: string, id: string, note: string): void => {
+    if (typeof window === "undefined") return;
+    const current = Storage.getSavedProducts(userEmail);
+    const updated = current.map(p => p.id === id ? { ...p, note } : p);
+    localStorage.setItem(`allmysell_saved_${userEmail}`, JSON.stringify(updated));
+  },
+
   getHistory: (userEmail: string): SearchHistoryItem[] => {
     if (typeof window === "undefined") return [];
     const key = `allmysell_history_${userEmail}`;
@@ -55,7 +75,7 @@ export const Storage = {
     return data ? JSON.parse(data) : [];
   },
 
-  addHistory: (userEmail: string, query: string, resultCount: number): void => {
+  addHistory: (userEmail: string, query: string, resultCount: number, topScore: number = 0): void => {
     if (typeof window === "undefined") return;
     const current = Storage.getHistory(userEmail);
     
@@ -69,6 +89,7 @@ export const Storage = {
       query,
       timestamp: new Date().toISOString(),
       resultCount,
+      topScore,
     };
 
     localStorage.setItem(`allmysell_history_${userEmail}`, JSON.stringify([newItem, ...current].slice(0, 50))); // Keep last 50

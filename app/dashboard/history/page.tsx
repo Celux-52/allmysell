@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { History, Search, ArrowRight, Trash2, Clock } from "lucide-react";
+import { History, Search, ArrowRight, Trash2, Clock, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { MagicCard } from "@/components/ui/magic-card";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import { Storage, SearchHistoryItem } from "@/lib/storage";
@@ -39,9 +39,21 @@ export default function HistoryPage() {
     const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
     
     if (diffInSeconds < 60) return "Just now";
-    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
-    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} min ago`;
+    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
+    if (diffInSeconds < 172800) return "Yesterday";
     return date.toLocaleDateString();
+  };
+
+  // Find if same query was run before (for trend comparison)
+  const getTrend = (item: SearchHistoryItem, index: number) => {
+    const sameQueryItems = history.filter((h, i) => i > index && h.query.toLowerCase() === item.query.toLowerCase());
+    if (sameQueryItems.length === 0) return null; // first time
+    const prevScore = sameQueryItems[0].topScore || 0;
+    const currentScore = item.topScore || 0;
+    if (currentScore > prevScore) return 'up';
+    if (currentScore < prevScore) return 'down';
+    return 'same';
   };
 
   return (
@@ -55,7 +67,7 @@ export default function HistoryPage() {
             </span>
           </AnimatedGradientText>
           <h1 className="text-3xl font-bold text-white">Search History</h1>
-          <p className="text-slate-400 mt-1">View your past product research queries and consensus runs.</p>
+          <p className="text-slate-400 mt-1">Track your research queries and spot trends over time.</p>
         </div>
         {history.length > 0 && (
           <button 
@@ -83,39 +95,62 @@ export default function HistoryPage() {
           </Link>
         </motion.div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3">
           <AnimatePresence>
-            {history.map((item, index) => (
+            {history.map((item, index) => {
+              const trend = getTrend(item, index);
+              return (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, height: 0, overflow: 'hidden' }}
-                transition={{ delay: index * 0.05 }}
+                transition={{ delay: index * 0.03 }}
               >
                 <div className="p-4 rounded-xl border border-white/5 bg-[#080c16] hover:bg-white/[0.02] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-4 flex-1 min-w-0">
                     <div className="p-2 rounded-lg bg-orange-500/10 border border-orange-500/20 mt-1 sm:mt-0 flex-shrink-0">
                       <Search className="h-5 w-5 text-orange-400" />
                     </div>
-                    <div>
-                      <h3 className="text-base font-medium text-white mb-1">"{item.query}"</h3>
-                      <div className="flex items-center gap-3 text-xs text-slate-500">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-base font-medium text-white mb-1 truncate">&quot;{item.query}&quot;</h3>
+                      <div className="flex items-center gap-3 text-xs text-slate-500 flex-wrap">
                         <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {formatRelativeTime(item.timestamp)}</span>
                         <span>•</span>
-                        <span className="text-slate-400">{item.resultCount} products analyzed</span>
+                        <span className="text-slate-400">{item.resultCount} products</span>
+                        {(item.topScore > 0) && (
+                          <>
+                            <span>•</span>
+                            <span className="text-amber-400 font-medium">Top Score: {item.topScore}</span>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
-                  <button 
-                    onClick={() => router.push(`/dashboard/research?q=${encodeURIComponent(item.query)}`)}
-                    className="flex-shrink-0 text-sm bg-white/5 hover:bg-white/10 text-white px-4 py-2 rounded-lg transition-colors border border-white/10 sm:opacity-0 sm:group-hover:opacity-100"
-                  >
-                    Run Again
-                  </button>
+
+                  <div className="flex items-center gap-3 flex-shrink-0">
+                    {/* Trend Indicator */}
+                    {trend && (
+                      <div className={`flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border ${
+                        trend === 'up' ? 'text-green-400 bg-green-500/10 border-green-500/20' :
+                        trend === 'down' ? 'text-red-400 bg-red-500/10 border-red-500/20' :
+                        'text-slate-400 bg-white/5 border-white/10'
+                      }`}>
+                        {trend === 'up' && <><TrendingUp className="h-3 w-3" /> Better</>}
+                        {trend === 'down' && <><TrendingDown className="h-3 w-3" /> Lower</>}
+                        {trend === 'same' && <><Minus className="h-3 w-3" /> Same</>}
+                      </div>
+                    )}
+                    <button 
+                      onClick={() => router.push(`/dashboard/research?q=${encodeURIComponent(item.query)}`)}
+                      className="flex-shrink-0 text-sm bg-white/5 hover:bg-orange-500/10 hover:text-orange-400 hover:border-orange-500/20 text-white px-4 py-2 rounded-lg transition-colors border border-white/10 sm:opacity-0 sm:group-hover:opacity-100"
+                    >
+                      Run Again
+                    </button>
+                  </div>
                 </div>
               </motion.div>
-            ))}
+            );})}
           </AnimatePresence>
         </div>
       )}

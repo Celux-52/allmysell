@@ -8,7 +8,15 @@ import { useState, useEffect } from "react";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { createClient } from "@/lib/supabase/client";
-import { Storage } from "@/lib/storage";
+import { Storage, SAVED_LIMIT } from "@/lib/storage";
+
+function calcScores(product: Product) {
+  const marginNum = parseInt(product.profitMargin) || 50;
+  const profitScore = Math.min(100, Math.max(0, marginNum + 15));
+  const competitionScore = product.competition === 'Low' ? 85 : product.competition === 'Medium' ? 55 : 25;
+  const opportunityScore = Math.round((profitScore * 0.5) + ((100 - competitionScore + 100) * 0.25) + (product.trend === 'Rising' ? 20 : product.trend === 'Stable' ? 10 : 0));
+  return { profitScore: Math.min(100, profitScore), competitionScore, opportunityScore: Math.min(100, opportunityScore) };
+}
 
 interface SupplierLink {
   name: string;
@@ -103,7 +111,8 @@ export default function ResearchPage() {
 
       if (data.success && data.results) {
         setResults(data.results);
-        Storage.addHistory(userEmail, searchQuery.trim(), data.results.products.length);
+        const topScore = Math.max(...(data.results.products || []).map((p: any) => p.score || 0), 0);
+        Storage.addHistory(userEmail, searchQuery.trim(), data.results.products.length, topScore);
       } else {
         setError("No results found. Try a different query.");
       }
@@ -132,7 +141,13 @@ export default function ResearchPage() {
   };
 
   const handleSaveProduct = (e: React.MouseEvent, product: Product) => {
-    e.stopPropagation(); // prevent expanding the card
+    e.stopPropagation();
+    const saved = Storage.getSavedProducts(userEmail);
+    if (saved.length >= SAVED_LIMIT) {
+      showToast(`Limit reached! Max ${SAVED_LIMIT} saved items. Remove some to add new ones.`);
+      return;
+    }
+    const scores = calcScores(product);
     const success = Storage.saveProduct(userEmail, {
       name: product.name,
       category: product.category,
@@ -140,13 +155,19 @@ export default function ResearchPage() {
       retailPrice: product.retailPrice,
       profitMargin: product.profitMargin,
       competition: product.competition,
+      trend: product.trend || 'Stable',
       score: product.score,
+      profitScore: scores.profitScore,
+      competitionScore: scores.competitionScore,
+      opportunityScore: scores.opportunityScore,
       description: product.description,
+      whyItWorks: product.whyItWorks || '',
+      targetAudience: product.targetAudience || '',
     });
     
     if (success) {
       setSavedProducts(prev => new Set(prev).add(product.name));
-      showToast(`${product.name} saved successfully!`);
+      showToast(`${product.name} saved! (${saved.length + 1}/${SAVED_LIMIT})`);
     } else {
       showToast(`${product.name} is already in your saved items.`);
     }
@@ -336,13 +357,45 @@ export default function ResearchPage() {
                       </button>
                     </div>
 
-                    <div className="flex justify-between items-center mb-4">
+                    <div className="flex justify-between items-center mb-3">
                       <span className={`text-xs px-2 py-1 rounded-full border ${getCompetitionBadge(product.competition)}`}>
                         {product.competition} Competition
                       </span>
+                      <span className={`text-xs px-2 py-1 rounded-full border ${product.trend === 'Rising' ? 'text-green-400 bg-green-500/10 border-green-500/20' : product.trend === 'Declining' ? 'text-red-400 bg-red-500/10 border-red-500/20' : 'text-slate-400 bg-white/5 border-white/10'}`}>
+                        {product.trend === 'Rising' ? '↑' : product.trend === 'Declining' ? '↓' : '→'} {product.trend}
+                      </span>
                     </div>
 
-                    <p className="text-sm text-slate-400 mb-4 leading-relaxed line-clamp-3">{product.description}</p>
+                    {/* 3-Score Bars */}
+                    {(() => { const s = calcScores(product); return (
+                    <div className="grid grid-cols-3 gap-2 mb-3">
+                      <div>
+                        <p className="text-[10px] text-slate-500 mb-1">⭐ Profit</p>
+                        <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full" style={{width:`${s.profitScore}%`}} /></div>
+                        <p className="text-[10px] text-green-400 mt-0.5 font-bold">{s.profitScore}</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-slate-500 mb-1">🔥 Compete</p>
+                        <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-amber-500 to-orange-400 rounded-full" style={{width:`${s.competitionScore}%`}} /></div>
+                        <p className="text-[10px] text-amber-400 mt-0.5 font-bold">{s.competitionScore}</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-slate-500 mb-1">💎 Opportunity</p>
+                        <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-purple-500 to-violet-400 rounded-full" style={{width:`${s.opportunityScore}%`}} /></div>
+                        <p className="text-[10px] text-purple-400 mt-0.5 font-bold">{s.opportunityScore}</p>
+                      </div>
+                    </div>
+                    ); })()}
+
+                    {/* Why This Will Sell - Always Visible */}
+                    {product.whyItWorks && (
+                      <div className="flex items-start gap-2 p-2.5 rounded-lg bg-orange-500/5 border border-orange-500/10 mb-3">
+                        <Zap className="h-3.5 w-3.5 text-orange-400 flex-shrink-0 mt-0.5" />
+                        <p className="text-xs text-orange-300/90 leading-relaxed">{product.whyItWorks}</p>
+                      </div>
+                    )}
+
+                    <p className="text-sm text-slate-400 mb-4 leading-relaxed line-clamp-2">{product.description}</p>
 
                     {/* Pricing Row */}
                     <div className="grid grid-cols-3 gap-3 mb-4 p-3 rounded-lg bg-white/[0.02] border border-white/5">
