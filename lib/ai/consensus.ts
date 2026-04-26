@@ -45,27 +45,77 @@ export interface ConsensusResult {
   consensusMethod: string;
 }
 
-async function searchWithTavily(query: string) {
-    if (!process.env.TAVILY_API_KEY) return "";
-    try {
-        const response = await fetch("https://api.tavily.com/search", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                api_key: process.env.TAVILY_API_KEY,
-                query: `trending e-commerce products wholesale retail margins competition for: ${query}`,
-                search_depth: "basic",
-                max_results: 5
-            })
-        });
-        const data = await response.json();
-        if (data && data.results) {
-            const results = data.results.map((r: any) => `Source: ${r.url}\nContent: ${r.content}`).join('\n\n');
-            return `\n\n--- LIVE INTERNET DATA ---\nThe following is real-time web search data for this query. You MUST base your analysis, prices, and trends on this data whenever possible:\n${results}\n---------------------------\n\n`;
+export async function fetchInternetDataViaTool(query: string): Promise<string> {
+    const webhookUrl = process.env.N8N_WEBHOOK_URL || "https://n8n.allmysell.com/webhook/search";
+    
+    const { getCline } = await import('./cline');
+    const cline = getCline();
+
+    const systemPrompt = `You are a web search routing agent. 
+You MUST use the "search" tool when the user asks for:
+* current information
+* trends
+* product research
+* anything requiring internet data
+
+Do NOT answer from memory if search is required.`;
+
+    const tools = [
+        {
+            type: "function" as const,
+            function: {
+                name: "search",
+                description: "Search the internet for up-to-date information",
+                parameters: {
+                    type: "object",
+                    properties: {
+                        query: { type: "string" }
+                    },
+                    required: ["query"]
+                }
+            }
         }
-        return "";
+    ];
+
+    try {
+        const response = await cline.chat.completions.create({
+            model: 'gemini-2.5-flash-preview', // Fast & reliable tool caller
+            messages: [
+                { role: 'system', content: systemPrompt },
+                { role: 'user', content: `Analyze trends and products for: ${query}` }
+            ],
+            tools: tools,
+            tool_choice: "auto"
+        });
+
+        const message = response.choices[0]?.message;
+
+        // Check if the model decided to use the tool
+        if (message?.tool_calls && message.tool_calls.length > 0) {
+            const toolCall = message.tool_calls[0] as any;
+            if (toolCall.function.name === "search") {
+                const args = JSON.parse(toolCall.function.arguments);
+                
+                // Call the n8n webhook
+                const n8nResponse = await fetch(webhookUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ query: args.query })
+                });
+                
+                const data = await n8nResponse.json();
+                
+                // Parse the response format standard
+                if (data && data.results && Array.isArray(data.results)) {
+                    const parsedResults = data.results.map((r: any) => `Title: ${r.title}\nLink: ${r.link}\nSnippet: ${r.snippet}`).join('\n\n');
+                    return `\n\n--- LIVE INTERNET DATA (n8n Search) ---\nThe following is real-time web search data for this query. You MUST base your analysis, prices, and trends on this data whenever possible:\n${parsedResults}\n---------------------------\n\n`;
+                }
+            }
+        }
+        
+        return ""; // Fallback if no tool was called or search failed
     } catch (e) {
-        console.error("Tavily search failed", e);
+        console.error("n8n tool search failed", e);
         return "";
     }
 }
@@ -373,8 +423,8 @@ export async function consensusResearch(query: string): Promise<ConsensusResult>
     'Llama 4 Scout',
   ];
 
-  // 1. Fetch live internet data via Tavily FIRST
-  const internetContext = await searchWithTavily(query);
+  // 1. Fetch live internet data via native tool calling to n8n webhook FIRST
+  const internetContext = await fetchInternetDataViaTool(query);
 
   // 2. Fire ALL 5 providers in parallel with the live internet context
   const settled = await Promise.allSettled([
