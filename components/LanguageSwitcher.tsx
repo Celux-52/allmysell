@@ -18,6 +18,21 @@ export default function LanguageSwitcher() {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Check existing language from cookie
+    const getCookie = (name: string) => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop()?.split(';').shift();
+      return null;
+    };
+    
+    const savedLang = getCookie('googtrans');
+    if (savedLang) {
+      const code = savedLang.split('/').pop();
+      const match = languages.find(l => l.code === code);
+      if (match) setCurrentLang(match);
+    }
+
     // 1. Add the Google Translate script dynamically
     const script = document.createElement('script');
     script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
@@ -48,11 +63,19 @@ export default function LanguageSwitcher() {
     setCurrentLang(lang);
     setIsOpen(false);
     
-    // Find the hidden Google Translate dropdown and trigger a change
+    // 1. Set the Google Translate cookie manually
+    const domain = window.location.hostname;
+    document.cookie = `googtrans=/auto/${lang.code}; path=/; domain=${domain}`;
+    document.cookie = `googtrans=/auto/${lang.code}; path=/`;
+    
+    // 2. Try to change via DOM if it's already loaded
     const gtCombo = document.querySelector('.goog-te-combo') as HTMLSelectElement;
     if (gtCombo) {
       gtCombo.value = lang.code;
-      gtCombo.dispatchEvent(new Event('change'));
+      gtCombo.dispatchEvent(new Event('change', { bubbles: true }));
+    } else {
+      // 3. If DOM isn't loaded, reload the page to apply the cookie
+      window.location.reload();
     }
   };
 
