@@ -105,34 +105,42 @@ export async function getGoogleTrendsData(keyword: string): Promise<GoogleTrends
 
 /**
  * Build real, clickable supplier search URLs for a product keyword.
- * These are always valid — they construct search URLs that definitely work.
+ * ALL suppliers ship to the USA — filtered by US warehouse / US shipping.
  */
 export function buildSupplierLinks(productName: string): { name: string; url: string }[] {
   const encoded = encodeURIComponent(productName);
   return [
     {
-      name: `AliExpress — Search "${productName}"`,
-      url: `https://www.aliexpress.com/wholesale?SearchText=${encoded}`,
+      name: `AliExpress (US Warehouse) — "${productName}"`,
+      url: `https://www.aliexpress.com/wholesale?SearchText=${encoded}&shipFromCountry=US&SortType=total_tranpro_desc`,
     },
     {
-      name: `Alibaba Wholesale — "${productName}"`,
-      url: `https://www.alibaba.com/trade/search?SearchText=${encoded}`,
+      name: `AliExpress (Ships to US) — "${productName}"`,
+      url: `https://www.aliexpress.com/wholesale?SearchText=${encoded}&shipToCountry=US&SortType=total_tranpro_desc`,
     },
     {
-      name: `DHgate — "${productName}"`,
-      url: `https://www.dhgate.com/wholesale/search.do?searchkey=${encoded}`,
+      name: `Amazon Wholesale — "${productName}"`,
+      url: `https://www.amazon.com/s?k=${encoded}&ref=nb_sb_noss`,
     },
     {
-      name: `CJ Dropshipping — "${productName}"`,
-      url: `https://cjdropshipping.com/search.html?key=${encoded}`,
+      name: `CJ Dropshipping (US Warehouse) — "${productName}"`,
+      url: `https://cjdropshipping.com/search.html?key=${encoded}&warehouse=US`,
     },
     {
-      name: `1688.com (China Wholesale) — "${productName}"`,
-      url: `https://s.1688.com/selloffer/offer_search.htm?keywords=${encoded}`,
+      name: `Alibaba (US Verified) — "${productName}"`,
+      url: `https://www.alibaba.com/trade/search?SearchText=${encoded}&country=US`,
+    },
+    {
+      name: `Temu (US Shipping) — "${productName}"`,
+      url: `https://www.temu.com/search_result.html?search_key=${encoded}`,
+    },
+    {
+      name: `DHgate (Ships to US) — "${productName}"`,
+      url: `https://www.dhgate.com/wholesale/search.do?searchkey=${encoded}&shipcountry=us`,
     },
     {
       name: `Google Trends — View Live Data`,
-      url: `https://trends.google.com/trends/explore?q=${encoded}`,
+      url: `https://trends.google.com/trends/explore?q=${encoded}&geo=US`,
     },
   ];
 }
