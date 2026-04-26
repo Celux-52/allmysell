@@ -45,8 +45,33 @@ export interface ConsensusResult {
   consensusMethod: string;
 }
 
-const RESEARCH_PROMPT = (query: string) => `You are a world-class e-commerce product research analyst.
-The user is researching: "${query}"
+async function searchWithTavily(query: string) {
+    if (!process.env.TAVILY_API_KEY) return "";
+    try {
+        const response = await fetch("https://api.tavily.com/search", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                api_key: process.env.TAVILY_API_KEY,
+                query: `trending e-commerce products wholesale retail margins competition for: ${query}`,
+                search_depth: "basic",
+                max_results: 5
+            })
+        });
+        const data = await response.json();
+        if (data && data.results) {
+            const results = data.results.map((r: any) => `Source: ${r.url}\nContent: ${r.content}`).join('\n\n');
+            return `\n\n--- LIVE INTERNET DATA ---\nThe following is real-time web search data for this query. You MUST base your analysis, prices, and trends on this data whenever possible:\n${results}\n---------------------------\n\n`;
+        }
+        return "";
+    } catch (e) {
+        console.error("Tavily search failed", e);
+        return "";
+    }
+}
+
+const RESEARCH_PROMPT = (query: string, internetContext: string = "") => `You are a world-class e-commerce product research analyst.
+The user is researching: "${query}"${internetContext}
 
 CRITICAL INSTRUCTIONS:
 1. Analyze this niche using your knowledge of current market data, Google Trends patterns, and e-commerce platforms.
@@ -90,14 +115,14 @@ function safeParseJSON(text: string): any {
 }
 
 // --- Provider 1: Groq (Llama 3.3 70B) ---
-async function queryGroq(query: string): Promise<{ products: any[]; summary: string } | null> {
+async function queryGroq(query: string, internetContext: string): Promise<{ products: any[]; summary: string } | null> {
   try {
     const { getGroq } = await import('./groq');
     const groq = getGroq();
     const response = await groq.chat.completions.create({
       model: 'llama-3.3-70b-versatile',
       messages: [
-        { role: 'system', content: RESEARCH_PROMPT(query) },
+        { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
         { role: 'user', content: query }
       ],
       response_format: { type: 'json_object' },
@@ -112,12 +137,12 @@ async function queryGroq(query: string): Promise<{ products: any[]; summary: str
 }
 
 // --- Provider 2: Gemini 2.0 Flash ---
-async function queryGemini(query: string): Promise<{ products: any[]; summary: string } | null> {
+async function queryGemini(query: string, internetContext: string): Promise<{ products: any[]; summary: string } | null> {
   try {
     const { getGemini } = await import('./gemini');
     const gemini = getGemini();
     const model = gemini.getGenerativeModel({ model: 'gemini-2.0-flash' });
-    const result = await model.generateContent(RESEARCH_PROMPT(query));
+    const result = await model.generateContent(RESEARCH_PROMPT(query, internetContext));
     const text = result.response.text();
     return safeParseJSON(text);
   } catch (err: any) {
@@ -127,14 +152,14 @@ async function queryGemini(query: string): Promise<{ products: any[]; summary: s
 }
 
 // --- Provider 3: Cline - DeepSeek R1 (Best Reasoning) ---
-async function queryDeepSeek(query: string): Promise<{ products: any[]; summary: string } | null> {
+async function queryDeepSeek(query: string, internetContext: string): Promise<{ products: any[]; summary: string } | null> {
   try {
     const { getCline } = await import('./cline');
     const cline = getCline();
     const response = await cline.chat.completions.create({
       model: 'deepseek-r1',
       messages: [
-        { role: 'system', content: RESEARCH_PROMPT(query) },
+        { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
         { role: 'user', content: query }
       ],
       temperature: 0.7
@@ -148,14 +173,14 @@ async function queryDeepSeek(query: string): Promise<{ products: any[]; summary:
 }
 
 // --- Provider 4: Cline - Qwen 3 72B ---
-async function queryQwen(query: string): Promise<{ products: any[]; summary: string } | null> {
+async function queryQwen(query: string, internetContext: string): Promise<{ products: any[]; summary: string } | null> {
   try {
     const { getCline } = await import('./cline');
     const cline = getCline();
     const response = await cline.chat.completions.create({
       model: 'qwen-3-72b-instruct',
       messages: [
-        { role: 'system', content: RESEARCH_PROMPT(query) },
+        { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
         { role: 'user', content: query }
       ],
       temperature: 0.7
@@ -169,14 +194,14 @@ async function queryQwen(query: string): Promise<{ products: any[]; summary: str
 }
 
 // --- Provider 5: Cline - Llama 4 Scout ---
-async function queryLlamaScout(query: string): Promise<{ products: any[]; summary: string } | null> {
+async function queryLlamaScout(query: string, internetContext: string): Promise<{ products: any[]; summary: string } | null> {
   try {
     const { getCline } = await import('./cline');
     const cline = getCline();
     const response = await cline.chat.completions.create({
       model: 'llama-4-scout-17b',
       messages: [
-        { role: 'system', content: RESEARCH_PROMPT(query) },
+        { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
         { role: 'user', content: query }
       ],
       temperature: 0.7
@@ -344,13 +369,16 @@ export async function consensusResearch(query: string): Promise<ConsensusResult>
     'Llama 4 Scout',
   ];
 
-  // Fire ALL 5 providers in parallel
+  // 1. Fetch live internet data via Tavily FIRST
+  const internetContext = await searchWithTavily(query);
+
+  // 2. Fire ALL 5 providers in parallel with the live internet context
   const settled = await Promise.allSettled([
-    queryGroq(query),
-    queryGemini(query),
-    queryDeepSeek(query),
-    queryQwen(query),
-    queryLlamaScout(query),
+    queryGroq(query, internetContext),
+    queryGemini(query, internetContext),
+    queryDeepSeek(query, internetContext),
+    queryQwen(query, internetContext),
+    queryLlamaScout(query, internetContext),
   ]);
 
   const results = settled.map(r => r.status === 'fulfilled' ? r.value : null);
