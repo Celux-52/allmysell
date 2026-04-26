@@ -1,150 +1,30 @@
-"use client";
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
+import DashboardShell from './dashboard-shell'
 
-import { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { 
-  LayoutDashboard, BarChart3, Search, Settings, 
-  Menu, X, Zap, History, Star, TrendingUp, LogOut
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+// Admin-only email whitelist
+const ADMIN_EMAILS = [
+  'melih20052005gs@gmail.com',
+  'yunussukru7@gmail.com',
+]
 
-const navigation = [
-  { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Trend Analysis", href: "/dashboard/trends", icon: TrendingUp },
-  { name: "Smart Research", href: "/dashboard/research", icon: Search },
-  { name: "Automations", href: "/dashboard/automation", icon: Zap },
-  { name: "Saved Items", href: "/dashboard/saved", icon: Star },
-  { name: "History", href: "/dashboard/history", icon: History },
-];
-
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  const pathname = usePathname();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
 
-  return (
-    <div className="min-h-screen bg-[#030712] text-white flex overflow-hidden selection:bg-orange-500/30">
-      {/* Mobile sidebar overlay */}
-      <AnimatePresence>
-        {sidebarOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSidebarOpen(false)}
-            className="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm lg:hidden"
-          />
-        )}
-      </AnimatePresence>
+  // Not logged in → redirect to login
+  if (!user) {
+    redirect('/login')
+  }
 
-      {/* Sidebar */}
-      <motion.div
-        className={cn(
-          "fixed inset-y-0 left-0 z-50 w-72 flex-col bg-[#080c16] border-r border-white/5 transition-transform duration-300 ease-in-out lg:static lg:flex lg:translate-x-0",
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        )}
-      >
-        <div className="flex h-16 shrink-0 items-center justify-between px-6 border-b border-white/5">
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-[0_0_15px_rgba(249,115,22,0.3)]">
-              <Zap className="h-5 w-5 text-white" />
-            </div>
-            <span className="text-lg font-bold tracking-tight text-white">AllMySell</span>
-          </Link>
-          <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-slate-400 hover:text-white">
-            <X className="h-5 w-5" />
-          </button>
-        </div>
+  // Not admin → redirect to home with message
+  if (!ADMIN_EMAILS.includes(user.email || '')) {
+    redirect('/?access=denied')
+  }
 
-        <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-1">
-          {navigation.map((item) => {
-            const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={cn(
-                  "group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all relative",
-                  isActive
-                    ? "text-white bg-white/5"
-                    : "text-slate-400 hover:text-white hover:bg-white/5"
-                )}
-              >
-                {isActive && (
-                  <motion.div
-                    layoutId="active-nav"
-                    className="absolute inset-0 rounded-lg bg-orange-500/10 border border-orange-500/20"
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  />
-                )}
-                <item.icon
-                  className={cn(
-                    "h-5 w-5 shrink-0 transition-colors relative z-10",
-                    isActive ? "text-orange-400" : "text-slate-500 group-hover:text-slate-300"
-                  )}
-                />
-                <span className="relative z-10">{item.name}</span>
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className="p-4 border-t border-white/5">
-          <Link
-            href="/dashboard/settings"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
-          >
-            <Settings className="h-5 w-5" />
-            Settings
-          </Link>
-          <button className="w-full mt-2 flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors">
-            <LogOut className="h-5 w-5" />
-            Sign Out
-          </button>
-        </div>
-      </motion.div>
-
-      {/* Main Content */}
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <header className="flex h-16 shrink-0 items-center gap-4 border-b border-white/5 bg-[#030712]/50 backdrop-blur-xl px-4 shadow-sm sm:gap-6 sm:px-6 lg:px-8 z-30 relative">
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="text-slate-400 hover:text-white lg:hidden"
-          >
-            <Menu className="h-6 w-6" />
-          </button>
-          
-          <div className="flex flex-1 justify-end items-center gap-4">
-            <div className="flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/10 px-3 py-1 text-sm font-medium text-orange-400">
-              <Sparkles className="h-4 w-4" />
-              Pro Plan
-            </div>
-            <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-orange-500 to-amber-500 ring-2 ring-white/10" />
-          </div>
-        </header>
-
-        <main className="flex-1 overflow-y-auto bg-[#030712] relative">
-          {/* Background effects */}
-          <div className="absolute top-0 inset-x-0 h-96 bg-gradient-to-b from-orange-500/5 to-transparent pointer-events-none" />
-          
-          <div className="relative z-10 px-4 py-8 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full h-full">
-            {children}
-          </div>
-        </main>
-      </div>
-    </div>
-  );
-}
-
-function Sparkles(props: any) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
-    </svg>
-  );
+  return <DashboardShell>{children}</DashboardShell>
 }
