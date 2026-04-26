@@ -164,14 +164,14 @@ export default function ResearchPage() {
               <BorderBeam size={300} duration={4} colorFrom="#f97316" colorTo="#fbbf24" />
               <Loader2 className="h-10 w-10 animate-spin text-orange-400 mx-auto mb-4" />
               <h3 className="text-lg font-bold text-white mb-2">Multi-AI Consensus Running</h3>
-              <p className="text-sm text-slate-400 mb-6">Groq, Gemini, and Cline are analyzing your query in parallel...</p>
-              <div className="flex justify-center gap-4">
-                {["Groq (Llama 70B)", "Gemini Flash", "Cline AI"].map((ai, i) => (
+              <p className="text-sm text-slate-400 mb-6">5 AI providers are analyzing your query in parallel + Google Trends data...</p>
+              <div className="flex justify-center gap-3 flex-wrap">
+                {["Groq (Llama 70B)", "Gemini Flash", "DeepSeek R1", "Qwen 3 72B", "Llama 4 Scout"].map((ai, i) => (
                   <motion.div 
                     key={ai}
                     initial={{ opacity: 0.3 }}
                     animate={{ opacity: [0.3, 1, 0.3] }}
-                    transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.3 }}
+                    transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
                     className="flex items-center gap-2 text-xs bg-white/5 border border-white/10 px-3 py-1.5 rounded-full text-slate-300"
                   >
                     <span className="h-2 w-2 rounded-full bg-orange-500 animate-pulse" />
@@ -399,7 +399,7 @@ export default function ResearchPage() {
                 <Brain className="h-6 w-6" />
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Multi-AI Consensus</h3>
-              <p className="text-sm text-slate-400">Groq, Gemini, and Cline analyze your query in parallel and merge their insights into one result.</p>
+              <p className="text-sm text-slate-400">5 AI providers (Groq, Gemini, DeepSeek, Qwen, Llama) analyze in parallel and merge their insights into one consensus.</p>
             </MagicCard>
           </motion.div>
           

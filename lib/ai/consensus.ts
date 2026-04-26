@@ -1,10 +1,14 @@
 /**
  * Multi-AI Consensus Engine + Real Google Trends + Real Supplier Links
  * 
- * 1. Queries ALL AI providers in parallel for product ideas
- * 2. Fetches REAL Google Trends data for each product
- * 3. Generates REAL, clickable supplier search URLs
- * 4. Merges and ranks everything into a consensus result
+ * Uses 5 independent AI providers in parallel:
+ *   1. Groq (Llama 3.3 70B)
+ *   2. Gemini 2.0 Flash
+ *   3. Cline - DeepSeek R1 (best reasoning)
+ *   4. Cline - Qwen 3 72B
+ *   5. Cline - Llama 4 Scout 17B
+ * 
+ * Then enriches with REAL Google Trends data and REAL clickable supplier URLs.
  */
 
 import { getGoogleTrendsData, buildSupplierLinks, type GoogleTrendsData } from './google-trends';
@@ -85,6 +89,7 @@ function safeParseJSON(text: string): any {
   }
 }
 
+// --- Provider 1: Groq (Llama 3.3 70B) ---
 async function queryGroq(query: string): Promise<{ products: any[]; summary: string } | null> {
   try {
     const { getGroq } = await import('./groq');
@@ -106,6 +111,7 @@ async function queryGroq(query: string): Promise<{ products: any[]; summary: str
   }
 }
 
+// --- Provider 2: Gemini 2.0 Flash ---
 async function queryGemini(query: string): Promise<{ products: any[]; summary: string } | null> {
   try {
     const { getGemini } = await import('./gemini');
@@ -120,12 +126,13 @@ async function queryGemini(query: string): Promise<{ products: any[]; summary: s
   }
 }
 
-async function queryCline(query: string): Promise<{ products: any[]; summary: string } | null> {
+// --- Provider 3: Cline - DeepSeek R1 (Best Reasoning) ---
+async function queryDeepSeek(query: string): Promise<{ products: any[]; summary: string } | null> {
   try {
     const { getCline } = await import('./cline');
     const cline = getCline();
     const response = await cline.chat.completions.create({
-      model: 'cline-free',
+      model: 'deepseek-r1',
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query) },
         { role: 'user', content: query }
@@ -135,7 +142,49 @@ async function queryCline(query: string): Promise<{ products: any[]; summary: st
     const text = response.choices[0]?.message?.content || '{}';
     return safeParseJSON(text);
   } catch (err: any) {
-    console.warn('[Consensus] Cline failed:', err.message);
+    console.warn('[Consensus] DeepSeek R1 failed:', err.message);
+    return null;
+  }
+}
+
+// --- Provider 4: Cline - Qwen 3 72B ---
+async function queryQwen(query: string): Promise<{ products: any[]; summary: string } | null> {
+  try {
+    const { getCline } = await import('./cline');
+    const cline = getCline();
+    const response = await cline.chat.completions.create({
+      model: 'qwen-3-72b-instruct',
+      messages: [
+        { role: 'system', content: RESEARCH_PROMPT(query) },
+        { role: 'user', content: query }
+      ],
+      temperature: 0.7
+    });
+    const text = response.choices[0]?.message?.content || '{}';
+    return safeParseJSON(text);
+  } catch (err: any) {
+    console.warn('[Consensus] Qwen 3 failed:', err.message);
+    return null;
+  }
+}
+
+// --- Provider 5: Cline - Llama 4 Scout ---
+async function queryLlamaScout(query: string): Promise<{ products: any[]; summary: string } | null> {
+  try {
+    const { getCline } = await import('./cline');
+    const cline = getCline();
+    const response = await cline.chat.completions.create({
+      model: 'llama-4-scout-17b',
+      messages: [
+        { role: 'system', content: RESEARCH_PROMPT(query) },
+        { role: 'user', content: query }
+      ],
+      temperature: 0.7
+    });
+    const text = response.choices[0]?.message?.content || '{}';
+    return safeParseJSON(text);
+  } catch (err: any) {
+    console.warn('[Consensus] Llama 4 Scout failed:', err.message);
     return null;
   }
 }
@@ -144,16 +193,15 @@ async function queryCline(query: string): Promise<{ products: any[]; summary: st
  * Merge AI results, then enrich with REAL Google Trends data and REAL supplier links
  */
 async function mergeAndEnrich(
-  allResults: Array<{ products: any[]; summary: string } | null>, 
-  providers: string[],
-  query: string
+  allResults: Array<{ products: any[]; summary: string } | null>,
+  providers: string[]
 ): Promise<ConsensusResult> {
   const activeProviders: string[] = [];
   const allProducts: any[] = [];
   const summaries: string[] = [];
 
   allResults.forEach((result, i) => {
-    if (result && result.products && Array.isArray(result.products)) {
+    if (result && result.products && Array.isArray(result.products) && result.products.length > 0) {
       activeProviders.push(providers[i]);
       allProducts.push(...result.products);
       if (result.summary) summaries.push(result.summary);
@@ -190,6 +238,9 @@ async function mergeAndEnrich(
     const allTips = new Set<string>();
     group.forEach((p: any) => { if (p.marketingTips) p.marketingTips.forEach((t: string) => allTips.add(t)); });
 
+    // Products recommended by more AI providers get higher consensus bonus
+    const consensusBonus = Math.min((group.length - 1) * 3, 10);
+
     mergedRaw.push({
       name: base.name,
       searchKeyword: base.searchKeyword || base.name,
@@ -199,13 +250,14 @@ async function mergeAndEnrich(
       profitMargin: base.profitMargin || 'N/A',
       competition: base.competition || 'Medium',
       trend: base.trend || 'Stable',
-      score: Math.min(avgScore + (group.length > 1 ? 5 : 0), 100),
+      score: Math.min(avgScore + consensusBonus, 100),
       description: base.description || '',
       platforms: [...new Set(group.flatMap((p: any) => p.platforms || []))],
       whyItWorks: base.whyItWorks || '',
       targetAudience: base.targetAudience || '',
       marketingTips: [...allTips].slice(0, 5),
       sources: [...allSources].slice(0, 5),
+      agreedByCount: group.length,
     });
   }
 
@@ -213,31 +265,29 @@ async function mergeAndEnrich(
   mergedRaw.sort((a, b) => b.score - a.score);
   const topProducts = mergedRaw.slice(0, 8);
 
-  // ENRICH: Fetch real Google Trends data for each product (in parallel, max 4)
-  const enrichPromises = topProducts.slice(0, 4).map(async (product) => {
-    const keyword = product.searchKeyword || product.name;
-    const trendsData = await getGoogleTrendsData(keyword);
-    return { product, trendsData };
-  });
-
-  // For products 5+, skip Google Trends (to avoid rate limiting)
-  const enrichedResults = await Promise.allSettled(enrichPromises);
+  // ENRICH: Fetch real Google Trends data for top products (max 4 to avoid rate limiting)
   const trendsMap = new Map<string, GoogleTrendsData | null>();
   
-  enrichedResults.forEach((result) => {
-    if (result.status === 'fulfilled') {
-      trendsMap.set(result.value.product.name, result.value.trendsData);
+  for (let i = 0; i < Math.min(topProducts.length, 4); i++) {
+    const keyword = topProducts[i].searchKeyword || topProducts[i].name;
+    try {
+      const trendsData = await getGoogleTrendsData(keyword);
+      trendsMap.set(topProducts[i].name, trendsData);
+    } catch (err: any) {
+      console.warn(`[GoogleTrends] Failed for "${keyword}":`, err.message);
+      trendsMap.set(topProducts[i].name, null);
     }
-  });
+    // Small delay between requests to avoid rate limiting
+    if (i < 3) await new Promise(r => setTimeout(r, 300));
+  }
 
-  // Build final products with REAL supplier links and REAL Google Trends data
+  // Build final products with REAL supplier links and REAL Google Trends
   const finalProducts: ConsensusProduct[] = topProducts.map((product) => {
     const keyword = product.searchKeyword || product.name;
     const realSuppliers = buildSupplierLinks(keyword);
     const realTrends = trendsMap.get(product.name) || null;
 
-    // Build Google Trends insight from real data
-    let googleTrendsInsight = 'Google Trends data not available for this product.';
+    let googleTrendsInsight = 'Google Trends data was not available for this product.';
     if (realTrends) {
       googleTrendsInsight = realTrends.summary;
       // Override AI trend direction with real Google Trends direction
@@ -267,8 +317,10 @@ async function mergeAndEnrich(
     };
   });
 
-  const combinedSummary = summaries.length > 1
-    ? `Cross-AI Consensus (${activeProviders.join(' + ')}): ${summaries[0]}`
+  // Build consensus summary
+  const providerList = activeProviders.join(', ');
+  const combinedSummary = activeProviders.length > 1
+    ? `🧠 Cross-AI Consensus from ${activeProviders.length} providers (${providerList}): ${summaries[0] || 'Analysis complete.'}`
     : summaries[0] || 'Analysis complete.';
 
   return {
@@ -281,25 +333,27 @@ async function mergeAndEnrich(
 
 /**
  * Main consensus research function.
- * 1. Fires all AI providers in parallel
- * 2. Merges their product suggestions
- * 3. Enriches with REAL Google Trends data
- * 4. Attaches REAL, clickable supplier links
+ * Fires 5 AI providers in parallel, merges, enriches with Google Trends + real supplier links.
  */
 export async function consensusResearch(query: string): Promise<ConsensusResult> {
-  const providers = ['Groq (Llama 3.3 70B)', 'Gemini 2.0 Flash', 'Cline AI'];
-
-  const [groqResult, geminiResult, clineResult] = await Promise.allSettled([
-    queryGroq(query),
-    queryGemini(query),
-    queryCline(query),
-  ]);
-
-  const results = [
-    groqResult.status === 'fulfilled' ? groqResult.value : null,
-    geminiResult.status === 'fulfilled' ? geminiResult.value : null,
-    clineResult.status === 'fulfilled' ? clineResult.value : null,
+  const providers = [
+    'Groq (Llama 3.3 70B)',
+    'Gemini 2.0 Flash',
+    'DeepSeek R1',
+    'Qwen 3 72B',
+    'Llama 4 Scout',
   ];
 
-  return mergeAndEnrich(results, providers, query);
+  // Fire ALL 5 providers in parallel
+  const settled = await Promise.allSettled([
+    queryGroq(query),
+    queryGemini(query),
+    queryDeepSeek(query),
+    queryQwen(query),
+    queryLlamaScout(query),
+  ]);
+
+  const results = settled.map(r => r.status === 'fulfilled' ? r.value : null);
+
+  return mergeAndEnrich(results, providers);
 }
