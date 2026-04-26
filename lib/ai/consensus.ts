@@ -345,21 +345,24 @@ async function mergeAndEnrich(
   mergedRaw.sort((a, b) => b.score - a.score);
   const topProducts = mergedRaw.slice(0, 8);
 
-  // ENRICH: Fetch real Google Trends data for top products (max 4 to avoid rate limiting)
+  // ENRICH: Fetch real Google Trends data for top products (max 4 to avoid rate limiting, fetch in parallel)
   const trendsMap = new Map<string, GoogleTrendsData | null>();
+  const top4 = topProducts.slice(0, 4);
   
-  for (let i = 0; i < Math.min(topProducts.length, 4); i++) {
-    const keyword = topProducts[i].searchKeyword || topProducts[i].name;
-    try {
-      const trendsData = await getGoogleTrendsData(keyword);
-      trendsMap.set(topProducts[i].name, trendsData);
-    } catch (err: any) {
-      console.warn(`[GoogleTrends] Failed for "${keyword}":`, err.message);
-      trendsMap.set(topProducts[i].name, null);
-    }
-    // Small delay between requests to avoid rate limiting
-    if (i < 3) await new Promise(r => setTimeout(r, 300));
-  }
+  await Promise.allSettled(
+    top4.map(async (product, i) => {
+      const keyword = product.searchKeyword || product.name;
+      // Stagger slightly to avoid instant rate limiting
+      if (i > 0) await new Promise(r => setTimeout(r, i * 200));
+      try {
+        const trendsData = await getGoogleTrendsData(keyword);
+        trendsMap.set(product.name, trendsData);
+      } catch (err: any) {
+        console.warn(`[GoogleTrends] Failed for "${keyword}":`, err.message);
+        trendsMap.set(product.name, null);
+      }
+    })
+  );
 
   // Build final products with REAL supplier links and REAL Google Trends
   const finalProducts: ConsensusProduct[] = topProducts.map((product) => {

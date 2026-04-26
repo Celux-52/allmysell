@@ -24,17 +24,29 @@ export async function getGoogleTrendsData(keyword: string): Promise<GoogleTrends
     // @ts-ignore: Could not find a declaration file for module 'google-trends-api'
     const googleTrends = (await import('google-trends-api')).default || (await import('google-trends-api'));
 
+    // Helper to wrap promises in a timeout
+    const withTimeout = (promise: Promise<any>, ms: number) => {
+      let timeoutId: NodeJS.Timeout;
+      const timeoutPromise = new Promise((_, reject) => {
+        timeoutId = setTimeout(() => reject(new Error('Google Trends Timeout')), ms);
+      });
+      return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timeoutId));
+    };
+
     // Interest over time - last 12 months
     let interestOverTime: { date: string; value: number }[] = [];
     let values: number[] = [];
 
     try {
-      const interestRes = await googleTrends.interestOverTime({
-        keyword,
-        startTime: new Date(Date.now() - 365 * 24 * 60 * 60 * 1000),
-        endTime: new Date(),
-        geo: '',
-      });
+      const interestRes = await withTimeout(
+        googleTrends.interestOverTime({
+          keyword,
+          startTime: new Date(Date.now() - 365 * 24 * 60 * 60 * 1000),
+          endTime: new Date(),
+          geo: '',
+        }),
+        4000
+      );
 
       const interestData = JSON.parse(interestRes);
       const timeline = interestData?.default?.timelineData || [];
@@ -70,7 +82,10 @@ export async function getGoogleTrendsData(keyword: string): Promise<GoogleTrends
     let relatedQueries: string[] = [];
     let risingQueries: string[] = [];
     try {
-      const relatedRes = await googleTrends.relatedQueries({ keyword });
+      const relatedRes = await withTimeout(
+        googleTrends.relatedQueries({ keyword }),
+        3000
+      );
       const relatedData = JSON.parse(relatedRes);
       const topQueries = relatedData?.default?.rankedList?.[0]?.rankedKeyword || [];
       const risingQs = relatedData?.default?.rankedList?.[1]?.rankedKeyword || [];
