@@ -39,11 +39,41 @@ export const FREE_AI_MODELS = [
 ]
 
 // Product research function (via Cline)
+async function searchWithTavily(query: string) {
+    if (!process.env.TAVILY_API_KEY) return null;
+    try {
+        const response = await fetch("https://api.tavily.com/search", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                api_key: process.env.TAVILY_API_KEY,
+                query: `trending e-commerce products wholesale retail margins competition for: ${query}`,
+                search_depth: "basic",
+                max_results: 5
+            })
+        });
+        const data = await response.json();
+        if (data && data.results) {
+            return data.results.map((r: any) => `Source: ${r.url}\nContent: ${r.content}`).join('\n\n');
+        }
+        return null;
+    } catch (e) {
+        console.error("Tavily search failed", e);
+        return null;
+    }
+}
+
 export async function researchProductsWithCline(query: string) {
     const cline = getCline()
+    
+    // Fetch live data from the internet
+    const liveInternetData = await searchWithTavily(query);
+    const internetContext = liveInternetData 
+      ? `\n\n--- LIVE INTERNET DATA ---\nThe following is real-time web search data for this query. You MUST base your analysis, prices, and trends on this data whenever possible:\n${liveInternetData}\n---------------------------\n\n` 
+      : "";
 
     const prompt = `You are an expert e-commerce product research AI for the AllMySell SaaS platform.
-  The user is researching: "${query}"
+  The user is researching: "${query}"${internetContext}
   
   Respond in the following JSON format:
   {
