@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { Menu, X, ChevronDown, Instagram, User, LogOut } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
-import LanguageSwitcher from './LanguageSwitcher';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -15,10 +14,10 @@ const navigation = [
 ];
 
 const webServices = [
-  { name: '🥉 Basic Setup', href: '/web-cozumleri#temel' },
-  { name: '🥈 Professional', href: '/web-cozumleri#profesyonel' },
-  { name: '🥇 Full Ecosystem', href: '/web-cozumleri#ekosistem' },
-  { name: '📞 Get a Quote', href: '/web-cozumleri#iletisim' },
+  { name: '🥉 Basic Setup', href: '/web-solutions#basic' },
+  { name: '🥈 Professional', href: '/web-solutions#professional' },
+  { name: '🥇 Full Ecosystem', href: '/web-solutions#ecosystem' },
+  { name: '📞 Get a Quote', href: '/web-solutions#contact' },
 ];
 
 const shops = [
@@ -110,8 +109,7 @@ export default function Navigation() {
             </div>
           </div>
 
-          <div className="hidden md:flex items-center gap-2">
-            <LanguageSwitcher />
+          <div className="hidden md:flex items-center gap-3">
             <a href="https://www.instagram.com/allmysell/" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-orange-400 transition-colors p-2" aria-label="Instagram"><Instagram size={20} /></a>
             <div className="w-px h-5 bg-white/10 mx-1"></div>
             {authLoading ? (<div className="w-20 h-8 bg-white/5 rounded-lg animate-pulse"></div>) : user ? (
@@ -127,7 +125,6 @@ export default function Navigation() {
           </div>
 
           <div className="md:hidden flex items-center gap-3">
-            <LanguageSwitcher />
             <a href="https://www.instagram.com/allmysell/" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-orange-400 transition-colors p-1" aria-label="Instagram"><Instagram size={20} /></a>
             {!authLoading && !user && (<Link href="/register" className="px-3 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg text-sm font-medium">Sign Up</Link>)}
             {!authLoading && user && (<Link href="/dashboard" className="p-1.5">{user.avatarUrl ? (<img src={user.avatarUrl} alt="" className="w-7 h-7 rounded-full object-cover border border-orange-500/30" />) : (<div className="w-7 h-7 bg-gradient-to-br from-orange-500 to-amber-500 rounded-full flex items-center justify-center text-white font-bold text-xs">{(user.fullName || user.email)[0].toUpperCase()}</div>)}</Link>)}

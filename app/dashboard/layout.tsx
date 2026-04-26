@@ -35,9 +35,9 @@ export default async function DashboardLayout({
             <Lock className="h-10 w-10 text-orange-400" />
           </div>
           
-          <h1 className="text-2xl font-bold text-white mb-3">SaaS Panel Çok Yakında!</h1>
+          <h1 className="text-2xl font-bold text-white mb-3">SaaS Panel Coming Soon!</h1>
           <p className="text-slate-400 mb-8 leading-relaxed">
-            AllMySell SaaS paneli şu anda kapalı beta testindedir. Yakında tüm kullanıcıların erişimine açılacaktır. İlginiz için teşekkür ederiz!
+            AllMySell SaaS panel is currently in closed beta. It will be available to all users soon. Thank you for your interest!
           </p>
           
           <div className="flex flex-col gap-3">
@@ -45,7 +45,7 @@ export default async function DashboardLayout({
               href="/"
               className="w-full py-3 bg-gradient-to-r from-orange-600 to-amber-600 rounded-lg text-sm font-medium hover:from-orange-500 hover:to-amber-500 transition-colors text-white shadow-lg shadow-orange-500/20 flex items-center justify-center gap-2"
             >
-              <ArrowLeft className="h-4 w-4" /> Ana Sayfaya Dön
+              <ArrowLeft className="h-4 w-4" /> Return to Homepage
             </Link>
           </div>
         </div>

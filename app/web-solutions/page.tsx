@@ -9,13 +9,12 @@ import { CheckCircle, XCircle, Code, Rocket, Shield, Globe } from "lucide-react"
 
 const plans = [
   {
-    id: 'temel',
+    id: 'basic',
     badge: '🥉',
     level: 'Level 1',
     name: 'Basic Setup',
     subtitle: '"Build & Deliver"',
-    price: '4,500 ₺',
-    priceUSD: '~$135',
+    price: '$135',
     delivery: '3–5 days',
     highlight: false,
     color: "from-blue-500/20 to-cyan-500/10",
@@ -29,13 +28,12 @@ const plans = [
     ],
   },
   {
-    id: 'profesyonel',
+    id: 'professional',
     badge: '🥈',
     level: 'Level 2',
     name: 'Professional Growth',
     subtitle: '"In-Depth Work"',
-    price: '9,500 ₺',
-    priceUSD: '~$285',
+    price: '$285',
     delivery: '7–12 days',
     highlight: true,
     color: "from-orange-500/20 to-amber-500/10",
@@ -49,13 +47,12 @@ const plans = [
     ],
   },
   {
-    id: 'ekosistem',
+    id: 'ecosystem',
     badge: '🥇',
     level: 'Level 3',
     name: 'Full Ecosystem',
     subtitle: '"Automation + Conversion"',
-    price: '19,500 ₺',
-    priceUSD: '~$585',
+    price: '$585',
     delivery: '15–25 days',
     highlight: false,
     color: "from-purple-500/20 to-pink-500/10",
@@ -135,7 +132,7 @@ export default function WebSolutionsPage() {
                   
                   <div className="pb-6 border-b border-white/10">
                     <div className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 mb-1">{plan.price}</div>
-                    <div className="text-slate-500 text-sm">{plan.priceUSD} — One-time payment</div>
+                    <div className="text-slate-500 text-sm">One-time payment</div>
                     <div className="mt-4 flex flex-wrap gap-2">
                       <span className="bg-white/5 border border-white/10 text-slate-300 text-xs px-3 py-1.5 rounded-full flex items-center gap-1"><Rocket className="h-3 w-3"/> {plan.delivery}</span>
                     </div>
@@ -158,7 +155,7 @@ export default function WebSolutionsPage() {
                 </div>
 
                 <a
-                  href="#iletisim"
+                  href="#contact"
                   className={`block text-center py-4 rounded-xl font-semibold transition-all ${
                     plan.highlight
                       ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white hover:shadow-[0_0_30px_rgba(249,115,22,0.4)] hover:scale-[1.02]'
@@ -174,7 +171,7 @@ export default function WebSolutionsPage() {
 
         {/* Contact Section */}
         <motion.div 
-          id="iletisim"
+          id="contact"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.8 }}
