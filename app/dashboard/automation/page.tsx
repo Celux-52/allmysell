@@ -2,16 +2,56 @@
 
 import { motion } from "framer-motion";
 import { MagicCard } from "@/components/ui/magic-card";
-import { Zap, Play, Pause, Settings2, Plus, ArrowRight } from "lucide-react";
+import { Zap, Play, Pause, Settings2, Plus, ArrowRight, Loader2, CheckCircle } from "lucide-react";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-const automations = [
+interface Automation {
+  id: number;
+  name: string;
+  status: string;
+  target: string;
+  frequency: string;
+  icon: string;
+}
+
+const initialAutomations: Automation[] = [
   { id: 1, name: "Auto-Scrape Bestsellers", status: "Active", target: "Etsy", frequency: "Every 12h", icon: "🔥" },
   { id: 2, name: "Price Tracker", status: "Paused", target: "Amazon", frequency: "Daily", icon: "💰" },
   { id: 3, name: "Keyword Rank Check", status: "Active", target: "Shopify", frequency: "Weekly", icon: "📈" },
 ];
 
 export default function AutomationPage() {
+  const router = useRouter();
+  const [automations, setAutomations] = useState<Automation[]>(initialAutomations);
+  const [togglingId, setTogglingId] = useState<number | null>(null);
+  const [showCreated, setShowCreated] = useState(false);
+
+  const toggleStatus = async (id: number) => {
+    setTogglingId(id);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 800));
+    setAutomations(prev => prev.map(a => 
+      a.id === id ? { ...a, status: a.status === "Active" ? "Paused" : "Active" } : a
+    ));
+    setTogglingId(null);
+  };
+
+  const handleNewAutomation = () => {
+    const newAuto: Automation = {
+      id: Date.now(),
+      name: "New Custom Automation",
+      status: "Active",
+      target: "All Platforms",
+      frequency: "Daily",
+      icon: "⚡",
+    };
+    setAutomations(prev => [newAuto, ...prev]);
+    setShowCreated(true);
+    setTimeout(() => setShowCreated(false), 3000);
+  };
+
   return (
     <div className="space-y-8 pb-10">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -25,10 +65,25 @@ export default function AutomationPage() {
           <h1 className="text-3xl font-bold text-white">Workflow Engine</h1>
           <p className="text-slate-400 mt-1">Set up background tasks to run your e-commerce operations automatically.</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 rounded-lg text-sm font-medium hover:from-orange-500 hover:to-amber-500 transition-colors shadow-[0_0_20px_rgba(249,115,22,0.3)] text-white">
+        <button 
+          onClick={handleNewAutomation}
+          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 rounded-lg text-sm font-medium hover:from-orange-500 hover:to-amber-500 transition-colors shadow-[0_0_20px_rgba(249,115,22,0.3)] text-white"
+        >
           <Plus className="h-4 w-4" /> New Automation
         </button>
       </div>
+
+      {/* Success toast */}
+      {showCreated && (
+        <motion.div 
+          initial={{ opacity: 0, y: -10 }} 
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center gap-3 p-3 bg-green-500/10 border border-green-500/20 rounded-xl text-green-400"
+        >
+          <CheckCircle className="h-5 w-5" />
+          <p className="text-sm font-medium">New automation created and activated!</p>
+        </motion.div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <motion.div 
@@ -56,20 +111,32 @@ export default function AutomationPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  {auto.status === "Active" ? (
-                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400 text-sm font-medium">
-                      <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                      </span>
-                      Active
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-500/10 border border-slate-500/20 text-slate-400 text-sm font-medium">
-                      <Pause className="h-3 w-3" /> Paused
-                    </div>
-                  )}
-                  <button className="p-2 hover:bg-white/10 rounded-lg transition-colors text-slate-400">
+                  <button 
+                    onClick={() => toggleStatus(auto.id)}
+                    disabled={togglingId === auto.id}
+                  >
+                    {togglingId === auto.id ? (
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-slate-400 text-sm">
+                        <Loader2 className="h-3 w-3 animate-spin" /> Updating...
+                      </div>
+                    ) : auto.status === "Active" ? (
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400 text-sm font-medium cursor-pointer hover:bg-green-500/20 transition-colors">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                        Active
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-500/10 border border-slate-500/20 text-slate-400 text-sm font-medium cursor-pointer hover:bg-orange-500/10 hover:text-orange-400 transition-colors">
+                        <Play className="h-3 w-3" /> Resume
+                      </div>
+                    )}
+                  </button>
+                  <button 
+                    onClick={() => router.push('/dashboard/settings')}
+                    className="p-2 hover:bg-white/10 rounded-lg transition-colors text-slate-400"
+                  >
                     <Settings2 className="h-5 w-5" />
                   </button>
                 </div>
@@ -113,12 +180,18 @@ export default function AutomationPage() {
 
           <div className="rounded-xl border border-white/5 bg-gradient-to-b from-[#080c16] to-transparent p-6 shadow-xl flex flex-col gap-4">
             <h3 className="font-semibold text-white">Recommended Actions</h3>
-            <button className="flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/5 group">
-              <span className="text-sm text-slate-300">Auto-Reply to Messages</span>
+            <button 
+              onClick={() => router.push('/dashboard/research')}
+              className="flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/5 group"
+            >
+              <span className="text-sm text-slate-300">Smart Product Research</span>
               <ArrowRight className="h-4 w-4 text-slate-500 group-hover:text-orange-400" />
             </button>
-            <button className="flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/5 group">
-              <span className="text-sm text-slate-300">Sync Inventory Daily</span>
+            <button 
+              onClick={() => router.push('/dashboard/trends')}
+              className="flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/5 group"
+            >
+              <span className="text-sm text-slate-300">View Live Trends</span>
               <ArrowRight className="h-4 w-4 text-slate-500 group-hover:text-orange-400" />
             </button>
           </div>

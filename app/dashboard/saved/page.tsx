@@ -1,17 +1,43 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { MagicCard } from "@/components/ui/magic-card";
-import { Star, ExternalLink, ArrowRight, Trash2 } from "lucide-react";
+import { Star, ExternalLink, ArrowRight, Trash2, AlertCircle, CheckCircle, Plus } from "lucide-react";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-const savedItems = [
+interface SavedItem {
+  id: number;
+  name: string;
+  platform: string;
+  date: string;
+  score: number;
+  tag: string;
+}
+
+const initialItems: SavedItem[] = [
   { id: 1, name: "Vintage Leather Bag", platform: "Etsy", date: "2 hours ago", score: 98, tag: "High Margin" },
   { id: 2, name: "Smart Pet Feeder", platform: "Amazon", date: "1 day ago", score: 85, tag: "Trending" },
   { id: 3, name: "LED Desk Lamp", platform: "Shopify", date: "3 days ago", score: 72, tag: "Consistent" },
 ];
 
 export default function SavedItemsPage() {
+  const router = useRouter();
+  const [items, setItems] = useState<SavedItem[]>(initialItems);
+  const [deletedMsg, setDeletedMsg] = useState<string | null>(null);
+
+  const handleDelete = (id: number) => {
+    const item = items.find(i => i.id === id);
+    setItems(prev => prev.filter(i => i.id !== id));
+    setDeletedMsg(`"${item?.name}" removed from vault.`);
+    setTimeout(() => setDeletedMsg(null), 3000);
+  };
+
+  const handleAnalyze = (name: string) => {
+    router.push(`/dashboard/research`);
+  };
+
   return (
     <div className="space-y-8 pb-10">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -27,57 +53,84 @@ export default function SavedItemsPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {savedItems.map((item, i) => (
+      {/* Deleted toast */}
+      <AnimatePresence>
+        {deletedMsg && (
           <motion.div 
-            key={item.id}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: i * 0.1 }}
+            initial={{ opacity: 0, y: -10 }} 
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="flex items-center gap-3 p-3 bg-orange-500/10 border border-orange-500/20 rounded-xl text-orange-400"
           >
-            <MagicCard className="p-6 flex flex-col h-full bg-[#080c16] border-white/10 group">
-              <div className="flex justify-between items-start mb-4">
-                <span className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-orange-400">
-                  {item.platform}
-                </span>
-                <button className="text-slate-500 hover:text-red-400 transition-colors">
-                  <Trash2 className="h-4 w-4" />
-                </button>
-              </div>
-              
-              <h3 className="text-lg font-bold text-white mb-2">{item.name}</h3>
-              
-              <div className="flex items-center gap-3 mb-6 flex-1">
-                <span className="text-xs text-slate-500 bg-white/5 px-2 py-1 rounded-md">{item.tag}</span>
-                <span className="text-xs text-slate-500">Added {item.date}</span>
-              </div>
-              
-              <div className="flex items-center justify-between pt-4 border-t border-white/5">
-                <div className="flex items-center gap-2">
-                  <div className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500">
-                    {item.score}
-                  </div>
-                  <span className="text-xs text-slate-500 uppercase tracking-wider">Score</span>
-                </div>
-                <button className="flex items-center gap-1 text-sm font-medium text-orange-400 hover:text-orange-300 transition-colors">
-                  Analyze <ArrowRight className="h-3 w-3" />
-                </button>
-              </div>
-            </MagicCard>
+            <CheckCircle className="h-5 w-5" />
+            <p className="text-sm font-medium">{deletedMsg}</p>
           </motion.div>
-        ))}
+        )}
+      </AnimatePresence>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <AnimatePresence>
+          {items.map((item, i) => (
+            <motion.div 
+              key={item.id}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ delay: i * 0.1 }}
+            >
+              <MagicCard className="p-6 flex flex-col h-full bg-[#080c16] border-white/10 group">
+                <div className="flex justify-between items-start mb-4">
+                  <span className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-orange-400">
+                    {item.platform}
+                  </span>
+                  <button 
+                    onClick={() => handleDelete(item.id)}
+                    className="text-slate-500 hover:text-red-400 transition-colors p-1 hover:bg-red-500/10 rounded-md"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </div>
+                
+                <h3 className="text-lg font-bold text-white mb-2">{item.name}</h3>
+                
+                <div className="flex items-center gap-3 mb-6 flex-1">
+                  <span className="text-xs text-slate-500 bg-white/5 px-2 py-1 rounded-md">{item.tag}</span>
+                  <span className="text-xs text-slate-500">Added {item.date}</span>
+                </div>
+                
+                <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                  <div className="flex items-center gap-2">
+                    <div className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500">
+                      {item.score}
+                    </div>
+                    <span className="text-xs text-slate-500 uppercase tracking-wider">Score</span>
+                  </div>
+                  <button 
+                    onClick={() => handleAnalyze(item.name)}
+                    className="flex items-center gap-1 text-sm font-medium text-orange-400 hover:text-orange-300 transition-colors px-3 py-1.5 rounded-lg hover:bg-orange-500/10"
+                  >
+                    Analyze <ArrowRight className="h-3 w-3" />
+                  </button>
+                </div>
+              </MagicCard>
+            </motion.div>
+          ))}
+        </AnimatePresence>
 
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3 }}
         >
-          <div className="h-full min-h-[250px] border-2 border-dashed border-white/10 rounded-xl flex flex-col items-center justify-center p-6 text-center hover:border-orange-500/30 hover:bg-white/5 transition-all cursor-pointer group">
+          <div 
+            onClick={() => router.push('/dashboard/research')}
+            className="h-full min-h-[250px] border-2 border-dashed border-white/10 rounded-xl flex flex-col items-center justify-center p-6 text-center hover:border-orange-500/30 hover:bg-white/5 transition-all cursor-pointer group"
+          >
             <div className="h-12 w-12 rounded-full bg-white/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <ExternalLink className="h-5 w-5 text-slate-400 group-hover:text-orange-400" />
+              <Plus className="h-5 w-5 text-slate-400 group-hover:text-orange-400" />
             </div>
             <h3 className="font-semibold text-white mb-1">Discover More</h3>
-            <p className="text-sm text-slate-500">Head to the Research tab to find new products to save.</p>
+            <p className="text-sm text-slate-500">Head to Smart Research to find new products to save.</p>
           </div>
         </motion.div>
       </div>
