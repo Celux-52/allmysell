@@ -11,7 +11,7 @@
  * Then enriches with REAL Google Trends data and REAL clickable supplier URLs.
  */
 
-import { getGoogleTrendsData, buildSupplierLinks, type GoogleTrendsData } from './google-trends';
+import { getGoogleTrendsData, buildSupplierLinks, buildCompetitorLinks, type GoogleTrendsData } from './google-trends';
 
 interface SupplierLink {
   name: string;
@@ -34,6 +34,7 @@ interface ConsensusProduct {
   marketingTips: string[];
   sources: string[];
   suppliers: SupplierLink[];
+  competitorLinks: { platform: string; url: string; note: string }[];
   googleTrendsInsight: string;
   googleTrendsData: GoogleTrendsData | null;
 }
@@ -364,6 +365,7 @@ async function mergeAndEnrich(
   const finalProducts: ConsensusProduct[] = topProducts.map((product) => {
     const keyword = product.searchKeyword || product.name;
     const realSuppliers = buildSupplierLinks(keyword);
+    const competitorLinks = buildCompetitorLinks(keyword);
     const realTrends = trendsMap.get(product.name) || null;
 
     let googleTrendsInsight = 'Google Trends data was not available for this product.';
@@ -391,6 +393,7 @@ async function mergeAndEnrich(
       marketingTips: product.marketingTips,
       sources: product.sources,
       suppliers: realSuppliers,
+      competitorLinks,
       googleTrendsInsight,
       googleTrendsData: realTrends,
     };

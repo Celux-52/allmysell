@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 // ... earlier imports
-import { Search, Sparkles, Wand2, Database, Loader2, Plus, Zap, ArrowUp, Star, AlertCircle, TrendingUp, ExternalLink, Truck, Globe2, Brain, CheckCircle } from "lucide-react";
+import { Search, Sparkles, Wand2, Database, Loader2, Plus, Zap, ArrowUp, Star, AlertCircle, TrendingUp, ExternalLink, Truck, Globe2, Brain, CheckCircle, BarChart } from "lucide-react";
 import { MagicCard } from "@/components/ui/magic-card";
 import { useState, useEffect } from "react";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
@@ -50,6 +50,7 @@ interface Product {
   marketingTips: string[];
   sources: string[];
   suppliers: SupplierLink[];
+  competitorLinks?: { platform: string; url: string; note: string }[];
   googleTrendsInsight: string;
   googleTrendsData: GoogleTrendsData | null;
 }
@@ -451,6 +452,34 @@ export default function ResearchPage() {
                           {product.suppliers.length > 3 && expandedCard !== i && (
                             <p className="text-xs text-orange-400 mt-1 cursor-pointer hover:underline">+{product.suppliers.length - 3} more — click to expand</p>
                           )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Competitor Sales Data */}
+                    {product.competitorLinks && product.competitorLinks.length > 0 && (
+                      <div className="mb-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <BarChart className="h-4 w-4 text-emerald-400" />
+                          <p className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Competitor Sales</p>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          {product.competitorLinks.slice(0, expandedCard === i ? 10 : 2).map((link, j) => (
+                            <a 
+                              key={j} 
+                              href={link.url} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="flex flex-col gap-1 text-xs text-slate-400 bg-emerald-500/5 p-2.5 rounded-md border border-emerald-500/10 hover:bg-emerald-500/10 hover:border-emerald-500/30 hover:text-emerald-300 transition-colors"
+                            >
+                              <div className="flex items-center justify-between">
+                                <span className="font-bold text-emerald-400">{link.platform}</span>
+                                <ExternalLink className="h-3 w-3" />
+                              </div>
+                              <span className="text-[10px] text-slate-500 leading-tight">{link.note}</span>
+                            </a>
+                          ))}
                         </div>
                       </div>
                     )}

@@ -145,3 +145,12 @@ export function buildSupplierLinks(productName: string): { name: string; url: st
     },
   ];
 }
+
+export function buildCompetitorLinks(productName: string): { platform: string; url: string; note: string }[] {
+  const encoded = encodeURIComponent(productName);
+  return [
+    { platform: 'Amazon', url: `https://www.amazon.com/s?k=${encoded}`, note: 'Check Bestseller tags and review counts' },
+    { platform: 'eBay', url: `https://www.ebay.com/sch/i.html?_nkw=${encoded}&LH_Sold=1`, note: 'View recently sold items and prices' },
+    { platform: 'Etsy', url: `https://www.etsy.com/search?q=${encoded}`, note: 'Analyze personalized and premium options' },
+  ];
+}
