@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import { findProblemSolutions, researchProducts } from '@/lib/ai/groq'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 30
@@ -21,27 +20,68 @@ export async function POST(request: NextRequest) {
     }
 
     let results: any = null
-    let engine = 'groq'
+    let engine = 'unknown'
 
+    // Try providers in order: Groq → Gemini → Cline (fallback chain)
     if (mode === 'problem') {
+      // Problem-Solution mode
       try {
+        const { findProblemSolutions } = await import('@/lib/ai/groq')
         results = await findProblemSolutions(query.trim())
-      } catch (err: any) {
-        console.error('Groq Problem AI error:', err.message)
-        return NextResponse.json({ error: 'Groq API hatası: ' + err.message }, { status: 503 })
+        engine = 'groq'
+      } catch (groqErr: any) {
+        console.warn('[Research] Groq failed for problem mode, trying Gemini:', groqErr.message)
+        try {
+          const { findProblemSolutions: geminiFPS } = await import('@/lib/ai/gemini')
+          results = await geminiFPS(query.trim())
+          engine = 'gemini'
+        } catch (geminiErr: any) {
+          console.warn('[Research] Gemini also failed:', geminiErr.message)
+          try {
+            const { researchProductsWithCline } = await import('@/lib/ai/cline')
+            results = await researchProductsWithCline(query.trim())
+            engine = 'cline'
+          } catch (clineErr: any) {
+            console.error('[Research] All AI providers failed:', clineErr.message)
+            return NextResponse.json(
+              { error: 'All AI providers are currently unavailable. Please try again later.' },
+              { status: 503 }
+            )
+          }
+        }
       }
     } else {
+      // Product research mode
       try {
+        const { researchProducts } = await import('@/lib/ai/groq')
         results = await researchProducts(query.trim())
-      } catch (err: any) {
-        console.error('Groq Research AI error:', err.message)
-        return NextResponse.json({ error: 'Groq API hatası: ' + err.message }, { status: 503 })
+        engine = 'groq'
+      } catch (groqErr: any) {
+        console.warn('[Research] Groq failed, trying Gemini:', groqErr.message)
+        try {
+          const { researchProducts: geminiRP } = await import('@/lib/ai/gemini')
+          results = await geminiRP(query.trim())
+          engine = 'gemini'
+        } catch (geminiErr: any) {
+          console.warn('[Research] Gemini also failed, trying Cline:', geminiErr.message)
+          try {
+            const { researchProductsWithCline } = await import('@/lib/ai/cline')
+            results = await researchProductsWithCline(query.trim())
+            engine = 'cline'
+          } catch (clineErr: any) {
+            console.error('[Research] All AI providers failed:', clineErr.message)
+            return NextResponse.json(
+              { error: 'All AI providers are currently unavailable. Please try again later.' },
+              { status: 503 }
+            )
+          }
+        }
       }
     }
 
     if (!results) {
       return NextResponse.json(
-        { error: 'Yapay zeka analiz servisi şu an kullanılamıyor. Lütfen GROQ_API_KEY\'inizi kontrol edin.' },
+        { error: 'AI analysis service is temporarily unavailable. Please check your API keys.' },
         { status: 503 }
       )
     }
@@ -55,7 +95,7 @@ export async function POST(request: NextRequest) {
       timestamp: new Date().toISOString(),
     })
   } catch (error: any) {
-    console.error('AI Research API error:', error)
+    console.error('[Research API] Error:', error)
     return NextResponse.json(
       { error: error.message || 'An unexpected error occurred' },
       { status: 500 }

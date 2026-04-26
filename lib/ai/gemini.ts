@@ -6,11 +6,21 @@ export function getGemini(): GoogleGenerativeAI {
   if (!geminiClient) {
     const apiKey = process.env.GEMINI_API_KEY
     if (!apiKey) {
-      throw new Error('GEMINI_API_KEY is not set in environment variables')
+      throw new Error('GEMINI_API_KEY is not set. Get one free at aistudio.google.com/apikey')
     }
     geminiClient = new GoogleGenerativeAI(apiKey)
   }
   return geminiClient
+}
+
+function safeParseJSON<T>(text: string, fallback: T): T {
+  try {
+    const cleaned = text.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim()
+    return JSON.parse(cleaned) as T
+  } catch {
+    console.error('[Gemini] Failed to parse JSON response')
+    return fallback
+  }
 }
 
 export interface ProductResearchResult {
@@ -69,9 +79,7 @@ Rules:
 
   const result = await model.generateContent(prompt)
   const text = result.response.text()
-  const cleaned = text.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim()
-  
-  return JSON.parse(cleaned) as ProductResearchResult
+  return safeParseJSON<ProductResearchResult>(text, { products: [], summary: 'Failed to parse AI response.' })
 }
 
 export interface TrendAnalysisResult {
@@ -123,21 +131,12 @@ Rules:
 - Include 3 categories: Hot/Rising, Stable Sellers, and one niche-specific
 - Each category should have 3-5 trends
 - Use realistic volume and growth numbers based on current market data
-- Volume format: "XXK+" for thousands
-- Growth format: "+XX%" or "-XX%"
 - CRITICAL: Provide real world verifiable sources/URLs in the "sources" fields to back your data
 - ONLY return valid JSON, no markdown or extra text`
 
   const result = await model.generateContent(prompt)
   const text = result.response.text()
-
-  // Clean the response - Gemini sometimes wraps in ```json
-  const cleaned = text
-    .replace(/```json\s*/g, '')
-    .replace(/```\s*/g, '')
-    .trim()
-
-  return JSON.parse(cleaned) as TrendAnalysisResult
+  return safeParseJSON<TrendAnalysisResult>(text, { categories: [], summary: 'Failed to parse AI response.', topOpportunity: '', sources: [] })
 }
 
 export interface ProblemSolutionResult {
@@ -185,13 +184,7 @@ Return 3-5 solutions. ONLY return valid JSON.`
 
   const result = await model.generateContent(prompt)
   const text = result.response.text()
-
-  const cleaned = text
-    .replace(/```json\s*/g, '')
-    .replace(/```\s*/g, '')
-    .trim()
-
-  return JSON.parse(cleaned) as ProblemSolutionResult
+  return safeParseJSON<ProblemSolutionResult>(text, { problem, solutions: [], marketSize: 'Unknown', recommendation: 'Failed to parse AI response.' })
 }
 
 export async function generateBlogContent(topic: string): Promise<{ title: string; content: string; excerpt: string; tags: string[] }> {
@@ -214,6 +207,5 @@ ONLY return valid JSON format no markdown tags around it.`
 
   const result = await model.generateContent(prompt)
   const text = result.response.text()
-  const cleaned = text.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim()
-  return JSON.parse(cleaned)
+  return safeParseJSON(text, { title: '', content: '', excerpt: '', tags: [] })
 }

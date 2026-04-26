@@ -16,10 +16,17 @@ export function getCline(): OpenAI {
 // ✅ Free AI Models List (completely free, rate-limited)
 export const FREE_AI_MODELS = [
     { id: 'cline-free', name: 'Cline AI', provider: 'Cline', speed: 'Very Fast', quality: 'Excellent', free: true },
-    { id: 'llama-3.1-8b-instant', name: 'Llama 3.1 8B', provider: 'Groq', speed: 'Fastest', quality: 'Good', free: true },
+    { id: 'deepseek-r1', name: 'DeepSeek R1', provider: 'DeepSeek', speed: 'Fast', quality: 'Best Reasoning', free: true },
     { id: 'llama-3.3-70b-versatile', name: 'Llama 3.3 70B', provider: 'Groq', speed: 'Fast', quality: 'Very Good', free: true },
+    { id: 'llama-3.3-70b-instruct', name: 'Llama 3.3 70B Instruct', provider: 'Meta', speed: 'Very Fast', quality: 'Excellent', free: true },
+    { id: 'llama-3.1-405b-instruct', name: 'Llama 3.1 405B', provider: 'Meta', speed: 'Medium', quality: 'Excellent', free: true },
+    { id: 'llama-3.1-8b-instant', name: 'Llama 3.1 8B', provider: 'Groq', speed: 'Fastest', quality: 'Good', free: true },
     { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash', provider: 'Google', speed: 'Fast', quality: 'Excellent', free: true },
+    { id: 'gemini-2.0-flash-001', name: 'Gemini 2.0 Flash Latest', provider: 'Google', speed: 'Fast', quality: 'Best Overall', free: true },
+    { id: 'qwen-2.5-72b-instruct', name: 'Qwen 2.5 72B', provider: 'Alibaba', speed: 'Fast', quality: 'Very Good', free: true },
+    { id: 'qwen-2.5-14b-instruct', name: 'Qwen 2.5 14B', provider: 'Alibaba', speed: 'Very Fast', quality: 'Good', free: true },
     { id: 'mistral-7b-instruct', name: 'Mistral 7B', provider: 'Groq', speed: 'Fastest', quality: 'Medium', free: true },
+    { id: 'mistral-nemo-12b', name: 'Mistral Nemo 12B', provider: 'Mistral', speed: 'Very Fast', quality: 'Good', free: true },
 ]
 
 // Product research function (via Cline)

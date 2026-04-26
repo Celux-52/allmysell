@@ -6,7 +6,7 @@ export function getGroq(): OpenAI {
   if (!groqClient) {
     const apiKey = process.env.GROQ_API_KEY
     if (!apiKey) {
-      throw new Error('Lütfen .env.local dosyasına GROQ_API_KEY ekleyin! (console.groq.com adresinden alabilirsiniz)')
+      throw new Error('GROQ_API_KEY is not set. Get one free at console.groq.com')
     }
     groqClient = new OpenAI({ 
       apiKey,
@@ -34,6 +34,16 @@ export interface ProductResearchResult {
     sources: string[]
   }>
   summary: string
+}
+
+function safeParseJSON<T>(text: string, fallback: T): T {
+  try {
+    const cleaned = text.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim()
+    return JSON.parse(cleaned) as T
+  } catch {
+    console.error('[Groq] Failed to parse JSON response')
+    return fallback
+  }
 }
 
 export async function researchProducts(query: string): Promise<ProductResearchResult> {
@@ -80,7 +90,7 @@ Rules:
   })
 
   const text = response.choices[0]?.message?.content || '{}'
-  return JSON.parse(text) as ProductResearchResult
+  return safeParseJSON<ProductResearchResult>(text, { products: [], summary: 'Failed to parse AI response.' })
 }
 
 export interface TrendAnalysisResult {
@@ -144,7 +154,7 @@ Rules:
   })
 
   const text = response.choices[0]?.message?.content || '{}'
-  return JSON.parse(text) as TrendAnalysisResult
+  return safeParseJSON<TrendAnalysisResult>(text, { categories: [], summary: 'Failed to parse AI response.', topOpportunity: '', sources: [] })
 }
 
 export interface ProblemSolutionResult {
@@ -197,7 +207,7 @@ Return 3-5 solutions. ONLY return valid JSON without markdown wrapping.`
   })
 
   const text = response.choices[0]?.message?.content || '{}'
-  return JSON.parse(text) as ProblemSolutionResult
+  return safeParseJSON<ProblemSolutionResult>(text, { problem, solutions: [], marketSize: 'Unknown', recommendation: 'Failed to parse AI response.' })
 }
 
 export async function generateBlogContent(topic: string): Promise<{ title: string; content: string; excerpt: string; tags: string[] }> {
@@ -225,5 +235,5 @@ ONLY return valid JSON format no markdown tags around it.`
   })
 
   const text = response.choices[0]?.message?.content || '{}'
-  return JSON.parse(text)
+  return safeParseJSON(text, { title: '', content: '', excerpt: '', tags: [] })
 }
