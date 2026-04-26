@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { MagicCard } from "@/components/ui/magic-card";
 import { BarChart3, TrendingUp, Search, Zap, ArrowRight, Package, DollarSign, Activity } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const stats = [
   { name: "Analyzed Trends", value: "2,845", change: "+14%", icon: TrendingUp, color: "text-orange-400", bg: "bg-orange-500/10" },
@@ -13,6 +14,7 @@ const stats = [
 ];
 
 export default function DashboardOverview() {
+  const router = useRouter();
   return (
     <div className="space-y-8">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -24,7 +26,10 @@ export default function DashboardOverview() {
           <button className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium hover:bg-white/10 transition-colors">
             Download Report
           </button>
-          <button className="px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 rounded-lg text-sm font-medium hover:from-orange-500 hover:to-amber-500 transition-colors shadow-[0_0_20px_rgba(249,115,22,0.3)]">
+          <button 
+            onClick={() => router.push('/dashboard/research')}
+            className="px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 rounded-lg text-sm font-medium hover:from-orange-500 hover:to-amber-500 transition-colors shadow-[0_0_20px_rgba(249,115,22,0.3)] text-white"
+          >
             New Research
           </button>
         </div>
@@ -82,11 +87,11 @@ export default function DashboardOverview() {
           <h2 className="text-lg font-semibold text-white mb-6">Quick Actions</h2>
           <div className="space-y-3 flex-1">
             {[
-              { title: "Start Etsy Scraper", desc: "Scan new bestselling items", icon: Search },
-              { title: "Sync Listings", desc: "Push updates to stores", icon: Zap },
-              { title: "Analyze Keywords", desc: "Find high volume tags", icon: BarChart3 },
+              { title: "Smart Research", desc: "AI-powered product analysis", icon: Search, href: "/dashboard/research" },
+              { title: "View Automations", desc: "Manage running tasks", icon: Zap, href: "/dashboard/automation" },
+              { title: "Trend Analysis", desc: "Find high volume niches", icon: BarChart3, href: "/dashboard/trends" },
             ].map((action, i) => (
-              <button key={i} className="w-full flex items-center gap-4 p-4 rounded-lg border border-white/5 bg-white/[0.02] hover:bg-white/5 hover:border-orange-500/30 transition-all group">
+              <Link key={i} href={action.href} className="w-full flex items-center gap-4 p-4 rounded-lg border border-white/5 bg-white/[0.02] hover:bg-white/5 hover:border-orange-500/30 transition-all group">
                 <div className="p-2 rounded-md bg-white/5 group-hover:bg-orange-500/20 group-hover:text-orange-400 transition-colors text-slate-400">
                   <action.icon className="h-5 w-5" />
                 </div>
@@ -95,7 +100,7 @@ export default function DashboardOverview() {
                   <p className="text-xs text-slate-400">{action.desc}</p>
                 </div>
                 <ArrowRight className="h-4 w-4 text-slate-600 group-hover:text-orange-400 transition-colors" />
-              </button>
+              </Link>
             ))}
           </div>
         </motion.div>
