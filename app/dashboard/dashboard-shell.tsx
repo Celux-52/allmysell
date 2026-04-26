@@ -15,9 +15,6 @@ const navigation = [
   { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
   { name: "Trend Analysis", href: "/dashboard/trends", icon: TrendingUp },
   { name: "Smart Research", href: "/dashboard/research", icon: Search },
-  { name: "Automations", href: "/dashboard/automation", icon: Zap },
-  { name: "Saved Items", href: "/dashboard/saved", icon: Star },
-  { name: "History", href: "/dashboard/history", icon: History },
 ];
 
 export default function DashboardShell({
