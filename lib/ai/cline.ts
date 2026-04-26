@@ -13,78 +13,90 @@ export function getCline(): OpenAI {
     return clineClient
 }
 
-// ✅ ÜCRETSİZ MODELLER LİSTESİ (Tamamen ücretsiz, limitli)
+// ✅ Free AI Models List (completely free, rate-limited)
 export const FREE_AI_MODELS = [
-    { id: 'cline-free', name: 'Cline AI', provider: 'Cline', speed: 'Çok Hızlı', quality: 'Mükemmel', free: true },
-    { id: 'llama-3.1-8b-instant', name: 'Llama 3.1 8B', provider: 'Groq', speed: 'En Hızlı', quality: 'İyi', free: true },
-    { id: 'llama-3.3-70b-versatile', name: 'Llama 3.3 70B', provider: 'Groq', speed: 'Hızlı', quality: 'Çok İyi', free: true },
-    { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash', provider: 'Google', speed: 'Hızlı', quality: 'Mükemmel', free: true },
-    { id: 'mistral-7b-instruct', name: 'Mistral 7B', provider: 'Groq', speed: 'En Hızlı', quality: 'Orta', free: true },
+    { id: 'cline-free', name: 'Cline AI', provider: 'Cline', speed: 'Very Fast', quality: 'Excellent', free: true },
+    { id: 'llama-3.1-8b-instant', name: 'Llama 3.1 8B', provider: 'Groq', speed: 'Fastest', quality: 'Good', free: true },
+    { id: 'llama-3.3-70b-versatile', name: 'Llama 3.3 70B', provider: 'Groq', speed: 'Fast', quality: 'Very Good', free: true },
+    { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash', provider: 'Google', speed: 'Fast', quality: 'Excellent', free: true },
+    { id: 'mistral-7b-instruct', name: 'Mistral 7B', provider: 'Groq', speed: 'Fastest', quality: 'Medium', free: true },
 ]
 
-// Varsayılan ürün araştırma fonksiyonu (Cline ile)
+// Product research function (via Cline)
 export async function researchProductsWithCline(query: string) {
     const cline = getCline()
 
-    const prompt = `Sen AllMysell platformu için e-ticaret uzmanı yapay zekasın. 
-  Kullanıcı ürünü araştırıyor: "${query}"
+    const prompt = `You are an expert e-commerce product research AI for the AllMySell SaaS platform.
+  The user is researching: "${query}"
   
-  Aşağıdaki JSON formatında cevap ver:
+  Respond in the following JSON format:
   {
     "products": [
       {
-        "name": "Ürün Adı",
-        "category": "Kategori",
-        "wholesalePrice": "TL X-Y",
-        "retailPrice": "TL X-Y",
+        "name": "Product Name",
+        "category": "Category",
+        "wholesalePrice": "$X-Y",
+        "retailPrice": "$X-Y",
         "profitMargin": "XX-XX%",
-        "competition": "Düşük|Orta|Yüksek",
-        "trend": "Yükseliyor|Sabit|Düşüyor",
+        "competition": "Low|Medium|High",
+        "trend": "Rising|Stable|Declining",
         "score": 85,
-        "description": "Kısa açıklama",
-        "platforms": ["Trendyol", "Hepsiburada", "AliExpress"],
-        "whyItWorks": "Neden bu ürün iyi satar",
-        "targetAudience": "Hedef kitle",
-        "marketingTips": ["İpucu 1", "İpucu 2"],
-        "sources": ["Kaynak 1", "Kaynak 2"]
+        "description": "Short description",
+        "platforms": ["eBay", "Etsy", "Amazon"],
+        "whyItWorks": "Why this product sells well",
+        "targetAudience": "Target audience",
+        "marketingTips": ["Tip 1", "Tip 2"],
+        "sources": ["Source 1", "Source 2"]
       }
     ],
-    "summary": "Genel piyasa analizi"
+    "summary": "Overall market analysis"
   }
   
-  Sadece geçerli JSON döndür, başka hiçbir şey ekleme.`
+  Return only valid JSON, nothing else.`
 
-    const response = await cline.chat.completions.create({
-        model: 'cline-free',
-        messages: [
-            { role: 'system', content: prompt },
-            { role: 'user', content: query }
-        ],
-        response_format: { type: 'json_object' },
-        temperature: 0.7
-    })
+    try {
+        const response = await cline.chat.completions.create({
+            model: 'cline-free',
+            messages: [
+                { role: 'system', content: prompt },
+                { role: 'user', content: query }
+            ],
+            temperature: 0.7
+        })
 
-    const text = response.choices[0]?.message?.content || '{}'
-    return JSON.parse(text)
+        const text = response.choices[0]?.message?.content || '{}'
+
+        // Safely parse JSON — strip markdown fences if the model wraps it
+        const cleaned = text.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim()
+        return JSON.parse(cleaned)
+    } catch (error) {
+        console.error('[Cline] Research error:', error)
+        return { products: [], summary: 'AI service is temporarily unavailable. Please try again later.' }
+    }
 }
 
-// Otomasyon asistanı
+// Automation assistant
 export async function clineAssistant(message: string, context?: string) {
     const cline = getCline()
 
-    const systemPrompt = `Sen AllMysell SaaS paneli için entegre Cline asistanısın.
-  Kullanıcının sorularına cevap ver, ürün öner, trend analiz et, otomasyon tavsiyeleri ver.
-  Daima Türkçe cevap ver, anlaşılır ve pratik bilgiler sun.
-  ${context ? `Ek bağlam: ${context}` : ''}`
+    const systemPrompt = `You are the integrated Cline AI assistant for the AllMySell SaaS panel.
+  Answer user questions, recommend products, analyze trends, and provide automation advice.
+  Always respond in English with clear, actionable insights.
+  ${context ? `Additional context: ${context}` : ''}`
 
-    const response = await cline.chat.completions.create({
-        model: 'cline-free',
-        messages: [
-            { role: 'system', content: systemPrompt },
-            { role: 'user', content: message }
-        ],
-        temperature: 0.8
-    })
+    try {
+        const response = await cline.chat.completions.create({
+            model: 'cline-free',
+            messages: [
+                { role: 'system', content: systemPrompt },
+                { role: 'user', content: message }
+            ],
+            temperature: 0.8
+        })
 
-    return response.choices[0]?.message?.content
+        return response.choices[0]?.message?.content || 'Sorry, I could not generate a response right now.'
+    } catch (error) {
+        console.error('[Cline] Assistant error:', error)
+        return 'The AI assistant is temporarily unavailable. Please try again shortly.'
+    }
 }

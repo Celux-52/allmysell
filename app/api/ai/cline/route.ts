@@ -20,10 +20,13 @@ export async function POST(request: Request) {
             return NextResponse.json({ success: true, models: FREE_AI_MODELS })
         }
 
-        return NextResponse.json({ success: false, error: 'Geçersiz işlem' }, { status: 400 })
+        return NextResponse.json({ success: false, error: 'Invalid action' }, { status: 400 })
 
     } catch (error) {
-        console.error('Cline API Hatası:', error)
-        return NextResponse.json({ success: false, error: 'Yapay zeka servisi şu anda aktif değil' }, { status: 500 })
+        console.error('[Cline API] Error:', error)
+        return NextResponse.json(
+            { success: false, error: 'AI service is currently unavailable. Please try again later.' },
+            { status: 500 }
+        )
     }
 }
