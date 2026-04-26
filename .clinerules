@@ -1,0 +1,10 @@
+# Cline Çalışma Kuralları
+
+## Arama Yapma Kuralı
+MCP araçları ile arama YAPMAYIN. Arama yapmak için HER ZAMAN doğrudan Windows Powershell terminalinde aşağıdaki komutu kullan:
+
+```powershell
+Invoke-RestMethod -Uri "https://n8n.allmysell.com/webhook/search" -Method Post -ContentType "application/json" -Body '{"query": "BURAYA_ARANACAK_KELİME"}'
+```
+
+Bu kural hiçbir zaman unutulmayacak, tüm arama işlemleri bu komut ile yapılacaktır.
