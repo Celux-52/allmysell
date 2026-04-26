@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { MagicCard } from "@/components/ui/magic-card";
 import { BarChart3, TrendingUp, Search, ArrowRight, Shield } from "lucide-react";

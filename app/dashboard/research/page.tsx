@@ -59,6 +59,7 @@ export default function ResearchPage() {
   const [userEmail, setUserEmail] = useState<string>("admin@allmysell.com");
   const [savedProducts, setSavedProducts] = useState<Set<string>>(new Set());
   const [toast, setToast] = useState<string | null>(null);
+  const [hasAutoRun, setHasAutoRun] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -78,9 +79,8 @@ export default function ResearchPage() {
     setTimeout(() => setToast(null), 3000);
   };
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!query || query.trim().length < 3) return;
+  const performSearch = async (searchQuery: string) => {
+    if (!searchQuery || searchQuery.trim().length < 3) return;
     
     setIsSearching(true);
     setError(null);
@@ -91,7 +91,7 @@ export default function ResearchPage() {
       const res = await fetch("/api/ai/research", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: query.trim(), mode: "product" }),
+        body: JSON.stringify({ query: searchQuery.trim(), mode: "product" }),
       });
 
       const data = await res.json();
@@ -103,7 +103,7 @@ export default function ResearchPage() {
 
       if (data.success && data.results) {
         setResults(data.results);
-        Storage.addHistory(userEmail, query.trim(), data.results.products.length);
+        Storage.addHistory(userEmail, searchQuery.trim(), data.results.products.length);
       } else {
         setError("No results found. Try a different query.");
       }
@@ -112,6 +112,23 @@ export default function ResearchPage() {
     } finally {
       setIsSearching(false);
     }
+  };
+
+  useEffect(() => {
+    if (!hasAutoRun && typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const q = urlParams.get('q');
+      if (q) {
+        setQuery(q);
+        performSearch(q);
+      }
+      setHasAutoRun(true);
+    }
+  }, [hasAutoRun, userEmail]);
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    performSearch(query);
   };
 
   const handleSaveProduct = (e: React.MouseEvent, product: Product) => {
