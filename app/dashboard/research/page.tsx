@@ -1,11 +1,14 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Sparkles, Wand2, Database, Loader2, Plus, Zap, ArrowUp, Star, AlertCircle, TrendingUp, ExternalLink, Truck, Globe2, Brain } from "lucide-react";
+// ... earlier imports
+import { Search, Sparkles, Wand2, Database, Loader2, Plus, Zap, ArrowUp, Star, AlertCircle, TrendingUp, ExternalLink, Truck, Globe2, Brain, CheckCircle } from "lucide-react";
 import { MagicCard } from "@/components/ui/magic-card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import { BorderBeam } from "@/components/ui/border-beam";
+import { createClient } from "@/lib/supabase/client";
+import { Storage } from "@/lib/storage";
 
 interface SupplierLink {
   name: string;
@@ -53,6 +56,27 @@ export default function ResearchPage() {
   const [results, setResults] = useState<ResearchResults | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
+  const [userEmail, setUserEmail] = useState<string>("admin@allmysell.com");
+  const [savedProducts, setSavedProducts] = useState<Set<string>>(new Set());
+  const [toast, setToast] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user?.email) {
+        setUserEmail(user.email);
+        const saved = Storage.getSavedProducts(user.email);
+        setSavedProducts(new Set(saved.map(p => p.name)));
+      }
+    };
+    fetchUser();
+  }, []);
+
+  const showToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 3000);
+  };
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,6 +103,7 @@ export default function ResearchPage() {
 
       if (data.success && data.results) {
         setResults(data.results);
+        Storage.addHistory(userEmail, query.trim(), data.results.products.length);
       } else {
         setError("No results found. Try a different query.");
       }
@@ -86,6 +111,27 @@ export default function ResearchPage() {
       setError("Network error. Please check your connection and try again.");
     } finally {
       setIsSearching(false);
+    }
+  };
+
+  const handleSaveProduct = (e: React.MouseEvent, product: Product) => {
+    e.stopPropagation(); // prevent expanding the card
+    const success = Storage.saveProduct(userEmail, {
+      name: product.name,
+      category: product.category,
+      wholesalePrice: product.wholesalePrice,
+      retailPrice: product.retailPrice,
+      profitMargin: product.profitMargin,
+      competition: product.competition,
+      score: product.score,
+      description: product.description,
+    });
+    
+    if (success) {
+      setSavedProducts(prev => new Set(prev).add(product.name));
+      showToast(`${product.name} saved successfully!`);
+    } else {
+      showToast(`${product.name} is already in your saved items.`);
     }
   };
 
@@ -102,7 +148,22 @@ export default function ResearchPage() {
   };
 
   return (
-    <div className="space-y-8 pb-10">
+    <div className="space-y-8 pb-10 relative">
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, x: "-50%" }}
+            animate={{ opacity: 1, y: 0, x: "-50%" }}
+            exit={{ opacity: 0, y: -20, x: "-50%" }}
+            className="fixed top-24 left-1/2 z-50 flex items-center gap-3 p-3 bg-green-500/10 border border-green-500/20 rounded-xl text-green-400 shadow-xl backdrop-blur-md"
+          >
+            <CheckCircle className="h-5 w-5" />
+            <p className="text-sm font-medium">{toast}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="max-w-3xl mx-auto text-center space-y-4 mb-8">
         <AnimatedGradientText className="mb-4">
           <span className="flex items-center gap-2">
@@ -229,7 +290,7 @@ export default function ResearchPage() {
                   transition={{ delay: i * 0.08 }}
                 >
                   <MagicCard 
-                    className="p-6 flex flex-col h-full cursor-pointer"
+                    className="p-6 flex flex-col h-full cursor-pointer relative group"
                     onClick={() => setExpandedCard(expandedCard === i ? null : i)}
                   >
                     {/* Header */}
@@ -240,16 +301,31 @@ export default function ResearchPage() {
                         </div>
                         <div className="h-8 w-px bg-white/10" />
                         <div>
-                          <h3 className="text-lg font-bold text-white leading-tight">{product.name}</h3>
+                          <h3 className="text-lg font-bold text-white leading-tight pr-10">{product.name}</h3>
                           <p className="text-xs text-slate-500">{product.category}</p>
                         </div>
                       </div>
+                      
+                      <button 
+                        onClick={(e) => handleSaveProduct(e, product)}
+                        className={`absolute top-6 right-6 p-2 rounded-full border transition-all ${
+                          savedProducts.has(product.name) 
+                            ? 'bg-amber-500/20 border-amber-500/50 text-amber-400' 
+                            : 'bg-white/5 border-white/10 text-slate-400 hover:bg-amber-500/10 hover:text-amber-400 hover:border-amber-500/30 opacity-0 group-hover:opacity-100'
+                        }`}
+                        title="Save to Favorites"
+                      >
+                        <Star className={`h-4 w-4 ${savedProducts.has(product.name) ? 'fill-current' : ''}`} />
+                      </button>
+                    </div>
+
+                    <div className="flex justify-between items-center mb-4">
                       <span className={`text-xs px-2 py-1 rounded-full border ${getCompetitionBadge(product.competition)}`}>
-                        {product.competition}
+                        {product.competition} Competition
                       </span>
                     </div>
 
-                    <p className="text-sm text-slate-400 mb-4 leading-relaxed">{product.description}</p>
+                    <p className="text-sm text-slate-400 mb-4 leading-relaxed line-clamp-3">{product.description}</p>
 
                     {/* Pricing Row */}
                     <div className="grid grid-cols-3 gap-3 mb-4 p-3 rounded-lg bg-white/[0.02] border border-white/5">

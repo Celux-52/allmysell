@@ -20,14 +20,6 @@ const webServices = [
   { name: '📞 Get a Quote', href: '/web-solutions#contact' },
 ];
 
-const shops = [
-  { name: 'eBay', href: '/shop/ebay' },
-  { name: 'Amazon', href: '/shop/amazon' },
-  { name: 'Etsy', href: '/shop/etsy' },
-  { name: 'Shopify', href: '/shop/shopify' },
-  { name: 'TikTok Shop', href: '/shop/tiktok' },
-];
-
 interface AuthUser {
   email: string;
   fullName: string | null;
@@ -95,12 +87,6 @@ export default function Navigation() {
             {navigation.map((item) => (
               <Link key={item.name} href={item.href} className="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all font-medium text-sm">{item.name}</Link>
             ))}
-            <div className="relative group">
-              <button className="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all font-medium flex items-center gap-1 text-sm">Shop<ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" /></button>
-              <div className="absolute left-0 mt-1 w-48 glass-card rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 z-50 overflow-hidden">
-                {shops.map((shop) => (<Link key={shop.name} href={shop.href} className="block px-4 py-3 text-sm text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all">{shop.name}</Link>))}
-              </div>
-            </div>
             <div className="relative group">
               <button className="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all font-medium flex items-center gap-1 text-sm">Web Solutions<ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" /></button>
               <div className="absolute left-0 mt-1 w-52 glass-card rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 z-50 overflow-hidden">
