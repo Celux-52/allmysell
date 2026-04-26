@@ -52,11 +52,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-[#030712] text-slate-100 antialiased`}>
         <Navigation />
         <main className="min-h-screen">
           {children}

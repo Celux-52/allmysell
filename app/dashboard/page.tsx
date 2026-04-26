@@ -1,98 +1,104 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Search, TrendingUp, Bookmark, Clock, Sparkles, ArrowRight, Zap } from 'lucide-react';
-import Link from 'next/link';
-import { createClient } from '@/lib/supabase/client';
+import { motion } from "framer-motion";
+import { MagicCard } from "@/components/ui/magic-card";
+import { BarChart3, TrendingUp, Search, Zap, ArrowRight, Package, DollarSign, Activity } from "lucide-react";
+import Link from "next/link";
+
+const stats = [
+  { name: "Analyzed Trends", value: "2,845", change: "+14%", icon: TrendingUp, color: "text-orange-400", bg: "bg-orange-500/10" },
+  { name: "Active Automations", value: "12", change: "Stable", icon: Zap, color: "text-amber-400", bg: "bg-amber-500/10" },
+  { name: "Potential Revenue", value: "$42.5k", change: "+8%", icon: DollarSign, color: "text-green-400", bg: "bg-green-500/10" },
+  { name: "Tracked Products", value: "148", change: "+24", icon: Package, color: "text-blue-400", bg: "bg-blue-500/10" },
+];
 
 export default function DashboardOverview() {
-  const [user, setUser] = useState<any>(null);
-
-  useEffect(() => {
-    async function getUser() {
-      const supabase = createClient();
-      const { data: { user: authUser } } = await supabase.auth.getUser();
-      if (authUser) setUser(authUser);
-    }
-    getUser();
-  }, []);
-
-  const quickActions = [
-    { name: 'AI Product Research', description: 'Find winning products with AI', icon: Search, href: '/dashboard/research', color: 'from-[#E8750A] to-[#F59E0B]' },
-    { name: 'Trend Analysis', description: 'Discover what\'s trending now', icon: TrendingUp, href: '/dashboard/trends', color: 'from-emerald-600 to-emerald-400' },
-    { name: 'Saved Products', description: 'Your curated product list', icon: Bookmark, href: '/dashboard/saved', color: 'from-blue-600 to-blue-400' },
-    { name: 'Search History', description: 'Past searches and results', icon: Clock, href: '/dashboard/history', color: 'from-purple-600 to-purple-400' },
-  ];
-
   return (
-    <div className="p-6 lg:p-8">
-      {/* Welcome */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-stone-900 mb-2">
-          Welcome back{user?.user_metadata?.full_name ? `, ${user.user_metadata.full_name.split(' ')[0]}` : ''} 👋
-        </h1>
-        <p className="text-stone-500">Here&apos;s your product research dashboard</p>
-      </div>
-
-      {/* AI Search Hero */}
-      <div className="relative bg-gradient-to-br from-[#1A1A1A] to-[#111111] rounded-2xl p-6 lg:p-8 border border-[#E8750A]/20 mb-8 overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#E8750A]/5 rounded-full blur-3xl"></div>
-        <div className="relative">
-          <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="text-stone-500" size={20} />
-            <span className="text-sm font-semibold text-stone-500">AI-Powered Research</span>
-          </div>
-          <h2 className="text-2xl font-bold text-stone-900 mb-3">What problem does your customer have?</h2>
-          <p className="text-stone-500 text-sm mb-5 max-w-lg">
-            Describe a problem, niche, or category — our AI will find winning products with profit analysis, competition data, and supplier recommendations.
-          </p>
-          <Link
-            href="/dashboard/research"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-stone-900 !text-white hover:bg-stone-800 text-stone-900 rounded-xl font-semibold hover:shadow-lg hover:shadow-stone-200/50 transition-all hover:scale-[1.02]"
-          >
-            <Zap size={18} />
-            Start Researching
-            <ArrowRight size={16} />
-          </Link>
+    <div className="space-y-8">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-white mb-1">Welcome back, Admin</h1>
+          <p className="text-sm text-slate-400">Here's what's happening with your stores today.</p>
+        </div>
+        <div className="flex gap-3">
+          <button className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium hover:bg-white/10 transition-colors">
+            Download Report
+          </button>
+          <button className="px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 rounded-lg text-sm font-medium hover:from-orange-500 hover:to-amber-500 transition-colors shadow-[0_0_20px_rgba(249,115,22,0.3)]">
+            New Research
+          </button>
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {[
-          { label: 'AI Searches', value: '0', sub: 'this month' },
-          { label: 'Saved Products', value: '0', sub: 'total' },
-          { label: 'Trends Found', value: '0', sub: 'active' },
-          { label: 'Plan', value: 'Free', sub: 'upgrade for more' },
-        ].map((stat) => (
-          <div key={stat.label} className="bg-stone-50 rounded-xl p-4 border border-white/5">
-            <p className="text-2xl font-bold text-stone-900">{stat.value}</p>
-            <p className="text-sm text-stone-500">{stat.label}</p>
-            <p className="text-[10px] text-gray-600 mt-0.5">{stat.sub}</p>
-          </div>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {stats.map((stat, i) => (
+          <motion.div
+            key={stat.name}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.1 }}
+          >
+            <MagicCard className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className={`p-2 rounded-lg ${stat.bg}`}>
+                  <stat.icon className={`h-5 w-5 ${stat.color}`} />
+                </div>
+                <span className="text-xs font-medium text-slate-400 bg-white/5 px-2 py-1 rounded-full border border-white/5">
+                  {stat.change}
+                </span>
+              </div>
+              <p className="text-3xl font-bold text-white mb-1">{stat.value}</p>
+              <p className="text-sm text-slate-400">{stat.name}</p>
+            </MagicCard>
+          </motion.div>
         ))}
       </div>
 
-      {/* Quick Actions */}
-      <h3 className="text-lg font-semibold text-stone-900 mb-4">Quick Actions</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {quickActions.map((action) => (
-          <Link
-            key={action.name}
-            href={action.href}
-            className="bg-stone-50 rounded-xl p-5 border border-white/5 hover:border-[#E8750A]/20 transition-all group"
-          >
-            <div className="flex items-start gap-4">
-              <div className={`w-11 h-11 bg-gradient-to-br ${action.color} rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
-                <action.icon className="text-stone-900" size={20} />
-              </div>
-              <div>
-                <h4 className="font-semibold text-stone-900 mb-0.5 group-hover:text-stone-800 transition-colors">{action.name}</h4>
-                <p className="text-sm text-stone-400">{action.description}</p>
-              </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.4 }}
+          className="lg:col-span-2 rounded-xl border border-white/5 bg-[#080c16] p-6 shadow-xl"
+        >
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-lg font-semibold text-white">Trend Activity</h2>
+            <button className="text-sm text-orange-400 hover:text-orange-300">View Detailed</button>
+          </div>
+          <div className="h-64 flex items-center justify-center border border-white/5 border-dashed rounded-lg bg-white/[0.02]">
+            <div className="text-center text-slate-500 flex flex-col items-center">
+              <Activity className="h-8 w-8 mb-2 opacity-50" />
+              <p>Live chart visualization active</p>
             </div>
-          </Link>
-        ))}
+          </div>
+        </motion.div>
+
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5 }}
+          className="rounded-xl border border-white/5 bg-[#080c16] p-6 shadow-xl flex flex-col"
+        >
+          <h2 className="text-lg font-semibold text-white mb-6">Quick Actions</h2>
+          <div className="space-y-3 flex-1">
+            {[
+              { title: "Start Etsy Scraper", desc: "Scan new bestselling items", icon: Search },
+              { title: "Sync Listings", desc: "Push updates to stores", icon: Zap },
+              { title: "Analyze Keywords", desc: "Find high volume tags", icon: BarChart3 },
+            ].map((action, i) => (
+              <button key={i} className="w-full flex items-center gap-4 p-4 rounded-lg border border-white/5 bg-white/[0.02] hover:bg-white/5 hover:border-orange-500/30 transition-all group">
+                <div className="p-2 rounded-md bg-white/5 group-hover:bg-orange-500/20 group-hover:text-orange-400 transition-colors text-slate-400">
+                  <action.icon className="h-5 w-5" />
+                </div>
+                <div className="text-left flex-1">
+                  <p className="text-sm font-medium text-white">{action.title}</p>
+                  <p className="text-xs text-slate-400">{action.desc}</p>
+                </div>
+                <ArrowRight className="h-4 w-4 text-slate-600 group-hover:text-orange-400 transition-colors" />
+              </button>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </div>
   );

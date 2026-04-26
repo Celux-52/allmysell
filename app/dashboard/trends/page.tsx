@@ -1,225 +1,167 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { TrendingUp, Flame, ArrowUpRight, ArrowDownRight, Minus, Loader2, RefreshCw, Search, Sparkles } from 'lucide-react';
-import { gamificationEvents } from '@/lib/gamification';
+import { motion } from "framer-motion";
+import { MagicCard } from "@/components/ui/magic-card";
+import { TrendingUp, BarChart, ArrowUp, Star, Search, Filter } from "lucide-react";
+import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 
-interface TrendItem {
-  keyword: string;
-  volume: string;
-  growth: string;
-  status: 'rising' | 'stable' | 'declining';
-  insight?: string;
-}
-
-interface TrendCategory {
-  name: string;
-  emoji: string;
-  trends: TrendItem[];
-}
+const trendingProducts = [
+  { id: 1, name: "Minimalist Leather Wallet", score: 98, searches: "125k", price: "$45", platform: "Etsy", trend: "+24%" },
+  { id: 2, name: "Ergonomic Laptop Stand", score: 94, searches: "89k", price: "$65", platform: "Amazon", trend: "+18%" },
+  { id: 3, name: "Wireless Charging Pad", score: 88, searches: "210k", price: "$35", platform: "eBay", trend: "+12%" },
+  { id: 4, name: "Custom Name Necklace", score: 85, searches: "45k", price: "$28", platform: "Etsy", trend: "+42%" },
+  { id: 5, name: "Mechanical Keyboard", score: 82, searches: "150k", price: "$120", platform: "Shopify", trend: "+8%" },
+];
 
 export default function TrendsPage() {
-  const [categories, setCategories] = useState<TrendCategory[]>([]);
-  const [summary, setSummary] = useState('');
-  const [topOpportunity, setTopOpportunity] = useState('');
-  const [trendSources, setTrendSources] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [niche, setNiche] = useState('');
-  const [error, setError] = useState('');
-  const [fetched, setFetched] = useState(false);
-
-  const fetchTrends = async (nicheQuery?: string) => {
-    setLoading(true);
-    setError('');
-
-    try {
-      const res = await fetch('/api/ai/trends', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ niche: nicheQuery || undefined }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.error || 'Failed to load trends');
-        return;
-      }
-
-      if (data.trends) {
-        setCategories(data.trends.categories || []);
-        setSummary(data.trends.summary || '');
-        setTopOpportunity(data.trends.topOpportunity || '');
-        setTrendSources(data.trends.sources || []);
-      }
-      setFetched(true);
-
-      // Award gamification check
-      gamificationEvents.checkFirstTrend();
-
-    } catch (err) {
-      setError('Failed to connect to AI service');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <div className="p-6 lg:p-8">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+    <div className="space-y-8 pb-10">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-stone-900 mb-1">Trend Analysis</h1>
-          <p className="text-stone-500 text-sm">AI-powered real-time market trend detection</p>
+          <AnimatedGradientText className="mb-2 !mx-0 !justify-start">
+            <span className="flex items-center gap-2">
+              <TrendingUp className="h-4 w-4 text-orange-400" />
+              Live Trends
+            </span>
+          </AnimatedGradientText>
+          <h1 className="text-3xl font-bold text-white">Trend Analysis Engine</h1>
+          <p className="text-slate-400 mt-1">Real-time market intelligence across major e-commerce platforms.</p>
         </div>
-      </div>
-
-      {/* Search / Niche Filter */}
-      <div className="bg-stone-50 rounded-xl p-4 border border-white/5 mb-6 flex gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" size={18} />
-          <input
-            type="text"
-            value={niche}
-            onChange={(e) => setNiche(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && fetchTrends(niche)}
-            placeholder="Enter a niche (optional) or leave empty for general trends..."
-            className="w-full pl-10 pr-4 py-3 bg-[#FAFAF9] border border-white/10 rounded-lg text-stone-900 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 text-sm"
-          />
-        </div>
-        <button
-          onClick={() => fetchTrends(niche)}
-          disabled={loading}
-          className="px-5 py-3 bg-gradient-to-r from-emerald-600 to-emerald-500 text-stone-900 rounded-lg font-medium hover:shadow-lg transition-all disabled:opacity-50 flex items-center gap-2 whitespace-nowrap text-sm"
-        >
-          {loading ? (
-            <span className="flex items-center gap-2"><Loader2 className="animate-spin" size={16} /> Loading...</span>
-          ) : fetched ? (
-            <span className="flex items-center gap-2"><RefreshCw size={16} /> Refresh</span>
-          ) : (
-            <span className="flex items-center gap-2"><Flame size={16} /> Discover Trends</span>
-          )}
-        </button>
-      </div>
-
-      {/* Quick Niches */}
-      {!fetched && !loading && (
-        <div className="flex flex-wrap gap-2 mb-8">
-          {['Electronics', 'Home & Garden', 'Fashion', 'Pet Supplies', 'Fitness', 'Kitchen', 'Auto Accessories', 'Beauty'].map((n) => (
-            <button
-              key={n}
-              onClick={() => { setNiche(n); fetchTrends(n); }}
-              className="px-3 py-1.5 bg-stone-50 border border-white/5 rounded-full text-xs text-stone-500 hover:text-emerald-400 hover:border-emerald-500/30 transition-colors"
-            >
-              {n}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* Error */}
-      {error && (
-        <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 mb-6 text-red-400 text-sm">{error}</div>
-      )}
-
-      {/* Loading */}
-      {loading && (
-        <div className="flex flex-col items-center py-16">
+        
+        <div className="flex gap-3">
           <div className="relative">
-            <div className="w-16 h-16 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin"></div>
-            <Flame className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-emerald-400" size={20} />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
+            <input 
+              type="text" 
+              placeholder="Search niche or product..." 
+              className="pl-9 pr-4 py-2 bg-[#080c16] border border-white/10 rounded-lg text-sm text-white focus:outline-none focus:border-orange-500/50 w-full sm:w-64 transition-colors"
+            />
           </div>
-          <p className="text-stone-500 mt-4 animate-pulse">Analyzing market trends with AI...</p>
+          <button className="p-2 bg-[#080c16] border border-white/10 rounded-lg hover:bg-white/5 transition-colors">
+            <Filter className="h-5 w-5 text-slate-400" />
+          </button>
         </div>
-      )}
+      </div>
 
-      {/* Top Opportunity */}
-      {!loading && topOpportunity && (
-        <div className="bg-gradient-to-r from-emerald-600/10 to-emerald-400/5 rounded-xl p-4 border border-emerald-500/20 mb-6 flex items-start gap-3">
-          <Sparkles className="text-emerald-400 flex-shrink-0 mt-0.5" size={18} />
-          <div>
-            <p className="text-xs font-semibold text-emerald-400 uppercase mb-1">🏆 Top Opportunity</p>
-            <p className="text-sm text-stone-600">{topOpportunity}</p>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="lg:col-span-2 rounded-xl border border-white/5 bg-[#080c16] overflow-hidden"
+        >
+          <div className="p-6 border-b border-white/5 flex items-center justify-between">
+            <h2 className="font-semibold text-white">Hot Opportunities</h2>
+            <button className="text-sm font-medium text-orange-400 hover:text-orange-300">View All</button>
           </div>
-        </div>
-      )}
-
-      {/* Summary */}
-      {!loading && summary && (
-        <div className="bg-stone-50 rounded-xl p-4 border border-white/5 mb-6">
-          <p className="text-sm text-stone-600">{summary}</p>
-        </div>
-      )}
-
-      {/* Trend Categories */}
-      {!loading && categories.length > 0 && (
-        <div className="space-y-8">
-          {categories.map((category) => (
-            <div key={category.name}>
-              <h2 className="text-xl font-semibold text-stone-900 mb-4">
-                {category.emoji} {category.name}
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {(category.trends || []).map((trend) => (
-                  <div
-                    key={trend.keyword}
-                    className="bg-stone-50 rounded-xl p-4 border border-white/5 hover:border-emerald-500/20 transition-all group"
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                          trend.status === 'rising' ? 'bg-emerald-500/10' :
-                          trend.status === 'stable' ? 'bg-blue-500/10' : 'bg-red-500/10'
-                        }`}>
-                          {trend.status === 'rising' ? <ArrowUpRight className="text-emerald-400" size={18} /> :
-                           trend.status === 'stable' ? <Minus className="text-blue-400" size={18} /> :
-                           <ArrowDownRight className="text-red-400" size={18} />}
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-white/[0.02] text-slate-400 border-b border-white/5">
+                <tr>
+                  <th className="px-6 py-4 font-medium">Product Name</th>
+                  <th className="px-6 py-4 font-medium">Platform</th>
+                  <th className="px-6 py-4 font-medium">Trend Score</th>
+                  <th className="px-6 py-4 font-medium">Est. Price</th>
+                  <th className="px-6 py-4 font-medium">Growth</th>
+                  <th className="px-6 py-4 font-medium"></th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {trendingProducts.map((product) => (
+                  <tr key={product.id} className="hover:bg-white/[0.02] transition-colors group">
+                    <td className="px-6 py-4 text-white font-medium">{product.name}</td>
+                    <td className="px-6 py-4 text-slate-400">{product.platform}</td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-2">
+                        <div className="h-2 w-16 bg-white/10 rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-gradient-to-r from-orange-500 to-amber-500" 
+                            style={{ width: `${product.score}%` }}
+                          />
                         </div>
-                        <div>
-                          <p className="text-sm font-medium text-stone-900 group-hover:text-emerald-400 transition-colors">{trend.keyword}</p>
-                          <p className="text-xs text-stone-400">Volume: {trend.volume}/mo</p>
-                        </div>
+                        <span className="text-white">{product.score}</span>
                       </div>
-                      <div className="text-right">
-                        <span className={`text-sm font-bold ${
-                          trend.status === 'rising' ? 'text-emerald-400' :
-                          trend.status === 'stable' ? 'text-blue-400' : 'text-red-400'
-                        }`}>
-                          {trend.growth}
-                        </span>
-                      </div>
-                    </div>
-                    {trend.insight && (
-                      <div className="mt-2 pl-[52px]">
-                        <p className="text-xs text-stone-400 mb-2">{trend.insight}</p>
-                        <div className="flex flex-wrap gap-2">
-                          <a href={`https://www.aliexpress.com/wholesale?SearchText=${encodeURIComponent(trend.keyword)}`} target="_blank" rel="noopener noreferrer" className="text-[9px] px-2 py-1 bg-stone-50 border border-white/10 hover:border-[#ff4747]/50 hover:text-[#ff4747] text-stone-500 rounded transition-all">
-                            AliExpress Ara
-                          </a>
-                          <a href={`https://trends.google.com/trends/explore?q=${encodeURIComponent(trend.keyword)}`} target="_blank" rel="noopener noreferrer" className="text-[9px] px-2 py-1 bg-stone-50 border border-white/10 hover:border-[#4285F4]/50 hover:text-[#4285F4] text-stone-500 rounded transition-all">
-                            Google Trends
-                          </a>
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                    </td>
+                    <td className="px-6 py-4 text-slate-400">{product.price}</td>
+                    <td className="px-6 py-4 text-green-400 flex items-center gap-1">
+                      <ArrowUp className="h-3 w-3" /> {product.trend}
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <button className="p-1.5 text-slate-500 hover:text-orange-400 opacity-0 group-hover:opacity-100 transition-all">
+                        <Star className="h-4 w-4" />
+                      </button>
+                    </td>
+                  </tr>
                 ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+              </tbody>
+            </table>
+          </div>
+        </motion.div>
 
-      {/* Initial State */}
-      {!loading && !fetched && !error && (
-        <div className="text-center py-12">
-          <TrendingUp className="mx-auto text-gray-600 mb-4" size={48} />
-          <h3 className="text-xl font-semibold text-stone-900 mb-2">Discover Market Trends</h3>
-          <p className="text-stone-500 text-sm max-w-md mx-auto">
-            Click &quot;Discover Trends&quot; to get AI-powered analysis of current market trends, or enter a specific niche to focus on.
-          </p>
+        <div className="space-y-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            <MagicCard className="p-6">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 bg-orange-500/10 rounded-lg text-orange-400">
+                  <BarChart className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-white">Market Sentiment</h3>
+                  <p className="text-sm text-slate-400">Overall AI Analysis</p>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span className="text-slate-400">Tech Accessories</span>
+                    <span className="text-green-400">+14%</span>
+                  </div>
+                  <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-full bg-green-500 w-[75%]" />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span className="text-slate-400">Home Decor</span>
+                    <span className="text-orange-400">-5%</span>
+                  </div>
+                  <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-full bg-orange-500 w-[45%]" />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span className="text-slate-400">Personalized Gifts</span>
+                    <span className="text-green-400">+32%</span>
+                  </div>
+                  <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-full bg-green-500 w-[90%]" />
+                  </div>
+                </div>
+              </div>
+            </MagicCard>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="rounded-xl border border-white/5 bg-gradient-to-b from-[#080c16] to-transparent p-6 relative overflow-hidden"
+          >
+            <div className="absolute top-0 right-0 p-4 opacity-10">
+              <TrendingUp className="h-24 w-24 text-orange-500" />
+            </div>
+            <h3 className="font-semibold text-white mb-2 relative z-10">Generate New Insights</h3>
+            <p className="text-sm text-slate-400 mb-4 relative z-10">Run a deep AI analysis on a specific niche to find hidden gems.</p>
+            <button className="w-full py-2.5 bg-white/5 border border-white/10 rounded-lg text-sm font-medium hover:bg-orange-500 hover:border-orange-500 transition-colors relative z-10 text-white shadow-[0_0_15px_rgba(249,115,22,0)] hover:shadow-[0_0_15px_rgba(249,115,22,0.3)]">
+              Start Deep Scan
+            </button>
+          </motion.div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

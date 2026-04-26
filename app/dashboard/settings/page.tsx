@@ -1,117 +1,125 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { User, Mail, Shield, Clock, Save } from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
+import { motion } from "framer-motion";
+import { Settings, User, Bell, Shield, CreditCard, Key } from "lucide-react";
+import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 
-export default function DashboardSettingsPage() {
-  const [user, setUser] = useState<any>(null);
-  const [fullName, setFullName] = useState('');
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
-
-  useEffect(() => {
-    async function getUser() {
-      const supabase = createClient();
-      const { data: { user: authUser } } = await supabase.auth.getUser();
-      if (authUser) {
-        setUser(authUser);
-        setFullName(authUser.user_metadata?.full_name || '');
-      }
-    }
-    getUser();
-  }, []);
-
-  const handleSave = async () => {
-    setSaving(true);
-    try {
-      const supabase = createClient();
-      await supabase.auth.updateUser({
-        data: { full_name: fullName },
-      });
-      setSaved(true);
-      setTimeout(() => setSaved(false), 3000);
-    } catch (err) {
-      console.error('Failed to update profile:', err);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  if (!user) return null;
-
-  const memberSince = new Date(user.created_at).toLocaleDateString('en-US', {
-    year: 'numeric', month: 'long', day: 'numeric',
-  });
-
+export default function SettingsPage() {
   return (
-    <div className="p-6 lg:p-8 max-w-2xl">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-stone-900 mb-1">Settings</h1>
-        <p className="text-stone-500 text-sm">Manage your account preferences</p>
+    <div className="space-y-8 pb-10">
+      <div>
+        <AnimatedGradientText className="mb-2 !mx-0 !justify-start">
+          <span className="flex items-center gap-2">
+            <Settings className="h-4 w-4 text-orange-400" />
+            Preferences
+          </span>
+        </AnimatedGradientText>
+        <h1 className="text-3xl font-bold text-white">Account Settings</h1>
+        <p className="text-slate-400 mt-1">Manage your API keys, billing, and profile details.</p>
       </div>
 
-      <div className="space-y-6">
-        {/* Profile */}
-        <div className="bg-stone-50 rounded-xl border border-white/5 p-6">
-          <h2 className="flex items-center gap-2 text-lg font-semibold text-stone-900 mb-4">
-            <User size={20} className="text-stone-800" />
-            Profile
-          </h2>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm text-stone-500 mb-1.5">Full Name</label>
-              <input
-                type="text"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                className="w-full px-3 py-2.5 bg-[#FAFAF9] border border-white/10 rounded-lg text-stone-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#E8750A]/30"
-              />
-            </div>
-            <div>
-              <label className="flex items-center gap-1.5 text-sm text-stone-500 mb-1.5">
-                <Mail size={14} /> Email
-              </label>
-              <input
-                type="email"
-                value={user.email}
-                disabled
-                className="w-full px-3 py-2.5 bg-[#FAFAF9] border border-white/10 rounded-lg text-stone-400 text-sm cursor-not-allowed"
-              />
-              <p className="text-[10px] text-gray-600 mt-1">Email cannot be changed</p>
-            </div>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="md:col-span-1 space-y-2">
+          {[
+            { name: "Profile", icon: User, active: true },
+            { name: "API Keys", icon: Key },
+            { name: "Billing", icon: CreditCard },
+            { name: "Notifications", icon: Bell },
+            { name: "Security", icon: Shield },
+          ].map((item, i) => (
             <button
-              onClick={handleSave}
-              disabled={saving}
-              className="flex items-center gap-2 px-4 py-2 bg-stone-900 !text-white hover:bg-stone-800 text-stone-900 rounded-lg text-sm font-medium hover:shadow-lg transition-all disabled:opacity-50"
+              key={i}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                item.active 
+                  ? "bg-orange-500/10 text-orange-400 border border-orange-500/20" 
+                  : "text-slate-400 hover:text-white hover:bg-white/5 border border-transparent"
+              }`}
             >
-              <Save size={16} />
-              {saving ? 'Saving...' : saved ? '✓ Saved!' : 'Save Changes'}
+              <item.icon className="h-4 w-4" />
+              {item.name}
             </button>
-          </div>
+          ))}
         </div>
 
-        {/* Account Info */}
-        <div className="bg-stone-50 rounded-xl border border-white/5 p-6">
-          <h2 className="flex items-center gap-2 text-lg font-semibold text-stone-900 mb-4">
-            <Shield size={20} className="text-stone-800" />
-            Account Info
-          </h2>
-          <div className="space-y-3 text-sm">
-            <div className="flex justify-between py-2">
-              <span className="text-stone-500">Provider</span>
-              <span className="text-stone-900 capitalize">{user.app_metadata?.provider || 'email'}</span>
+        <motion.div 
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="md:col-span-3 space-y-6"
+        >
+          {/* Profile Section */}
+          <div className="rounded-2xl border border-white/10 bg-[#080c16] p-6 shadow-xl">
+            <h2 className="text-xl font-bold text-white mb-6 border-b border-white/5 pb-4">Profile Information</h2>
+            
+            <div className="flex items-center gap-6 mb-8">
+              <div className="h-20 w-20 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center text-2xl font-bold text-white shadow-[0_0_20px_rgba(249,115,22,0.3)]">
+                A
+              </div>
+              <div>
+                <button className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium hover:bg-white/10 transition-colors mb-2">
+                  Change Avatar
+                </button>
+                <p className="text-xs text-slate-500">JPG, GIF or PNG. Max size of 800K</p>
+              </div>
             </div>
-            <div className="flex justify-between py-2 border-t border-white/5">
-              <span className="text-stone-500">Account ID</span>
-              <span className="text-stone-400 font-mono text-xs">{user.id.slice(0, 8)}...</span>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-300">Full Name</label>
+                <input 
+                  type="text" 
+                  defaultValue="Admin User"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-orange-500/50 transition-colors"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-300">Email Address</label>
+                <input 
+                  type="email" 
+                  defaultValue="admin@allmysell.com"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-orange-500/50 transition-colors"
+                />
+              </div>
             </div>
-            <div className="flex justify-between py-2 border-t border-white/5">
-              <span className="text-stone-500 flex items-center gap-1"><Clock size={14} /> Member Since</span>
-              <span className="text-stone-900">{memberSince}</span>
+            
+            <div className="flex justify-end pt-4 border-t border-white/5">
+              <button className="px-6 py-2.5 bg-gradient-to-r from-orange-600 to-amber-600 rounded-lg text-sm font-medium hover:from-orange-500 hover:to-amber-500 transition-colors text-white shadow-lg shadow-orange-500/20">
+                Save Changes
+              </button>
             </div>
           </div>
-        </div>
+
+          {/* Connected Accounts placeholder */}
+          <div className="rounded-2xl border border-white/10 bg-[#080c16] p-6 shadow-xl">
+            <h2 className="text-xl font-bold text-white mb-6 border-b border-white/5 pb-4">Connected Marketplaces</h2>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-4 rounded-lg border border-white/5 bg-white/[0.02]">
+                <div className="flex items-center gap-4">
+                  <div className="text-2xl">🛍️</div>
+                  <div>
+                    <p className="font-medium text-white">eBay Account</p>
+                    <p className="text-xs text-slate-400">Not connected</p>
+                  </div>
+                </div>
+                <button className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium hover:bg-white/10 transition-colors text-white">
+                  Connect
+                </button>
+              </div>
+              
+              <div className="flex items-center justify-between p-4 rounded-lg border border-green-500/20 bg-green-500/5">
+                <div className="flex items-center gap-4">
+                  <div className="text-2xl">🏪</div>
+                  <div>
+                    <p className="font-medium text-white">Shopify Store</p>
+                    <p className="text-xs text-green-400">Connected to allmysell.myshopify.com</p>
+                  </div>
+                </div>
+                <button className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium hover:bg-red-500/20 hover:text-red-400 transition-colors text-white">
+                  Disconnect
+                </button>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </div>
   );

@@ -1,221 +1,150 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import {
-  LayoutDashboard, Search, TrendingUp, Bookmark, Clock,
-  Settings, LogOut, ChevronLeft, ChevronRight, Shield, Sparkles,
-  Menu, X, Bot, Trophy
-} from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  LayoutDashboard, BarChart3, Search, Settings, 
+  Menu, X, Zap, History, Star, TrendingUp, LogOut
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
-const sidebarItems: { name: string; href: string; icon: any; adminOnly?: boolean }[] = [
-  { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'AI Research', href: '/dashboard/research', icon: Search },
-  { name: 'Trends', href: '/dashboard/trends', icon: TrendingUp },
-  { name: 'Saved Products', href: '/dashboard/saved', icon: Bookmark },
-  { name: 'History', href: '/dashboard/history', icon: Clock },
-  { name: 'Achievements', href: '/dashboard/achievements', icon: Trophy },
-  { name: 'Bot Automation', href: '/dashboard/automation', icon: Bot, adminOnly: true },
-  { name: 'Settings', href: '/dashboard/settings', icon: Settings },
+const navigation = [
+  { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Trend Analysis", href: "/dashboard/trends", icon: TrendingUp },
+  { name: "Smart Research", href: "/dashboard/research", icon: Search },
+  { name: "Automations", href: "/dashboard/automation", icon: Zap },
+  { name: "Saved Items", href: "/dashboard/saved", icon: Star },
+  { name: "History", href: "/dashboard/history", icon: History },
 ];
 
-interface DashboardUser {
-  id: string;
-  email: string;
-  fullName: string | null;
-  avatarUrl: string | null;
-  role: string;
-}
-
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
-  const router = useRouter();
-  const [collapsed, setCollapsed] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [user, setUser] = useState<DashboardUser | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function getUser() {
-      const supabase = createClient();
-      const { data: { user: authUser } } = await supabase.auth.getUser();
-      if (!authUser) {
-        router.push('/login');
-        return;
-      }
-      setUser({
-        id: authUser.id,
-        email: authUser.email || '',
-        fullName: authUser.user_metadata?.full_name || null,
-        avatarUrl: authUser.user_metadata?.avatar_url || null,
-        role: authUser.user_metadata?.role || 'user',
-      });
-      setLoading(false);
-    }
-    getUser();
-  }, [router]);
-
-  const handleLogout = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    router.push('/');
-    router.refresh();
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#FAFAF9] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-[#E8750A]/30 border-t-[#E8750A] rounded-full animate-spin"></div>
-          <p className="text-stone-500 animate-pulse">Loading dashboard...</p>
-        </div>
-      </div>
-    );
-  }
-
-  const isAdmin = user?.role === 'admin' ||
-                  user?.email === 'melih@allmysell.com' ||
-                  user?.email === 'yunus@allmysell.com' ||
-                  user?.email === 'yunussukur7@gmail.com' ||
-                  user?.email === 'melih20052005gs@gmail.com';
-
-  const SidebarContent = () => (
-    <>
-      {/* Logo */}
-      <div className="p-4 border-b border-white/5">
-        <Link href="/" className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-stone-900 !text-white hover:bg-stone-800 rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg shadow-stone-200/50">
-            <span className="text-stone-900 font-bold text-lg">A</span>
-          </div>
-          {!collapsed && (
-            <div>
-              <h1 className="text-lg font-bold bg-stone-900 !text-white hover:bg-stone-800 bg-clip-text text-transparent">AllMySell</h1>
-              <p className="text-[10px] text-gray-600 -mt-0.5">Product Research Platform</p>
-            </div>
-          )}
-        </Link>
-      </div>
-
-      {/* AI Badge */}
-      {!collapsed && (
-        <div className="mx-3 mt-4 p-3 bg-gradient-to-r from-[#E8750A]/10 to-[#F59E0B]/5 rounded-xl border border-stone-200/60">
-          <div className="flex items-center gap-2 mb-1">
-            <Sparkles className="text-stone-500" size={14} />
-            <span className="text-xs font-semibold text-stone-500">Free Plan</span>
-          </div>
-          <p className="text-[10px] text-stone-400">Upgrade for unlimited AI searches</p>
-        </div>
-      )}
-
-      {/* Navigation */}
-      <nav className="flex-1 py-4 px-2 space-y-1">
-        {sidebarItems.filter(item => !item.adminOnly || isAdmin).map((item) => {
-          const isActive = pathname === item.href;
-          return (
-            <Link
-              key={item.name}
-              href={item.href}
-              onClick={() => setMobileOpen(false)}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${
-                isActive
-                  ? 'bg-[#E8750A]/15 text-stone-800 border border-[#E8750A]/20'
-                  : 'text-stone-500 hover:bg-white/5 hover:text-gray-200'
-              }`}
-              title={collapsed ? item.name : undefined}
-            >
-              <item.icon size={20} className={`flex-shrink-0 ${isActive ? 'text-stone-800' : 'group-hover:text-stone-800'}`} />
-              {!collapsed && <span className="text-sm font-medium">{item.name}</span>}
-            </Link>
-          );
-        })}
-      </nav>
-
-      {/* Bottom */}
-      <div className="p-2 border-t border-white/5 space-y-1">
-        {isAdmin && (
-          <Link
-            href="/admin"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-purple-400 hover:bg-purple-500/10 transition-all"
-            title={collapsed ? 'Admin Panel' : undefined}
-          >
-            <Shield size={20} className="flex-shrink-0" />
-            {!collapsed && <span className="text-sm">Admin Panel</span>}
-          </Link>
-        )}
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-400 hover:bg-red-500/10 transition-all w-full"
-          title={collapsed ? 'Log Out' : undefined}
-        >
-          <LogOut size={20} className="flex-shrink-0" />
-          {!collapsed && <span className="text-sm">Log Out</span>}
-        </button>
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className="hidden md:flex items-center gap-3 px-3 py-2.5 rounded-lg text-stone-400 hover:bg-white/5 hover:text-stone-600 transition-all w-full"
-        >
-          {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
-          {!collapsed && <span className="text-sm">Collapse</span>}
-        </button>
-      </div>
-
-      {/* User Card */}
-      {!collapsed && user && (
-        <div className="p-4 border-t border-white/5">
-          <div className="flex items-center gap-3">
-            {user.avatarUrl ? (
-              <img src={user.avatarUrl} alt="" className="w-9 h-9 rounded-full object-cover border border-[#E8750A]/20 flex-shrink-0" />
-            ) : (
-              <div className="w-9 h-9 bg-stone-900 !text-white hover:bg-stone-800 rounded-full flex items-center justify-center text-stone-900 text-sm font-bold flex-shrink-0">
-                {(user.fullName || user.email)[0].toUpperCase()}
-              </div>
-            )}
-            <div className="min-w-0">
-              <p className="text-xs font-medium text-stone-900 truncate">{user.fullName || 'User'}</p>
-              <p className="text-[10px] text-stone-400 truncate">{user.email}</p>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#FAFAF9] flex">
-      {/* Desktop Sidebar */}
-      <aside className={`hidden md:flex ${collapsed ? 'w-20' : 'w-64'} bg-white border-r border-white/5 flex-col transition-all duration-300 sticky top-0 h-screen`}>
-        <SidebarContent />
-      </aside>
+    <div className="min-h-screen bg-[#030712] text-white flex overflow-hidden selection:bg-orange-500/30">
+      {/* Mobile sidebar overlay */}
+      <AnimatePresence>
+        {sidebarOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSidebarOpen(false)}
+            className="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm lg:hidden"
+          />
+        )}
+      </AnimatePresence>
 
-      {/* Mobile Header */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-white/5 px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-stone-900 !text-white hover:bg-stone-800 rounded-lg flex items-center justify-center">
-            <span className="text-stone-900 font-bold text-sm">A</span>
-          </div>
-          <span className="font-bold bg-stone-900 !text-white hover:bg-stone-800 bg-clip-text text-transparent">AllMySell</span>
-        </Link>
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 rounded-lg text-stone-600 hover:bg-white/5">
-          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
-      </div>
+      {/* Sidebar */}
+      <motion.div
+        className={cn(
+          "fixed inset-y-0 left-0 z-50 w-72 flex-col bg-[#080c16] border-r border-white/5 transition-transform duration-300 ease-in-out lg:static lg:flex lg:translate-x-0",
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        )}
+      >
+        <div className="flex h-16 shrink-0 items-center justify-between px-6 border-b border-white/5">
+          <Link href="/dashboard" className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-[0_0_15px_rgba(249,115,22,0.3)]">
+              <Zap className="h-5 w-5 text-white" />
+            </div>
+            <span className="text-lg font-bold tracking-tight text-white">AllMySell</span>
+          </Link>
+          <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-slate-400 hover:text-white">
+            <X className="h-5 w-5" />
+          </button>
+        </div>
 
-      {/* Mobile Sidebar Overlay */}
-      {mobileOpen && (
-        <>
-          <div className="md:hidden fixed inset-0 bg-transparent/60 z-40" onClick={() => setMobileOpen(false)} />
-          <aside className="md:hidden fixed left-0 top-0 bottom-0 w-64 bg-white z-50 flex flex-col">
-            <SidebarContent />
-          </aside>
-        </>
-      )}
+        <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-1">
+          {navigation.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  "group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all relative",
+                  isActive
+                    ? "text-white bg-white/5"
+                    : "text-slate-400 hover:text-white hover:bg-white/5"
+                )}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="active-nav"
+                    className="absolute inset-0 rounded-lg bg-orange-500/10 border border-orange-500/20"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+                <item.icon
+                  className={cn(
+                    "h-5 w-5 shrink-0 transition-colors relative z-10",
+                    isActive ? "text-orange-400" : "text-slate-500 group-hover:text-slate-300"
+                  )}
+                />
+                <span className="relative z-10">{item.name}</span>
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="p-4 border-t border-white/5">
+          <Link
+            href="/dashboard/settings"
+            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
+          >
+            <Settings className="h-5 w-5" />
+            Settings
+          </Link>
+          <button className="w-full mt-2 flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors">
+            <LogOut className="h-5 w-5" />
+            Sign Out
+          </button>
+        </div>
+      </motion.div>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto md:pt-0 pt-14">
-        {children}
-      </main>
+      <div className="flex flex-1 flex-col overflow-hidden">
+        <header className="flex h-16 shrink-0 items-center gap-4 border-b border-white/5 bg-[#030712]/50 backdrop-blur-xl px-4 shadow-sm sm:gap-6 sm:px-6 lg:px-8 z-30 relative">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="text-slate-400 hover:text-white lg:hidden"
+          >
+            <Menu className="h-6 w-6" />
+          </button>
+          
+          <div className="flex flex-1 justify-end items-center gap-4">
+            <div className="flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/10 px-3 py-1 text-sm font-medium text-orange-400">
+              <Sparkles className="h-4 w-4" />
+              Pro Plan
+            </div>
+            <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-orange-500 to-amber-500 ring-2 ring-white/10" />
+          </div>
+        </header>
+
+        <main className="flex-1 overflow-y-auto bg-[#030712] relative">
+          {/* Background effects */}
+          <div className="absolute top-0 inset-x-0 h-96 bg-gradient-to-b from-orange-500/5 to-transparent pointer-events-none" />
+          
+          <div className="relative z-10 px-4 py-8 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full h-full">
+            {children}
+          </div>
+        </main>
+      </div>
     </div>
+  );
+}
+
+function Sparkles(props: any) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+    </svg>
   );
 }

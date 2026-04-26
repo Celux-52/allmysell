@@ -1,295 +1,98 @@
-import { Target, Users, TrendingUp, Globe2, Phone, Mail, MapPin } from 'lucide-react';
-import Link from 'next/link';
-import type { Metadata } from 'next';
+"use client";
 
-export const metadata: Metadata = {
-  title: 'About Us | The AllMySell Story',
-  description: 'Discover the story behind AllMySell, a fast-growing global e-commerce brand specializing in technology and mobile accessories. Learn about our mission and multi-platform approach.',
-  keywords: ['about AllMySell', 'e-commerce brand', 'tech accessories seller', 'multi-platform strategy'],
-};
+import { motion } from "framer-motion";
+import { Particles } from "@/components/ui/particles";
+import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
+import { Users, Target, Rocket, Sparkles } from "lucide-react";
+import TrustBadges from "@/components/TrustBadges";
 
 export default function AboutPage() {
   return (
-    <div className="bg-[#FAFAF9]">
-      {/* Hero Section */}
-      <section className="relative bg-stone-900 !text-white hover:bg-stone-800 text-stone-900 py-20">
-        <div className="absolute inset-0 bg-transparent/20"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              About Us
-            </h1>
-            <p className="text-xl md:text-2xl text-stone-600 max-w-3xl mx-auto">
-              A growing brand with multi-channel sales strategy, 
-              establishing strong presence across global e-commerce platforms
-            </p>
-          </div>
-        </div>
-      </section>
+    <div className="bg-[#030712] min-h-screen text-white pt-24 selection:bg-orange-500/30">
+      <div className="absolute inset-0 z-0 h-[50vh] overflow-hidden pointer-events-none">
+        <Particles quantity={40} color="#F97316" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-orange-600/10 rounded-full blur-[120px] mix-blend-screen" />
+      </div>
 
-      {/* Mission Section */}
-      <section className="py-20 bg-[#FAFAF9]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl font-bold text-stone-900 mb-6">
-                Our Vision
-              </h2>
-              <p className="text-lg text-stone-500 mb-4">
-                AllMySell is an innovative brand that stands out in the global 
-                e-commerce ecosystem with a multi-platform sales strategy. We are 
-                currently actively selling on eBay. Our stores on platforms like 
-                Amazon, Etsy, Shopify and TikTok Shop will open very soon.
-              </p>
-              <p className="text-lg text-stone-500 mb-4">
-                With our technology and mobile accessory focused products, we aim to 
-                provide our customers with a quality and reliable shopping experience. 
-                Our eBay store features chargers, car accessories, phone cases and more.
-              </p>
-              <p className="text-lg text-stone-500">
-                Our goal is to be a trusted brand in global markets by offering the 
-                right product on the right platform. Instead of being limited to a 
-                single platform, we are growing with our strategy that provides 
-                multi-directional access.
-              </p>
-            </div>
-            <div className="bg-gradient-to-br from-[#1A1A1A] to-[#111111] p-8 rounded-2xl border border-stone-200/60">
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="bg-[#E8750A]/10 text-stone-800 p-3 rounded-lg">
-                    <Target size={24} />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-stone-900 mb-2">
-                      Our Goal
-                    </h3>
-                    <p className="text-stone-500">
-                      To be a leader in global markets with multi-platform strategy
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <div className="bg-[#F59E0B]/10 text-stone-500 p-3 rounded-lg">
-                    <Users size={24} />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-stone-900 mb-2">
-                      Customer Focused
-                    </h3>
-                    <p className="text-stone-500">
-                      Providing superior customer experience on every platform
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <div className="bg-[#E8750A]/10 text-stone-800 p-3 rounded-lg">
-                    <TrendingUp size={24} />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-stone-900 mb-2">
-                      Continuous Growth
-                    </h3>
-                    <p className="text-stone-500">
-                      Continuing to expand with new platforms and markets
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <div className="bg-[#F59E0B]/10 text-stone-500 p-3 rounded-lg">
-                    <Globe2 size={24} />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-stone-900 mb-2">
-                      Global Vision
-                    </h3>
-                    <p className="text-stone-500">
-                      Reaching and serving customers worldwide
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Strategy Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-stone-900 mb-4">
-              Our Multi-Platform E-Commerce Strategy
-            </h2>
-            <p className="text-xl text-stone-500 max-w-3xl mx-auto">
-              Reaching a wide customer base by leveraging the unique 
-              advantages of each platform
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-stone-50 p-8 rounded-xl shadow-md border border-stone-200/60">
-              <div className="text-4xl mb-4">🎯</div>
-              <h3 className="text-2xl font-bold text-stone-900 mb-4">
-                Platform Diversity
-              </h3>
-              <p className="text-stone-500">
-                We reach every customer segment by having presence on platforms 
-                with different features such as eBay, Amazon, Etsy, Shopify and 
-                TikTok Shop.
-              </p>
-            </div>
-
-            <div className="bg-stone-50 p-8 rounded-xl shadow-md border border-stone-200/60">
-              <div className="text-4xl mb-4">📊</div>
-              <h3 className="text-2xl font-bold text-stone-900 mb-4">
-                Optimized Sales
-              </h3>
-              <p className="text-stone-500">
-                We present our products in the most efficient way by analyzing 
-                each platform's algorithm and user behaviors.
-              </p>
-            </div>
-
-            <div className="bg-stone-50 p-8 rounded-xl shadow-md border border-stone-200/60">
-              <div className="text-4xl mb-4">🚀</div>
-              <h3 className="text-2xl font-bold text-stone-900 mb-4">
-                Rapid Growth
-              </h3>
-              <p className="text-stone-500">
-                Without depending on a single platform, we achieve sustainable 
-                and rapid growth with our multi-channel sales strategy.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
-      <section className="py-20 bg-[#FAFAF9]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-stone-900 mb-4">
-              Our Values
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="bg-stone-900 !text-white hover:bg-stone-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">✨</span>
-              </div>
-              <h3 className="text-xl font-semibold text-stone-900 mb-2">Quality</h3>
-              <p className="text-stone-500">
-                Premium quality products and services on every platform
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="bg-stone-900 !text-white hover:bg-stone-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🤝</span>
-              </div>
-              <h3 className="text-xl font-semibold text-stone-900 mb-2">Trust</h3>
-              <p className="text-stone-500">
-                Customer satisfaction and trust-oriented approach
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="bg-stone-900 !text-white hover:bg-stone-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">⚡</span>
-              </div>
-              <h3 className="text-xl font-semibold text-stone-900 mb-2">Speed</h3>
-              <p className="text-stone-500">
-                Fast delivery and customer support services
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="bg-stone-900 !text-white hover:bg-stone-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🌟</span>
-              </div>
-              <h3 className="text-xl font-semibold text-stone-900 mb-2">Innovation</h3>
-              <p className="text-stone-500">
-                Continuous development and new platform integrations
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Partners Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-stone-900 mb-4">
-              Our Team & Contact
-            </h2>
-            <p className="text-xl text-stone-500">
-              Meet our partners and get in touch
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="bg-stone-50 p-8 rounded-xl shadow-lg border border-stone-200/60">
-              <div className="flex items-center space-x-4 mb-6">
-                <div className="bg-stone-900 !text-white hover:bg-stone-800 text-stone-900 w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">
-                  M
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-stone-900">Melih</h3>
-                  <p className="text-stone-500">Co-Founder & Partner</p>
-                </div>
-              </div>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3 text-stone-600">
-                  <Phone size={20} className="text-stone-800" />
-                  <span>+90 553 706 59 12</span>
-                </div>
-                <div className="flex items-center space-x-3 text-stone-600">
-                  <Mail size={20} className="text-stone-800" />
-                  <span>melihbicak@gmail.com</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-stone-50 p-8 rounded-xl shadow-lg border border-stone-200/60">
-              <div className="flex items-center space-x-4 mb-6">
-                <div className="bg-gradient-to-br from-[#F59E0B] to-[#C2410C] text-stone-900 w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold">
-                  Y
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-stone-900">Şükür Yunus</h3>
-                  <p className="text-stone-500">Co-Founder & Partner</p>
-                </div>
-              </div>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3 text-stone-600">
-                  <Phone size={20} className="text-stone-500" />
-                  <span>+90 551 834 30 30</span>
-                </div>
-                <div className="flex items-center space-x-3 text-stone-600">
-                  <Mail size={20} className="text-stone-500" />
-                  <span>yunussukur7@gmail.com</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="bg-stone-900 !text-white hover:bg-stone-800 text-stone-900 py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Explore Our eBay Store
-          </h2>
-          <p className="text-xl mb-8 text-stone-600">
-            Browse our technology products in our currently active eBay store
+      <div className="relative z-10 container mx-auto px-4 max-w-5xl pb-24">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-16"
+        >
+          <AnimatedGradientText className="mb-6">
+            <span className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-orange-400" />
+              <span>Our Story</span>
+            </span>
+          </AnimatedGradientText>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
+            Building the <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500">Future of Retail</span>
+          </h1>
+          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+            From humble beginnings to an AI-powered SaaS platform. We are building the tools we always wished we had.
           </p>
-          <Link
-            href="/shop/ebay"
-            className="inline-block bg-stone-50 text-stone-800 px-8 py-4 rounded-full font-semibold text-lg hover:bg-orange-50 transition-all hover:scale-105 shadow-lg"
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-12 items-center mb-32">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+            className="space-y-6"
           >
-            View eBay Store
-          </Link>
+            <h2 className="text-3xl font-bold">The Journey Begins</h2>
+            <div className="space-y-4 text-slate-300 leading-relaxed">
+              <p>
+                The story of Melih and Şükür Yunus did not begin with big plans, ready capital, or long-term startup dreams. It started in a much more ordinary way: they met while working at the same workplace. Different lives, different paths, but very similar struggles.
+              </p>
+              <p>
+                At that time, Şükür Yunus was attending his own university while actively working in e-commerce. He didn't learn this business from theory alone; he learned it by being inside it. He tested products, made sales, lost money, adjusted, and tried again.
+              </p>
+              <p>
+                Melih's situation followed a different rhythm. He was also attending university under heavy conditions. The thought that "this cannot be it" became impossible to ignore. Watching Şükür Yunus operate in e-commerce opened a door in Melih's mind.
+              </p>
+            </div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3 }}
+            className="relative"
+          >
+            <div className="aspect-square rounded-2xl bg-gradient-to-tr from-orange-500/20 to-amber-500/5 border border-white/10 p-2 overflow-hidden backdrop-blur-sm relative">
+              <div className="absolute inset-0 bg-slate-950/80 rounded-xl m-2 flex items-center justify-center border border-white/5">
+                <div className="text-center p-8">
+                  <Rocket className="w-16 h-16 text-orange-400 mx-auto mb-4 opacity-50" />
+                  <p className="text-xl font-medium text-slate-400 italic">"AllMySell is not a story that was told. It is a process that was lived."</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
-      </section>
+
+        <div className="grid sm:grid-cols-3 gap-6 mb-32">
+          {[
+            { icon: Target, title: "Our Mission", desc: "To democratize e-commerce success through advanced AI automation." },
+            { icon: Users, title: "Who We Are", desc: "A team of former sellers building the ultimate command center." },
+            { icon: Sparkles, title: "Our Vision", desc: "An ecosystem where any motivated individual can build a global business." }
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 + (i * 0.1) }}
+              className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-orange-500/30 hover:bg-white/10 transition-all group"
+            >
+              <item.icon className="h-10 w-10 text-orange-400 mb-6 group-hover:scale-110 transition-transform" />
+              <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+              <p className="text-slate-400">{item.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+
+      </div>
+      <TrustBadges />
     </div>
   );
 }

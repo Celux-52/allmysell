@@ -1,84 +1,76 @@
-import type { Metadata } from 'next';
+"use client";
 
-export const metadata: Metadata = {
-  title: 'Amazon Store - AllMySell | Under Construction',
-  description: 'AllMySell Amazon store is currently under construction. Stay tuned for updates!',
-};
+import { motion } from "framer-motion";
+import { Particles } from "@/components/ui/particles";
+import { BorderBeam } from "@/components/ui/border-beam";
+import { Lock, Wrench, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 
-export default function AmazonPage() {
+export default function AmazonShopPage() {
   return (
-    <div className="bg-stone-50 min-h-screen">
-      {/* Hero Section */}
-      <section className="relative bg-stone-50 text-stone-900 py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="text-8xl mb-8">📦</div>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Amazon Store
-          </h1>
-          <div className="inline-block bg-cornsilk/20 backdrop-blur-sm px-8 py-4 rounded-full mb-8">
-            <p className="text-2xl font-semibold">&#128679; Under Construction</p>
-          </div>
-          <p className="text-xl md:text-2xl text-stone-600 max-w-3xl mx-auto">
-            Our Amazon store is currently being built. We are working hard to bring you
-            the best products and shopping experience. Stay tuned!
-          </p>
-        </div>
-      </section>
+    <div className="min-h-screen bg-[#030712] text-white flex flex-col items-center justify-center relative overflow-hidden pt-20">
+      <Particles className="absolute inset-0 z-0" quantity={150} color="#F59E0B" ease={40} />
+      
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-600/10 rounded-full filter blur-[150px] animate-pulse-glow pointer-events-none" />
 
-      {/* What to Expect */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-stone-900 mb-4">
-              Coming Soon
-            </h2>
-            <p className="text-xl text-stone-500">
-              What to expect when we launch
-            </p>
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, type: "spring", bounce: 0.5 }}
+        className="relative z-10 p-8 md:p-16 rounded-3xl bg-slate-950/60 border border-white/10 backdrop-blur-xl shadow-2xl max-w-3xl w-full mx-4 text-center overflow-hidden"
+      >
+        <BorderBeam size={400} duration={8} colorFrom="#f59e0b" colorTo="#fbbf24" />
+        
+        <motion.div
+          animate={{ rotate: [0, -10, 10, -10, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+          className="inline-block mb-6"
+        >
+          <div className="relative">
+            <div className="h-24 w-24 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-white/10 flex items-center justify-center shadow-2xl">
+              <span className="text-5xl">📦</span>
+            </div>
+            <Lock className="h-10 w-10 text-amber-500 absolute -bottom-2 -right-2" />
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-8 bg-white border border-stone-200/50 shadow-sm rounded-xl border border-stone-200">
-              <div className="text-5xl mb-4">&#128722;</div>
-              <h3 className="text-2xl font-bold text-stone-900 mb-4">Quality Products</h3>
-              <p className="text-stone-500">
-                Carefully curated selection of premium products
-              </p>
-            </div>
-            <div className="text-center p-8 bg-white border border-stone-200/50 shadow-sm rounded-xl border border-stone-200">
-              <div className="text-5xl mb-4">&#128640;</div>
-              <h3 className="text-2xl font-bold text-stone-900 mb-4">Fast Shipping</h3>
-              <p className="text-stone-500">
-                Reliable and speedy delivery worldwide
-              </p>
-            </div>
-            <div className="text-center p-8 bg-white border border-stone-200/50 shadow-sm rounded-xl border border-stone-200">
-              <div className="text-5xl mb-4">&#128737;</div>
-              <h3 className="text-2xl font-bold text-stone-900 mb-4">Buyer Protection</h3>
-              <p className="text-stone-500">
-                Secure shopping with full buyer protection
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+        </motion.div>
 
-      {/* CTA Section */}
-      <section className="bg-stone-100 text-stone-900 py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Don&apos;t Miss the Launch!
-          </h2>
-          <p className="text-xl mb-8 text-stone-600">
-            Check back soon or visit our homepage for updates
-          </p>
-          <a
-            href="/"
-            className="inline-flex items-center space-x-2 bg-stone-50 text-stone-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-stone-100/50 transition-all hover:scale-105 shadow-lg"
+        <AnimatedGradientText className="mb-6 mx-auto">
+          <span className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest">
+            <Wrench className="h-4 w-4" />
+            Integration In Progress
+          </span>
+        </AnimatedGradientText>
+
+        <motion.h1 
+          className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6"
+        >
+          Amazon Module is <br/>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 animate-text-shimmer">
+            Under Construction
+          </span>
+        </motion.h1>
+
+        <motion.p className="text-lg md:text-xl text-slate-400 mb-10 max-w-lg mx-auto leading-relaxed">
+          The ultimate Amazon FBA & FBM synchronization engine is being built. FBA inventory tracking and Buy Box analytics are coming soon.
+        </motion.p>
+
+        <motion.div className="flex justify-center gap-4 flex-wrap">
+          <Link 
+            href="/shop"
+            className="group relative inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10"
           >
-            <span>Go to Homepage</span>
-          </a>
-        </div>
-      </section>
+            Back to Integrations
+          </Link>
+          <Link 
+            href="/dashboard"
+            className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-semibold text-black transition-all hover:bg-slate-200"
+          >
+            Dashboard
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

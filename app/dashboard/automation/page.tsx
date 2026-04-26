@@ -1,276 +1,128 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Bot, Search, Loader2, CheckCircle2, AlertCircle, Zap, TrendingUp, Package, ExternalLink, RefreshCw } from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
+import { motion } from "framer-motion";
+import { MagicCard } from "@/components/ui/magic-card";
+import { Zap, Play, Pause, Settings2, Plus, ArrowRight } from "lucide-react";
+import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 
-interface TrendProduct {
-  id: number;
-  product_name: string;
-  cj_price: number;
-  shipping_cost: number;
-  total_cost: number;
-  ebay_avg_price: number;
-  sell_price: number;
-  net_profit_percent: number;
-  competition: number;
-  stock_status: string;
-  category: string;
-  supplier_link: string;
-  image_urls: string;
-  keyword: string;
-  created_at: string;
-}
+const automations = [
+  { id: 1, name: "Auto-Scrape Bestsellers", status: "Active", target: "Etsy", frequency: "Every 12h", icon: "🔥" },
+  { id: 2, name: "Price Tracker", status: "Paused", target: "Amazon", frequency: "Daily", icon: "💰" },
+  { id: 3, name: "Keyword Rank Check", status: "Active", target: "Shopify", frequency: "Weekly", icon: "📈" },
+];
 
 export default function AutomationPage() {
-  const [keyword, setKeyword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<{ type: 'success' | 'error'; message: string; note?: string } | null>(null);
-  const [products, setProducts] = useState<TrendProduct[]>([]);
-  const [loadingProducts, setLoadingProducts] = useState(true);
-  const supabase = createClient();
-
-  const fetchProducts = async () => {
-    setLoadingProducts(true);
-    const { data, error } = await supabase
-      .from('trend_products')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(50);
-
-    if (!error && data) {
-      setProducts(data);
-    }
-    setLoadingProducts(false);
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  const handleRunBot = async () => {
-    const searchKeyword = keyword.trim();
-    if (!searchKeyword) {
-      alert('Lütfen aramak için İngilizce bir kelime girin!');
-      return;
-    }
-    setLoading(true);
-    setResult(null);
-    setProducts([]); // Eski ürünleri ekrandan temizle
-
-    fetch('/api/run-bot', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ keyword: searchKeyword }),
-    }).catch(console.error);
-
-    setResult({
-      type: 'success',
-      message: `"${searchKeyword}" için arama arka planda devam ediyor... Lütfen bekleyin.`,
-      note: 'Not: "Airpods" gibi markalı kelimeler veya hatalı yazımlarda CJ Dropshipping sonuç vermez. Sonuç gelmesi 1 dakikadan uzun sürerse farklı (genel) bir kelime deneyin.',
-    });
-
-    // Akıllı Bekleme (Polling): Her 5 saniyede bir yeni veri gelmiş mi diye kontrol et
-    let attempts = 0;
-    const pollInterval = setInterval(async () => {
-      attempts++;
-      
-      const { data } = await supabase
-        .from('trend_products')
-        .select('*')
-        .eq('keyword', searchKeyword)
-        .order('created_at', { ascending: false })
-        .limit(1);
-
-      // Eğer aradığımız kelimeyle eşleşen yeni bir ürün düştüyse
-      if (data && data.length > 0) {
-        clearInterval(pollInterval);
-        fetchProducts(); // Tabloyu tam güncelle
-        setResult({
-          type: 'success',
-          message: `Harika! "${searchKeyword}" için sonuçlar başarıyla yüklendi.`,
-        });
-        setKeyword('');
-        setLoading(false);
-      } 
-      // 3 dakika (36 deneme) geçtiyse pes et (Timeout)
-      else if (attempts >= 36) {
-        clearInterval(pollInterval);
-        setResult({
-          type: 'error',
-          message: `Zaman Aşımı: "${searchKeyword}" için ürün bulunamadı.`,
-          note: 'Bot CJ Dropshipping, eBay ve AliExpress taramalarını 3 dakika boyunca yaptı ama kârlı ürün bulamadı. Muhtemelen marka kısıtlaması (örn: Apple) veya stok sorunu var. Lütfen farklı kelimeler deneyin.',
-        });
-        setLoading(false);
-      }
-    }, 5000); // 5 saniyede bir kontrol et
-  };
-
   return (
-    <div className="p-6 lg:p-8 max-w-7xl mx-auto space-y-8">
-      {/* Header */}
-      <div className="flex items-center gap-4">
-        <div className="w-14 h-14 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 rounded-2xl flex items-center justify-center border border-emerald-500/20">
-          <Bot className="text-emerald-600" size={28} />
-        </div>
+    <div className="space-y-8 pb-10">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-stone-900 tracking-tight">Trend Hunter Bot</h1>
-          <p className="text-stone-500 text-sm mt-0.5">eBay trend ürünlerini otomatik bul, CJ ile eşleştir, kâr analizi yap</p>
+          <AnimatedGradientText className="mb-2 !mx-0 !justify-start">
+            <span className="flex items-center gap-2">
+              <Zap className="h-4 w-4 text-orange-400" />
+              Automations
+            </span>
+          </AnimatedGradientText>
+          <h1 className="text-3xl font-bold text-white">Workflow Engine</h1>
+          <p className="text-slate-400 mt-1">Set up background tasks to run your e-commerce operations automatically.</p>
         </div>
+        <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 rounded-lg text-sm font-medium hover:from-orange-500 hover:to-amber-500 transition-colors shadow-[0_0_20px_rgba(249,115,22,0.3)] text-white">
+          <Plus className="h-4 w-4" /> New Automation
+        </button>
       </div>
 
-      {/* Bot Trigger Card */}
-      <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
-        <div className="p-5 border-b border-stone-100 bg-amber-50/50">
-          <div className="flex items-start gap-3">
-            <Zap className="text-amber-500 mt-0.5 flex-shrink-0" size={18} />
-            <p className="text-sm text-stone-600 leading-relaxed">
-              İngilizce bir kelime girin. Bot eBay'de en çok satanları arar, CJ Dropshipping ile eşleştirir,
-              kâr marjlarını hesaplar ve sonuçları aşağıdaki tabloya kaydeder. <strong>~40 saniye</strong> sürer.
-            </p>
-          </div>
-        </div>
-        <div className="p-6">
-          <div className="flex gap-3">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" size={18} />
-              <input
-                type="text"
-                value={keyword}
-                onChange={(e) => setKeyword(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && !loading && handleRunBot()}
-                placeholder="Örn: necklace, mug, leather jacket..."
-                className="w-full pl-10 pr-4 py-3 bg-stone-50 border border-stone-200 rounded-xl text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400 transition-all"
-                disabled={loading}
-              />
-            </div>
-            <button
-              type="button"
-              onClick={handleRunBot}
-              disabled={loading || !keyword.trim()}
-              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl flex items-center gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-sm cursor-pointer"
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="lg:col-span-2 space-y-4"
+        >
+          {automations.map((auto, i) => (
+            <motion.div
+              key={auto.id}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: i * 0.1 }}
             >
-              {loading ? (
-                <><Loader2 size={18} className="animate-spin" /><span>Başlatılıyor...</span></>
-              ) : (
-                <><Bot size={18} /><span>Botu Çalıştır</span></>
-              )}
-            </button>
-          </div>
+              <MagicCard className="p-6 flex flex-col sm:flex-row items-center gap-6 group hover:border-orange-500/30">
+                <div className="h-16 w-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform shadow-inner">
+                  {auto.icon}
+                </div>
+                <div className="flex-1 text-center sm:text-left">
+                  <h3 className="text-lg font-bold text-white mb-1">{auto.name}</h3>
+                  <div className="flex items-center justify-center sm:justify-start gap-4 text-sm text-slate-400">
+                    <span className="flex items-center gap-1">Target: <strong className="text-slate-300">{auto.target}</strong></span>
+                    <span className="w-1 h-1 rounded-full bg-white/20" />
+                    <span>Run: <strong className="text-slate-300">{auto.frequency}</strong></span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  {auto.status === "Active" ? (
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400 text-sm font-medium">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                      </span>
+                      Active
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-500/10 border border-slate-500/20 text-slate-400 text-sm font-medium">
+                      <Pause className="h-3 w-3" /> Paused
+                    </div>
+                  )}
+                  <button className="p-2 hover:bg-white/10 rounded-lg transition-colors text-slate-400">
+                    <Settings2 className="h-5 w-5" />
+                  </button>
+                </div>
+              </MagicCard>
+            </motion.div>
+          ))}
+        </motion.div>
 
-          {result && (
-            <div className={`mt-4 p-4 rounded-xl flex items-start gap-3 ${
-              result.type === 'success'
-                ? 'bg-emerald-50 border border-emerald-200 text-emerald-700'
-                : 'bg-red-50 border border-red-200 text-red-700'
-            }`}>
-              {result.type === 'success'
-                ? <CheckCircle2 size={20} className="mt-0.5 flex-shrink-0" />
-                : <AlertCircle size={20} className="mt-0.5 flex-shrink-0" />}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="space-y-6"
+        >
+          <div className="rounded-xl border border-white/5 bg-[#080c16] p-6 shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-4 opacity-10">
+              <Zap className="h-32 w-32 text-orange-500" />
+            </div>
+            <h3 className="font-semibold text-white mb-4 relative z-10">System Load</h3>
+            <div className="space-y-4 relative z-10">
               <div>
-                <p className="text-sm font-medium">{result.message}</p>
-                {result.note && <p className="text-sm mt-1 opacity-90">{result.note}</p>}
+                <div className="flex justify-between text-sm mb-1">
+                  <span className="text-slate-400">API Usage</span>
+                  <span className="text-orange-400">75%</span>
+                </div>
+                <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-orange-500 to-amber-500 w-[75%]" />
+                </div>
+              </div>
+              <div>
+                <div className="flex justify-between text-sm mb-1">
+                  <span className="text-slate-400">Queue Status</span>
+                  <span className="text-green-400">Healthy</span>
+                </div>
+                <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                  <div className="h-full bg-green-500 w-[20%]" />
+                </div>
               </div>
             </div>
-          )}
-        </div>
-      </div>
+          </div>
 
-      {/* Products Table */}
-      <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
-        <div className="p-5 border-b border-stone-100 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <TrendingUp className="text-emerald-600" size={20} />
-            <h2 className="font-semibold text-stone-800">Bulunan Kârlı Ürünler</h2>
-            <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-medium">
-              {products.length} ürün
-            </span>
+          <div className="rounded-xl border border-white/5 bg-gradient-to-b from-[#080c16] to-transparent p-6 shadow-xl flex flex-col gap-4">
+            <h3 className="font-semibold text-white">Recommended Actions</h3>
+            <button className="flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/5 group">
+              <span className="text-sm text-slate-300">Auto-Reply to Messages</span>
+              <ArrowRight className="h-4 w-4 text-slate-500 group-hover:text-orange-400" />
+            </button>
+            <button className="flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/5 group">
+              <span className="text-sm text-slate-300">Sync Inventory Daily</span>
+              <ArrowRight className="h-4 w-4 text-slate-500 group-hover:text-orange-400" />
+            </button>
           </div>
-          <button
-            onClick={fetchProducts}
-            className="flex items-center gap-1.5 text-sm text-stone-500 hover:text-emerald-600 transition-colors cursor-pointer"
-          >
-            <RefreshCw size={15} className={loadingProducts ? 'animate-spin' : ''} />
-            Yenile
-          </button>
-        </div>
-
-        {loading ? (
-          <div className="p-16 text-center">
-            <div className="relative w-20 h-20 mx-auto mb-6">
-              <div className="absolute inset-0 border-4 border-emerald-100 rounded-full"></div>
-              <div className="absolute inset-0 border-4 border-emerald-500 rounded-full border-t-transparent animate-spin"></div>
-              <Bot className="absolute inset-0 m-auto text-emerald-500" size={28} />
-            </div>
-            <h3 className="text-lg font-semibold text-stone-800 mb-1 animate-pulse">Bot Arka Planda Çalışıyor...</h3>
-            <p className="text-stone-500 text-sm max-w-sm mx-auto">
-               Lütfen bekleyin. eBay satış verileri analiz ediliyor ve en kârlı ürünler CJ Dropshipping ile eşleştiriliyor. Bu işlem yaklaşık 40-60 saniye sürebilir.
-            </p>
-          </div>
-        ) : loadingProducts ? (
-          <div className="p-12 text-center text-stone-400">
-            <Loader2 size={24} className="animate-spin mx-auto mb-2" />
-            <p className="text-sm">Tablo güncelleniyor...</p>
-          </div>
-        ) : products.length === 0 ? (
-          <div className="p-12 text-center text-stone-400">
-            <Package size={32} className="mx-auto mb-3 opacity-40" />
-            <p className="text-sm">Henüz ürün bulunamadı. Aramaya başlamak için yukarıdan bir kelime girin!</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="bg-stone-50 text-stone-500 text-xs uppercase tracking-wide">
-                  <th className="text-left px-4 py-3 font-medium">Ürün Adı</th>
-                  <th className="text-center px-4 py-3 font-medium">Maliyet</th>
-                  <th className="text-center px-4 py-3 font-medium">Satış</th>
-                  <th className="text-center px-4 py-3 font-medium">Kâr %</th>
-                  <th className="text-center px-4 py-3 font-medium">Rekabet</th>
-                  <th className="text-center px-4 py-3 font-medium">Kelime</th>
-                  <th className="text-center px-4 py-3 font-medium">Link</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-stone-100">
-                {products.map((p) => (
-                  <tr key={p.id} className="hover:bg-stone-50 transition-colors">
-                    <td className="px-4 py-3 max-w-xs">
-                      <p className="font-medium text-stone-800 truncate">{p.product_name}</p>
-                      <p className="text-xs text-stone-400 mt-0.5">{p.category}</p>
-                    </td>
-                    <td className="px-4 py-3 text-center text-stone-600">${p.total_cost}</td>
-                    <td className="px-4 py-3 text-center font-semibold text-stone-800">${p.sell_price}</td>
-                    <td className="px-4 py-3 text-center">
-                      <span className={`font-bold px-2 py-0.5 rounded-full text-xs ${
-                        p.net_profit_percent >= 100
-                          ? 'bg-emerald-100 text-emerald-700'
-                          : p.net_profit_percent >= 50
-                          ? 'bg-amber-100 text-amber-700'
-                          : 'bg-red-100 text-red-700'
-                      }`}>
-                        %{p.net_profit_percent}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-center text-stone-500">{p.competition}</td>
-                    <td className="px-4 py-3 text-center">
-                      <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">{p.keyword}</span>
-                    </td>
-                    <td className="px-4 py-3 text-center">
-                      <a
-                        href={p.supplier_link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-emerald-600 hover:text-emerald-700 transition-colors"
-                      >
-                        <ExternalLink size={14} />
-                      </a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+        </motion.div>
       </div>
     </div>
   );

@@ -64,6 +64,16 @@ const config: Config = {
           '0%, 100%': { boxShadow: '0 0 5px rgba(232, 117, 10, 0.3)' },
           '50%': { boxShadow: '0 0 20px rgba(232, 117, 10, 0.6)' },
         },
+        "border-beam": {
+          "100%": {
+            "offset-distance": "100%",
+          },
+        },
+        "gradient": {
+          to: {
+            backgroundPosition: "var(--bg-size) 0",
+          },
+        },
       },
       animation: {
         fadeIn: 'fadeIn 0.6s ease-in-out',
@@ -74,6 +84,8 @@ const config: Config = {
         bounceIn: 'bounceIn 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55)',
         float: 'float 3s ease-in-out infinite',
         glow: 'glow 2s ease-in-out infinite',
+        "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
+        "gradient": "gradient 8s linear infinite",
       },
     },
   },
