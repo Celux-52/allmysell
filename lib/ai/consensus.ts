@@ -78,6 +78,7 @@ CRITICAL INSTRUCTIONS:
 2. Provide realistic wholesale and retail pricing based on actual market data.
 3. Score each product 0-100 based on: demand (30%), margin (25%), competition (20%), trend momentum (15%), ease of sourcing (10%).
 4. For each product, give a short keyword that best represents it for supplier searches (in the "searchKeyword" field).
+5. For "painPoint", "sellingAngle", and "viralPotential": write MAX 1 short sentence each. Be specific, no fluff.
 
 Return ONLY valid JSON in this exact structure:
 {
@@ -95,7 +96,10 @@ Return ONLY valid JSON in this exact structure:
       "description": "Detailed description",
       "platforms": ["eBay", "Etsy", "Amazon", "Shopify"],
       "whyItWorks": "Deep market analysis",
-      "targetAudience": "Specific target demographic",
+      "targetAudience": "Specific target demographic (e.g. Women 18-30 interested in fitness)",
+      "painPoint": "What problem does the buyer have? (1 line max)",
+      "sellingAngle": "Best ad/content angle to sell this (1 line max)",
+      "viralPotential": "Why could this go viral on social media? (1 line max)",
       "marketingTips": ["Actionable tip 1", "Tip 2", "Tip 3"],
       "sources": ["Data source 1", "Source 2"]
     }

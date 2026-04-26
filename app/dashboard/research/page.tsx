@@ -44,6 +44,9 @@ interface Product {
   platforms: string[];
   whyItWorks: string;
   targetAudience: string;
+  painPoint?: string;
+  sellingAngle?: string;
+  viralPotential?: string;
   marketingTips: string[];
   sources: string[];
   suppliers: SupplierLink[];
@@ -387,11 +390,14 @@ export default function ResearchPage() {
                     </div>
                     ); })()}
 
-                    {/* Why This Will Sell - Always Visible */}
-                    {product.whyItWorks && (
-                      <div className="flex items-start gap-2 p-2.5 rounded-lg bg-orange-500/5 border border-orange-500/10 mb-3">
-                        <Zap className="h-3.5 w-3.5 text-orange-400 flex-shrink-0 mt-0.5" />
-                        <p className="text-xs text-orange-300/90 leading-relaxed">{product.whyItWorks}</p>
+                    {/* Why This Will Sell - AI Insight */}
+                    {(product.targetAudience || product.painPoint || product.sellingAngle || product.viralPotential) && (
+                      <div className="p-3 rounded-lg bg-gradient-to-br from-orange-500/5 to-amber-500/5 border border-orange-500/10 mb-3 space-y-1.5">
+                        <p className="text-[10px] font-bold text-orange-400 uppercase tracking-wider flex items-center gap-1.5 mb-2"><Zap className="h-3 w-3" /> Why This Will Sell</p>
+                        {product.targetAudience && <p className="text-[11px] text-slate-300 leading-snug">🎯 <span className="text-slate-500">Target:</span> {product.targetAudience}</p>}
+                        {product.painPoint && <p className="text-[11px] text-slate-300 leading-snug">💥 <span className="text-slate-500">Pain:</span> {product.painPoint}</p>}
+                        {product.sellingAngle && <p className="text-[11px] text-slate-300 leading-snug">📈 <span className="text-slate-500">Angle:</span> {product.sellingAngle}</p>}
+                        {product.viralPotential && <p className="text-[11px] text-slate-300 leading-snug">🔥 <span className="text-slate-500">Viral:</span> {product.viralPotential}</p>}
                       </div>
                     )}
 
