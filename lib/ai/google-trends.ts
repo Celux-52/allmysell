@@ -21,6 +21,7 @@ export interface GoogleTrendsData {
 export async function getGoogleTrendsData(keyword: string): Promise<GoogleTrendsData | null> {
   try {
     // Dynamic import to avoid build-time issues (server-only module)
+    // @ts-ignore: Could not find a declaration file for module 'google-trends-api'
     const googleTrends = (await import('google-trends-api')).default || (await import('google-trends-api'));
 
     // Interest over time - last 12 months
