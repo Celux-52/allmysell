@@ -123,11 +123,7 @@ export default function Navigation() {
         <div className="md:hidden glass-nav border-t border-white/[0.06]">
           <div className="px-4 pt-2 pb-4 space-y-1">
             {navigation.map((item) => (<Link key={item.name} href={item.href} className="block px-4 py-3 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all font-medium text-sm" onClick={() => setIsOpen(false)}>{item.name}</Link>))}
-            <div className="px-2">
-              <button onClick={() => setShopOpen(!shopOpen)} className="w-full text-left px-2 py-3 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all font-medium flex items-center justify-between text-sm">Shop<ChevronDown size={14} className={`transition-transform ${shopOpen ? 'rotate-180' : ''}`} /></button>
-              {shopOpen && (<div className="bg-white/[0.03] rounded-lg mt-1">{shops.map((shop) => (<Link key={shop.name} href={shop.href} className="block px-4 py-2.5 text-sm text-slate-500 hover:text-white hover:bg-white/[0.06] transition-all" onClick={() => { setIsOpen(false); setShopOpen(false); }}>{shop.name}</Link>))}</div>)}
-            </div>
-            <div className="px-2"><Link href="/web-cozumleri" className="block px-2 py-3 rounded-lg text-orange-400 hover:bg-orange-500/10 transition-all font-semibold text-sm" onClick={() => setIsOpen(false)}>🌐 Web Solutions</Link></div>
+            <div className="px-2"><Link href="/web-solutions" className="block px-2 py-3 rounded-lg text-orange-400 hover:bg-orange-500/10 transition-all font-semibold text-sm" onClick={() => setIsOpen(false)}>🌐 Web Solutions</Link></div>
             {!authLoading && (<div className="px-2 pt-2 border-t border-white/[0.06]">{user ? (<><Link href="/dashboard" className="block px-2 py-3 rounded-lg text-slate-300 hover:text-white hover:bg-white/[0.06] transition-all font-medium text-sm" onClick={() => setIsOpen(false)}>📊 Dashboard</Link><button onClick={() => { handleLogout(); setIsOpen(false); }} className="w-full text-left px-2 py-3 rounded-lg text-red-400 hover:bg-red-500/10 transition-all font-medium text-sm">🚪 Log Out</button></>) : (<Link href="/login" className="block px-2 py-3 rounded-lg text-slate-300 hover:text-white hover:bg-white/[0.06] transition-all font-medium text-sm" onClick={() => setIsOpen(false)}>🔑 Log In</Link>)}</div>)}
           </div>
         </div>
