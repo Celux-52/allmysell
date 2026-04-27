@@ -79,8 +79,13 @@ export default function ResearchPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (user?.email) {
         setUserEmail(user.email);
-        const saved = Storage.getSavedProducts(user.email);
-        setSavedProducts(new Set(saved.map(p => p.name)));
+        try {
+          const { getSavedProductsAction } = await import('@/app/actions/savedProducts');
+          const res = await getSavedProductsAction();
+          if (res.success && res.data) {
+            setSavedProducts(new Set(res.data.map((p: any) => p.productName)));
+          }
+        } catch (err) {}
       }
     };
     fetchUser();
@@ -144,36 +149,42 @@ export default function ResearchPage() {
     performSearch(query);
   };
 
-  const handleSaveProduct = (e: React.MouseEvent, product: Product) => {
+  const handleSaveProduct = async (e: React.MouseEvent, product: Product) => {
     e.stopPropagation();
-    const saved = Storage.getSavedProducts(userEmail);
-    if (saved.length >= SAVED_LIMIT) {
-      showToast(`Limit reached! Max ${SAVED_LIMIT} saved items. Remove some to add new ones.`);
+    if (savedProducts.has(product.name)) {
+      showToast(`${product.name} is already in your saved items.`);
       return;
     }
+
     const scores = calcScores(product);
-    const success = Storage.saveProduct(userEmail, {
-      name: product.name,
-      category: product.category,
-      wholesalePrice: product.wholesalePrice,
-      retailPrice: product.retailPrice,
-      profitMargin: product.profitMargin,
-      competition: product.competition,
-      trend: product.trend || 'Stable',
-      score: product.score,
-      profitScore: scores.profitScore,
-      competitionScore: scores.competitionScore,
-      opportunityScore: scores.opportunityScore,
-      description: product.description,
-      whyItWorks: product.whyItWorks || '',
-      targetAudience: product.targetAudience || '',
-    });
     
-    if (success) {
-      setSavedProducts(prev => new Set(prev).add(product.name));
-      showToast(`${product.name} saved! (${saved.length + 1}/${SAVED_LIMIT})`);
-    } else {
-      showToast(`${product.name} is already in your saved items.`);
+    try {
+      const { saveProductAction } = await import('@/app/actions/savedProducts');
+      const res = await saveProductAction({
+        name: product.name,
+        category: product.category,
+        wholesalePrice: product.wholesalePrice,
+        retailPrice: product.retailPrice,
+        profitMargin: product.profitMargin,
+        competition: product.competition,
+        trend: product.trend || 'Stable',
+        score: product.score,
+        profitScore: scores.profitScore,
+        competitionScore: scores.competitionScore,
+        opportunityScore: scores.opportunityScore,
+        description: product.description,
+        whyItWorks: product.whyItWorks || '',
+        targetAudience: product.targetAudience || '',
+      });
+
+      if (res.success) {
+        setSavedProducts(prev => new Set(prev).add(product.name));
+        showToast(`${product.name} saved successfully!`);
+      } else {
+        showToast(res.error || "Failed to save product.");
+      }
+    } catch (err) {
+      showToast("Error saving product.");
     }
   };
 

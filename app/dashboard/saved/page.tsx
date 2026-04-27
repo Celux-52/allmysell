@@ -21,16 +21,49 @@ export default function SavedItemsPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (user?.email) {
         setUserEmail(user.email);
-        setSavedProducts(Storage.getSavedProducts(user.email));
+        try {
+          const { getSavedProductsAction } = await import('@/app/actions/savedProducts');
+          const res = await getSavedProductsAction();
+          if (res.success && res.data) {
+            // Map DB format to UI format
+            const formatted = res.data.map((p: any) => {
+              let parsed = {};
+              try { if (p.notes) parsed = JSON.parse(p.notes); } catch(e) {}
+              return {
+                id: p.id,
+                name: p.productName,
+                category: p.category,
+                wholesalePrice: (parsed as any).wholesalePrice || "N/A",
+                retailPrice: (parsed as any).retailPrice || "N/A",
+                profitMargin: `${p.profitMargin}%`,
+                competition: p.competition,
+                trend: (parsed as any).trend || "Stable",
+                score: p.aiScore,
+                profitScore: (parsed as any).profitScore,
+                competitionScore: (parsed as any).competitionScore,
+                opportunityScore: (parsed as any).opportunityScore,
+                description: (parsed as any).description,
+                whyItWorks: (parsed as any).whyItWorks,
+                targetAudience: (parsed as any).targetAudience,
+                note: (parsed as any).userNote || "",
+                savedAt: p.createdAt.toISOString ? p.createdAt.toISOString() : p.createdAt
+              };
+            });
+            setSavedProducts(formatted);
+          }
+        } catch(err) {}
       }
     };
     init();
   }, []);
 
-  const handleRemove = (id: string) => {
+  const handleRemove = async (id: string) => {
     if (!userEmail) return;
-    Storage.removeProduct(userEmail, id);
-    setSavedProducts(prev => prev.filter(p => p.id !== id));
+    try {
+      const { removeSavedProductAction } = await import('@/app/actions/savedProducts');
+      await removeSavedProductAction(id);
+      setSavedProducts(prev => prev.filter(p => p.id !== id));
+    } catch(err) {}
   };
 
   const startEditNote = (product: SavedProduct) => {
@@ -38,12 +71,15 @@ export default function SavedItemsPage() {
     setNoteText(product.note || "");
   };
 
-  const saveNote = (id: string) => {
+  const saveNote = async (id: string) => {
     if (!userEmail) return;
-    Storage.updateNote(userEmail, id, noteText);
-    setSavedProducts(prev => prev.map(p => p.id === id ? { ...p, note: noteText } : p));
-    setEditingNote(null);
-    setNoteText("");
+    try {
+      const { updateSavedProductNoteAction } = await import('@/app/actions/savedProducts');
+      await updateSavedProductNoteAction(id, noteText);
+      setSavedProducts(prev => prev.map(p => p.id === id ? { ...p, note: noteText } : p));
+      setEditingNote(null);
+      setNoteText("");
+    } catch(err) {}
   };
 
   const getScoreColor = (score: number) => {
