@@ -6,13 +6,14 @@ import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard, Users, FileText, Package, Settings,
   ChevronLeft, ChevronRight, LogOut, Home, Shield,
-  BarChart3, Bot
+  BarChart3, Bot, Star
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 
 const sidebarItems = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { name: 'Users', href: '/admin/users', icon: Users },
+  { name: 'User Saves', href: '/admin/saves', icon: Star },
   { name: 'Blog Posts', href: '/admin/blog', icon: FileText },
   { name: 'Products', href: '/admin/products', icon: Package },
   { name: 'Bot Automation', href: '/admin/bots', icon: Bot },
