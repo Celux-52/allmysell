@@ -531,9 +531,12 @@ export async function consensusResearch(query: string): Promise<ConsensusResult>
 export async function consensusTrends(niche: string) {
   const searchTerm = niche || 'trending products 2026';
   
-  const AI_PROMPT = `You are an expert e-commerce trend analyst. ${niche ? `Analyze trends for the "${niche}" niche.` : 'Analyze current trending product categories in e-commerce.'}
+  const AI_PROMPT = `You are an expert e-commerce trend analyst. ${niche ? `Analyze trends for the "${niche}" niche.` : 'Discover highly specific, obscure, and extremely profitable e-commerce MICRO-NICHES. Do NOT give me generic categories like "Tech Accessories" or "Home Decor". Think outside the box.'}
 
-CRITICAL: For EVERY piece of data you provide, you MUST explain your reasoning and cite your source.
+CRITICAL:
+1. Find UNEXPECTED, hidden, or hyper-specific sub-niches (e.g., "Mushroom Core Room Decor", "Gothic Pet Accessories", "Ergonomic Japanese Stationery").
+2. For EVERY piece of data you provide, you MUST explain your reasoning and cite your source.
+3. Be wildly creative but ground it in actual rising trends.
 
 Return a JSON response with exactly this structure:
 {
@@ -575,7 +578,7 @@ Rules:
         model: 'llama-3.3-70b-versatile',
         messages: [{ role: 'user', content: AI_PROMPT }],
         response_format: { type: 'json_object' },
-        temperature: 0.7
+        temperature: 0.9
       })
       return r.choices[0]?.message?.content || '{}'
     }},
@@ -589,7 +592,7 @@ Rules:
       const r = await getCline().chat.completions.create({
         model: 'deepseek/deepseek-r1',
         messages: [{ role: 'user', content: AI_PROMPT }],
-        temperature: 0.7
+        temperature: 0.9
       })
       return r.choices[0]?.message?.content || '{}'
     }},
@@ -598,7 +601,7 @@ Rules:
       const r = await getCline().chat.completions.create({
         model: 'qwen/qwen-2.5-72b-instruct',
         messages: [{ role: 'user', content: AI_PROMPT }],
-        temperature: 0.7
+        temperature: 0.9
       })
       return r.choices[0]?.message?.content || '{}'
     }},
@@ -607,7 +610,7 @@ Rules:
       const r = await getCline().chat.completions.create({
         model: 'anthropic/claude-3.5-haiku',
         messages: [{ role: 'user', content: AI_PROMPT }],
-        temperature: 0.7
+        temperature: 0.9
       })
       return r.choices[0]?.message?.content || '{}'
     }},
