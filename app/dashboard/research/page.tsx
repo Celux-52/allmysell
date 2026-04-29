@@ -280,7 +280,7 @@ export default function ResearchPage() {
               <h3 className="text-lg font-bold text-white mb-2">Multi-AI Consensus Running</h3>
               <p className="text-sm text-slate-400 mb-6">5 AI providers are analyzing your query in parallel + Google Trends data...</p>
               <div className="flex justify-center gap-3 flex-wrap">
-                {["Groq (Llama 70B)", "Gemini Flash", "DeepSeek R1", "Qwen 2.5 72B", "Claude 3.5 Haiku"].map((ai, i) => (
+                {["Groq (Llama 70B)", "Gemini Flash", "DeepSeek R1", "Qwen 2.5", "Llama 3.3 70B"].map((ai, i) => (
                   <motion.div 
                     key={ai}
                     initial={{ opacity: 0.3 }}
@@ -591,7 +591,7 @@ export default function ResearchPage() {
                 <Brain className="h-6 w-6" />
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Multi-AI Consensus</h3>
-              <p className="text-sm text-slate-400">5 AI providers (Groq, Gemini, DeepSeek, Qwen, Claude) analyze in parallel and merge their insights into one consensus.</p>
+              <p className="text-sm text-slate-400">5 AI providers (Groq, Gemini, DeepSeek, Qwen, Llama) analyze in parallel and merge their insights into one consensus.</p>
             </MagicCard>
           </motion.div>
           

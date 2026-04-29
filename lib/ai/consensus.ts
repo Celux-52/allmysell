@@ -212,7 +212,7 @@ async function queryDeepSeek(query: string, internetContext: string): Promise<{ 
     const { getCline } = await import('./cline');
     const cline = getCline();
     const response = await cline.chat.completions.create({
-      model: 'deepseek/deepseek-r1',
+      model: 'deepseek/deepseek-r1:free',
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
         { role: 'user', content: query }
@@ -233,7 +233,7 @@ async function queryQwen(query: string, internetContext: string): Promise<{ prod
     const { getCline } = await import('./cline');
     const cline = getCline();
     const response = await cline.chat.completions.create({
-      model: 'qwen/qwen-2.5-72b-instruct',
+      model: 'qwen/qwen-2.5-72b-instruct:free',
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
         { role: 'user', content: query }
@@ -254,7 +254,7 @@ async function queryLlamaScout(query: string, internetContext: string): Promise<
     const { getCline } = await import('./cline');
     const cline = getCline();
     const response = await cline.chat.completions.create({
-      model: 'anthropic/claude-3.5-haiku',
+      model: 'meta-llama/llama-3.3-70b-instruct:free',
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
         { role: 'user', content: query }
@@ -502,9 +502,9 @@ export async function consensusResearch(query: string): Promise<ConsensusResult>
   const providers = [
     'Groq (Llama 3.3 70B)',
     'Gemini 2.0 Flash',
-    'DeepSeek R1',
-    'Qwen 2.5 72B',
-    'Claude 3.5 Haiku',
+    'DeepSeek R1 (Free)',
+    'Qwen 2.5 72B (Free)',
+    'Llama 3.3 70B (Free)',
   ];
 
   // 1. Fetch live internet data via native tool calling to n8n webhook FIRST
