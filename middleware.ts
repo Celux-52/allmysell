@@ -23,10 +23,6 @@ export async function middleware(req: NextRequest) {
   );
 
   const { data: { user } } = await supabase.auth.getUser();
-  const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
-
-  console.log("USER:", user?.email);
-  console.log("ADMIN:", adminEmail);
 
   if (req.nextUrl.pathname.startsWith("/admin")) {
     if (!user || !isAdmin(user.email)) {

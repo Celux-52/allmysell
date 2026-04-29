@@ -16,9 +16,9 @@ export default function Footer() {
               <span className="text-xl font-bold gradient-text">AllMySell</span>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed mb-6 max-w-sm">
-              Central digital platform bringing together our stores across global 
-              e-commerce marketplaces. Serving you through eBay, Amazon, Etsy, 
-              Shopify, and TikTok Shop stores.
+              AI-powered e-commerce automation platform. We build intelligent tools 
+              for trend research, automated listing, and scalable online business 
+              growth — plus professional web development services.
             </p>
             {/* Social Icons */}
             <div className="flex space-x-3">
@@ -37,10 +37,15 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Our Stores</h4>
+            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Platform</h4>
             <ul className="space-y-3">
-              {['eBay', 'Amazon', 'Etsy', 'Shopify', 'TikTok Shop'].map((store) => (
-                <li key={store}><Link href={`/shop/${store.toLowerCase().replace(' ', '')}`} className="text-sm text-slate-500 hover:text-orange-400 transition-colors">{store} Store</Link></li>
+              {[
+                { name: 'SaaS Panel', href: '/dashboard' },
+                { name: 'AI Research', href: '/dashboard/research' },
+                { name: 'Web Solutions', href: '/web-solutions' },
+                { name: 'Pricing', href: '/web-solutions#contact' },
+              ].map((item) => (
+                <li key={item.name}><Link href={item.href} className="text-sm text-slate-500 hover:text-orange-400 transition-colors">{item.name}</Link></li>
               ))}
             </ul>
           </div>

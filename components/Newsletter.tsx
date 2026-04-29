@@ -32,8 +32,8 @@ export default function Newsletter() {
             Stay <span className="gradient-text">Updated</span>
           </h2>
           <p className="text-slate-400 text-lg max-w-xl mx-auto">
-            Be the first to know when our Amazon, Etsy, Shopify, and TikTok Shop stores go live! 
-            Get exclusive deals and new product announcements.
+            Get the latest updates on new platform features, AI research tools, 
+            and exclusive early access to upcoming releases.
           </p>
         </div>
 
@@ -63,13 +63,13 @@ export default function Newsletter() {
               </button>
             </div>
             <p className="text-slate-500 text-sm mt-4">
-              🎁 Subscribe now and get 10% off your first purchase!
+              🚀 Subscribe now and be the first to access new features!
             </p>
           </form>
         )}
 
         <div className="mt-10 flex flex-wrap justify-center gap-6 text-slate-500 text-sm">
-          {['Exclusive Deals', 'New Store Alerts', 'No Spam'].map((item) => (
+          {['Feature Updates', 'Platform News', 'No Spam'].map((item) => (
             <div key={item} className="flex items-center space-x-2">
               <svg className="w-4 h-4 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />

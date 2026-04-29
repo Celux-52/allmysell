@@ -51,7 +51,7 @@ export default function Testimonials() {
           <h2 className="text-4xl font-bold text-white mb-4">
             Share Your <span className="gradient-text">Experience</span>
           </h2>
-          <p className="text-lg text-slate-400">Have you purchased from us? We&apos;d love to hear about your experience!</p>
+          <p className="text-lg text-slate-400">Used our platform or services? We&apos;d love to hear about your experience!</p>
         </div>
 
         <div className="glass-card rounded-2xl p-8">
@@ -65,8 +65,8 @@ export default function Testimonials() {
               <input type="email" id="email" name="email" required className="w-full px-4 py-3 glass-input rounded-xl text-white placeholder-slate-500" placeholder="john@example.com" />
             </div>
             <div>
-              <label htmlFor="product" className="block text-sm font-medium text-slate-300 mb-2">Product Purchased</label>
-              <input type="text" id="product" name="product" className="w-full px-4 py-3 glass-input rounded-xl text-white placeholder-slate-500" placeholder="e.g., Magnetic Power Bank 10000mAh" />
+              <label htmlFor="service" className="block text-sm font-medium text-slate-300 mb-2">Service Used</label>
+              <input type="text" id="service" name="service" className="w-full px-4 py-3 glass-input rounded-xl text-white placeholder-slate-500" placeholder="e.g., SaaS Panel, Web Development, AI Research" />
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-300 mb-2">Your Rating *</label>
@@ -91,10 +91,10 @@ export default function Testimonials() {
 
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
-            { emoji: '🛍️', title: 'eBay Store', sub: 'Active Seller' },
-            { emoji: '⭐', title: 'Quality Products', sub: 'Tech Accessories' },
-            { emoji: '📞', title: 'Customer Support', sub: "We're Here to Help" },
-            { emoji: '🚚', title: 'Worldwide Shipping', sub: 'Reliable Delivery' },
+            { emoji: '🚀', title: 'SaaS Platform', sub: 'AI-Powered Tools' },
+            { emoji: '⭐', title: 'Premium Quality', sub: 'Enterprise Grade' },
+            { emoji: '📞', title: 'Dedicated Support', sub: "We're Here to Help" },
+            { emoji: '🌍', title: 'Global Service', sub: 'Worldwide Clients' },
           ].map((item, i) => (
             <div key={i} className="text-center">
               <div className="text-4xl mb-2">{item.emoji}</div>

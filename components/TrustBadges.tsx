@@ -1,10 +1,10 @@
-import { Shield, Lock, CheckCircle, Award } from 'lucide-react';
+import { Shield, Headphones, Zap, Award } from 'lucide-react';
 
 const badges = [
-  { icon: Lock, title: 'Secure Payment', sub: 'SSL Encrypted', gradient: 'from-orange-500 to-amber-500' },
-  { icon: Shield, title: 'Buyer Protection', sub: '100% Protected', gradient: 'from-blue-500 to-cyan-500' },
-  { icon: CheckCircle, title: 'Verified Seller', sub: 'Trusted Store', gradient: 'from-green-500 to-emerald-500' },
-  { icon: Award, title: 'Quality Guarantee', sub: '30 Days Return', gradient: 'from-purple-500 to-pink-500' },
+  { icon: Shield, title: 'Enterprise Security', sub: 'SSL & SOC2 Ready', gradient: 'from-orange-500 to-amber-500' },
+  { icon: Zap, title: '99.9% Uptime', sub: 'Always Available', gradient: 'from-blue-500 to-cyan-500' },
+  { icon: Headphones, title: '24/7 Support', sub: 'Dedicated Team', gradient: 'from-green-500 to-emerald-500' },
+  { icon: Award, title: 'Trusted Platform', sub: 'Global Clients', gradient: 'from-purple-500 to-pink-500' },
 ];
 
 export default function TrustBadges() {

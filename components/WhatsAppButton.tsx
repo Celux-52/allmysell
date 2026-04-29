@@ -6,7 +6,7 @@ export default function WhatsAppButton() {
   const [isHovered1, setIsHovered1] = useState(false);
   const [isHovered2, setIsHovered2] = useState(false);
   
-  const message = 'Hello! I have a question about your products.';
+  const message = 'Hello! I have a question about your services.';
   const whatsappUrl1 = `https://wa.me/905537065912?text=${encodeURIComponent(message)}`;
   const whatsappUrl2 = `https://wa.me/905518343030?text=${encodeURIComponent(message)}`;
 

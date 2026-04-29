@@ -72,10 +72,10 @@ export default function HeroSection() {
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
           <Link
-            href="/shop"
+            href="/web-solutions"
             className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10"
           >
-            Explore Stores
+            View Solutions
           </Link>
         </motion.div>
 

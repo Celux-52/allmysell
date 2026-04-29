@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Package, Users, Globe2, Star } from 'lucide-react';
+import { Cpu, Users, Globe2, Star } from 'lucide-react';
 
 interface StatItem {
   icon: React.ComponentType<{ className?: string }>;
@@ -12,10 +12,10 @@ interface StatItem {
 }
 
 const stats: StatItem[] = [
-  { icon: Package, value: 500, suffix: '+', label: 'Products Listed', gradient: 'from-orange-500 to-amber-500' },
-  { icon: Users, value: 1200, suffix: '+', label: 'Happy Customers', gradient: 'from-blue-500 to-cyan-500' },
-  { icon: Globe2, value: 30, suffix: '+', label: 'Countries Served', gradient: 'from-green-500 to-emerald-500' },
-  { icon: Star, value: 4.9, suffix: '★', label: 'Average Rating', gradient: 'from-amber-500 to-yellow-500' },
+  { icon: Cpu, value: 50, suffix: '+', label: 'AI Models Integrated', gradient: 'from-orange-500 to-amber-500' },
+  { icon: Users, value: 200, suffix: '+', label: 'Active Users', gradient: 'from-blue-500 to-cyan-500' },
+  { icon: Globe2, value: 15, suffix: '+', label: 'Countries Reached', gradient: 'from-green-500 to-emerald-500' },
+  { icon: Star, value: 4.9, suffix: '★', label: 'Client Satisfaction', gradient: 'from-amber-500 to-yellow-500' },
 ];
 
 function AnimatedNumber({ value, suffix, started }: { value: number; suffix: string; started: boolean }) {

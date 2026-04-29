@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { Particles } from "@/components/ui/particles";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import { Users, Target, Rocket, Sparkles } from "lucide-react";
-import TrustBadges from "@/components/TrustBadges";
 
 export default function AboutPage() {
   return (
@@ -92,7 +91,6 @@ export default function AboutPage() {
         </div>
 
       </div>
-      <TrustBadges />
     </div>
   );
 }

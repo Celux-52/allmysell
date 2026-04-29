@@ -5,46 +5,38 @@ import { ChevronDown } from 'lucide-react';
 
 const faqCategories = [
   {
-    category: 'Orders & Shipping',
+    category: 'Platform & SaaS Panel',
     questions: [
-      { question: 'How long does shipping take?', answer: "We offer various shipping options. Standard shipping typically takes 5-10 business days, while express shipping takes 2-5 business days. Shipping times may vary depending on your location and the marketplace you're ordering from." },
-      { question: 'Do you ship internationally?', answer: 'Yes! We ship worldwide through our various marketplace stores. International shipping times vary by destination, typically ranging from 7-21 business days.' },
-      { question: 'How can I track my order?', answer: "Once your order ships, you'll receive a tracking number via email from the marketplace (eBay, Amazon, etc.). You can use this number to track your package's journey in real-time." },
-      { question: 'What if my order is delayed?', answer: "If your order is delayed beyond the expected delivery date, please contact us immediately. We'll investigate with the shipping carrier and provide a solution." },
+      { question: 'What is AllMySell?', answer: 'AllMySell is an AI-powered e-commerce automation platform. Our SaaS panel helps online sellers discover trending products, automate listing creation, and manage cross-platform operations — all from one dashboard.' },
+      { question: 'How does the AI research tool work?', answer: 'Our Multi-AI Consensus Engine uses multiple AI models (including Groq, Gemini, DeepSeek, and more) to analyze market trends, validate product opportunities, and provide data-driven insights with a confidence score.' },
+      { question: 'Which platforms does AllMySell support?', answer: 'Our research tools cover major e-commerce platforms including eBay, Amazon, Etsy, Shopify, and TikTok Shop. We analyze trends and opportunities across all these marketplaces.' },
+      { question: 'Is there a free trial?', answer: 'Yes! You can sign up and explore the platform for free. Our free tier includes limited AI research queries. Upgrade anytime for full access to all features.' },
     ]
   },
   {
-    category: 'Returns & Refunds',
+    category: 'Web Development Services',
     questions: [
-      { question: 'What is your return policy?', answer: "We offer a 30-day return policy on most items. Products must be in original condition with all packaging. Returns are processed through the respective marketplace's return system (eBay, Amazon, etc.)." },
-      { question: 'How do I initiate a return?', answer: 'To initiate a return, go to your order on the marketplace where you purchased (eBay, Amazon, etc.) and select "Return item". Follow the prompts to complete your return request.' },
-      { question: 'When will I receive my refund?', answer: 'Refunds are processed within 3-5 business days after we receive your returned item. The refund will be credited to your original payment method.' },
-      { question: 'Who pays for return shipping?', answer: "If the return is due to our error or a defective product, we'll cover the return shipping costs. For other returns, the buyer is responsible for return shipping fees." },
+      { question: 'What web development packages do you offer?', answer: 'We offer three tiers: Basic Setup ($135) for professional homepages, Professional Growth ($285) with advanced SEO and analytics, and Full Ecosystem ($585) with complete e-commerce infrastructure and AI integration.' },
+      { question: 'How long does a web project take?', answer: 'Depending on the package: Basic Setup takes 3-5 days, Professional Growth takes 7-12 days, and Full Ecosystem takes 15-25 days. We provide regular updates throughout the process.' },
+      { question: 'Do you provide hosting?', answer: 'Domain and hosting costs are covered by the client. We help you set up and configure your hosting environment as part of the project. We recommend modern platforms like Vercel, Netlify, or traditional hosting providers.' },
+      { question: 'What technologies do you use?', answer: 'We build with modern, production-grade technologies including Next.js, React, TypeScript, Tailwind CSS, and integrate with services like Supabase, Vercel, and various AI APIs.' },
     ]
   },
   {
-    category: 'Products & Quality',
+    category: 'Account & Security',
     questions: [
-      { question: 'Are your products authentic?', answer: 'Yes! All our products are 100% authentic. We source directly from authorized distributors and manufacturers. We never sell counterfeit items.' },
-      { question: 'Do your products come with warranty?', answer: 'Most of our products come with manufacturer warranty. Warranty period varies by product - please check the individual product listing for specific warranty information.' },
-      { question: 'What if I receive a defective product?', answer: "If you receive a defective product, contact us immediately. We'll arrange for a replacement or full refund, including return shipping costs." },
-      { question: 'How do I know which product is right for me?', answer: "Each product listing includes detailed specifications and compatibility information. If you're unsure, feel free to contact us before purchasing - we're happy to help!" },
+      { question: 'How do I create an account?', answer: 'Click "Get Started" on our homepage or visit the registration page. You can sign up with your email or use Google authentication for a one-click setup.' },
+      { question: 'Is my data secure?', answer: 'Absolutely. We use enterprise-grade security with SSL encryption, Supabase authentication, and follow industry best practices for data protection. Your research data and account information are fully protected.' },
+      { question: 'Can I delete my account?', answer: 'Yes. You can request account deletion at any time by contacting our support team. All your personal data will be permanently removed within 30 days of the request.' },
+      { question: 'What authentication methods are supported?', answer: 'We support email/password authentication and Google OAuth. All sessions are securely managed with industry-standard token-based authentication.' },
     ]
   },
   {
-    category: 'Payment & Security',
+    category: 'Billing & Support',
     questions: [
-      { question: 'What payment methods do you accept?', answer: 'We accept all major payment methods available on our marketplace platforms, including credit/debit cards, PayPal, and other digital payment options.' },
-      { question: 'Is it safe to order from you?', answer: "Absolutely! All transactions are protected by the marketplace's buyer protection program (eBay Money Back Guarantee, Amazon A-to-Z Guarantee, etc.). Your payment information is securely encrypted." },
-      { question: 'Do you store my payment information?', answer: "No, we don't store any payment information. All payments are processed securely through the marketplace platforms (eBay, Amazon, etc.)." },
-    ]
-  },
-  {
-    category: 'Account & Support',
-    questions: [
-      { question: 'How can I contact customer support?', answer: "You can reach us through the marketplace's messaging system, or contact us directly via our website. We respond to all inquiries within 24 hours." },
-      { question: 'What are your customer support hours?', answer: 'We provide customer support 24/7. Our team is always available to assist you with any questions or concerns.' },
-      { question: 'Can I cancel my order?', answer: 'Yes, you can cancel your order before it ships. Please contact us immediately through the marketplace messaging system to request cancellation.' },
+      { question: 'What payment methods do you accept?', answer: 'For web development services, we accept payments via bank transfer and digital payment methods. Payment terms are 50% upfront to secure your project slot, with the remainder due upon completion.' },
+      { question: 'How can I contact support?', answer: 'You can reach us through our contact page, via WhatsApp (available on every page), or by email. We typically respond within 24 hours.' },
+      { question: 'Do you offer refunds?', answer: 'For web development projects, we offer revisions within the project scope. If we cannot deliver what was agreed upon, we provide a full refund. SaaS subscriptions can be cancelled at any time.' },
     ]
   }
 ];
@@ -73,7 +65,7 @@ export default function FAQPage() {
           <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4 tracking-tight">
             Frequently Asked <span className="gradient-text">Questions</span>
           </h1>
-          <p className="text-slate-400 text-lg max-w-xl mx-auto">Find answers to common questions about shopping with AllMySell</p>
+          <p className="text-slate-400 text-lg max-w-xl mx-auto">Find answers to common questions about AllMySell platform and services</p>
         </div>
 
         <div className="space-y-6">
@@ -89,7 +81,7 @@ export default function FAQPage() {
 
         <div className="mt-12 glass-card rounded-2xl p-8 text-center">
           <h2 className="text-2xl font-bold text-white mb-4">Still have questions?</h2>
-          <p className="text-slate-400 mb-6">Can&apos;t find the answer you&apos;re looking for? Our customer support team is here to help.</p>
+          <p className="text-slate-400 mb-6">Can&apos;t find the answer you&apos;re looking for? Our team is here to help.</p>
           <a href="/contact" className="btn-primary inline-block"><span>Contact Us</span></a>
         </div>
       </div>

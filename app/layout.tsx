@@ -11,21 +11,21 @@ import GoogleAnalytics from '@/components/GoogleAnalytics';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: { default: 'AllMySell | Premium Tech & Mobile Accessories', template: '%s | AllMySell' },
-  description: 'Shop premium technology products and mobile accessories at AllMySell. Discover high-quality chargers, power banks, car accessories, and phone cases with fast worldwide shipping.',
-  keywords: ['buy tech accessories online', 'mobile accessories store', 'car phone holders', 'wireless power banks', 'AllMySell', 'premium phone cases', 'durable charging cables'],
+  title: { default: 'AllMySell | AI-Powered E-Commerce Automation Platform', template: '%s | AllMySell' },
+  description: 'Scale your e-commerce business with AllMySell. AI-powered trend research, automated listing, cross-platform management, and professional web development services.',
+  keywords: ['e-commerce automation', 'AI trend research', 'SaaS platform', 'web development services', 'AllMySell', 'online business tools', 'e-commerce software'],
   metadataBase: new URL('https://allmysell.com'),
   openGraph: {
-    title: { default: 'AllMySell | Premium Tech & Mobile Accessories', template: '%s | AllMySell' },
-    description: 'Shop premium technology products and mobile accessories at AllMySell. Discover high-quality chargers, power banks, and car accessories.',
+    title: { default: 'AllMySell | AI-Powered E-Commerce Automation Platform', template: '%s | AllMySell' },
+    description: 'Scale your e-commerce business with AllMySell. AI-powered trend research, automated listing, and professional web development services.',
     url: 'https://allmysell.com',
     siteName: 'AllMySell',
     images: [
       {
-        url: 'https://i.ebayimg.com/images/g/cf0AAeSwvQ5pXfAv/s-l1600.webp',
+        url: 'https://allmysell.com/favicon.svg',
         width: 1200,
         height: 630,
-        alt: 'AllMySell - E-Commerce Store',
+        alt: 'AllMySell - E-Commerce Automation Platform',
       },
     ],
     locale: 'en_US',
@@ -33,9 +33,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: { default: 'AllMySell | Premium Tech & Mobile Accessories', template: '%s | AllMySell' },
-    description: 'Shop premium technology products and mobile accessories at AllMySell. Discover high-quality chargers, power banks, and car accessories.',
-    images: ['https://i.ebayimg.com/images/g/cf0AAeSwvQ5pXfAv/s-l1600.webp'],
+    title: { default: 'AllMySell | AI-Powered E-Commerce Automation Platform', template: '%s | AllMySell' },
+    description: 'Scale your e-commerce business with AllMySell. AI-powered trend research, automated listing, and professional web development services.',
+    images: ['https://allmysell.com/favicon.svg'],
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION_ID || undefined,
