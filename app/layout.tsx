@@ -52,11 +52,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" translate="no" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <meta name="google" content="notranslate" />
       </head>
-      <body className={`${inter.className} bg-[#030712] text-slate-100 antialiased`}>
+      <body className={`${inter.className} bg-[#030712] text-slate-100 antialiased`} suppressHydrationWarning>
         <Navigation />
         <main className="min-h-screen">
           {children}

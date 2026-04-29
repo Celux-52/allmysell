@@ -126,9 +126,12 @@ export default function DashboardShell({
           </button>
 
           <div className="flex flex-1 justify-end items-center gap-4">
-            <div className="flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/10 px-3 py-1 text-sm font-medium text-orange-400">
+            <Link href="/admin/saves" className="flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/10 hover:bg-orange-500/20 px-3 py-1 text-sm font-medium text-orange-400 transition-colors">
               <Sparkles className="h-4 w-4" />
-              Admin Panel
+              Admin Paneline Git
+            </Link>
+            <div className="flex items-center gap-2 rounded-full border border-slate-700/50 bg-slate-800/50 px-3 py-1 text-sm font-medium text-slate-300">
+              Premium SaaS
             </div>
             <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-orange-500 to-amber-500 ring-2 ring-white/10" />
           </div>
