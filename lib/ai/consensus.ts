@@ -659,7 +659,7 @@ Rules:
     niche: niche || 'general',
     trends: {
       categories: allCategories.slice(0, 6), // Keep top 6 categories from all AIs
-      summary: \`🧠 Multi-AI Consensus (\${successfulProviders.length} providers): \${bestSummary}\`,
+      summary: `🧠 Multi-AI Consensus (${successfulProviders.length} providers): ${bestSummary}`,
       topOpportunity: bestOpportunity,
       methodology: "Parallel consensus gathered from Groq, Gemini, DeepSeek, Qwen, and Claude.",
       sources: Array.from(uniqueSourcesMap.values()),
