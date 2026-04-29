@@ -1,91 +1,53 @@
-# AllMySell - Multi-Platform E-Commerce Hub
-AllMySell, global e-ticaret platformlarındaki mağazalarınızı tek bir çatı altında toplayan merkezi bir web platformudur.
+# AllMySell - AI-Powered E-Commerce Automation Platform & Web Solutions
 
-**Şu an sadece eBay mağazası aktif olarak satış yapmaktadır.** Diğer platformlar (Amazon, Etsy, Shopify, TikTok Shop) yapım aşamasındadır ve çok yakında açılacaktır.
+AllMySell is a centralized SaaS platform and professional web development service designed to help entrepreneurs scale their online businesses through AI-driven market intelligence, cross-platform automation, and premium digital infrastructure.
 
-## 🚀 Özellikler
+## 🚀 Features
 
-- **Modern Stack**: Next.js 15 + TypeScript + Tailwind CSS
-- **Responsive Design**: Mobil uyumlu, tüm ekran boyutlarında mükemmel görünüm
-- **SEO Optimizasyonu**: Arama motorları için optimize edilmiş
-- **Platform Durumu**:
-  - ✅ **eBay Mağazası** - Aktif ve satışta
-  - 🚧 Amazon Mağazası - Yapım aşamasında
-  - 🚧 Etsy Mağazası - Yapım aşamasında
-  - 🚧 Shopify Mağazası - Yapım aşamasında
-  - 🚧 TikTok Shop - Yapım aşamasında
+- **Multi-AI Consensus Engine**: Aggregates data from 5 premium AI models (Groq Llama 3.3, Gemini 2.0 Flash, DeepSeek R1, Qwen 3, Claude 3.5 Haiku) for highly accurate product trend analysis.
+- **Real-Time Data Integration**: Cross-references AI insights with live Google Trends data and real supplier API feeds.
+- **Role-Based Admin Panel**: Secure, email-whitelisted administration dashboard for managing users and automations.
+- **Web Development Services**: Three tiers of professional Next.js/React web development packages for e-commerce brands.
+- **Modern Tech Stack**: Built with Next.js 15, TypeScript, Tailwind CSS, Supabase (PostgreSQL & Auth), and Framer Motion.
 
-## 📦 Kurulum
+## 📦 Installation
 
 ```bash
-# Bağımlılıkları yükle
+# Install dependencies
 npm install
 
-# Geliştirme sunucusunu başlat
+# Run development server
 npm run dev
 
-# Production build
+# Build for production
 npm run build
 
-# Production sunucusunu başlat
+# Start production server
 npm start
 ```
 
-## 🌐 Sayfalar
+## 🌐 Platform Architecture
 
-- **Anasayfa (/)**: Tüm platformların genel tanıtımı ve durum bilgisi
-- **Hakkımızda (/about)**: Marka vizyonu ve teknoloji odaklı e-ticaret stratejisi
-- **eBay (/ebay)**: ✅ Aktif mağaza - 14 teknoloji ve mobil aksesuar ürünü
-  - USB Port Super Fast Car Charger
-  - 8 in 2 USB Hub (Type-C HUB Docking Station)
-  - Magnetic Power Bank 10000mAh (iPhone uyumlu)
-  - Invisible Holder Charger Cable 240W
-  - 20000mAh 45W Portable Charger
-  - SUPFINE Magnetic iPhone Case (MagSafe)
-  - USB-C Fast Charger Cable
-  - AZDOME M17 Pro Dual Dash Cam
-  - Portable 10W Solar Panel
-  - Mini Electric Shaver
-  - Portable Mobile Phone Tripod
-  - Auto AI Box (Netflix/YouTube)
-  - Heavy Duty Charging Cable Type-C
-  - Liquid Silicone MagSafe Case
-- **Amazon (/amazon)**: 🚧 Yakında açılacak
-- **Etsy (/etsy)**: 🚧 Yakında açılacak
-- **Shopify (/shopify)**: 🚧 Yakında açılacak
-- **TikTok Shop (/tiktok)**: 🚧 Yakında açılacak
+- **Public Site**: Introduces the SaaS platform, AI capabilities, and Web Development service plans.
+- **SaaS Panel (`/dashboard`)**: Protected route for authenticated users to access AI Research and market analytics.
+- **Admin Panel (`/admin`)**: Highly restricted zone for system administrators to manage n8n automations, view user metrics, and oversee the platform.
 
-## 🎨 Tasarım
-
-Sade, güven veren ve premium bir tasarım dili kullanılmıştır:
-- Modern gradient renkler
-- Smooth animasyonlar ve transitions
-- Kolay navigasyon
-- CTA (Call-to-Action) butonları
-- Her platform için özel renk paleti
-
-## 🛠️ Teknolojiler
+## 🛠️ Technology Stack
 
 - **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
+- **Database & Auth**: Supabase (PostgreSQL, OAuth)
+- **Animations**: Framer Motion
 - **Icons**: Lucide React
-- **Font**: Inter (Google Fonts)
+- **Automations**: n8n Webhooks
 
-## 📱 Responsive
+## 🔒 Security
 
-Web sitesi tüm cihazlarda (mobil, tablet, desktop) mükemmel çalışır.
+- The platform implements strict middleware protection for all `/admin` routes.
+- Only explicitly whitelisted email addresses (managed via environment variables) can access administrative functions.
+- All user data and search history are securely stored in a Supabase PostgreSQL instance.
 
-## 🔗 eBay Mağaza Linki
+## 📄 License
 
-Aktif mağazamız:
-- eBay Seller Store: https://www.ebay.com/usr/YOUR_USERNAME
-
-**Tüm ürünler gerçek eBay linkleriyle bağlantılıdır. Her ürün kartına tıklandığında direkt olarak o ürünün eBay sayfasına yönlendirilir.**
-
-Diğer platformlar açıldığında buraya eklenecektir.
-
-## 📄 Lisans
-
-© 2026 AllMySell. Tüm hakları saklıdır.
-
+© 2026 AllMySell. All rights reserved.
