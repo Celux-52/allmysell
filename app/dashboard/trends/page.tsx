@@ -455,7 +455,7 @@ export default function TrendsPage() {
                 </h4>
                 <div className="space-y-2 text-xs text-slate-400 leading-relaxed">
                   <p><strong className="text-slate-300">1. Google Trends API:</strong> We fetch real search interest data from Google Trends using the open-source <code className="text-blue-300 bg-white/5 px-1 rounded">google-trends-api</code> npm package. This gives us actual search volume, trend direction, and related queries.</p>
-                  <p><strong className="text-slate-300">2. AI Analysis:</strong> Our multi-AI consensus engine (Groq/Gemini/DeepSeek) analyzes the data and cross-references with e-commerce platform trends from Etsy, Amazon, and eBay.</p>
+                  <p><strong className="text-slate-300">2. AI Analysis:</strong> Our multi-AI consensus engine (Groq, Gemini, DeepSeek, Qwen, Claude) analyzes the data and cross-references with e-commerce platform trends from Etsy, Amazon, and eBay in parallel.</p>
                   <p><strong className="text-slate-300">3. Transparency:</strong> Every data point shows its source. Google Trends data includes direct verification links. AI insights are clearly labeled as model-generated.</p>
                 </div>
               </div>

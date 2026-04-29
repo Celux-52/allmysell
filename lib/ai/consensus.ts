@@ -523,3 +523,147 @@ export async function consensusResearch(query: string): Promise<ConsensusResult>
 
   return mergeAndEnrich(results, providers, query, internetContext);
 }
+
+/**
+ * TRENDS CONSENSUS ENGINE
+ * Fires 5 AI providers in parallel to find the best trends, then merges categories.
+ */
+export async function consensusTrends(niche: string) {
+  const searchTerm = niche || 'trending products 2026';
+  
+  const AI_PROMPT = `You are an expert e-commerce trend analyst. ${niche ? `Analyze trends for the "${niche}" niche.` : 'Analyze current trending product categories in e-commerce.'}
+
+CRITICAL: For EVERY piece of data you provide, you MUST explain your reasoning and cite your source.
+
+Return a JSON response with exactly this structure:
+{
+  "categories": [
+    {
+      "name": "Category Name",
+      "emoji": "🔥",
+      "trends": [
+        {
+          "keyword": "Product keyword",
+          "volume": "250K+",
+          "growth": "+180%",
+          "status": "rising",
+          "insight": "Brief market insight with reasoning",
+          "dataSource": "Where this data comes from (e.g. Google Trends, Etsy Search Data, Amazon BSR, etc.)",
+          "reasoning": "Why this trend matters and how we determined its status"
+        }
+      ]
+    }
+  ],
+  "summary": "Overall market analysis with transparent methodology",
+  "topOpportunity": "Best opportunity with clear reasoning why",
+  "methodology": "Explain exactly how this analysis was performed and what data sources were consulted",
+  "sources": [
+    {"name": "Google Trends", "url": "https://trends.google.com/trends/explore?q=${encodeURIComponent(searchTerm)}", "type": "real-time"}
+  ],
+  "limitations": "What this analysis cannot tell you and what you should verify independently"
+}
+
+Rules:
+- Include exactly 2 distinct categories.
+- Each category must have 2-3 trends.
+- ONLY return valid JSON without any markdown formatting.`;
+
+  const providers = [
+    { name: 'Groq (Llama 3.3 70B)', fn: async () => {
+      const { getGroq } = await import('@/lib/ai/groq')
+      const r = await getGroq().chat.completions.create({
+        model: 'llama-3.3-70b-versatile',
+        messages: [{ role: 'user', content: AI_PROMPT }],
+        response_format: { type: 'json_object' },
+        temperature: 0.7
+      })
+      return r.choices[0]?.message?.content || '{}'
+    }},
+    { name: 'Gemini 2.0 Flash', fn: async () => {
+      const { getGemini } = await import('@/lib/ai/gemini')
+      const result = await getGemini().getGenerativeModel({ model: 'gemini-2.0-flash' }).generateContent(AI_PROMPT)
+      return result.response.text()
+    }},
+    { name: 'DeepSeek R1', fn: async () => {
+      const { getCline } = await import('@/lib/ai/cline')
+      const r = await getCline().chat.completions.create({
+        model: 'deepseek/deepseek-r1',
+        messages: [{ role: 'user', content: AI_PROMPT }],
+        temperature: 0.7
+      })
+      return r.choices[0]?.message?.content || '{}'
+    }},
+    { name: 'Qwen 2.5 72B', fn: async () => {
+      const { getCline } = await import('@/lib/ai/cline')
+      const r = await getCline().chat.completions.create({
+        model: 'qwen/qwen-2.5-72b-instruct',
+        messages: [{ role: 'user', content: AI_PROMPT }],
+        temperature: 0.7
+      })
+      return r.choices[0]?.message?.content || '{}'
+    }},
+    { name: 'Claude 3.5 Haiku', fn: async () => {
+      const { getCline } = await import('@/lib/ai/cline')
+      const r = await getCline().chat.completions.create({
+        model: 'anthropic/claude-3.5-haiku',
+        messages: [{ role: 'user', content: AI_PROMPT }],
+        temperature: 0.7
+      })
+      return r.choices[0]?.message?.content || '{}'
+    }},
+  ];
+
+  // Fire all 5 in parallel
+  const settled = await Promise.allSettled(providers.map(p => p.fn()));
+
+  const allCategories: any[] = [];
+  const allSources: any[] = [];
+  const successfulProviders: string[] = [];
+  let bestSummary = "";
+  let bestOpportunity = "";
+
+  settled.forEach((result, i) => {
+    if (result.status === 'fulfilled' && result.value) {
+      try {
+        const cleaned = result.value.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim();
+        const parsed = JSON.parse(cleaned);
+        
+        if (parsed.categories && Array.isArray(parsed.categories)) {
+          allCategories.push(...parsed.categories);
+          successfulProviders.push(providers[i].name);
+        }
+        if (parsed.sources && Array.isArray(parsed.sources)) {
+          allSources.push(...parsed.sources);
+        }
+        if (parsed.summary && !bestSummary) bestSummary = parsed.summary;
+        if (parsed.topOpportunity && !bestOpportunity) bestOpportunity = parsed.topOpportunity;
+      } catch (e) {}
+    }
+  });
+
+  if (allCategories.length === 0) {
+    return null;
+  }
+
+  // Deduplicate sources by URL
+  const uniqueSourcesMap = new Map();
+  allSources.forEach(s => {
+    if (s.url && !uniqueSourcesMap.has(s.url)) {
+      uniqueSourcesMap.set(s.url, s);
+    }
+  });
+  
+  // Return merged result
+  return {
+    engine: successfulProviders.join(' + '),
+    niche: niche || 'general',
+    trends: {
+      categories: allCategories.slice(0, 6), // Keep top 6 categories from all AIs
+      summary: \`🧠 Multi-AI Consensus (\${successfulProviders.length} providers): \${bestSummary}\`,
+      topOpportunity: bestOpportunity,
+      methodology: "Parallel consensus gathered from Groq, Gemini, DeepSeek, Qwen, and Claude.",
+      sources: Array.from(uniqueSourcesMap.values()),
+      limitations: "AI-generated volumes and growth are estimations. Google Trends API provides actual verification."
+    }
+  };
+}
