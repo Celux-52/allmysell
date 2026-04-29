@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
       create: {
         email: 'test@gmail.com',
         password: hashedPassword,
-        fullName: 'Test Kullanıcı',
+        fullName: 'Test User',
         platform: 'amazon',
         monthlyOrders: 'high',
         emailVerified: true,
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Test kullanıcı oluşturuldu',
+      message: 'Test user created',
       testUser: {
         email: testUser.email,
         password: 'test123',
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     console.error('Setup error:', error);
     const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { success: false, message: `Hata: ${errorMessage}` },
+      { success: false, message: `Error: ${errorMessage}` },
       { status: 500 }
     );
   }

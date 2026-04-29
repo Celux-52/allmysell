@@ -11,16 +11,16 @@ export async function POST(request: NextRequest) {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) {
-      return NextResponse.json({ error: 'Lütfen AI araması yapmak için giriş yapın.' }, { status: 401 })
+      return NextResponse.json({ error: 'Please log in to use AI research.' }, { status: 401 })
     }
 
     const { query, mode = 'product' } = await request.json()
 
     if (!query || typeof query !== 'string' || query.trim().length < 3) {
-      return NextResponse.json({ error: 'Arama terimi en az 3 karakter olmalıdır.' }, { status: 400 })
+      return NextResponse.json({ error: 'Search query must be at least 3 characters.' }, { status: 400 })
     }
 
-    // --- ANTI-BOT RATE LIMITING (Kötüye Kullanım Koruması) ---
+    // --- ANTI-BOT RATE LIMITING ---
     // Get start of current month
     const startOfMonth = new Date()
     startOfMonth.setDate(1)
@@ -39,12 +39,12 @@ export async function POST(request: NextRequest) {
       const MONTHLY_LIMIT = 1000
       if (searchCount >= MONTHLY_LIMIT) {
         return NextResponse.json(
-          { error: `Aylık arama limitinize (${MONTHLY_LIMIT}) ulaştınız. Lütfen sistem yöneticisiyle iletişime geçin.` },
+          { error: `You have reached your monthly search limit (${MONTHLY_LIMIT}). Please contact the administrator.` },
           { status: 429 }
         )
       }
     } catch (dbError) {
-      console.warn('[Research API] Veritabanı limiti kontrol edilemedi:', dbError)
+      console.warn('[Research API] Could not check database rate limit:', dbError)
       // If DB fails, we still let them search to not break the app entirely, but log it.
     }
 
@@ -53,14 +53,14 @@ export async function POST(request: NextRequest) {
 
     if (!results || results.products.length === 0) {
       return NextResponse.json(
-        { error: 'Sonuç bulunamadı. Yapay zeka sağlayıcıları geçici olarak meşgul olabilir.' },
+        { error: 'No results found. AI providers may be temporarily busy.' },
         { status: 503 }
       )
     }
 
     // --- SAVE TO SEARCH HISTORY ---
     try {
-      // Sadece profil varsa ekleyebilmek için userId ile kayıt deniyoruz
+      // Save search history with userId
       await prisma.searchHistory.create({
         data: {
           userId: user.id,
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
         }
       })
     } catch (dbError) {
-      console.warn('[Research API] Arama geçmişi kaydedilemedi:', dbError)
+      console.warn('[Research API] Could not save search history:', dbError)
     }
 
     return NextResponse.json({

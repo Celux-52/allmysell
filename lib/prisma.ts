@@ -9,7 +9,7 @@ function getPrismaClient() {
   
   if (!dbUrl) {
     const availableEnvVars = Object.keys(process.env).filter(key => key.includes('URL') || key.includes('POSTGRES')).join(', ');
-    throw new Error(`Veritabanı bağlantı linki (DATABASE_URL) bulunamadı. Mevcut değişkenler: ${availableEnvVars || 'Yok'}. Lütfen Vercel panelinden Environment Variables kısmını kontrol edin.`);
+    throw new Error(`DATABASE_URL not found. Available env vars: ${availableEnvVars || 'None'}. Please check your Environment Variables in Vercel dashboard.`);
   }
   
   if (!globalForPrisma.prisma) {

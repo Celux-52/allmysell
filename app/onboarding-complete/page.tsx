@@ -20,104 +20,104 @@ export default function OnboardingCompletePage() {
     shopify: 'Shopify',
     etsy: 'Etsy',
     tiktok: 'TikTok Shop',
-    other: 'Diğer Platform',
+    other: 'Other Platform',
   };
 
   const orderLabels: Record<string, string> = {
-    low: '0-10 sipariş/ay',
-    medium: '11-50 sipariş/ay',
-    high: '51-200 sipariş/ay',
-    'very-high': '200+ sipariş/ay',
+    low: '0-10 orders/month',
+    medium: '11-50 orders/month',
+    high: '51-200 orders/month',
+    'very-high': '200+ orders/month',
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#E8750A] to-[#E8750A] flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen bg-[#030712] flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-2xl">
-        <div className="bg-stone-50 rounded-2xl shadow-2xl p-8 md:p-12 animate-scaleIn text-center">
+        <div className="glass-card rounded-2xl p-8 md:p-12 text-center">
           {/* Success Icon */}
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounceIn">
-            <CheckCircle className="text-green-600" size={48} />
+          <div className="w-20 h-20 bg-green-500/10 border border-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle className="text-green-400" size={48} />
           </div>
 
           {/* Heading */}
-          <h1 className="text-3xl md:text-4xl font-bold text-stone-900 mb-3 animate-slideInUp">
-            Hoş Geldiniz, {userInfo?.fullName}! 🎉
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
+            Welcome, {userInfo?.fullName}! 🎉
           </h1>
-          <p className="text-stone-500 text-lg mb-8 animate-slideInUp" style={{ animationDelay: '0.1s' }}>
-            Profiliniz başarıyla tamamlandı. Şimdi sana uygun hizmetleri sunmaya hazırsınız.
+          <p className="text-slate-400 text-lg mb-8">
+            Your profile is complete. We&apos;re ready to tailor the experience for you.
           </p>
 
           {/* Profile Summary */}
           {userInfo && (
-            <div className="bg-gradient-to-br from-olive to-peru p-6 rounded-xl mb-8 animate-slideInUp" style={{ animationDelay: '0.2s' }}>
+            <div className="bg-white/5 border border-white/10 p-6 rounded-xl mb-8">
               <div className="grid md:grid-cols-3 gap-4 text-center">
                 <div>
-                  <p className="text-stone-500 text-sm mb-1">Email</p>
-                  <p className="text-stone-900 font-semibold">{userInfo.email}</p>
+                  <p className="text-slate-500 text-sm mb-1">Email</p>
+                  <p className="text-white font-semibold">{userInfo.email}</p>
                 </div>
                 <div>
-                  <p className="text-stone-500 text-sm mb-1">Platform</p>
-                  <p className="text-stone-900 font-semibold">{platformNames[userInfo.platform] || userInfo.platform}</p>
+                  <p className="text-slate-500 text-sm mb-1">Platform</p>
+                  <p className="text-white font-semibold">{platformNames[userInfo.platform] || userInfo.platform}</p>
                 </div>
                 <div>
-                  <p className="text-stone-500 text-sm mb-1">Aylık Hacim</p>
-                  <p className="text-stone-900 font-semibold">{orderLabels[userInfo.monthlyOrders] || userInfo.monthlyOrders}</p>
+                  <p className="text-slate-500 text-sm mb-1">Monthly Volume</p>
+                  <p className="text-white font-semibold">{orderLabels[userInfo.monthlyOrders] || userInfo.monthlyOrders}</p>
                 </div>
               </div>
             </div>
           )}
 
           {/* Next Steps */}
-          <div className="bg-peru border-2 border-peru p-6 rounded-xl mb-8 animate-slideInUp" style={{ animationDelay: '0.3s' }}>
-            <h3 className="text-lg font-bold text-stone-900 mb-4 flex items-center justify-center gap-2">
-              <Gift size={24} className="text-stone-800" />
-              Sana Hazır İçerik
+          <div className="bg-orange-500/5 border border-orange-500/20 p-6 rounded-xl mb-8">
+            <h3 className="text-lg font-bold text-white mb-4 flex items-center justify-center gap-2">
+              <Gift size={24} className="text-orange-400" />
+              What&apos;s Ready for You
             </h3>
             <ul className="space-y-2 text-left">
               <li className="flex items-start gap-3">
-                <span className="text-stone-800 font-bold">✓</span>
-                <span className="text-stone-600">
-                  {userInfo?.platform === 'ebay' ? 'eBay satış' : userInfo?.platform === 'amazon' ? 'Amazon satış' : 'Satış'} için özel rehberler ve tips
+                <span className="text-orange-400 font-bold">✓</span>
+                <span className="text-slate-300">
+                  {userInfo?.platform === 'ebay' ? 'eBay selling' : userInfo?.platform === 'amazon' ? 'Amazon selling' : 'Selling'} guides and tips tailored to your platform
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-stone-800 font-bold">✓</span>
-                <span className="text-stone-600">Sipariş hacmine göre uyarlanmış ürün önerileri</span>
+                <span className="text-orange-400 font-bold">✓</span>
+                <span className="text-slate-300">Product recommendations based on your order volume</span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-stone-800 font-bold">✓</span>
-                <span className="text-stone-600">İşletmenizi büyütmek için özel sunumlar</span>
+                <span className="text-orange-400 font-bold">✓</span>
+                <span className="text-slate-300">Custom insights to help scale your business</span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-stone-800 font-bold">✓</span>
-                <span className="text-stone-600">Özel ürün lansmanlarına erken erişim</span>
+                <span className="text-orange-400 font-bold">✓</span>
+                <span className="text-slate-300">Early access to new platform features and tools</span>
               </li>
             </ul>
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 animate-slideInUp" style={{ animationDelay: '0.4s' }}>
+          <div className="flex flex-col sm:flex-row gap-4">
             <Link
               href="/"
-              className="flex-1 bg-stone-900 !text-white hover:bg-stone-800 text-stone-900 py-3 px-6 rounded-lg font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2"
+              className="flex-1 bg-gradient-to-r from-orange-600 to-amber-600 text-white py-3 px-6 rounded-lg font-semibold hover:shadow-lg hover:shadow-orange-500/25 transition-all flex items-center justify-center gap-2"
             >
-              Anasayfaya Dön <ArrowRight size={20} />
+              Go to Homepage <ArrowRight size={20} />
             </Link>
             <Link
-              href="/shop/ebay"
-              className="flex-1 border-2 border-[#E8750A] text-stone-800 py-3 px-6 rounded-lg font-semibold hover:bg-olive transition-all"
+              href="/dashboard"
+              className="flex-1 border border-white/10 bg-white/5 text-white py-3 px-6 rounded-lg font-semibold hover:bg-white/10 transition-all"
             >
-              Ürünleri Gez
+              Launch Panel
             </Link>
           </div>
 
           {/* Footer */}
-          <p className="text-stone-400 text-sm mt-8">
-            Herhangi bir sorunuz olursa,{' '}
-            <Link href="/contact" className="text-stone-800 hover:underline">
-              iletişim
+          <p className="text-slate-500 text-sm mt-8">
+            Have any questions?{' '}
+            <Link href="/contact" className="text-orange-400 hover:underline">
+              Contact us
             </Link>
-            {' '}sayfamızı ziyaret edin.
+            .
           </p>
         </div>
       </div>

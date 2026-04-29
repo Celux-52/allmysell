@@ -27,15 +27,15 @@ export default function BotsAdminPage() {
         body: JSON.stringify({ keyword: keyword.trim() }),
       });
 
-      if (!response.ok) throw new Error('Sunucu hatası');
+      if (!response.ok) throw new Error('Server error');
 
       setStatus('success');
-      setMessage('Arama başarıyla tamamlandı. Yeni ürünler Google Sheets tablonuza eklendi.');
+      setMessage('Search completed successfully. New products have been added to your Google Sheets.');
       setKeyword('');
     } catch (err) {
       console.error(err);
       setStatus('error');
-      setMessage('Bot çalıştırılamadı. n8n workflow açık (Active) olduğundan emin olun.');
+      setMessage('Failed to run bot. Make sure your n8n workflow is active.');
     } finally {
       setLoading(false);
     }
@@ -48,32 +48,32 @@ export default function BotsAdminPage() {
           <Bot className="text-purple-400" size={24} />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-white tracking-tight">Bot Otomasyonları</h1>
-          <p className="text-gray-400 mt-1">N8n ve Python tabanlı botlarınızı buradan yönetin.</p>
+          <h1 className="text-3xl font-bold text-white tracking-tight">Bot Automations</h1>
+          <p className="text-gray-400 mt-1">Manage your n8n and Python-based bots from here.</p>
         </div>
       </div>
 
       <div className="bg-[#111111] border border-white/10 rounded-2xl p-6 shadow-xl">
         <div className="flex items-center gap-3 mb-6">
           <Search className="text-purple-400" size={20} />
-          <h2 className="text-xl font-semibold text-white">eBay Trend Avcısı Botu</h2>
+          <h2 className="text-xl font-semibold text-white">eBay Trend Hunter Bot</h2>
         </div>
         
         <p className="text-sm text-gray-400 mb-6 leading-relaxed">
-          Bu bot, belirlediğiniz İngilizce kelimeyi eBay'de aratır, "Bestseller" olan ve son zamanlarda çok satan kârlı ürünleri tespit eder.
-          Bulunan ürünler otomatik olarak CJ Dropshipping üzerinde eşleştirilerek kâr marjları hesaplanır ve Google Excel (Sheets) tablonuza aktarılır.
+          This bot searches your keyword on eBay, identifies bestselling and high-profit products, 
+          matches them with CJ Dropshipping for profit margin calculation, and exports the results to your Google Sheets.
         </p>
 
         <form onSubmit={runBot} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">
-              Aranacak Kelime (İngilizce)
+              Search Keyword
             </label>
             <input
               type="text"
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
-              placeholder="Örn: necklace, mug, leather jacket..."
+              placeholder="e.g., necklace, mug, leather jacket..."
               className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
               disabled={loading}
             />
@@ -87,12 +87,12 @@ export default function BotsAdminPage() {
             {loading ? (
               <>
                 <Loader2 size={20} className="animate-spin" />
-                <span>Yapay Zeka Taranıyor... (Yaklaşık 30 sn)</span>
+                <span>AI Scanning... (~30 seconds)</span>
               </>
             ) : (
               <>
                 <Bot size={20} />
-                <span>Botu Çalıştır</span>
+                <span>Run Bot</span>
               </>
             )}
           </button>
@@ -107,7 +107,7 @@ export default function BotsAdminPage() {
             {status === 'success' ? <CheckCircle2 size={20} className="mt-0.5" /> : <AlertCircle size={20} className="mt-0.5" />}
             <div className="flex-1">
               <h3 className="text-sm font-medium mb-1">
-                {status === 'success' ? 'İşlem Başarılı' : 'Hata Oluştu'}
+                {status === 'success' ? 'Operation Successful' : 'Error Occurred'}
               </h3>
               <p className="text-sm opacity-90">{message}</p>
             </div>

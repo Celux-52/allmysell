@@ -109,8 +109,8 @@ const products = [
   // PREVIOUS PRODUCTS
   {
     id: 'magsafe-sticker-360-ring',
-    name: 'MagSafe Sticker 360 Manyetik Halkalı 2 Paket',
-    description: 'Evrensel Kablosuz Şarj Adaptörü Kiti',
+    name: 'MagSafe Sticker 360 Magnetic Ring 2 Pack',
+    description: 'Universal Wireless Charging Adapter Kit',
     category: 'Phone Accessories',
     image: 'https://i.ebayimg.com/images/g/euIAAeSwTh5p0SZ5/s-l1600.webp',
     platform: 'eBay',

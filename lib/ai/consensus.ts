@@ -271,7 +271,7 @@ async function queryLlamaScout(query: string, internetContext: string): Promise<
 
 /**
  * ✅ SMART AI VALIDATION LAYER
- * Tüm AI yanıtlarını birbirleriyle karşılaştır, eksikleri ve yanlışları tespit et
+ * Cross-validate all AI responses, detect inconsistencies and errors
  */
 async function smartValidateAndRefine(
   allResults: Array<{ products: any[]; summary: string } | null>,
@@ -295,32 +295,32 @@ async function smartValidateAndRefine(
     return { products: [], summaries: [], activeProviders: [] };
   }
 
-  // 🧠 ZEKA KONTROLÜ: AI'ları birbirlerini düzeltmesi için kullan
+  // 🧠 INTELLIGENCE CHECK: Use AIs to cross-correct each other
   const allProductsJson = JSON.stringify(allProducts, null, 2);
 
   const validationPrompt = `
-Sen bir VERİ DENETÇİSİSİN. Aşağıda 5 farklı yapay zekanın aynı sorgu için döndürdüğü ürün listesi var.
+You are a DATA AUDITOR. Below is a product list returned by 5 different AI models for the same query.
 
-SORGUNUZ: ${query}
+QUERY: ${query}
 
-GÖREVİN:
-1. Aynı ürünleri birbirleriyle karşılaştır
-2. Fiyat, marj, skor gibi verilerdeki tutarsızlıkları tespit et
-3. Eksik alanları belirle
-4. Uydurulmuş veya gerçekçi olmayan verileri işaret et
-5. Her ürün için EN DOĞRU ortalama değerleri hesapla
-6. Hiçbir AI'ın yanlış yapmasına izin verme
+YOUR TASK:
+1. Compare identical products across providers
+2. Detect inconsistencies in price, margin, score data
+3. Identify missing fields
+4. Flag fabricated or unrealistic data
+5. Calculate the MOST ACCURATE average values for each product
+6. Do not allow any AI to make errors
 
-✅ SADECE düzeltilmiş ve doğrulanmış JSON döndür. Hiçbir açıklama ekleme.
+✅ Return ONLY corrected and validated JSON. Do not add any explanations.
 
-TÜM ÜRÜNLER:
+ALL PRODUCTS:
 ${allProductsJson}
 
 ${internetContext}
 `;
 
   try {
-    // En iyi mantık yapısına sahip DeepSeek R1 ile doğrulama yap
+    // Validate using DeepSeek R1 which has the best reasoning capabilities
     const { getCline } = await import('./cline');
     const cline = getCline();
 
@@ -334,7 +334,7 @@ ${internetContext}
     const validated = safeParseJSON(validationResponse.choices[0]?.message?.content || '{}');
 
     if (validated && validated.products && Array.isArray(validated.products)) {
-      console.log(`✅ Smart validation completed: ${allProducts.length} ürün doğrulandı`);
+      console.log(`✅ Smart validation completed: ${allProducts.length} products validated`);
       return {
         products: validated.products,
         summaries: validated.summary ? [validated.summary, ...summaries] : summaries,
@@ -358,7 +358,7 @@ async function mergeAndEnrich(
   internetContext: string
 ): Promise<ConsensusResult> {
 
-  // ✅ İLK ÖNCE AKILLI DOĞRULAMA YAP
+  // ✅ RUN SMART VALIDATION FIRST
   const { products: validatedProducts, summaries, activeProviders } = await smartValidateAndRefine(
     allResults, providers, query, internetContext
   );
@@ -366,7 +366,7 @@ async function mergeAndEnrich(
   if (validatedProducts.length === 0) {
     return {
       products: [],
-      summary: 'Tüm yapay zeka sağlayıcıları sonuç döndüremedi. Lütfen tekrar deneyin.',
+      summary: 'All AI providers failed to return results. Please try again.',
       aiProviders: [],
       consensusMethod: 'none',
     };
@@ -396,7 +396,7 @@ async function mergeAndEnrich(
     // Products recommended by more AI providers get higher consensus bonus
     const consensusBonus = Math.min((group.length - 1) * 5, 15);
 
-    // ✅ VERİ KALİTE KONTROLÜ
+    // ✅ DATA QUALITY CHECK
     const qualityPenalty = group.length < 2 ? -10 : 0;
 
     mergedRaw.push({
