@@ -4,10 +4,14 @@ let clineClient: OpenAI | null = null
 
 export function getCline(): OpenAI {
     if (!clineClient) {
-        const apiKey = process.env.CLINE_API_KEY || 'demo'
+        const apiKey = process.env.OPENROUTER_API_KEY || process.env.CLINE_API_KEY || 'demo'
         clineClient = new OpenAI({
             apiKey,
-            baseURL: "https://api.cline.bot/v1"
+            baseURL: "https://openrouter.ai/api/v1",
+            defaultHeaders: {
+                "HTTP-Referer": "https://allmysell.com", 
+                "X-Title": "AllMySell",
+            }
         })
     }
     return clineClient
@@ -76,7 +80,7 @@ export async function researchProductsWithCline(query: string) {
 
     try {
         const response = await cline.chat.completions.create({
-            model: 'cline-free',
+            model: 'meta-llama/llama-3.1-8b-instruct', // Using a real model instead of fake cline-free
             messages: [
                 { role: 'system', content: prompt },
                 { role: 'user', content: query }
@@ -106,7 +110,7 @@ export async function clineAssistant(message: string, context?: string) {
 
     try {
         const response = await cline.chat.completions.create({
-            model: 'cline-free',
+            model: 'meta-llama/llama-3.1-8b-instruct',
             messages: [
                 { role: 'system', content: systemPrompt },
                 { role: 'user', content: message }
