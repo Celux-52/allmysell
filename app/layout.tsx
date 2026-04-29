@@ -7,7 +7,6 @@ import { Analytics } from '@vercel/analytics/next';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import CookieBanner from '@/components/CookieBanner';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
-import N8nChatWidget from '@/components/N8nChatWidget';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -68,7 +67,6 @@ export default function RootLayout({
         <CookieBanner />
         <GoogleAnalytics />
         <Analytics />
-        <N8nChatWidget />
       </body>
     </html>
   );
