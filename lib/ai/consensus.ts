@@ -1,17 +1,21 @@
 /**
- * Multi-AI Consensus Engine + Real Google Trends + Real Supplier Links
+ * Multi-AI Consensus Engine + Real Google Trends + Semantic Supplier Matching
  * 
  * Uses 5 independent AI providers in parallel:
  *   1. Groq (Llama 3.3 70B)
  *   2. Gemini 2.0 Flash
  *   3. Cline - DeepSeek R1 (best reasoning)
  *   4. Cline - Qwen 3 72B
- *   5. Cline - Llama 4 Scout 17B
+ *   5. Cline - Claude 3.5 Haiku
  * 
- * Then enriches with REAL Google Trends data and REAL clickable supplier URLs.
+ * Then enriches with:
+ *   - REAL Google Trends data
+ *   - AI-powered semantic supplier matching (embeddings + cosine similarity)
+ *   - Quality-filtered supplier products (rating ≥ 4.0, orders ≥ 50)
  */
 
-import { getGoogleTrendsData, buildSupplierLinks, buildCompetitorLinks, type GoogleTrendsData } from './google-trends';
+import { getGoogleTrendsData, buildCompetitorLinks, type GoogleTrendsData } from './google-trends';
+import { sourceSuppliersBatch, type ScoredSupplierMatch, type SupplierSourceResult } from './supplier-sourcing';
 
 interface SupplierLink {
   name: string;
@@ -33,7 +37,17 @@ interface ConsensusProduct {
   targetAudience: string;
   marketingTips: string[];
   sources: string[];
+  /** Static fallback supplier search URLs */
   suppliers: SupplierLink[];
+  /** AI-matched supplier products with semantic scores */
+  semanticSuppliers: ScoredSupplierMatch[];
+  /** Sourcing stats: how many candidates evaluated, rejected, etc. */
+  sourcingStats: {
+    totalCandidates: number;
+    rejectedBySemantic: number;
+    rejectedByQuality: number;
+    matchCount: number;
+  } | null;
   competitorLinks: { platform: string; url: string; note: string }[];
   googleTrendsInsight: string;
   googleTrendsData: GoogleTrendsData | null;
@@ -442,12 +456,39 @@ async function mergeAndEnrich(
     })
   );
 
-  // Build final products with REAL supplier links and REAL Google Trends
+  // ═══════════════════════════════════════════════════════
+  // SEMANTIC SUPPLIER SOURCING (NEW)
+  // Replaces static URL generation with AI-powered matching
+  // ═══════════════════════════════════════════════════════
+  console.log('\n🔗 [Consensus] Starting semantic supplier sourcing...');
+  const supplierResults = await sourceSuppliersBatch(
+    topProducts.map(p => ({
+      name: p.name,
+      searchKeyword: p.searchKeyword || p.name,
+      category: p.category,
+      description: p.description,
+      whyItWorks: p.whyItWorks,
+      targetAudience: p.targetAudience,
+    }))
+  );
+  console.log(`🔗 [Consensus] Supplier sourcing complete for ${supplierResults.size} products\n`);
+
+  // Build final products with semantic suppliers + Google Trends
   const finalProducts: ConsensusProduct[] = topProducts.map((product) => {
     const keyword = product.searchKeyword || product.name;
-    const realSuppliers = buildSupplierLinks(keyword);
     const competitorLinks = buildCompetitorLinks(keyword);
     const realTrends = trendsMap.get(product.name) || null;
+
+    // Get semantic supplier results for this product
+    const sourcing = supplierResults.get(product.name);
+    const semanticSuppliers = sourcing?.matches || [];
+    const fallbackLinks = sourcing?.fallbackLinks || [];
+    const sourcingStats = sourcing ? {
+      totalCandidates: sourcing.totalCandidatesEvaluated,
+      rejectedBySemantic: sourcing.rejectedBySemantic,
+      rejectedByQuality: sourcing.rejectedByQuality,
+      matchCount: sourcing.matches.length,
+    } : null;
 
     let googleTrendsInsight = 'Google Trends data was not available for this product.';
     if (realTrends) {
@@ -473,7 +514,9 @@ async function mergeAndEnrich(
       targetAudience: product.targetAudience,
       marketingTips: product.marketingTips,
       sources: product.sources,
-      suppliers: realSuppliers,
+      suppliers: fallbackLinks,
+      semanticSuppliers,
+      sourcingStats,
       competitorLinks,
       googleTrendsInsight,
       googleTrendsData: realTrends,

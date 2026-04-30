@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 // ... earlier imports
-import { Search, Sparkles, Wand2, Database, Loader2, Plus, Zap, ArrowUp, Star, AlertCircle, TrendingUp, ExternalLink, Truck, Globe2, Brain, CheckCircle, BarChart } from "lucide-react";
+import { Search, Sparkles, Wand2, Database, Loader2, Plus, Zap, ArrowUp, Star, AlertCircle, TrendingUp, ExternalLink, Truck, Globe2, Brain, CheckCircle, BarChart, ShieldCheck, Package, ThumbsUp } from "lucide-react";
 import { MagicCard } from "@/components/ui/magic-card";
 import { useState, useEffect } from "react";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
@@ -21,6 +21,33 @@ function calcScores(product: Product) {
 interface SupplierLink {
   name: string;
   url: string;
+}
+
+interface SemanticSupplierProduct {
+  title: string;
+  description: string;
+  price: string;
+  rating: number;
+  orders: number;
+  platform: string;
+  url: string;
+  imageHint: string;
+  shipsToUS: boolean;
+}
+
+interface ScoredSupplierMatch {
+  product: SemanticSupplierProduct;
+  similarityScore: number;
+  qualityScore: number;
+  overallScore: number;
+  matchLabel: 'Excellent' | 'Good' | 'Partial';
+}
+
+interface SourcingStats {
+  totalCandidates: number;
+  rejectedBySemantic: number;
+  rejectedByQuality: number;
+  matchCount: number;
 }
 
 interface GoogleTrendsData {
@@ -50,6 +77,8 @@ interface Product {
   marketingTips: string[];
   sources: string[];
   suppliers: SupplierLink[];
+  semanticSuppliers?: ScoredSupplierMatch[];
+  sourcingStats?: SourcingStats | null;
   competitorLinks?: { platform: string; url: string; note: string }[];
   googleTrendsInsight: string;
   googleTrendsData: GoogleTrendsData | null;
@@ -278,7 +307,7 @@ export default function ResearchPage() {
               <BorderBeam size={300} duration={4} colorFrom="#f97316" colorTo="#fbbf24" />
               <Loader2 className="h-10 w-10 animate-spin text-orange-400 mx-auto mb-4" />
               <h3 className="text-lg font-bold text-white mb-2">Multi-AI Consensus Running</h3>
-              <p className="text-sm text-slate-400 mb-6">5 AI providers are analyzing your query in parallel + Google Trends data...</p>
+              <p className="text-sm text-slate-400 mb-6">5 AI providers are analyzing your query in parallel + Google Trends + Semantic Supplier Matching...</p>
               <div className="flex justify-center gap-3 flex-wrap">
                 {["Groq (Llama 70B)", "Gemini Flash", "DeepSeek R1", "Qwen 2.5", "Claude 3.5 Haiku"].map((ai, i) => (
                   <motion.div 
@@ -439,8 +468,74 @@ export default function ResearchPage() {
                       </div>
                     )}
 
-                    {/* Suppliers */}
-                    {product.suppliers && product.suppliers.length > 0 && (
+                    {/* Semantic Supplier Matches */}
+                    {product.semanticSuppliers && product.semanticSuppliers.length > 0 ? (
+                      <div className="mb-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <ShieldCheck className="h-4 w-4 text-emerald-400" />
+                            <p className="text-xs font-semibold text-slate-300 uppercase tracking-wider">AI-Matched Suppliers ({product.semanticSuppliers.length})</p>
+                          </div>
+                          {product.sourcingStats && (
+                            <span className="text-[10px] text-slate-500">
+                              {product.sourcingStats.totalCandidates} scanned · {product.sourcingStats.rejectedBySemantic + product.sourcingStats.rejectedByQuality} filtered
+                            </span>
+                          )}
+                        </div>
+                        <div className="space-y-2">
+                          {product.semanticSuppliers.slice(0, expandedCard === i ? 6 : 2).map((match, j) => (
+                            <a
+                              key={j}
+                              href={match.product.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="block p-3 rounded-lg bg-white/[0.02] border border-white/5 hover:bg-emerald-500/5 hover:border-emerald-500/20 transition-all group/supplier"
+                            >
+                              <div className="flex items-start justify-between gap-2 mb-1.5">
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-xs font-medium text-white truncate group-hover/supplier:text-emerald-300 transition-colors">{match.product.title}</p>
+                                  <p className="text-[10px] text-slate-500 truncate mt-0.5">{match.product.description}</p>
+                                </div>
+                                <ExternalLink className="h-3 w-3 text-slate-500 flex-shrink-0 mt-0.5 group-hover/supplier:text-emerald-400" />
+                              </div>
+                              <div className="flex items-center gap-2 flex-wrap">
+                                {/* Match badge */}
+                                <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+                                  match.matchLabel === 'Excellent' ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/20' :
+                                  match.matchLabel === 'Good' ? 'bg-blue-500/15 text-blue-400 border border-blue-500/20' :
+                                  'bg-slate-500/15 text-slate-400 border border-slate-500/20'
+                                }`}>
+                                  {match.matchLabel === 'Excellent' ? '⚡' : match.matchLabel === 'Good' ? '✓' : '~'} {Math.round(match.similarityScore * 100)}% match
+                                </span>
+                                {/* Platform */}
+                                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/15">
+                                  {match.product.platform}
+                                </span>
+                                {/* Price */}
+                                <span className="text-[10px] font-bold text-green-400">{match.product.price}</span>
+                                {/* Rating */}
+                                <span className="text-[10px] text-amber-400 flex items-center gap-0.5">
+                                  <Star className="h-2.5 w-2.5 fill-current" /> {match.product.rating}
+                                </span>
+                                {/* Orders */}
+                                <span className="text-[10px] text-slate-500 flex items-center gap-0.5">
+                                  <Package className="h-2.5 w-2.5" /> {match.product.orders.toLocaleString()} sold
+                                </span>
+                                {/* US Ship */}
+                                {match.product.shipsToUS && (
+                                  <span className="text-[10px] text-sky-400">🇺🇸 US</span>
+                                )}
+                              </div>
+                            </a>
+                          ))}
+                          {product.semanticSuppliers.length > 2 && expandedCard !== i && (
+                            <p className="text-xs text-emerald-400 mt-1 cursor-pointer hover:underline">+{product.semanticSuppliers.length - 2} more verified matches — click to expand</p>
+                          )}
+                        </div>
+                      </div>
+                    ) : product.suppliers && product.suppliers.length > 0 ? (
+                      /* Fallback: Static supplier links */
                       <div className="mb-4">
                         <div className="flex items-center gap-2 mb-2">
                           <Truck className="h-4 w-4 text-orange-400" />
@@ -465,7 +560,7 @@ export default function ResearchPage() {
                           )}
                         </div>
                       </div>
-                    )}
+                    ) : null}
 
                     {/* Competitor Sales Data */}
                     {product.competitorLinks && product.competitorLinks.length > 0 && (
@@ -600,8 +695,8 @@ export default function ResearchPage() {
               <div className="h-12 w-12 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-400 mb-4 border border-orange-500/20">
                 <Truck className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-bold text-white mb-2">Real Suppliers</h3>
-              <p className="text-sm text-slate-400">Every product comes with 3-4+ verified supplier sources from AliExpress, Alibaba, CJ Dropshipping, and more.</p>
+              <h3 className="text-lg font-bold text-white mb-2">Semantic Supplier Match</h3>
+              <p className="text-sm text-slate-400">AI-powered supplier matching uses embeddings to find products with ≥75% semantic similarity — no more random results.</p>
             </MagicCard>
           </motion.div>
           
