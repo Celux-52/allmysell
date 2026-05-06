@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { EtsySupplierAgent } from '@/lib/ai/etsy-supplier-agent';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
 
 export async function POST(req: Request) {
   try {
