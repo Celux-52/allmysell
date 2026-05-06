@@ -297,7 +297,7 @@ export default function SavedItemsPage() {
             ))}
           </AnimatePresence>
         </div>
-      )}
+      ))}
 
       {activeTab === 'etsy' && (
         etsySavedProducts.length === 0 ? (

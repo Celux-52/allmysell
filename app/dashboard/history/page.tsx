@@ -187,7 +187,7 @@ export default function HistoryPage() {
             );})}
           </AnimatePresence>
         </div>
-      )}
+      ))}
 
       {activeTab === 'etsy' && (
         etsyHistory.length === 0 ? (
