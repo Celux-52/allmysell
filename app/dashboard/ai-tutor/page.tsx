@@ -15,7 +15,8 @@ import {
   CheckCircle2,
   Bookmark,
   MoreHorizontal,
-  ChevronLeft
+  ChevronLeft,
+  X
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
