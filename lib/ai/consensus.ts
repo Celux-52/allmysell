@@ -226,7 +226,7 @@ async function queryDeepSeek(query: string, internetContext: string): Promise<{ 
     const { getCline } = await import('./cline');
     const cline = getCline();
     const response = await cline.chat.completions.create({
-      model: 'deepseek/deepseek-r1',
+      model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
         { role: 'user', content: query }
@@ -633,7 +633,7 @@ Rules:
     { name: 'DeepSeek R1', fn: async () => {
       const { getCline } = await import('@/lib/ai/cline')
       const r = await getCline().chat.completions.create({
-        model: 'deepseek/deepseek-r1:free',
+        model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
         messages: [{ role: 'user', content: AI_PROMPT }],
         temperature: 0.9
       })

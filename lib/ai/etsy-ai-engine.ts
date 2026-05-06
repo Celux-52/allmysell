@@ -34,7 +34,7 @@ export class EtsyAIEngine {
 
     try {
       const response = await cline.chat.completions.create({
-        model: "deepseek/deepseek-r1:free", // Kullanıcının tercih ettiği DeepSeek R1 modeli
+        model: "google/gemini-2.0-flash-lite-preview-02-05:free", // Her zaman tamamen ücretsiz olan model
         messages: [{ role: "user", content: prompt }],
         temperature: 0.7
       });
