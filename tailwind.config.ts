@@ -9,6 +9,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
         // New Orange-Black Palette
         olive: '#E8750A',       // Was #808000, now vibrant orange (primary)
         peru: '#F59E0B',        // Was #CD853F, now amber/gold (secondary)

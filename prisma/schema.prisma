@@ -257,3 +257,88 @@ model AnalyticsEvent {
   @@index([createdAt])
   @@map("analytics_events")
 }
+
+// ============================================
+// ETSY AI SAAS
+// ============================================
+
+model EtsyProduct {
+  id          String   @id @default(cuid())
+  keyword     String
+  listingId   String   @map("listing_id")
+  title       String
+  price       Float?
+  currency    String   @default("USD")
+  favorites   Int      @default(0)
+  views       Int      @default(0)
+  tags        String[] @default([])
+  url         String?
+  imageUrl    String?  @map("image_url")
+  shopName    String?  @map("shop_name")
+  
+  analyses    EtsyAnalysis[]
+  suppliers   EtsySupplier[]
+  listings    EtsyListing[]
+
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@index([keyword])
+  @@index([listingId])
+  @@map("etsy_products")
+}
+
+model EtsyAnalysis {
+  id               String   @id @default(cuid())
+  productId        String   @map("product_id")
+  product          EtsyProduct @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  trendScore       Float    @map("trend_score") // 0-100
+  competitionLevel String   @map("competition_level") // Low, Medium, High
+  decision         String   // SELL, AVOID
+  summary          String   @db.Text
+  isHandmade       Boolean  @default(false) @map("is_handmade")
+  isCustomizable   Boolean  @default(false) @map("is_customizable")
+  
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@index([productId])
+  @@map("etsy_analyses")
+}
+
+model EtsySupplier {
+  id            String   @id @default(cuid())
+  productId     String   @map("product_id")
+  product       EtsyProduct @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  sourceType    String   @map("source_type") // POD, AliExpress, Private Label
+  supplierName  String?  @map("supplier_name")
+  supplierUrl   String?  @map("supplier_url")
+  estimatedCost Float?   @map("estimated_cost")
+  riskLevel     String   @map("risk_level") // Low, Medium, High
+  notes         String?  @db.Text
+  
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@index([productId])
+  @@map("etsy_suppliers")
+}
+
+model EtsyListing {
+  id            String   @id @default(cuid())
+  productId     String   @map("product_id")
+  product       EtsyProduct @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  seoTitle      String   @map("seo_title")
+  description   String   @db.Text
+  tags          String[] @default([])
+  suggestedPrice Float?  @map("suggested_price")
+  
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@index([productId])
+  @@map("etsy_listings")
+}

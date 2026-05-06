@@ -6,13 +6,17 @@ import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard, BarChart3, Search, Settings,
-  Menu, X, Zap, History, Star, TrendingUp, LogOut
+  Menu, X, Zap, History, Star, TrendingUp, LogOut, Users, GraduationCap, Store
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
 
 const navigation = [
   { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
+  { name: "SaaS Panel", href: "/dashboard/saas", icon: Zap },
+  { name: "Etsy AI Cockpit", href: "/dashboard/etsy", icon: Store },
+  { name: "AI Tutor", href: "/dashboard/ai-tutor", icon: GraduationCap },
+  { name: "Lead Engine", href: "/dashboard/lead-engine", icon: Users },
   { name: "Trend Analysis", href: "/dashboard/trends", icon: TrendingUp },
   { name: "Smart Research", href: "/dashboard/research", icon: Search },
   { name: "Saved Items", href: "/dashboard/saved", icon: Star },
