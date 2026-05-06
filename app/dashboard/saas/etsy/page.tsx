@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Loader2, Sparkles, TrendingUp, AlertTriangle, CheckCircle, Tag, Store, Eye, Heart, ShoppingBag, PenTool, Truck, Factory } from "lucide-react";
+import { Search, Loader2, Sparkles, TrendingUp, AlertTriangle, CheckCircle, Tag, Store, Eye, Heart, ShoppingBag, PenTool, Truck, Factory, Star } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { EtsyStorage } from "@/modules/etsy-automation/services/etsyStorage";
+import { createClient } from "@/lib/supabase/client";
 
 export default function EtsySaaSPanel() {
   const [keyword, setKeyword] = useState("");
@@ -13,6 +15,17 @@ export default function EtsySaaSPanel() {
   const [result, setResult] = useState<any>(null);
   const [listing, setListing] = useState<any>(null);
   const [supplier, setSupplier] = useState<any>(null);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [isSaved, setIsSaved] = useState(false);
+
+  useEffect(() => {
+    const init = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user?.email) setUserEmail(user.email);
+    };
+    init();
+  }, []);
 
   const handleAnalyze = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,6 +35,7 @@ export default function EtsySaaSPanel() {
     setResult(null);
     setListing(null);
     setSupplier(null);
+    setIsSaved(false);
 
     try {
       const res = await fetch("/api/etsy/analyze", {
@@ -36,6 +50,16 @@ export default function EtsySaaSPanel() {
 
       const data = await res.json();
       setResult(data);
+      
+      // Save to history
+      if (userEmail) {
+        EtsyStorage.addHistory(
+          userEmail, 
+          keyword, 
+          data.analysis.decision, 
+          data.analysis.trendScore
+        );
+      }
     } catch (error) {
       console.error(error);
       alert("Bir hata oluştu. Lütfen API bağlantılarınızı (Etsy & OpenAI) kontrol edin.");
@@ -94,6 +118,30 @@ export default function EtsySaaSPanel() {
       console.error(error);
     } finally {
       setIsFindingSupplier(false);
+    }
+  };
+
+  const handleSaveProduct = () => {
+    if (!result || !userEmail || isSaved) return;
+    
+    const success = EtsyStorage.saveProduct(userEmail, {
+      keyword,
+      title: result.product.title,
+      price: result.product.price,
+      currency: result.product.currency,
+      favorites: result.product.favorites,
+      views: result.product.views,
+      url: result.product.url,
+      imageUrl: result.product.imageUrl,
+      shopName: result.product.shopName,
+      trendScore: result.analysis.trendScore,
+      decision: result.analysis.decision,
+    });
+    
+    if (success) {
+      setIsSaved(true);
+    } else {
+      alert("Bu ürün zaten kaydedilmiş veya limit (20) dolmuş olabilir.");
     }
   };
 
@@ -167,6 +215,21 @@ export default function EtsySaaSPanel() {
               <Card className={`col-span-1 md:col-span-2 p-8 border ${result.analysis.decision === 'SELL' ? 'border-green-500/30 bg-green-500/5' : 'border-red-500/30 bg-red-500/5'} bg-[#080c16] shadow-2xl relative overflow-hidden`}>
                 <div className="absolute top-0 right-0 p-8 opacity-10">
                   {result.analysis.decision === 'SELL' ? <CheckCircle className="w-48 h-48 text-green-500" /> : <AlertTriangle className="w-48 h-48 text-red-500" />}
+                </div>
+                
+                <div className="absolute top-6 right-6 z-20">
+                  <button 
+                    onClick={handleSaveProduct}
+                    disabled={isSaved}
+                    className={`p-3 rounded-xl border transition-all ${
+                      isSaved 
+                        ? 'bg-amber-500/20 border-amber-500/30 text-amber-400' 
+                        : 'bg-black/40 border-white/10 text-slate-400 hover:text-amber-400 hover:border-amber-500/30'
+                    }`}
+                    title="Favorilere Kaydet"
+                  >
+                    <Star className={`w-5 h-5 ${isSaved ? 'fill-current' : ''}`} />
+                  </button>
                 </div>
                 
                 <div className="relative z-10">
