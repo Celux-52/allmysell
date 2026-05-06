@@ -29,7 +29,7 @@ export class EtsySupplierAgent {
 
     try {
       const response = await cline.chat.completions.create({
-        model: "qwen/qwen-2.5-72b-instruct", // Qwen model for data extraction
+        model: "qwen/qwen-2.5-72b-instruct:free", // Qwen model for data extraction
         messages: [{ role: "user", content: prompt }],
         temperature: 0.7
       });

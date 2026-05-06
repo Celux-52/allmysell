@@ -27,7 +27,7 @@ export class EtsyListingGenerator {
 
     try {
       const response = await cline.chat.completions.create({
-        model: "anthropic/claude-3.5-haiku", // Kullanıcının premium modeli
+        model: "google/gemini-2.0-flash-lite-preview-02-05:free", // Tamamen ücretsiz model
         messages: [{ role: "user", content: prompt }],
         temperature: 0.8
       });

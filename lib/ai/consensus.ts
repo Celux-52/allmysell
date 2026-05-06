@@ -633,7 +633,7 @@ Rules:
     { name: 'DeepSeek R1', fn: async () => {
       const { getCline } = await import('@/lib/ai/cline')
       const r = await getCline().chat.completions.create({
-        model: 'deepseek/deepseek-r1',
+        model: 'deepseek/deepseek-r1:free',
         messages: [{ role: 'user', content: AI_PROMPT }],
         temperature: 0.9
       })
@@ -642,7 +642,7 @@ Rules:
     { name: 'Qwen 2.5 72B', fn: async () => {
       const { getCline } = await import('@/lib/ai/cline')
       const r = await getCline().chat.completions.create({
-        model: 'qwen/qwen-2.5-72b-instruct',
+        model: 'qwen/qwen-2.5-72b-instruct:free',
         messages: [{ role: 'user', content: AI_PROMPT }],
         temperature: 0.9
       })
