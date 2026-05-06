@@ -14,12 +14,6 @@ import { createClient } from "@/lib/supabase/client";
 const navigation = [
   { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
   { name: "SaaS Panel", href: "/dashboard/saas", icon: Zap },
-  { name: "AI Tutor", href: "/dashboard/ai-tutor", icon: GraduationCap },
-  { name: "Lead Engine", href: "/dashboard/lead-engine", icon: Users },
-  { name: "Trend Analysis", href: "/dashboard/trends", icon: TrendingUp },
-  { name: "Smart Research", href: "/dashboard/research", icon: Search },
-  { name: "Saved Items", href: "/dashboard/saved", icon: Star },
-  { name: "History", href: "/dashboard/history", icon: History },
 ];
 
 export default function DashboardShell({
