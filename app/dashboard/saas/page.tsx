@@ -9,10 +9,10 @@ export default function SaaSPanelPage() {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
-                        SaaS Yönetim Paneli
+                        Nerve Center
                     </h1>
                     <p className="text-muted-foreground mt-1">
-                        Sistem kaynaklarını, gelirleri ve kullanıcı istatistiklerini buradan yönetin
+                        System resources, revenue streams & user analytics at a glance
                     </p>
                 </div>
                 <div className="flex gap-2">

@@ -103,9 +103,9 @@ export default function EtsySaaSPanel() {
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold text-white flex items-center gap-2">
           <Store className="h-8 w-8 text-orange-500" />
-          Etsy AI Cockpit
+          Etsy Sniper
         </h1>
-        <p className="text-slate-400">Veriye dayalı trend analizi, ürün avcısı ve otonom satış kararı motoru.</p>
+        <p className="text-slate-400">AI-powered niche hunter, decision engine & autonomous listing generator.</p>
       </div>
 
       {/* Search Input */}
