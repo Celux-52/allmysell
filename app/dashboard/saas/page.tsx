@@ -13,7 +13,7 @@ const modules = [
     name: "Etsy Automation",
     subtitle: "AI-Powered Product Sniper",
     description: "Find winning Etsy niches, get instant SELL/AVOID decisions, generate human-like SEO listings & discover suppliers — all autonomous.",
-    href: "/dashboard/etsy",
+    href: "/dashboard/saas/etsy",
     icon: Crosshair,
     gradient: "from-orange-600 to-amber-600",
     stats: [
@@ -29,7 +29,7 @@ const modules = [
     name: "Smart Research Engine",
     subtitle: "Multi-AI Consensus System",
     description: "5 parallel AI models (Groq, Gemini, DeepSeek, Qwen, Claude) analyze trends, find high-margin products from US warehouses with real-time Google Trends data.",
-    href: "/dashboard",
+    href: "/dashboard/saas/research",
     icon: Cpu,
     gradient: "from-indigo-600 to-violet-600",
     stats: [
