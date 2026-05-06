@@ -13,8 +13,7 @@ import { createClient } from "@/lib/supabase/client";
 
 const navigation = [
   { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Nerve Center", href: "/dashboard/saas", icon: Zap },
-  { name: "Etsy Sniper", href: "/dashboard/etsy", icon: Store },
+  { name: "SaaS Panel", href: "/dashboard/saas", icon: Zap },
   { name: "AI Tutor", href: "/dashboard/ai-tutor", icon: GraduationCap },
   { name: "Lead Engine", href: "/dashboard/lead-engine", icon: Users },
   { name: "Trend Analysis", href: "/dashboard/trends", icon: TrendingUp },
