@@ -44,6 +44,12 @@ export class EtsyAIEngine {
 
       // Clean markdown if AI wrapped it
       content = content.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim();
+      
+      const firstBrace = content.indexOf('{');
+      const lastBrace = content.lastIndexOf('}');
+      if (firstBrace !== -1 && lastBrace !== -1) {
+        content = content.substring(firstBrace, lastBrace + 1);
+      }
 
       return JSON.parse(content);
     } catch (error) {

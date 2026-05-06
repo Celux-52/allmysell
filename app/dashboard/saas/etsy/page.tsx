@@ -45,7 +45,8 @@ export default function EtsySaaSPanel() {
       });
       
       if (!res.ok) {
-        throw new Error("Failed to fetch data");
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || `Failed to fetch data (${res.status})`);
       }
 
       const data = await res.json();
@@ -60,9 +61,9 @@ export default function EtsySaaSPanel() {
           data.analysis.trendScore
         );
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert("Bir hata oluştu. Lütfen API bağlantılarınızı (Etsy & OpenAI) kontrol edin.");
+      alert(error.message || "Bir hata oluştu. Lütfen API bağlantılarınızı kontrol edin.");
     } finally {
       setIsLoading(false);
     }
