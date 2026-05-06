@@ -14,6 +14,8 @@ import { createClient } from "@/lib/supabase/client";
 const navigation = [
   { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
   { name: "SaaS Panel", href: "/dashboard/saas", icon: Zap },
+  { name: "Saved Items", href: "/dashboard/saved", icon: Star },
+  { name: "History", href: "/dashboard/history", icon: History },
 ];
 
 export default function DashboardShell({
