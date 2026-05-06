@@ -68,7 +68,13 @@ export default function DashboardShell({
         </div>
 
         <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-1">
-          {navigation.map((item) => {
+          {navigation.filter(item => {
+            if (item.name === "Overview") {
+              // Only show "Overview" inside the "ilk proje" (Smart Research)
+              return pathname === "/dashboard" || pathname.startsWith("/dashboard/research") || pathname.startsWith("/dashboard/trends");
+            }
+            return true;
+          }).map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link
