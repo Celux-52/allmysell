@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Activity, CreditCard, DollarSign, Users, Zap, TrendingUp, Download, Plus } from 'lucide-react';
+import { Activity, CreditCard, DollarSign, Users, Zap, TrendingUp, Download, Plus, BarChart3 } from 'lucide-react';
 
 export default function SaaSPanelPage() {
     return (
