@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     const topProduct = products[0];
 
     // 2. Save product to DB (Optional, don't crash if DB is down)
-    let savedProduct = { id: 'temp-' + Date.now(), ...topProduct };
+    let savedProduct: any = { id: 'temp-' + Date.now(), ...topProduct };
     try {
       savedProduct = await prisma.etsyProduct.create({
         data: {
@@ -49,7 +49,7 @@ export async function POST(req: Request) {
     const analysisResult = await aiEngine.analyzeProduct(topProduct);
 
     // 4. Save analysis to DB (Optional)
-    let savedAnalysis = { ...analysisResult };
+    let savedAnalysis: any = { ...analysisResult };
     try {
       savedAnalysis = await prisma.etsyAnalysis.create({
         data: {

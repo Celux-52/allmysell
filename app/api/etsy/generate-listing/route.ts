@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     const generatedData = await generator.generateListing(title, tags || []);
 
     // Save generated listing to DB (Optional)
-    let savedListing = { seoTitle: generatedData.seoTitle, description: generatedData.description, tags: generatedData.tags };
+    let savedListing: any = { seoTitle: generatedData.seoTitle, description: generatedData.description, tags: generatedData.tags };
     try {
       savedListing = await prisma.etsyListing.create({
         data: {

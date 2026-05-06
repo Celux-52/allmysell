@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     const strategy = await agent.findSupplierStrategy(title, tags || [], price || 0);
 
     // Save strategy to DB (Optional)
-    let savedSupplier = { ...strategy };
+    let savedSupplier: any = { ...strategy };
     try {
       savedSupplier = await prisma.etsySupplier.create({
         data: {
