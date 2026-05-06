@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Activity, CreditCard, DollarSign, Users, Zap, TrendingUp, Database, Wifi, Brain, Store, Loader2 } from 'lucide-react';
+import { Activity, CreditCard, DollarSign, Users, Zap, TrendingUp, Database, Wifi, Brain, Store, Loader2, ShieldAlert } from 'lucide-react';
+import { createClient } from "@/lib/supabase/client";
 
 interface StatsData {
   users: { total: number; recent: any[] };
@@ -12,14 +14,30 @@ interface StatsData {
 }
 
 export default function NerveCenterPage() {
+  const router = useRouter();
   const [stats, setStats] = useState<StatsData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    fetch("/api/saas/stats")
-      .then(res => res.json())
-      .then(data => { setStats(data); setLoading(false); })
-      .catch(() => setLoading(false));
+    // Admin check
+    const checkAdmin = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || "").split(",").map(e => e.trim().toLowerCase());
+      
+      if (user && adminEmails.includes(user.email?.toLowerCase() || "")) {
+        setIsAdmin(true);
+        // Fetch stats only if admin
+        fetch("/api/saas/stats")
+          .then(res => res.json())
+          .then(data => { setStats(data); setLoading(false); })
+          .catch(() => setLoading(false));
+      } else {
+        setLoading(false);
+      }
+    };
+    checkAdmin();
   }, []);
 
   if (loading) {
@@ -28,6 +46,22 @@ export default function NerveCenterPage() {
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="h-10 w-10 text-orange-500 animate-spin" />
           <p className="text-slate-400 text-sm">Loading real-time data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="flex flex-col items-center gap-4 text-center">
+          <div className="h-16 w-16 rounded-full bg-red-500/10 flex items-center justify-center">
+            <ShieldAlert className="h-8 w-8 text-red-500" />
+          </div>
+          <h2 className="text-xl font-bold text-white">Access Denied</h2>
+          <p className="text-slate-400 text-sm max-w-sm">
+            Nerve Center is restricted to system administrators only.
+          </p>
         </div>
       </div>
     );

@@ -3,42 +3,9 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { 
-  Zap, Store, ArrowRight, Activity, TrendingUp, 
-  Brain, Crosshair, BarChart3, ShoppingBag 
+  Zap, Store, ArrowRight, 
+  Brain, Crosshair, ShoppingBag 
 } from "lucide-react";
-
-const modules = [
-  {
-    name: "Nerve Center",
-    description: "Full command over your SaaS metrics — revenue, subscribers, system health & payment analytics.",
-    href: "/dashboard/saas/nerve-center",
-    icon: Brain,
-    gradient: "from-violet-600 to-indigo-600",
-    glowColor: "violet",
-    stats: [
-      { label: "Revenue", value: "₺45K+", icon: BarChart3 },
-      { label: "Subscribers", value: "2,350", icon: Activity },
-      { label: "Uptime", value: "99.8%", icon: TrendingUp },
-    ],
-    badge: "LIVE",
-    badgeColor: "bg-green-500/20 text-green-400",
-  },
-  {
-    name: "Etsy Sniper",
-    description: "AI-powered niche hunter — find winning products, get SELL/AVOID decisions & generate SEO listings.",
-    href: "/dashboard/etsy",
-    icon: Crosshair,
-    gradient: "from-orange-600 to-amber-600",
-    glowColor: "orange",
-    stats: [
-      { label: "AI Models", value: "3", icon: Brain },
-      { label: "Etsy API", value: "Live", icon: Store },
-      { label: "SEO Engine", value: "Active", icon: ShoppingBag },
-    ],
-    badge: "NEW",
-    badgeColor: "bg-orange-500/20 text-orange-400",
-  },
-];
 
 export default function SaaSPanelPage() {
   return (
@@ -61,59 +28,62 @@ export default function SaaSPanelPage() {
         </p>
       </motion.div>
 
-      {/* Module Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {modules.map((mod, i) => (
-          <motion.div
-            key={mod.name}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.15, duration: 0.5 }}
-          >
-            <Link href={mod.href} className="block group">
-              <div className="relative rounded-2xl border border-white/10 bg-[#080c16] p-8 overflow-hidden hover:border-white/20 transition-all duration-500 h-full">
-                {/* Glow */}
-                <div className={`absolute -top-20 -right-20 w-60 h-60 bg-${mod.glowColor}-500/10 blur-3xl rounded-full group-hover:bg-${mod.glowColor}-500/20 transition-all duration-700`}></div>
-                
-                {/* Badge */}
-                <div className="flex items-center justify-between mb-6 relative z-10">
-                  <div className={`h-14 w-14 rounded-xl bg-gradient-to-br ${mod.gradient} flex items-center justify-center shadow-2xl`}>
-                    <mod.icon className="h-7 w-7 text-white" />
-                  </div>
-                  <span className={`text-xs font-bold tracking-widest px-3 py-1 rounded-full ${mod.badgeColor}`}>
-                    {mod.badge}
-                  </span>
-                </div>
-
-                {/* Title */}
-                <h2 className="text-2xl font-bold text-white mb-2 relative z-10 group-hover:text-orange-400 transition-colors">
-                  {mod.name}
-                </h2>
-                <p className="text-slate-400 text-sm leading-relaxed mb-8 relative z-10">
-                  {mod.description}
-                </p>
-
-                {/* Stats */}
-                <div className="grid grid-cols-3 gap-3 mb-8 relative z-10">
-                  {mod.stats.map((stat) => (
-                    <div key={stat.label} className="bg-black/40 rounded-lg p-3 border border-white/5 text-center">
-                      <stat.icon className="h-4 w-4 text-slate-500 mx-auto mb-1" />
-                      <div className="text-white font-bold text-sm">{stat.value}</div>
-                      <div className="text-slate-500 text-[10px] uppercase tracking-wider">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* CTA */}
-                <div className={`flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r ${mod.gradient} text-white font-semibold text-sm group-hover:shadow-lg transition-all relative z-10`}>
-                  Launch Module
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </div>
+      {/* Etsy Sniper Card — Full Width */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15, duration: 0.5 }}
+      >
+        <Link href="/dashboard/etsy" className="block group">
+          <div className="relative rounded-2xl border border-white/10 bg-[#080c16] p-8 overflow-hidden hover:border-orange-500/30 transition-all duration-500">
+            {/* Glow */}
+            <div className="absolute -top-20 -right-20 w-60 h-60 bg-orange-500/10 blur-3xl rounded-full group-hover:bg-orange-500/20 transition-all duration-700"></div>
+            
+            {/* Badge */}
+            <div className="flex items-center justify-between mb-6 relative z-10">
+              <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-orange-600 to-amber-600 flex items-center justify-center shadow-2xl">
+                <Crosshair className="h-7 w-7 text-white" />
               </div>
-            </Link>
-          </motion.div>
-        ))}
-      </div>
+              <span className="text-xs font-bold tracking-widest px-3 py-1 rounded-full bg-orange-500/20 text-orange-400">
+                NEW
+              </span>
+            </div>
+
+            {/* Title */}
+            <h2 className="text-2xl font-bold text-white mb-2 relative z-10 group-hover:text-orange-400 transition-colors">
+              Etsy Sniper
+            </h2>
+            <p className="text-slate-400 text-sm leading-relaxed mb-8 relative z-10 max-w-xl">
+              AI-powered niche hunter — find winning products, get SELL/AVOID decisions &amp; generate SEO listings automatically.
+            </p>
+
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-3 mb-8 relative z-10 max-w-md">
+              <div className="bg-black/40 rounded-lg p-3 border border-white/5 text-center">
+                <Brain className="h-4 w-4 text-slate-500 mx-auto mb-1" />
+                <div className="text-white font-bold text-sm">3</div>
+                <div className="text-slate-500 text-[10px] uppercase tracking-wider">AI Models</div>
+              </div>
+              <div className="bg-black/40 rounded-lg p-3 border border-white/5 text-center">
+                <Store className="h-4 w-4 text-slate-500 mx-auto mb-1" />
+                <div className="text-white font-bold text-sm">Live</div>
+                <div className="text-slate-500 text-[10px] uppercase tracking-wider">Etsy API</div>
+              </div>
+              <div className="bg-black/40 rounded-lg p-3 border border-white/5 text-center">
+                <ShoppingBag className="h-4 w-4 text-slate-500 mx-auto mb-1" />
+                <div className="text-white font-bold text-sm">Active</div>
+                <div className="text-slate-500 text-[10px] uppercase tracking-wider">SEO Engine</div>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 text-white font-semibold text-sm group-hover:shadow-lg transition-all relative z-10 max-w-xs">
+              Launch Etsy Sniper
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+        </Link>
+      </motion.div>
     </div>
   );
 }
