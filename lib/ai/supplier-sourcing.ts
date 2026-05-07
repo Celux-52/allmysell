@@ -121,7 +121,7 @@ Return 8-12 products. Mix of highly relevant, somewhat relevant, and irrelevant 
 ONLY return valid JSON.`;
 
     const response = await cline.chat.completions.create({
-      model: 'meta-llama/llama-3.1-8b-instruct:free',
+      model: 'meta-llama/llama-3.1-8b-instant:free',
       messages: [
         { role: 'system', content: prompt },
         { role: 'user', content: `Find supplier products for: ${searchKeyword}` }
