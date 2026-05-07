@@ -20,7 +20,7 @@ export class EtsyAIEngine {
       1. Is this product customizable/personalizable?
       2. Does it have a handmade aesthetic?
       3. What is the competition level?
-      4. Is there real demand? (Analyze favorites-to-views ratio)
+      4. Is there real demand? (Analyze engagement based on available data - if views/favorites are 0, look at title and tags for trendiness)
       5. Is there profit margin potential?
 
       Return ONLY the following JSON format, no extra text:

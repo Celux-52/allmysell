@@ -1,32 +1,80 @@
+import { getCline } from '../ai/cline';
+import { fetchInternetDataViaTool } from '../ai/consensus';
+
 export class EtsyService {
   private apiKey: string;
   private sharedSecret: string;
   private baseUrl = 'https://openapi.etsy.com/v3';
 
   constructor() {
-    this.apiKey = process.env.ETSY_API_KEY || '';
-    this.sharedSecret = process.env.ETSY_SHARED_SECRET || '';
+    // No API keys needed, moving to pure AI research
   }
 
-  async searchProducts(keyword: string, limit: number = 5) {
-    if (!this.apiKey) throw new Error("Etsy API Key is not set");
+  async searchProducts(keyword: string, limit: number = 3) {
+    console.log(`[EtsyService] Starting AI-driven research for: ${keyword}`);
+    return this.searchProductsAI(keyword, limit);
+  }
 
+  /**
+   * AI-powered research using the existing n8n search tool and OpenRouter.
+   */
+  private async searchProductsAI(keyword: string, limit: number = 3) {
     try {
-      const response = await fetch(`${this.baseUrl}/application/listings/active?keywords=${encodeURIComponent(keyword)}&limit=${limit}&includes=Images,Shop`, {
-        headers: {
-          'x-api-key': this.apiKey
-        }
-      });
+      // 1. Search Etsy via existing n8n search tool
+      const internetContext = await fetchInternetDataViaTool(`site:etsy.com ${keyword} products`);
 
-      if (!response.ok) {
-        throw new Error(`Etsy API error: ${response.statusText}`);
+      if (!internetContext) {
+        throw new Error("No search context returned from internet tool");
       }
 
-      const data = await response.json();
-      return this.formatListings(data.results);
+      // 2. Extract product details using AI (DeepSeek R1 prioritized)
+      const cline = getCline();
+      const prompt = `
+        You are an Etsy product analyst. Using the LIVE INTERNET DATA below, extract the top ${limit} unique product listings for "${keyword}".
+        
+        ${internetContext}
+
+        For each product, provide:
+        - listingId (extract from URL or generate unique ID)
+        - title
+        - price (number only)
+        - currency (3-letter code)
+        - views (estimate or 0)
+        - favorites (estimate or 0)
+        - url
+        - tags (keywords)
+        - shopName
+        - imageUrl (null if not found)
+
+        Return ONLY a JSON array of objects.
+      `;
+
+      const response = await cline.chat.completions.create({
+        model: 'deepseek/deepseek-r1:free',
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.1
+      });
+
+      const content = response.choices[0]?.message?.content || '[]';
+      const cleaned = content.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim();
+      const products = JSON.parse(cleaned);
+
+      return products.map((p: any) => ({
+        listingId: p.listingId?.toString() || Math.random().toString(36).substring(7),
+        title: p.title || 'Unknown Product',
+        price: Number(p.price) || 0,
+        currency: p.currency || 'USD',
+        views: Number(p.views) || 0,
+        favorites: Number(p.favorites) || 0,
+        url: p.url || '',
+        tags: Array.isArray(p.tags) ? p.tags : [],
+        shopName: p.shopName || 'Etsy Shop',
+        imageUrl: p.imageUrl || null
+      }));
+
     } catch (error) {
-      console.error("Error fetching from Etsy:", error);
-      throw error;
+      console.error("[EtsyService] AI Research failed:", error);
+      return [];
     }
   }
 

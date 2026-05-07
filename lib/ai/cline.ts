@@ -19,27 +19,13 @@ export function getCline(): OpenAI {
 
 // ✅ Free AI Models List (completely free, rate-limited)
 export const FREE_AI_MODELS = [
-    { id: 'cline-free', name: 'Cline AI', provider: 'Cline', speed: 'Very Fast', quality: 'Excellent', free: true },
-    { id: 'deepseek-r1', name: 'DeepSeek R1', provider: 'DeepSeek', speed: 'Fast', quality: '🏆 Best Reasoning', free: true },
-    { id: 'deepseek-v3', name: 'DeepSeek V3', provider: 'DeepSeek', speed: 'Very Fast', quality: 'Excellent', free: true },
-    { id: 'llama-4-scout-17b', name: 'Llama 4 Scout 17B', provider: 'Meta', speed: 'Very Fast', quality: 'Excellent', free: true },
-    { id: 'llama-3.3-70b-versatile', name: 'Llama 3.3 70B', provider: 'Groq', speed: 'Fast', quality: 'Very Good', free: true },
-    { id: 'llama-3.3-70b-instruct', name: 'Llama 3.3 70B Instruct', provider: 'Meta', speed: 'Very Fast', quality: 'Excellent', free: true },
-    { id: 'llama-3.1-405b-instruct', name: 'Llama 3.1 405B', provider: 'Meta', speed: 'Medium', quality: 'Excellent', free: true },
-    { id: 'llama-3.1-8b-instant', name: 'Llama 3.1 8B', provider: 'Groq', speed: '⚡ Fastest', quality: 'Good', free: true },
-    { id: 'gemini-2.5-flash-preview', name: 'Gemini 2.5 Flash', provider: 'Google', speed: 'Fast', quality: '🏆 Best Overall', free: true },
-    { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash', provider: 'Google', speed: 'Fast', quality: 'Excellent', free: true },
-    { id: 'gemini-2.0-flash-001', name: 'Gemini 2.0 Flash Latest', provider: 'Google', speed: 'Fast', quality: 'Excellent', free: true },
-    { id: 'qwen-3-72b-instruct', name: 'Qwen 3 72B', provider: 'Alibaba', speed: 'Fast', quality: 'Excellent', free: true },
-    { id: 'qwen-2.5-72b-instruct', name: 'Qwen 2.5 72B', provider: 'Alibaba', speed: 'Fast', quality: 'Very Good', free: true },
-    { id: 'qwen-2.5-14b-instruct', name: 'Qwen 2.5 14B', provider: 'Alibaba', speed: 'Very Fast', quality: 'Good', free: true },
-    { id: 'mistral-small-3', name: 'Mistral Small 3', provider: 'Mistral', speed: 'Very Fast', quality: 'Excellent', free: true },
-    { id: 'mistral-nemo-12b', name: 'Mistral Nemo 12B', provider: 'Mistral', speed: 'Very Fast', quality: 'Good', free: true },
-    { id: 'mistral-7b-instruct', name: 'Mistral 7B', provider: 'Groq', speed: '⚡ Fastest', quality: 'Medium', free: true },
-    { id: 'phi-4', name: 'Phi 4', provider: 'Microsoft', speed: 'Very Fast', quality: 'Excellent', free: true },
-    { id: 'phi-3-medium-128k', name: 'Phi 3 Medium', provider: 'Microsoft', speed: 'Fast', quality: 'Good', free: true },
-    { id: 'codestral-24b', name: 'Codestral 24B', provider: 'Mistral', speed: 'Very Fast', quality: 'Best Code', free: true },
-    { id: 'glm-4-9b-chat', name: 'GLM 4 9B', provider: 'Zhipu', speed: 'Fast', quality: 'Good', free: true },
+    { id: 'deepseek/deepseek-r1:free', name: 'DeepSeek R1 (Free)', provider: 'DeepSeek', speed: 'Medium', quality: '🏆 Best Reasoning', free: true },
+    { id: 'google/gemma-2-9b-it:free', name: 'Gemma 2 9B (Free)', provider: 'Google', speed: 'Fast', quality: 'Excellent', free: true },
+    { id: 'meta-llama/llama-3.3-70b-instruct:free', name: 'Llama 3.3 70B (Free)', provider: 'Meta', speed: 'Fast', quality: 'Excellent', free: true },
+    { id: 'qwen/qwen-2.5-coder-32b-instruct:free', name: 'Qwen 2.5 Coder (Free)', provider: 'Alibaba', speed: 'Very Fast', quality: 'Best Code', free: true },
+    { id: 'anthropic/claude-3-haiku:free', name: 'Claude 3 Haiku (Free)', provider: 'Anthropic', speed: 'Very Fast', quality: 'Very Good', free: true },
+    { id: 'google/gemini-2.0-flash-lite-preview-02-05:free', name: 'Gemini 2.0 Flash Lite (Free)', provider: 'Google', speed: '⚡ Fastest', quality: 'Excellent', free: true },
+    { id: 'deepseek/deepseek-v3:free', name: 'DeepSeek V3 (Free)', provider: 'DeepSeek', speed: 'Very Fast', quality: 'Excellent', free: true },
 ]
 
 import { fetchInternetDataViaTool } from './consensus';
