@@ -2,10 +2,6 @@ import { getCline } from '../ai/cline';
 import { fetchInternetDataViaTool } from '../ai/consensus';
 
 export class EtsyService {
-  private apiKey: string;
-  private sharedSecret: string;
-  private baseUrl = 'https://openapi.etsy.com/v3';
-
   constructor() {
     // No API keys needed, moving to pure AI research
   }
