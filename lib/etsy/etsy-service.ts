@@ -55,7 +55,7 @@ export class EtsyService {
       `;
 
       const response = await cline.chat.completions.create({
-        model: 'google/gemini-2.0-flash-001', // Super fast, avoids Vercel timeout
+        model: 'google/gemini-2.0-flash-lite-preview-02-05:free', // Super fast & FREE
         messages: [{ role: 'user', content: prompt }],
         temperature: 0.1
       });

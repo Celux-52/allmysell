@@ -71,7 +71,7 @@ Return ONLY JSON.`;
           throw new Error(`AI Error: ${apiError.message}`);
         }
       },
-      { maxRetries: 1, baseDelayMs: 500, fallbackModels: ['google/gemini-2.0-flash-001'] }
+      { maxRetries: 1, baseDelayMs: 500, fallbackModels: ['google/gemini-2.0-flash-lite-preview-02-05:free'] }
     );
   }
 }
