@@ -121,7 +121,7 @@ Return 8-12 products. Mix of highly relevant, somewhat relevant, and irrelevant 
 ONLY return valid JSON.`;
 
     const response = await cline.chat.completions.create({
-      model: 'gemini-2.5-flash-preview',
+      model: 'google/gemini-2.0-flash-001',
       messages: [
         { role: 'system', content: prompt },
         { role: 'user', content: `Find supplier products for: ${searchKeyword}` }

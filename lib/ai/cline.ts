@@ -66,7 +66,7 @@ export async function researchProductsWithCline(query: string) {
 
     try {
         const response = await cline.chat.completions.create({
-            model: 'meta-llama/llama-3.1-8b-instruct', // Using a real model instead of fake cline-free
+            model: 'meta-llama/llama-3.1-8b-instant:free', // Using a real model instead of fake cline-free
             messages: [
                 { role: 'system', content: prompt },
                 { role: 'user', content: query }
@@ -96,7 +96,7 @@ export async function clineAssistant(message: string, context?: string) {
 
     try {
         const response = await cline.chat.completions.create({
-            model: 'meta-llama/llama-3.1-8b-instruct',
+            model: 'meta-llama/llama-3.1-8b-instant:free',
             messages: [
                 { role: 'system', content: systemPrompt },
                 { role: 'user', content: message }
