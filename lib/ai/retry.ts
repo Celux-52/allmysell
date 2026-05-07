@@ -10,8 +10,8 @@ interface RetryOptions {
 }
 
 const DEFAULT_OPTIONS: Required<RetryOptions> = {
-  maxRetries: 3,
-  baseDelayMs: 2500, // Increased delay to respect rate limits
+  maxRetries: 4, // Increased to 4 retries
+  baseDelayMs: 2000,
   fallbackModels: [],
 };
 
@@ -32,7 +32,6 @@ export async function withRetry<T>(
     } catch (error: any) {
       lastError = error;
       
-      // If we hit a rate limit (429), wait longer
       const isRateLimit = error.message?.includes('429') || error.status === 429;
       const delayMultiplier = isRateLimit ? 3 : 1;
       
@@ -45,11 +44,15 @@ export async function withRetry<T>(
     }
   }
 
-  // 2. Fallback Chain: If primary fails, try these stable free models in order
+  // 2. ULTIMATE FAILOVER CHAIN
+  // We try every single known stable free model in order
   const failoverChain = [
     'meta-llama/llama-3.2-3b-instruct:free',
     'qwen/qwen-2.5-coder-32b-instruct:free',
-    'google/gemini-2.0-flash-lite-preview-02-05:free'
+    'deepseek/deepseek-v3:free',
+    'mistralai/mistral-7b-instruct:free',
+    'google/gemini-2.0-flash-lite-preview-02-05:free',
+    'microsoft/phi-3-mini-128k-instruct:free'
   ];
 
   for (const fallbackModel of failoverChain) {
@@ -62,7 +65,7 @@ export async function withRetry<T>(
     }
   }
 
-  throw lastError || new Error("All AI attempts and fallbacks failed");
+  throw lastError || new Error("All AI attempts and fallbacks failed after massive rotation");
 }
 
 export const FREE_MODEL_CHAINS = {
