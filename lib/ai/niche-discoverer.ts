@@ -46,35 +46,32 @@ Return ONLY JSON.`;
 
     return withRetry(
       async (overrideModel?: string) => {
-        // We use Gemini 2.0 Flash directly for speed to avoid Vercel timeouts (10s)
-        // DeepSeek is removed from this specific chain because it is too slow.
-        const modelToUse = overrideModel || 'google/gemini-2.0-flash-001';
-        console.log(`[NicheDiscoverer] Requesting niches using: ${modelToUse}`);
-
-        const response = await cline.chat.completions.create({
-          model: modelToUse,
-          messages: [
-            { role: "system", content: systemPrompt },
-            { role: "user", content: userPrompt }
-          ],
-          temperature: 0.7,
-          max_tokens: 1000,
-        });
-
-        const content = response.choices[0]?.message?.content || '';
-        if (!content) throw new Error("No discovery data received from AI");
-
-        console.log(`[NicheDiscoverer] Received content length: ${content.length}`);
+        // Llama 3 8B is one of the most stable free models on OpenRouter
+        const modelToUse = overrideModel || 'meta-llama/llama-3-8b-instruct:free';
+        console.log(`[NicheDiscoverer] Attempting discovery with: ${modelToUse}`);
 
         try {
+          const response = await cline.chat.completions.create({
+            model: modelToUse,
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: userPrompt }
+            ],
+            temperature: 0.7,
+            max_tokens: 1000,
+          });
+
+          const content = response.choices[0]?.message?.content || '';
+          if (!content) throw new Error("AI response was empty. OpenRouter might be overloaded.");
+
           const cleanedJson = extractJSON(content);
           return JSON.parse(cleanedJson) as DiscoveredNiche[];
-        } catch (parseError) {
-          console.error("[NicheDiscoverer] JSON Parse Error. Content:", content);
-          throw new Error("AI returned invalid JSON format");
+        } catch (apiError: any) {
+          console.error(`[NicheDiscoverer] API Call failed:`, apiError.message);
+          throw new Error(`AI Error: ${apiError.message}`);
         }
       },
-      { maxRetries: 1, baseDelayMs: 500, fallbackModels: ['meta-llama/llama-3.3-70b-instruct:free'] }
+      { maxRetries: 1, baseDelayMs: 500, fallbackModels: ['google/gemini-2.0-flash-001'] }
     );
   }
 }
