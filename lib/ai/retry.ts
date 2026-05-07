@@ -63,18 +63,14 @@ export const FREE_MODEL_CHAINS = {
   analysis: [
     'meta-llama/llama-3.1-8b-instruct:free',
     'google/gemma-2-9b-it:free',
-    'mistralai/mistral-7b-instruct:free',
-    'microsoft/phi-3-medium-128k-instruct:free',
   ],
   creative: [
     'meta-llama/llama-3.1-8b-instruct:free',
     'google/gemma-2-9b-it:free',
-    'anthropic/claude-3-haiku:free',
   ],
   extraction: [
     'google/gemma-2-9b-it:free',
     'meta-llama/llama-3.1-8b-instruct:free',
-    'qwen/qwen-2.5-coder-32b-instruct:free',
   ],
 };
 
