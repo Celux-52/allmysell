@@ -231,7 +231,7 @@ async function queryLlamaScout(query: string, internetContext: string): Promise<
     const { getCline } = await import('./cline');
     const cline = getCline();
     const response = await cline.chat.completions.create({
-      model: 'meta-llama/llama-3.3-70b-instruct:free',
+      model: 'meta-llama/llama-3.1-8b-instant:free',
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
         { role: 'user', content: query }

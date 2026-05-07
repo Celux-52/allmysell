@@ -61,16 +61,13 @@ export async function withRetry<T>(
  */
 export const FREE_MODEL_CHAINS = {
   analysis: [
-    'meta-llama/llama-3.1-8b-instant:free',
-    'meta-llama/llama-3.3-70b-instruct:free',
+    'meta-llama/llama-3.1-8b-instant:free'
   ],
   creative: [
-    'meta-llama/llama-3.1-8b-instant:free',
-    'meta-llama/llama-3.3-70b-instruct:free',
+    'meta-llama/llama-3.1-8b-instant:free'
   ],
   extraction: [
-    'meta-llama/llama-3.1-8b-instant:free',
-    'meta-llama/llama-3.3-70b-instruct:free',
+    'meta-llama/llama-3.1-8b-instant:free'
   ],
 };
 

@@ -21,7 +21,7 @@ export function getCline(): OpenAI {
 export const FREE_AI_MODELS = [
     { id: 'deepseek/deepseek-r1:free', name: 'DeepSeek R1 (Free)', provider: 'DeepSeek', speed: 'Medium', quality: '🏆 Best Reasoning', free: true },
     { id: 'google/gemma-2-9b-it:free', name: 'Gemma 2 9B (Free)', provider: 'Google', speed: 'Fast', quality: 'Excellent', free: true },
-    { id: 'meta-llama/llama-3.3-70b-instruct:free', name: 'Llama 3.3 70B (Free)', provider: 'Meta', speed: 'Fast', quality: 'Excellent', free: true },
+    { id: 'meta-llama/llama-3.1-8b-instant:free', name: 'Llama 3.1 8B Instant (Free)', provider: 'Meta', speed: 'Fast', quality: 'Excellent', free: true },
     { id: 'qwen/qwen-2.5-coder-32b-instruct:free', name: 'Qwen 2.5 Coder (Free)', provider: 'Alibaba', speed: 'Very Fast', quality: 'Best Code', free: true },
     { id: 'anthropic/claude-3-haiku:free', name: 'Claude 3 Haiku (Free)', provider: 'Anthropic', speed: 'Very Fast', quality: 'Very Good', free: true },
     { id: 'google/gemini-2.0-flash-lite-preview-02-05:free', name: 'Gemini 2.0 Flash Lite (Free)', provider: 'Google', speed: '⚡ Fastest', quality: 'Excellent', free: true },
