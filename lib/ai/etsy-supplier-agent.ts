@@ -1,8 +1,10 @@
 import { getCline } from './cline';
+import { withRetry, extractJSON, FREE_MODEL_CHAINS } from './retry';
 
 export class EtsySupplierAgent {
   async findSupplier(productTitle: string, tags: string[] = [], price: number = 0) {
     const cline = getCline();
+    const [primaryModel, ...fallbacks] = FREE_MODEL_CHAINS.extraction;
 
     const prompt = `
       You are a global sourcing expert specializing in e-commerce supply chain strategy.
@@ -28,28 +30,20 @@ export class EtsySupplierAgent {
       }
     `;
 
-    try {
-      const response = await cline.chat.completions.create({
-        model: "qwen/qwen-2.5-72b-instruct:free",
-        messages: [{ role: "user", content: prompt }],
-        temperature: 0.7
-      });
+    return withRetry(
+      async (overrideModel?: string) => {
+        const response = await cline.chat.completions.create({
+          model: overrideModel || primaryModel,
+          messages: [{ role: "user", content: prompt }],
+          temperature: 0.7,
+        });
 
-      let content = response.choices[0].message.content;
-      if (!content) throw new Error("No content received from AI");
+        const content = response.choices[0].message.content;
+        if (!content) throw new Error("No content received from AI");
 
-      content = content.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim();
-
-      const firstBrace = content.indexOf('{');
-      const lastBrace = content.lastIndexOf('}');
-      if (firstBrace !== -1 && lastBrace !== -1) {
-        content = content.substring(firstBrace, lastBrace + 1);
-      }
-
-      return JSON.parse(content);
-    } catch (error) {
-      console.error("Supplier Agent failed:", error);
-      throw error;
-    }
+        return JSON.parse(extractJSON(content));
+      },
+      { maxRetries: 2, baseDelayMs: 1000, fallbackModels: fallbacks }
+    );
   }
 }

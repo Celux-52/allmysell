@@ -1,8 +1,10 @@
 import { getCline } from './cline';
+import { withRetry, extractJSON, FREE_MODEL_CHAINS } from './retry';
 
 export class EtsyAIEngine {
   async analyzeProduct(productData: any) {
     const cline = getCline();
+    const [primaryModel, ...fallbacks] = FREE_MODEL_CHAINS.analysis;
 
     const prompt = `
       You are an expert Etsy product analyst and e-commerce strategist.
@@ -32,29 +34,20 @@ export class EtsyAIEngine {
       }
     `;
 
-    try {
-      const response = await cline.chat.completions.create({
-        model: "google/gemini-2.0-flash-lite-preview-02-05:free",
-        messages: [{ role: "user", content: prompt }],
-        temperature: 0.7
-      });
+    return withRetry(
+      async (overrideModel?: string) => {
+        const response = await cline.chat.completions.create({
+          model: overrideModel || primaryModel,
+          messages: [{ role: "user", content: prompt }],
+          temperature: 0.7,
+        });
 
-      let content = response.choices[0].message.content;
-      if (!content) throw new Error("No content received from AI");
+        const content = response.choices[0].message.content;
+        if (!content) throw new Error("No content received from AI");
 
-      // Clean markdown if AI wrapped it
-      content = content.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim();
-      
-      const firstBrace = content.indexOf('{');
-      const lastBrace = content.lastIndexOf('}');
-      if (firstBrace !== -1 && lastBrace !== -1) {
-        content = content.substring(firstBrace, lastBrace + 1);
-      }
-
-      return JSON.parse(content);
-    } catch (error) {
-      console.error("AI Analysis failed:", error);
-      throw error;
-    }
+        return JSON.parse(extractJSON(content));
+      },
+      { maxRetries: 2, baseDelayMs: 1000, fallbackModels: fallbacks }
+    );
   }
 }

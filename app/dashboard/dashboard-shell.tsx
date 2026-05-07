@@ -38,6 +38,11 @@ export default function DashboardShell({
     checkAdmin();
   }, []);
 
+  // Auto-close mobile sidebar on route change
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [pathname]);
+
   const handleSignOut = async () => {
     const supabase = createClient();
     await supabase.auth.signOut();

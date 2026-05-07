@@ -28,7 +28,7 @@ const modules = [
   {
     name: "Smart Research Engine",
     subtitle: "Multi-AI Consensus System",
-    description: "5 parallel AI models (Groq, Gemini, DeepSeek, Qwen, Claude) analyze trends, find high-margin products from US warehouses with real-time Google Trends data.",
+    description: "Multi-AI consensus system (Groq, Gemini, Qwen, Claude) analyzes trends, finds high-margin products from US warehouses with real-time Google Trends data.",
     href: "/dashboard/saas/research",
     icon: Cpu,
     gradient: "from-indigo-600 to-violet-600",
@@ -57,10 +57,10 @@ export default function SaaSPanelPage() {
           <span className="text-sm font-medium text-orange-400">SaaS Command Hub</span>
         </div>
         <h1 className="text-4xl font-black text-white tracking-tight">
-          Choose Your Weapon
+          Select Your Module
         </h1>
         <p className="text-slate-400 mt-3 text-lg max-w-xl mx-auto">
-          Select a module to launch. Each one is an autonomous AI-powered system designed to maximize your profits.
+          Each module is an autonomous AI-powered system designed to maximize your e-commerce profits.
         </p>
       </motion.div>
 

@@ -1,8 +1,10 @@
 import { getCline } from './cline';
+import { withRetry, extractJSON, FREE_MODEL_CHAINS } from './retry';
 
 export class EtsyListingGenerator {
   async generateListing(productTitle: string, tags: string[] = []) {
     const cline = getCline();
+    const [primaryModel, ...fallbacks] = FREE_MODEL_CHAINS.creative;
 
     const prompt = `
       You are an Etsy SEO expert and professional copywriter. Your target audience is the end consumer.
@@ -25,28 +27,20 @@ export class EtsyListingGenerator {
       }
     `;
 
-    try {
-      const response = await cline.chat.completions.create({
-        model: "google/gemini-2.0-flash-lite-preview-02-05:free",
-        messages: [{ role: "user", content: prompt }],
-        temperature: 0.8
-      });
+    return withRetry(
+      async (overrideModel?: string) => {
+        const response = await cline.chat.completions.create({
+          model: overrideModel || primaryModel,
+          messages: [{ role: "user", content: prompt }],
+          temperature: 0.8,
+        });
 
-      let content = response.choices[0].message.content;
-      if (!content) throw new Error("No content received from AI");
+        const content = response.choices[0].message.content;
+        if (!content) throw new Error("No content received from AI");
 
-      content = content.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim();
-
-      const firstBrace = content.indexOf('{');
-      const lastBrace = content.lastIndexOf('}');
-      if (firstBrace !== -1 && lastBrace !== -1) {
-        content = content.substring(firstBrace, lastBrace + 1);
-      }
-
-      return JSON.parse(content);
-    } catch (error) {
-      console.error("Listing Generation failed:", error);
-      throw error;
-    }
+        return JSON.parse(extractJSON(content));
+      },
+      { maxRetries: 2, baseDelayMs: 1000, fallbackModels: fallbacks }
+    );
   }
 }
