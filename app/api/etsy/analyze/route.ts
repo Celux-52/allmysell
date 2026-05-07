@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { EtsyService } from '@/lib/etsy/etsy-service';
 import { EtsyAIEngine } from '@/lib/ai/etsy-ai-engine';
 import { prisma } from '@/lib/prisma';
+import { createClient } from '@/lib/supabase/server';
 
 export async function POST(req: Request) {
   try {
@@ -64,6 +65,29 @@ export async function POST(req: Request) {
       });
     } catch (dbError) {
       console.warn("DB Save failed for Etsy Analysis, returning raw AI data...", dbError);
+    }
+
+    // 5. Save to global SearchHistory for persistent UI history
+    try {
+      const supabase = await createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (user) {
+        await prisma.searchHistory.create({
+          data: {
+            userId: user.id,
+            query: keyword,
+            queryType: 'etsy',
+            resultCount: 1,
+            results: {
+              product: savedProduct,
+              analysis: savedAnalysis
+            }
+          }
+        });
+      }
+    } catch (historyError) {
+      console.warn("Persistent History Save failed:", historyError);
     }
 
     return NextResponse.json({

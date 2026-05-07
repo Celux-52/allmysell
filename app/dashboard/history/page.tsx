@@ -25,19 +25,41 @@ export default function HistoryPage() {
       if (user?.email) {
         setUserEmail(user.email);
         setHistory(Storage.getHistory(user.email));
-        setEtsyHistory(EtsyStorage.getHistory(user.email));
+        
+        // Fetch DB history for Etsy
+        try {
+          const res = await fetch('/api/etsy/history');
+          if (res.ok) {
+            const dbHistory = await res.json();
+            // Merge with localStorage if we want both, or just prefer DB
+            setEtsyHistory(dbHistory);
+          } else {
+            setEtsyHistory(EtsyStorage.getHistory(user.email));
+          }
+        } catch (e) {
+          setEtsyHistory(EtsyStorage.getHistory(user.email));
+        }
       }
     };
     init();
   }, []);
 
-  const handleClearHistory = () => {
+  const handleClearHistory = async () => {
     if (!userEmail) return;
     if (activeTab === 'research') {
       Storage.clearHistory(userEmail);
       setHistory([]);
     } else {
+      // Clear localStorage
       EtsyStorage.clearHistory(userEmail);
+      
+      // Clear DB history
+      try {
+        await fetch('/api/etsy/history/clear', { method: 'DELETE' });
+      } catch (e) {
+        console.error("Failed to clear DB history:", e);
+      }
+      
       setEtsyHistory([]);
     }
   };
