@@ -5,29 +5,29 @@ export class EtsyListingGenerator {
     const cline = getCline();
 
     const prompt = `
-      Sen Etsy SEO uzmanı ve metin yazarısın. Hedef kitlen doğrudan son tüketici.
-      Şu ürün için Etsy listeleme başlığı ve açıklaması yazacaksın:
-      ÜRÜN: ${productTitle}
-      ETİKETLER: ${tags.join(', ')}
+      You are an Etsy SEO expert and professional copywriter. Your target audience is the end consumer.
+      Write an Etsy listing title and description for this product:
+      PRODUCT: ${productTitle}
+      TAGS: ${tags.join(', ')}
 
-      KURALLAR (KESİNLİKLE UYULACAK):
-      1. KESİNLİKLE YAPAY ZEKA GİBİ KONUŞMA. Robotik kelimelerden kaçın. Şunları ASLA KULLANMA: "In conclusion", "Dive into", "Tapestry", "Elevate", "Discover", "Unleash", "Whether you...", "Perfect for".
-      2. Samimi, insani, el emeği hissiyatı veren, dürüst bir satıcı dili kullan.
-      3. Başlık SEO uyumlu olsun (Etsy algoritması için ilk 40 karakter en önemli kısımdır), anahtar kelimeleri spam yapmadan doğal şekilde yedir.
-      4. Açıklama çok uzun olmasın, okunabilir kısa paragraflar ve madde imleri kullan. Müşterinin aklındaki soruları yanıtla (boyut, malzeme, kargo süreci).
-      5. Sonunda tavsiye edilen tam 13 adet arama hacmi yüksek Etsy etiketi ver.
+      RULES (STRICTLY FOLLOW):
+      1. NEVER write like an AI. Avoid robotic phrases. NEVER use: "In conclusion", "Dive into", "Tapestry", "Elevate", "Discover", "Unleash", "Whether you...", "Perfect for".
+      2. Use a warm, authentic, handmade-feeling, honest seller voice.
+      3. Title must be SEO-optimized (first 40 characters are most important for Etsy algorithm), weave keywords naturally without spamming.
+      4. Keep description concise with readable short paragraphs and bullet points. Answer customer questions (size, material, shipping).
+      5. Provide exactly 13 high-search-volume Etsy tags at the end.
 
-      Çıktı kesinlikle aşağıdaki JSON formatında olmalı:
+      Output MUST be in the following JSON format:
       {
-        "seoTitle": "Etsy Başlığı (Max 140 karakter)",
-        "description": "Satıcı ağzından samimi ürün açıklaması (HTML formatında P ve BR etiketleri kullanılabilir)",
-        "tags": ["etiket1", "etiket2", "etiket3"]
+        "seoTitle": "Etsy Title (Max 140 characters)",
+        "description": "Authentic seller-voice product description (HTML format with P and BR tags allowed)",
+        "tags": ["tag1", "tag2", "tag3"]
       }
     `;
 
     try {
       const response = await cline.chat.completions.create({
-        model: "google/gemini-2.0-flash-lite-preview-02-05:free", // Tamamen ücretsiz model
+        model: "google/gemini-2.0-flash-lite-preview-02-05:free",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.8
       });

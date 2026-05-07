@@ -14,7 +14,7 @@ export class EtsyService {
     try {
       const response = await fetch(`${this.baseUrl}/application/listings/active?keywords=${encodeURIComponent(keyword)}&limit=${limit}&includes=Images,Shop`, {
         headers: {
-          'x-api-key': `${this.apiKey}:${this.sharedSecret}`
+          'x-api-key': this.apiKey
         }
       });
 

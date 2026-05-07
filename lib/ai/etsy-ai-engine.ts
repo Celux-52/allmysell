@@ -5,28 +5,28 @@ export class EtsyAIEngine {
     const cline = getCline();
 
     const prompt = `
-      Sen bir Etsy ürün analisti ve e-ticaret uzmanısın.
-      Kullanıcı Etsy için şu ürünü analiz etmeni istiyor:
+      You are an expert Etsy product analyst and e-commerce strategist.
+      Analyze the following Etsy product listing and provide a data-driven assessment:
       
-      BAŞLIK: ${productData.title}
-      FİYAT: ${productData.price} ${productData.currency}
-      FAVORİLER: ${productData.favorites}
-      GÖRÜNTÜLENME: ${productData.views}
-      ETİKETLER: ${productData.tags.join(', ')}
+      TITLE: ${productData.title}
+      PRICE: ${productData.price} ${productData.currency}
+      FAVORITES: ${productData.favorites}
+      VIEWS: ${productData.views}
+      TAGS: ${productData.tags.join(', ')}
 
-      Analiz et:
-      1. Bu ürün kişiselleştirilebilir mi?
-      2. Handmade (el yapımı) hissi var mı?
-      3. Rekabet ne durumda?
-      4. Talep var mı? (Favori/görüntülenme oranına bak)
-      5. Kar bırakır mı?
+      Evaluate:
+      1. Is this product customizable/personalizable?
+      2. Does it have a handmade aesthetic?
+      3. What is the competition level?
+      4. Is there real demand? (Analyze favorites-to-views ratio)
+      5. Is there profit margin potential?
 
-      Sonuçları kesinlikle aşağıdaki JSON formatında ver, ekstra metin ekleme:
+      Return ONLY the following JSON format, no extra text:
       {
-        "trendScore": (0-100 arası sayı),
+        "trendScore": (0-100 number),
         "competitionLevel": "Low" | "Medium" | "High",
         "decision": "SELL" | "AVOID",
-        "summary": "Kısa ve net açıklama",
+        "summary": "Brief, clear analysis in English",
         "isHandmade": boolean,
         "isCustomizable": boolean
       }
@@ -34,7 +34,7 @@ export class EtsyAIEngine {
 
     try {
       const response = await cline.chat.completions.create({
-        model: "google/gemini-2.0-flash-lite-preview-02-05:free", // Her zaman tamamen ücretsiz olan model
+        model: "google/gemini-2.0-flash-lite-preview-02-05:free",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.7
       });

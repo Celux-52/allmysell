@@ -1,18 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  LayoutDashboard, BarChart3, Search, Settings,
-  Menu, X, Zap, History, Star, TrendingUp, LogOut, Users, GraduationCap, Store
+  Settings, Menu, X, Zap, History, Star, LogOut
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
+import { isAdmin } from "@/lib/isAdmin";
 
 const navigation = [
-  { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
   { name: "SaaS Panel", href: "/dashboard/saas", icon: Zap },
   { name: "Saved Items", href: "/dashboard/saved", icon: Star },
   { name: "History", href: "/dashboard/history", icon: History },
@@ -26,6 +25,18 @@ export default function DashboardShell({
   const pathname = usePathname();
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isAdminUser, setIsAdminUser] = useState(false);
+
+  useEffect(() => {
+    const checkAdmin = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user?.email && isAdmin(user.email)) {
+        setIsAdminUser(true);
+      }
+    };
+    checkAdmin();
+  }, []);
 
   const handleSignOut = async () => {
     const supabase = createClient();
@@ -68,7 +79,7 @@ export default function DashboardShell({
         </div>
 
         <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-1">
-          {navigation.filter(item => item.name !== "Overview").map((item) => {
+          {navigation.map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link
@@ -125,10 +136,12 @@ export default function DashboardShell({
           </button>
 
           <div className="flex flex-1 justify-end items-center gap-4">
-            <Link href="/admin/saves" className="flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/10 hover:bg-orange-500/20 px-3 py-1 text-sm font-medium text-orange-400 transition-colors">
-              <Sparkles className="h-4 w-4" />
-              Admin Paneline Git
-            </Link>
+            {isAdminUser && (
+              <Link href="/admin/saves" className="flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/10 hover:bg-orange-500/20 px-3 py-1 text-sm font-medium text-orange-400 transition-colors">
+                <SparklesIcon className="h-4 w-4" />
+                Admin
+              </Link>
+            )}
             <div className="flex items-center gap-2 rounded-full border border-slate-700/50 bg-slate-800/50 px-3 py-1 text-sm font-medium text-slate-300">
               Premium SaaS
             </div>
@@ -147,7 +160,7 @@ export default function DashboardShell({
   );
 }
 
-function Sparkles(props: any) {
+function SparklesIcon(props: any) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
       <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />

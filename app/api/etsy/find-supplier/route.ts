@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     }
 
     const agent = new EtsySupplierAgent();
-    const strategy = await agent.findSupplierStrategy(title, tags || [], price || 0);
+    const strategy = await agent.findSupplier(title, tags || [], price || 0);
 
     // Save strategy to DB (Optional)
     let savedSupplier: any = { ...strategy };

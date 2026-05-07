@@ -356,7 +356,7 @@ export default function SavedItemsPage() {
 
                     <div className="grid grid-cols-2 gap-2 mb-3">
                       <div>
-                        <p className="text-[10px] text-slate-500 mb-1">⭐ Trend Skoru</p>
+                        <p className="text-[10px] text-slate-500 mb-1">⭐ Trend Score</p>
                         <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-orange-500 to-amber-400 rounded-full" style={{width:`${product.trendScore || 50}%`}} /></div>
                         <p className="text-[10px] text-amber-400 mt-0.5 font-bold">{product.trendScore || '—'}</p>
                       </div>
@@ -368,11 +368,11 @@ export default function SavedItemsPage() {
 
                     <div className="grid grid-cols-2 gap-2 mb-3 p-2 rounded-lg bg-white/[0.02] border border-white/5">
                       <div className="text-center">
-                        <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-0.5">Fiyat</p>
+                        <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-0.5">Price</p>
                         <p className="text-sm font-bold text-green-400">{product.price} {product.currency}</p>
                       </div>
                       <div className="text-center border-l border-white/5">
-                        <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-0.5">Favoriler</p>
+                        <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-0.5">Favorites</p>
                         <p className="text-sm font-bold text-red-400">{product.favorites}</p>
                       </div>
                     </div>

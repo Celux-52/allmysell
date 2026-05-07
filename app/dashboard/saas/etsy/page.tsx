@@ -17,6 +17,7 @@ export default function EtsySaaSPanel() {
   const [supplier, setSupplier] = useState<any>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [isSaved, setIsSaved] = useState(false);
+  const [hasAutoRun, setHasAutoRun] = useState(false);
 
   useEffect(() => {
     const init = async () => {
@@ -27,9 +28,21 @@ export default function EtsySaaSPanel() {
     init();
   }, []);
 
-  const handleAnalyze = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!keyword) return;
+  // Auto-run from ?q= parameter (e.g. from History "Run Again")
+  useEffect(() => {
+    if (!hasAutoRun && typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const q = urlParams.get('q');
+      if (q) {
+        setKeyword(q);
+        runAnalysis(q);
+      }
+      setHasAutoRun(true);
+    }
+  }, [hasAutoRun]);
+
+  const runAnalysis = async (searchKeyword: string) => {
+    if (!searchKeyword) return;
 
     setIsLoading(true);
     setResult(null);
@@ -41,7 +54,7 @@ export default function EtsySaaSPanel() {
       const res = await fetch("/api/etsy/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ keyword }),
+        body: JSON.stringify({ keyword: searchKeyword }),
       });
       
       if (!res.ok) {
@@ -56,17 +69,22 @@ export default function EtsySaaSPanel() {
       if (userEmail) {
         EtsyStorage.addHistory(
           userEmail, 
-          keyword, 
+          searchKeyword, 
           data.analysis.decision, 
           data.analysis.trendScore
         );
       }
     } catch (error: any) {
       console.error(error);
-      alert(error.message || "Bir hata oluştu. Lütfen API bağlantılarınızı kontrol edin.");
+      alert(error.message || "Something went wrong. Please check your API connections.");
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleAnalyze = async (e: React.FormEvent) => {
+    e.preventDefault();
+    runAnalysis(keyword);
   };
 
   const handleGenerateListing = async () => {
@@ -87,9 +105,12 @@ export default function EtsySaaSPanel() {
       const data = await res.json();
       if (data.success) {
         setListing(data.listing);
+      } else {
+        alert(data.error || "Listing generation failed. Please try again.");
       }
     } catch (error) {
       console.error(error);
+      alert("Network error. Please try again.");
     } finally {
       setIsGeneratingListing(false);
     }
@@ -114,9 +135,12 @@ export default function EtsySaaSPanel() {
       const data = await res.json();
       if (data.success) {
         setSupplier(data.supplier);
+      } else {
+        alert(data.error || "Supplier search failed. Please try again.");
       }
     } catch (error) {
       console.error(error);
+      alert("Network error. Please try again.");
     } finally {
       setIsFindingSupplier(false);
     }
@@ -142,7 +166,7 @@ export default function EtsySaaSPanel() {
     if (success) {
       setIsSaved(true);
     } else {
-      alert("Bu ürün zaten kaydedilmiş veya limit (20) dolmuş olabilir.");
+      alert("This product is already saved or your limit (20) has been reached.");
     }
   };
 
@@ -171,7 +195,7 @@ export default function EtsySaaSPanel() {
           type="text"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
-          placeholder="Etsy'de araştırmak istediğiniz nişi veya ürünü yazın (Örn: Custom leather wallet)"
+          placeholder="Enter a niche or product to research (e.g. Custom leather wallet)"
           className="w-full bg-[#080c16] border border-white/10 rounded-xl py-4 pl-12 pr-32 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 transition-all shadow-xl"
         />
         <button
@@ -180,7 +204,7 @@ export default function EtsySaaSPanel() {
           className="absolute right-2 top-2 bottom-2 px-6 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white rounded-lg font-medium transition-all flex items-center gap-2 disabled:opacity-50"
         >
           {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
-          Analiz Et
+          Analyze
         </button>
       </motion.form>
 
@@ -197,8 +221,8 @@ export default function EtsySaaSPanel() {
               <div className="absolute inset-0 bg-orange-500/20 blur-xl rounded-full"></div>
               <Loader2 className="h-12 w-12 text-orange-500 animate-spin relative z-10" />
             </div>
-            <p className="text-orange-400 font-medium animate-pulse">AI Pazar Analizi Yapıyor...</p>
-            <p className="text-slate-500 text-sm">Rekabet, fiyatlama ve trendler hesaplanıyor.</p>
+            <p className="text-orange-400 font-medium animate-pulse">Running AI Market Analysis...</p>
+            <p className="text-slate-500 text-sm">Evaluating competition, pricing & trends.</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -227,7 +251,7 @@ export default function EtsySaaSPanel() {
                         ? 'bg-amber-500/20 border-amber-500/30 text-amber-400' 
                         : 'bg-black/40 border-white/10 text-slate-400 hover:text-amber-400 hover:border-amber-500/30'
                     }`}
-                    title="Favorilere Kaydet"
+                    title="Save to Favorites"
                   >
                     <Star className={`w-5 h-5 ${isSaved ? 'fill-current' : ''}`} />
                   </button>
@@ -235,7 +259,7 @@ export default function EtsySaaSPanel() {
                 
                 <div className="relative z-10">
                   <span className={`text-sm font-bold tracking-widest uppercase ${result.analysis.decision === 'SELL' ? 'text-green-400' : 'text-red-400'}`}>
-                    AI KARAR MOTORU
+                    AI DECISION ENGINE
                   </span>
                   <h2 className={`text-6xl font-black mt-2 mb-6 ${result.analysis.decision === 'SELL' ? 'text-green-500' : 'text-red-500'}`}>
                     {result.analysis.decision}
@@ -244,14 +268,14 @@ export default function EtsySaaSPanel() {
                     {result.analysis.summary}
                   </p>
 
-                  <div className="flex gap-4 mt-8">
+                  <div className="flex gap-4 mt-8 flex-wrap">
                     <div className="flex items-center gap-2 bg-black/40 px-4 py-2 rounded-lg border border-white/5">
                       <TrendingUp className="w-5 h-5 text-blue-400" />
-                      <span className="text-white font-medium">Trend Skoru: {result.analysis.trendScore}/100</span>
+                      <span className="text-white font-medium">Trend Score: {result.analysis.trendScore}/100</span>
                     </div>
                     <div className="flex items-center gap-2 bg-black/40 px-4 py-2 rounded-lg border border-white/5">
                       <ShoppingBag className="w-5 h-5 text-purple-400" />
-                      <span className="text-white font-medium">Rekabet: {result.analysis.competitionLevel}</span>
+                      <span className="text-white font-medium">Competition: {result.analysis.competitionLevel}</span>
                     </div>
                   </div>
                 </div>
@@ -259,7 +283,7 @@ export default function EtsySaaSPanel() {
 
               {/* Product Info Card */}
               <Card className="col-span-1 p-6 border-white/10 bg-[#080c16] shadow-xl flex flex-col">
-                <h3 className="text-slate-400 text-sm font-semibold mb-4">REFERANS ÜRÜN (TOP SELLER)</h3>
+                <h3 className="text-slate-400 text-sm font-semibold mb-4">REFERENCE PRODUCT (TOP SELLER)</h3>
                 {result.product.imageUrl && (
                   <div className="w-full h-48 rounded-lg overflow-hidden mb-4 border border-white/5 relative">
                     <img src={result.product.imageUrl} alt="Product" className="object-cover w-full h-full" />
@@ -268,7 +292,7 @@ export default function EtsySaaSPanel() {
                 <h4 className="text-white font-medium line-clamp-2 mb-2">{result.product.title}</h4>
                 <div className="flex justify-between items-center mt-auto pt-4 border-t border-white/5">
                   <div className="flex flex-col">
-                    <span className="text-xs text-slate-500">Fiyat</span>
+                    <span className="text-xs text-slate-500">Price</span>
                     <span className="text-green-400 font-bold text-lg">{result.product.price} {result.product.currency}</span>
                   </div>
                   <div className="flex gap-4">
@@ -299,7 +323,7 @@ export default function EtsySaaSPanel() {
                     className="w-full py-4 border border-orange-500/30 bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 rounded-xl font-bold transition-all flex justify-center items-center gap-2 shadow-lg shadow-orange-500/5 disabled:opacity-50"
                   >
                     {isGeneratingListing ? <Loader2 className="w-5 h-5 animate-spin" /> : <PenTool className="w-5 h-5" />}
-                    {isGeneratingListing ? "İnsani SEO Metni Üretiliyor..." : "Otonom SEO Listelemesi Oluştur"}
+                    {isGeneratingListing ? "Generating Human-Like SEO Copy..." : "Generate SEO Listing"}
                   </button>
                 )}
 
@@ -310,7 +334,7 @@ export default function EtsySaaSPanel() {
                     className="w-full py-4 border border-cyan-500/30 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 rounded-xl font-bold transition-all flex justify-center items-center gap-2 shadow-lg shadow-cyan-500/5 disabled:opacity-50"
                   >
                     {isFindingSupplier ? <Loader2 className="w-5 h-5 animate-spin" /> : <Factory className="w-5 h-5" />}
-                    {isFindingSupplier ? "Tedarik Ağları Taranıyor..." : "Tedarikçi & Üretim Stratejisi Bul"}
+                    {isFindingSupplier ? "Scanning Supply Networks..." : "Find Supplier & Production Strategy"}
                   </button>
                 )}
               </motion.div>
@@ -325,19 +349,19 @@ export default function EtsySaaSPanel() {
                 >
                   <Card className="p-8 border border-purple-500/20 bg-gradient-to-br from-[#080c16] to-purple-900/10 shadow-2xl relative">
                     <div className="absolute top-0 right-0 p-2 bg-purple-500/20 text-purple-400 text-xs font-bold px-4 py-1 rounded-bl-lg">
-                      Yapay Zeka İzi Temizlendi
+                      AI Trace Removed
                     </div>
                     
                     <div className="space-y-6">
                       <div>
-                        <h3 className="text-xs text-slate-500 font-semibold mb-2 uppercase">Optimize Edilmiş Başlık</h3>
+                        <h3 className="text-xs text-slate-500 font-semibold mb-2 uppercase">Optimized Title</h3>
                         <p className="text-xl text-white font-medium leading-relaxed bg-black/40 p-4 rounded-lg border border-white/5">
                           {listing.seoTitle}
                         </p>
                       </div>
 
                       <div>
-                        <h3 className="text-xs text-slate-500 font-semibold mb-2 uppercase">Satıcı Ağzından Ürün Açıklaması</h3>
+                        <h3 className="text-xs text-slate-500 font-semibold mb-2 uppercase">Product Description (Seller Voice)</h3>
                         <div 
                           className="text-slate-300 leading-relaxed bg-black/40 p-6 rounded-lg border border-white/5 prose prose-invert max-w-none"
                           dangerouslySetInnerHTML={{ __html: listing.description }}
@@ -346,7 +370,7 @@ export default function EtsySaaSPanel() {
 
                       <div>
                         <h3 className="text-xs text-slate-500 font-semibold mb-3 uppercase flex items-center gap-2">
-                          <Tag className="w-4 h-4" /> 13 Altın Etiket
+                          <Tag className="w-4 h-4" /> 13 Golden Tags
                         </h3>
                         <div className="flex flex-wrap gap-2">
                           {listing.tags.map((tag: string, i: number) => (
@@ -372,21 +396,21 @@ export default function EtsySaaSPanel() {
                   <Card className="p-8 border border-cyan-500/20 bg-gradient-to-br from-[#080c16] to-cyan-900/10 shadow-2xl relative">
                     <div className="absolute top-0 right-0 p-2 bg-cyan-500/20 text-cyan-400 text-xs font-bold px-4 py-1 rounded-bl-lg flex items-center gap-2">
                       <Truck className="w-4 h-4" />
-                      Tedarik Stratejisi
+                      Supply Strategy
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                       <div className="col-span-1 space-y-4">
                         <div className="bg-black/40 p-4 rounded-lg border border-white/5">
-                          <span className="text-xs text-slate-500 font-semibold uppercase block mb-1">Üretim Modeli</span>
+                          <span className="text-xs text-slate-500 font-semibold uppercase block mb-1">Production Model</span>
                           <span className="text-cyan-400 font-bold text-lg">{supplier.sourceType}</span>
                         </div>
                         <div className="bg-black/40 p-4 rounded-lg border border-white/5">
-                          <span className="text-xs text-slate-500 font-semibold uppercase block mb-1">Önerilen Kaynak</span>
+                          <span className="text-xs text-slate-500 font-semibold uppercase block mb-1">Recommended Source</span>
                           <span className="text-white font-medium">{supplier.supplierName}</span>
                         </div>
                         <div className="bg-black/40 p-4 rounded-lg border border-white/5">
-                          <span className="text-xs text-slate-500 font-semibold uppercase block mb-1">Risk Seviyesi</span>
+                          <span className="text-xs text-slate-500 font-semibold uppercase block mb-1">Risk Level</span>
                           <span className={`font-bold ${supplier.riskLevel === 'Low' ? 'text-green-400' : supplier.riskLevel === 'Medium' ? 'text-amber-400' : 'text-red-400'}`}>
                             {supplier.riskLevel}
                           </span>
@@ -397,13 +421,13 @@ export default function EtsySaaSPanel() {
                         <div className="bg-black/40 p-6 rounded-lg border border-white/5 h-full">
                           <h3 className="text-xs text-slate-500 font-semibold mb-3 uppercase flex items-center gap-2">
                             <Factory className="w-4 h-4" /> 
-                            Yapay Zeka Tedarik Raporu
+                            AI Supply Report
                           </h3>
                           <p className="text-slate-300 leading-relaxed text-sm md:text-base">
                             {supplier.notes}
                           </p>
                           <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
-                            <span className="text-slate-400 text-sm">Tahmini Üretim Maliyeti:</span>
+                            <span className="text-slate-400 text-sm">Estimated Production Cost:</span>
                             <span className="text-cyan-400 font-bold text-xl">${supplier.estimatedCost}</span>
                           </div>
                         </div>

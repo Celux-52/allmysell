@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Geist } from 'next/font/google';
 import './globals.css';
 import Navigation from '@/components/Navigation';
+import HideOnRoutes from '@/components/HideOnRoutes';
 import Footer from '@/components/Footer';
 import { Analytics } from '@vercel/analytics/next';
 import WhatsAppButton from '@/components/WhatsAppButton';
@@ -61,12 +62,16 @@ export default function RootLayout({
         <meta name="google" content="notranslate" />
       </head>
       <body className={`${inter.className} bg-[#030712] text-slate-100 antialiased`} suppressHydrationWarning>
-        <Navigation />
+        <HideOnRoutes>
+          <Navigation />
+        </HideOnRoutes>
         <main className="min-h-screen">
           {children}
         </main>
-        <Footer />
-        <WhatsAppButton />
+        <HideOnRoutes>
+          <Footer />
+          <WhatsAppButton />
+        </HideOnRoutes>
         <CookieBanner />
         <GoogleAnalytics />
         <Analytics />
