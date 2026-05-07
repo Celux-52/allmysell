@@ -16,12 +16,16 @@ export class EtsyService {
    */
   private async searchProductsAI(keyword: string, limit: number = 3) {
     try {
+      console.log(`[EtsyService] Searching for: "${keyword}" using n8n search tool...`);
       // 1. Search Etsy via existing n8n search tool
       const internetContext = await fetchInternetDataViaTool(`site:etsy.com ${keyword} products`);
 
       if (!internetContext) {
-        throw new Error("No search context returned from internet tool");
+        console.error(`[EtsyService] No search context returned from internet tool for: ${keyword}`);
+        return [];
       }
+
+      console.log(`[EtsyService] Internet context received (${internetContext.length} chars). Extracting with AI...`);
 
       // 2. Extract product details using AI (DeepSeek R1 prioritized)
       const cline = getCline();
@@ -52,8 +56,19 @@ export class EtsyService {
       });
 
       const content = response.choices[0]?.message?.content || '[]';
+      console.log(`[EtsyService] AI Raw Response: ${content.substring(0, 100)}...`);
+
       const cleaned = content.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim();
-      const products = JSON.parse(cleaned);
+      let products = [];
+      try {
+        products = JSON.parse(cleaned);
+      } catch (parseError) {
+        console.error(`[EtsyService] JSON Parse error:`, parseError);
+        // Fallback to empty if AI fails to format JSON
+        return [];
+      }
+
+      console.log(`[EtsyService] Successfully extracted ${products.length} products`);
 
       return products.map((p: any) => ({
         listingId: p.listingId?.toString() || Math.random().toString(36).substring(7),

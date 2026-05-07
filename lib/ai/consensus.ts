@@ -94,7 +94,7 @@ Do NOT answer from memory if search is required.`;
 
   try {
     const response = await cline.chat.completions.create({
-      model: 'gemini-2.5-flash-preview', // Fast & reliable tool caller
+      model: 'google/gemini-2.0-flash-001', // Extremely fast & reliable for tool calling
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: `Analyze trends and products for: ${query}` }
@@ -226,7 +226,7 @@ async function queryDeepSeek(query: string, internetContext: string): Promise<{ 
     const { getCline } = await import('./cline');
     const cline = getCline();
     const response = await cline.chat.completions.create({
-      model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
+      model: 'deepseek/deepseek-r1:free',
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
         { role: 'user', content: query }
@@ -247,7 +247,7 @@ async function queryQwen(query: string, internetContext: string): Promise<{ prod
     const { getCline } = await import('./cline');
     const cline = getCline();
     const response = await cline.chat.completions.create({
-      model: 'qwen/qwen-2.5-72b-instruct',
+      model: 'qwen/qwen-2.5-72b-instruct:free',
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
         { role: 'user', content: query }
@@ -268,7 +268,7 @@ async function queryLlamaScout(query: string, internetContext: string): Promise<
     const { getCline } = await import('./cline');
     const cline = getCline();
     const response = await cline.chat.completions.create({
-      model: 'anthropic/claude-3.5-haiku',
+      model: 'meta-llama/llama-3.3-70b-instruct:free',
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
         { role: 'user', content: query }
@@ -339,10 +339,9 @@ ${internetContext}
     const cline = getCline();
 
     const validationResponse = await cline.chat.completions.create({
-      model: 'deepseek-r1',
+      model: 'deepseek/deepseek-r1:free',
       messages: [{ role: 'user', content: validationPrompt }],
-      temperature: 0.1,
-      response_format: { type: 'json_object' }
+      temperature: 0.1
     });
 
     const validated = safeParseJSON(validationResponse.choices[0]?.message?.content || '{}');
@@ -633,7 +632,7 @@ Rules:
     { name: 'DeepSeek R1', fn: async () => {
       const { getCline } = await import('@/lib/ai/cline')
       const r = await getCline().chat.completions.create({
-        model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
+        model: 'deepseek/deepseek-r1:free',
         messages: [{ role: 'user', content: AI_PROMPT }],
         temperature: 0.9
       })
@@ -648,10 +647,10 @@ Rules:
       })
       return r.choices[0]?.message?.content || '{}'
     }},
-    { name: 'Claude 3.5 Haiku', fn: async () => {
+    { name: 'Claude 3 Haiku', fn: async () => {
       const { getCline } = await import('@/lib/ai/cline')
       const r = await getCline().chat.completions.create({
-        model: 'anthropic/claude-3.5-haiku',
+        model: 'anthropic/claude-3-haiku:free',
         messages: [{ role: 'user', content: AI_PROMPT }],
         temperature: 0.9
       })
