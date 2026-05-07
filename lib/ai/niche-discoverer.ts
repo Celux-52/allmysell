@@ -46,8 +46,10 @@ Return ONLY JSON.`;
 
     return withRetry(
       async (overrideModel?: string) => {
-        const modelToUse = overrideModel || primaryModel;
-        console.log(`[NicheDiscoverer] Calling AI model: ${modelToUse}`);
+        // We use Gemini 2.0 Flash directly for speed to avoid Vercel timeouts (10s)
+        // DeepSeek is removed from this specific chain because it is too slow.
+        const modelToUse = overrideModel || 'google/gemini-2.0-flash-001';
+        console.log(`[NicheDiscoverer] Requesting niches using: ${modelToUse}`);
 
         const response = await cline.chat.completions.create({
           model: modelToUse,
@@ -56,22 +58,23 @@ Return ONLY JSON.`;
             { role: "user", content: userPrompt }
           ],
           temperature: 0.7,
+          max_tokens: 1000,
         });
 
-        const content = response.choices[0].message.content;
+        const content = response.choices[0]?.message?.content || '';
         if (!content) throw new Error("No discovery data received from AI");
 
-        console.log(`[NicheDiscoverer] Raw Response received (${content.length} chars)`);
+        console.log(`[NicheDiscoverer] Received content length: ${content.length}`);
 
         try {
           const cleanedJson = extractJSON(content);
           return JSON.parse(cleanedJson) as DiscoveredNiche[];
         } catch (parseError) {
-          console.error("[NicheDiscoverer] JSON Parse Error. Raw content:", content);
+          console.error("[NicheDiscoverer] JSON Parse Error. Content:", content);
           throw new Error("AI returned invalid JSON format");
         }
       },
-      { maxRetries: 2, baseDelayMs: 1000, fallbackModels: fallbacks }
+      { maxRetries: 1, baseDelayMs: 500, fallbackModels: ['meta-llama/llama-3.3-70b-instruct:free'] }
     );
   }
 }
