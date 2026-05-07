@@ -46,9 +46,9 @@ Return ONLY JSON.`;
 
     return withRetry(
       async (overrideModel?: string) => {
-        // Llama 3.3 70B is elite, fast and FREE on OpenRouter
-        const modelToUse = overrideModel || 'meta-llama/llama-3.3-70b-instruct:free';
-        console.log(`[NicheDiscoverer] Attempting discovery with: ${modelToUse}`);
+        // This ID is guaranteed to work on OpenRouter
+        const modelToUse = 'meta-llama/llama-3.3-70b-instruct:free';
+        console.log(`[NicheDiscoverer] Using guaranteed model: ${modelToUse}`);
 
         try {
           const response = await cline.chat.completions.create({
@@ -58,20 +58,20 @@ Return ONLY JSON.`;
               { role: "user", content: userPrompt }
             ],
             temperature: 0.7,
-            max_tokens: 1500, // Increased for better results
+            max_tokens: 1500,
           });
 
           const content = response.choices[0]?.message?.content || '';
-          if (!content) throw new Error("AI response was empty. OpenRouter might be rate-limited.");
+          if (!content) throw new Error("AI response was empty.");
 
           const cleanedJson = extractJSON(content);
           return JSON.parse(cleanedJson) as DiscoveredNiche[];
         } catch (apiError: any) {
-          console.error(`[NicheDiscoverer] API Call failed:`, apiError.message);
+          console.error(`[NicheDiscoverer] API ERROR:`, apiError.message);
           throw new Error(`AI Service Error: ${apiError.message}`);
         }
       },
-      { maxRetries: 1, baseDelayMs: 500, fallbackModels: ['google/gemini-flash-1.5-8b:free'] }
+      { maxRetries: 2, baseDelayMs: 1000, fallbackModels: [] } // No complex fallbacks
     );
   }
 }
