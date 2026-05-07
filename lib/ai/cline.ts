@@ -27,6 +27,7 @@ export const FREE_AI_MODELS = [
 ]
 
 import { fetchInternetDataViaTool } from './consensus';
+import { extractJSON } from './retry';
 
 export async function researchProductsWithCline(query: string) {
     const cline = getCline()
@@ -73,9 +74,7 @@ export async function researchProductsWithCline(query: string) {
         })
 
         const text = response.choices[0]?.message?.content || '{}'
-
-        // Safely parse JSON — strip markdown fences if the model wraps it
-        const cleaned = text.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim()
+        const cleaned = extractJSON(text)
         return JSON.parse(cleaned)
     } catch (error) {
         console.error('[Cline] Research error:', error)

@@ -1,17 +1,5 @@
-/**
- * Supplier Sourcing Engine — Semantic Product Matching
- * 
- * Replaces basic keyword-based supplier matching with AI-powered
- * semantic matching. For each consensus product, this engine:
- * 
- * 1. Uses AI to generate realistic supplier product candidates
- * 2. Embeds both the original product and each supplier candidate
- * 3. Computes cosine similarity scores
- * 4. Filters out products below the 0.75 threshold
- * 5. Filters out low-quality products (low rating, low orders)
- * 6. Returns ranked supplier matches with real clickable URLs
- */
-
+import { getCline } from './cline';
+import { extractJSON } from './retry';
 import { generateEmbedding, cosineSimilarity, buildProductText } from './embeddings';
 
 // ═══════════════════════════════════════════════════════
@@ -82,7 +70,6 @@ async function searchSupplierCandidates(
   description: string
 ): Promise<SupplierProduct[]> {
   try {
-    const { getCline } = await import('./cline');
     const cline = getCline();
 
     const prompt = `You are a supplier product database API. Given a product query, return realistic supplier listings that would appear on wholesale/dropshipping platforms.
@@ -129,8 +116,8 @@ ONLY return valid JSON.`;
       temperature: 0.6,
     });
 
-    const text = response.choices[0]?.message?.content || '{}';
-    const cleaned = text.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim();
+    const text = response.choices[0]?.message?.content || '[]';
+    const cleaned = extractJSON(text);
     const parsed = JSON.parse(cleaned);
 
     if (parsed.products && Array.isArray(parsed.products)) {

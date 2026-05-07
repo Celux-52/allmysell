@@ -16,6 +16,7 @@
 
 import { getGoogleTrendsData, buildCompetitorLinks, type GoogleTrendsData } from './google-trends';
 import { sourceSuppliersBatch, type ScoredSupplierMatch, type SupplierSourceResult } from './supplier-sourcing';
+import { extractJSON } from './retry';
 
 interface SupplierLink {
   name: string;
@@ -139,7 +140,7 @@ Return 4-6 products. ONLY return valid JSON.`;
 
 function safeParseJSON(text: string): any {
   try {
-    const cleaned = text.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim();
+    const cleaned = extractJSON(text);
     return JSON.parse(cleaned);
   } catch {
     return null;
@@ -210,7 +211,7 @@ async function queryQwen(query: string, internetContext: string): Promise<{ prod
     const { getCline } = await import('./cline');
     const cline = getCline();
     const response = await cline.chat.completions.create({
-      model: 'qwen/qwen-2.5-72b-instruct:free',
+      model: 'meta-llama/llama-3.2-3b-instruct:free',
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
         { role: 'user', content: query }
@@ -613,7 +614,7 @@ Rules:
     { name: 'Claude 3 Haiku', fn: async () => {
       const { getCline } = await import('@/lib/ai/cline')
       const r = await getCline().chat.completions.create({
-        model: 'anthropic/claude-3-haiku:free',
+        model: 'meta-llama/llama-3.2-3b-instruct:free',
         messages: [{ role: 'user', content: AI_PROMPT }],
         temperature: 0.9
       })
@@ -633,7 +634,7 @@ Rules:
   settled.forEach((result, i) => {
     if (result.status === 'fulfilled' && result.value) {
       try {
-        const cleaned = result.value.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim();
+        const cleaned = extractJSON(result.value);
         const parsed = JSON.parse(cleaned);
         
         if (parsed.categories && Array.isArray(parsed.categories)) {

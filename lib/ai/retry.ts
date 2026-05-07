@@ -44,7 +44,7 @@ export async function withRetry<T>(
     }
   }
 
-  // 2. ULTIMATE FAILOVER CHAIN (The Great Wall)
+  // 2. ULTIMATE FAILOVER CHAIN
   const failoverChain = [
     'meta-llama/llama-3.2-3b-instruct:free',
     'qwen/qwen-2.5-coder-32b-instruct:free',
@@ -52,7 +52,7 @@ export async function withRetry<T>(
     'mistralai/mistral-7b-instruct:free',
     'google/gemini-2.0-flash-lite-preview-02-05:free',
     'microsoft/phi-3-mini-128k-instruct:free',
-    'openrouter/auto:free' // The absolute final resort
+    'openrouter/auto:free'
   ];
 
   for (const fallbackModel of failoverChain) {
@@ -75,22 +75,51 @@ export const FREE_MODEL_CHAINS = {
 };
 
 /**
- * Cleans AI response content to extract valid JSON.
+ * ULTRA-ROBUST JSON EXTRACTION
+ * Handles thinking tags, markdown, and stray text before/after/BETWEEN JSON blocks.
  */
 export function extractJSON(content: string): string {
-  let cleaned = content.replace(/<think>[\s\S]*?<\/think>/gi, '');
-  cleaned = cleaned.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim();
+  if (!content) return '{}';
   
+  // 1. Remove thinking tags
+  let cleaned = content.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+  
+  // 2. Try to find the LARGEST valid JSON block using a stack-based approach
+  // or at least find the first/last character boundaries correctly
   const firstBrace = cleaned.indexOf('{');
-  const lastBrace = cleaned.lastIndexOf('}');
-  if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
-    return cleaned.substring(firstBrace, lastBrace + 1);
+  const firstBracket = cleaned.indexOf('[');
+  
+  // Determine if we are looking for an object or an array
+  const isArray = firstBracket !== -1 && (firstBrace === -1 || firstBracket < firstBrace);
+  const startChar = isArray ? '[' : '{';
+  const endChar = isArray ? ']' : '}';
+  
+  const startIndex = cleaned.indexOf(startChar);
+  if (startIndex === -1) return cleaned; // Fallback
+  
+  // Count braces to find the matching closing brace
+  let count = 0;
+  let endIndex = -1;
+  
+  for (let i = startIndex; i < cleaned.length; i++) {
+    if (cleaned[i] === startChar) count++;
+    else if (cleaned[i] === endChar) {
+      count--;
+      if (count === 0) {
+        endIndex = i;
+        break;
+      }
+    }
   }
   
-  const firstBracket = cleaned.indexOf('[');
-  const lastBracket = cleaned.lastIndexOf(']');
-  if (firstBracket !== -1 && lastBracket !== -1 && lastBracket > firstBracket) {
-    return cleaned.substring(firstBracket, lastBracket + 1);
+  if (startIndex !== -1 && endIndex !== -1) {
+    return cleaned.substring(startIndex, endIndex + 1);
+  }
+  
+  // Fallback to simple lastIndexOf if stack method fails
+  const lastIndex = cleaned.lastIndexOf(endChar);
+  if (startIndex !== -1 && lastIndex !== -1 && lastIndex > startIndex) {
+    return cleaned.substring(startIndex, lastIndex + 1);
   }
   
   return cleaned;

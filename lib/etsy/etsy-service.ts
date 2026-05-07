@@ -1,4 +1,5 @@
 import { getCline } from '../ai/cline';
+import { extractJSON } from '../ai/retry';
 import { fetchInternetDataViaTool } from '../ai/consensus';
 
 export class EtsyService {
@@ -60,14 +61,14 @@ export class EtsyService {
         temperature: 0.1
       });
 
-      const content = response.choices[0]?.message?.content || '[]';
-      const cleaned = content.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim();
+      const text = response.choices[0]?.message?.content || '[]';
+      const cleaned = extractJSON(text);
       
       let products = [];
       try {
         products = JSON.parse(cleaned);
       } catch (parseError) {
-        console.error(`[EtsyService] Extraction failed to parse JSON:`, content);
+        console.error(`[EtsyService] Extraction failed to parse JSON:`, text);
         return [];
       }
 
