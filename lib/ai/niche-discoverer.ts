@@ -46,8 +46,8 @@ Return ONLY JSON.`;
 
     return withRetry(
       async (overrideModel?: string) => {
-        // Llama 3 8B is one of the most stable free models on OpenRouter
-        const modelToUse = overrideModel || 'meta-llama/llama-3-8b-instruct:free';
+        // Llama 3.1 8B Instant is very stable and FREE on OpenRouter
+        const modelToUse = overrideModel || 'meta-llama/llama-3.1-8b-instant:free';
         console.log(`[NicheDiscoverer] Attempting discovery with: ${modelToUse}`);
 
         try {
@@ -62,13 +62,14 @@ Return ONLY JSON.`;
           });
 
           const content = response.choices[0]?.message?.content || '';
-          if (!content) throw new Error("AI response was empty. OpenRouter might be overloaded.");
+          if (!content) throw new Error("AI response was empty. OpenRouter might be rate-limited.");
 
           const cleanedJson = extractJSON(content);
           return JSON.parse(cleanedJson) as DiscoveredNiche[];
         } catch (apiError: any) {
           console.error(`[NicheDiscoverer] API Call failed:`, apiError.message);
-          throw new Error(`AI Error: ${apiError.message}`);
+          // Return the actual error message to the frontend for diagnosis
+          throw new Error(`AI Service Error: ${apiError.message}`);
         }
       },
       { maxRetries: 1, baseDelayMs: 500, fallbackModels: ['google/gemini-2.0-flash-lite-preview-02-05:free'] }
