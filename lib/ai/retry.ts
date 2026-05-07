@@ -1,6 +1,6 @@
 /**
  * AI Retry & Fallback Utility
- * Provides resilient AI API calls with automatic retry.
+ * Provides resilient AI API calls with automatic retry and model rotation.
  */
 
 interface RetryOptions {
@@ -11,12 +11,12 @@ interface RetryOptions {
 
 const DEFAULT_OPTIONS: Required<RetryOptions> = {
   maxRetries: 3,
-  baseDelayMs: 1500,
+  baseDelayMs: 2500, // Increased delay to respect rate limits
   fallbackModels: [],
 };
 
 /**
- * Wraps an async function with retry logic and exponential backoff.
+ * Wraps an async function with retry logic and model rotation.
  */
 export async function withRetry<T>(
   fn: (model?: string) => Promise<T>,
@@ -25,35 +25,46 @@ export async function withRetry<T>(
   const opts = { ...DEFAULT_OPTIONS, ...options };
   let lastError: Error | null = null;
 
-  // Try primary call with retries
+  // 1. Try with primary model (and retries)
   for (let attempt = 0; attempt <= opts.maxRetries; attempt++) {
     try {
       return await fn();
     } catch (error: any) {
       lastError = error;
-      console.warn(`[AI Retry] Attempt ${attempt + 1}/${opts.maxRetries + 1} failed:`, error.message);
       
-      // If it's a 404 or 400, don't just fail, try the next attempt or throw
+      // If we hit a rate limit (429), wait longer
+      const isRateLimit = error.message?.includes('429') || error.status === 429;
+      const delayMultiplier = isRateLimit ? 3 : 1;
+      
+      console.warn(`[AI Retry] Attempt ${attempt + 1}/${opts.maxRetries + 1} failed (${isRateLimit ? 'Rate Limit' : 'Error'}):`, error.message);
+      
       if (attempt < opts.maxRetries) {
-        const delay = opts.baseDelayMs * Math.pow(2, attempt);
+        const delay = opts.baseDelayMs * Math.pow(2, attempt) * delayMultiplier;
         await new Promise(resolve => setTimeout(resolve, delay));
       }
     }
   }
 
-  // Final fallback to the ONLY verified free model if all else fails
-  try {
-    console.log(`[AI Fallback] Trying final stable model: meta-llama/llama-3.2-3b-instruct:free`);
-    return await fn('meta-llama/llama-3.2-3b-instruct:free');
-  } catch (error: any) {
-    throw lastError || error;
+  // 2. Fallback Chain: If primary fails, try these stable free models in order
+  const failoverChain = [
+    'meta-llama/llama-3.2-3b-instruct:free',
+    'qwen/qwen-2.5-coder-32b-instruct:free',
+    'google/gemini-2.0-flash-lite-preview-02-05:free'
+  ];
+
+  for (const fallbackModel of failoverChain) {
+    try {
+      console.log(`[AI Fallback] Attempting failover to: ${fallbackModel}`);
+      return await fn(fallbackModel);
+    } catch (error: any) {
+      lastError = error;
+      console.warn(`[AI Fallback] ${fallbackModel} also failed:`, error.message);
+    }
   }
+
+  throw lastError || new Error("All AI attempts and fallbacks failed");
 }
 
-/**
- * Free model fallback chains.
- * Standardized on Llama 3.2 3B as it is currently the most stable FREE model on OpenRouter.
- */
 export const FREE_MODEL_CHAINS = {
   analysis: ['meta-llama/llama-3.2-3b-instruct:free'],
   creative: ['meta-llama/llama-3.2-3b-instruct:free'],
