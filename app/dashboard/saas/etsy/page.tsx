@@ -18,6 +18,8 @@ export default function EtsySaaSPanel() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [isSaved, setIsSaved] = useState(false);
   const [hasAutoRun, setHasAutoRun] = useState(false);
+  const [isDiscovering, setIsDiscovering] = useState(false);
+  const [discoveredNiches, setDiscoveredNiches] = useState<any[]>([]);
 
   useEffect(() => {
     const init = async () => {
@@ -170,6 +172,29 @@ export default function EtsySaaSPanel() {
     }
   };
 
+  const handleDiscover = async (strategy: string) => {
+    setIsDiscovering(true);
+    setDiscoveredNiches([]);
+    try {
+      const res = await fetch("/api/etsy/discover-niches", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ strategy }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setDiscoveredNiches(data.niches);
+      } else {
+        alert(data.error || "Discovery failed.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Network error.");
+    } finally {
+      setIsDiscovering(false);
+    }
+  };
+
   return (
     <div className="space-y-8 pb-10 max-w-6xl mx-auto">
       {/* Header */}
@@ -207,6 +232,79 @@ export default function EtsySaaSPanel() {
           Analyze
         </button>
       </motion.form>
+
+      {/* Niche Discovery Tabs */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-white font-semibold flex items-center gap-2">
+            <TrendingUp className="h-4 w-4 text-orange-500" />
+            AI Niche Discovery
+          </h3>
+          <div className="flex gap-2">
+            <button 
+              onClick={() => handleDiscover('mashup')} 
+              disabled={isDiscovering}
+              className="text-xs bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 px-3 py-1.5 rounded-lg border border-orange-500/20 transition-all flex items-center gap-1"
+            >
+              Mix Categories
+            </button>
+            <button 
+              onClick={() => handleDiscover('arbitrage')}
+              disabled={isDiscovering}
+              className="text-xs bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 px-3 py-1.5 rounded-lg border border-blue-500/20 transition-all"
+            >
+              Trend Arbitrage
+            </button>
+            <button 
+              onClick={() => handleDiscover('problem-solver')}
+              disabled={isDiscovering}
+              className="text-xs bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 px-3 py-1.5 rounded-lg border border-purple-500/20 transition-all"
+            >
+              Solve Problems
+            </button>
+          </div>
+        </div>
+
+        {isDiscovering && (
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-32 bg-[#080c16] border border-white/5 rounded-xl animate-pulse flex items-center justify-center">
+                <Loader2 className="h-5 w-5 text-slate-700 animate-spin" />
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {discoveredNiches.map((niche, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: idx * 0.1 }}
+              className="bg-[#080c16] border border-white/10 rounded-xl p-4 hover:border-orange-500/30 transition-all group relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 p-1">
+                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${niche.competitionLevel === 'Low' ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-400'}`}>
+                   {niche.competitionLevel}
+                 </span>
+              </div>
+              <h4 className="text-white font-bold text-sm mb-1 group-hover:text-orange-400 transition-colors">{niche.name}</h4>
+              <p className="text-slate-500 text-[11px] line-clamp-2 mb-3">{niche.whyItWorks}</p>
+              <button 
+                onClick={() => {
+                  setKeyword(niche.name);
+                  runAnalysis(niche.name);
+                }}
+                className="w-full py-1.5 bg-white/5 hover:bg-orange-500 text-white text-[10px] font-bold rounded-lg transition-all flex items-center justify-center gap-1"
+              >
+                <Search className="h-3 w-3" />
+                Analyze This
+              </button>
+            </motion.div>
+          ))}
+        </div>
+      </div>
 
       {/* Loading State */}
       <AnimatePresence>
