@@ -1,6 +1,6 @@
 /**
  * AI Retry & Fallback Utility
- * Provides resilient AI API calls with automatic retry and model fallback.
+ * Provides resilient AI API calls with automatic retry.
  */
 
 interface RetryOptions {
@@ -10,14 +10,13 @@ interface RetryOptions {
 }
 
 const DEFAULT_OPTIONS: Required<RetryOptions> = {
-  maxRetries: 2,
-  baseDelayMs: 1000,
+  maxRetries: 3,
+  baseDelayMs: 1500,
   fallbackModels: [],
 };
 
 /**
  * Wraps an async function with retry logic and exponential backoff.
- * If all retries fail and fallbackModels are provided, tries each fallback in order.
  */
 export async function withRetry<T>(
   fn: (model?: string) => Promise<T>,
@@ -34,6 +33,7 @@ export async function withRetry<T>(
       lastError = error;
       console.warn(`[AI Retry] Attempt ${attempt + 1}/${opts.maxRetries + 1} failed:`, error.message);
       
+      // If it's a 404 or 400, don't just fail, try the next attempt or throw
       if (attempt < opts.maxRetries) {
         const delay = opts.baseDelayMs * Math.pow(2, attempt);
         await new Promise(resolve => setTimeout(resolve, delay));
@@ -41,37 +41,23 @@ export async function withRetry<T>(
     }
   }
 
-  // Try fallback models
-  for (const fallbackModel of opts.fallbackModels) {
-    try {
-      console.log(`[AI Fallback] Trying fallback model: ${fallbackModel}`);
-      return await fn(fallbackModel);
-    } catch (error: any) {
-      lastError = error;
-      console.warn(`[AI Fallback] ${fallbackModel} also failed:`, error.message);
-    }
+  // Final fallback to the ONLY verified free model if all else fails
+  try {
+    console.log(`[AI Fallback] Trying final stable model: meta-llama/llama-3.2-3b-instruct:free`);
+    return await fn('meta-llama/llama-3.2-3b-instruct:free');
+  } catch (error: any) {
+    throw lastError || error;
   }
-
-  throw lastError || new Error("All AI attempts and fallbacks failed");
 }
 
 /**
- * Free model fallback chains for different use cases.
- * Using ONLY verified free models from OpenRouter (Checked Live).
+ * Free model fallback chains.
+ * Standardized on Llama 3.2 3B as it is currently the most stable FREE model on OpenRouter.
  */
 export const FREE_MODEL_CHAINS = {
-  analysis: [
-    'meta-llama/llama-3.2-3b-instruct:free',
-    'google/gemma-2-9b-it:free',
-  ],
-  creative: [
-    'meta-llama/llama-3.2-3b-instruct:free',
-    'google/gemma-2-9b-it:free',
-  ],
-  extraction: [
-    'google/gemma-2-9b-it:free',
-    'meta-llama/llama-3.2-3b-instruct:free',
-  ],
+  analysis: ['meta-llama/llama-3.2-3b-instruct:free'],
+  creative: ['meta-llama/llama-3.2-3b-instruct:free'],
+  extraction: ['meta-llama/llama-3.2-3b-instruct:free'],
 };
 
 /**
