@@ -55,7 +55,7 @@ export class EtsyService {
       `;
 
       const response = await cline.chat.completions.create({
-        model: 'google/gemini-2.0-flash-lite-preview-02-05:free', // Super fast & FREE
+        model: 'meta-llama/llama-3.1-8b-instruct:free', // Ultra stable & FREE
         messages: [{ role: 'user', content: prompt }],
         temperature: 0.1
       });

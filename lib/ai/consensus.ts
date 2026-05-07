@@ -189,7 +189,7 @@ async function queryDeepSeek(query: string, internetContext: string): Promise<{ 
     const { getCline } = await import('./cline');
     const cline = getCline();
     const response = await cline.chat.completions.create({
-      model: 'deepseek/deepseek-r1:free',
+      model: 'meta-llama/llama-3.1-8b-instruct:free',
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
         { role: 'user', content: query }
@@ -302,7 +302,7 @@ ${internetContext}
     const cline = getCline();
 
     const validationResponse = await cline.chat.completions.create({
-      model: 'deepseek/deepseek-r1:free',
+      model: 'meta-llama/llama-3.1-8b-instruct:free',
       messages: [{ role: 'user', content: validationPrompt }],
       temperature: 0.1
     });
@@ -595,7 +595,7 @@ Rules:
     { name: 'DeepSeek R1', fn: async () => {
       const { getCline } = await import('@/lib/ai/cline')
       const r = await getCline().chat.completions.create({
-        model: 'deepseek/deepseek-r1:free',
+        model: 'meta-llama/llama-3.1-8b-instruct:free',
         messages: [{ role: 'user', content: AI_PROMPT }],
         temperature: 0.9
       })
