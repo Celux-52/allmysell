@@ -36,18 +36,21 @@ export class EtsyAIEngine {
 
     return withRetry(
       async (overrideModel?: string) => {
+        const modelToUse = overrideModel || primaryModel;
+        console.log(`[EtsyAIEngine] Analyzing using: ${modelToUse}`);
+
         const response = await cline.chat.completions.create({
-          model: overrideModel || primaryModel,
+          model: modelToUse,
           messages: [{ role: "user", content: prompt }],
-          temperature: 0.7,
+          temperature: 0.1,
         });
 
-        const content = response.choices[0].message.content;
+        const content = response.choices[0]?.message?.content || '';
         if (!content) throw new Error("No content received from AI");
 
         return JSON.parse(extractJSON(content));
       },
-      { maxRetries: 2, baseDelayMs: 1000, fallbackModels: fallbacks }
+      { maxRetries: 4, baseDelayMs: 1500, fallbackModels: fallbacks }
     );
   }
 }

@@ -44,11 +44,12 @@ For each niche, provide:
 
 Return ONLY JSON.`;
 
+    const [primaryModel, ...fallbacks] = FREE_MODEL_CHAINS.analysis;
+
     return withRetry(
       async (overrideModel?: string) => {
-        // This ID is guaranteed to work on OpenRouter
-        const modelToUse = 'meta-llama/llama-3.3-70b-instruct:free';
-        console.log(`[NicheDiscoverer] Using guaranteed model: ${modelToUse}`);
+        const modelToUse = overrideModel || primaryModel;
+        console.log(`[NicheDiscoverer] Using model: ${modelToUse}`);
 
         try {
           const response = await cline.chat.completions.create({
@@ -67,11 +68,11 @@ Return ONLY JSON.`;
           const cleanedJson = extractJSON(content);
           return JSON.parse(cleanedJson) as DiscoveredNiche[];
         } catch (apiError: any) {
-          console.error(`[NicheDiscoverer] API ERROR:`, apiError.message);
+          console.error(`[NicheDiscoverer] API ERROR (${modelToUse}):`, apiError.message);
           throw new Error(`AI Service Error: ${apiError.message}`);
         }
       },
-      { maxRetries: 2, baseDelayMs: 1000, fallbackModels: [] } // No complex fallbacks
+      { maxRetries: 4, baseDelayMs: 1500, fallbackModels: fallbacks } // Robust retries
     );
   }
 }

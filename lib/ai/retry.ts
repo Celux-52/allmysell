@@ -62,18 +62,21 @@ export async function withRetry<T>(
 export const FREE_MODEL_CHAINS = {
   analysis: [
     'meta-llama/llama-3.3-70b-instruct:free',
-    'google/gemini-flash-1.5-8b:free',
+    'meta-llama/llama-3.1-8b-instruct:free',
+    'qwen/qwen-2.5-coder-32b-instruct:free',
+    'mistralai/mistral-7b-instruct:free',
     'deepseek/deepseek-r1:free',
   ],
   creative: [
-    'google/gemini-flash-1.5-8b:free',
     'meta-llama/llama-3.3-70b-instruct:free',
     'anthropic/claude-3-haiku:free',
+    'google/gemini-2.0-flash-lite-preview-02-05:free',
+    'meta-llama/llama-3.1-8b-instruct:free',
   ],
   extraction: [
-    'google/gemini-flash-1.5-8b:free',
     'qwen/qwen-2.5-coder-32b-instruct:free',
-    'meta-llama/llama-3.3-70b-instruct:free',
+    'google/gemini-2.0-flash-lite-preview-02-05:free',
+    'meta-llama/llama-3.1-8b-instruct:free',
   ],
 };
 
