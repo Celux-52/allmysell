@@ -10,7 +10,7 @@ interface RetryOptions {
 }
 
 const DEFAULT_OPTIONS: Required<RetryOptions> = {
-  maxRetries: 4, // Increased to 4 retries
+  maxRetries: 4,
   baseDelayMs: 2000,
   fallbackModels: [],
 };
@@ -44,15 +44,15 @@ export async function withRetry<T>(
     }
   }
 
-  // 2. ULTIMATE FAILOVER CHAIN
-  // We try every single known stable free model in order
+  // 2. ULTIMATE FAILOVER CHAIN (The Great Wall)
   const failoverChain = [
     'meta-llama/llama-3.2-3b-instruct:free',
     'qwen/qwen-2.5-coder-32b-instruct:free',
     'deepseek/deepseek-v3:free',
     'mistralai/mistral-7b-instruct:free',
     'google/gemini-2.0-flash-lite-preview-02-05:free',
-    'microsoft/phi-3-mini-128k-instruct:free'
+    'microsoft/phi-3-mini-128k-instruct:free',
+    'openrouter/auto:free' // The absolute final resort
   ];
 
   for (const fallbackModel of failoverChain) {
