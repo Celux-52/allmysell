@@ -46,19 +46,30 @@ Return ONLY JSON.`;
 
     return withRetry(
       async (overrideModel?: string) => {
+        const modelToUse = overrideModel || primaryModel;
+        console.log(`[NicheDiscoverer] Calling AI model: ${modelToUse}`);
+
         const response = await cline.chat.completions.create({
-          model: overrideModel || primaryModel,
+          model: modelToUse,
           messages: [
             { role: "system", content: systemPrompt },
             { role: "user", content: userPrompt }
           ],
-          temperature: 0.9, // Higher temperature for more creativity
+          temperature: 0.7,
         });
 
         const content = response.choices[0].message.content;
         if (!content) throw new Error("No discovery data received from AI");
 
-        return JSON.parse(extractJSON(content)) as DiscoveredNiche[];
+        console.log(`[NicheDiscoverer] Raw Response received (${content.length} chars)`);
+
+        try {
+          const cleanedJson = extractJSON(content);
+          return JSON.parse(cleanedJson) as DiscoveredNiche[];
+        } catch (parseError) {
+          console.error("[NicheDiscoverer] JSON Parse Error. Raw content:", content);
+          throw new Error("AI returned invalid JSON format");
+        }
       },
       { maxRetries: 2, baseDelayMs: 1000, fallbackModels: fallbacks }
     );
