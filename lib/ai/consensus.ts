@@ -87,7 +87,7 @@ export async function fetchInternetDataViaTool(query: string): Promise<string> {
       const parsedResults = data.results
         .map((r: any) => `Title: ${r.title}\nLink: ${r.link}\nSnippet: ${r.snippet}`)
         .join('\n\n');
-        
+
       return `\n\n--- LIVE INTERNET DATA (n8n Search) ---\n${parsedResults}\n---------------------------\n\n`;
     }
 
@@ -536,7 +536,7 @@ export async function consensusResearch(query: string): Promise<ConsensusResult>
  */
 export async function consensusTrends(niche: string) {
   const searchTerm = niche || 'trending products 2026';
-  
+
   const AI_PROMPT = `You are an expert e-commerce trend analyst. ${niche ? `Analyze trends for the "${niche}" niche.` : 'Discover highly specific, obscure, and extremely profitable e-commerce MICRO-NICHES. Do NOT give me generic categories like "Tech Accessories" or "Home Decor". Think outside the box.'}
 
 CRITICAL:
@@ -578,48 +578,58 @@ Rules:
 - ONLY return valid JSON without any markdown formatting.`;
 
   const providers = [
-    { name: 'Groq (Llama 3.3 70B)', fn: async () => {
-      const { getGroq } = await import('@/lib/ai/groq')
-      const r = await getGroq().chat.completions.create({
-        model: 'llama-3.3-70b-versatile',
-        messages: [{ role: 'user', content: AI_PROMPT }],
-        response_format: { type: 'json_object' },
-        temperature: 0.9
-      })
-      return r.choices[0]?.message?.content || '{}'
-    }},
-    { name: 'Gemini 2.0 Flash', fn: async () => {
-      const { getGemini } = await import('@/lib/ai/gemini')
-      const result = await getGemini().getGenerativeModel({ model: 'gemini-2.0-flash' }).generateContent(AI_PROMPT)
-      return result.response.text()
-    }},
-    { name: 'DeepSeek R1', fn: async () => {
-      const { getCline } = await import('@/lib/ai/cline')
-      const r = await getCline().chat.completions.create({
-        model: 'meta-llama/llama-3.2-3b-instruct:free',
-        messages: [{ role: 'user', content: AI_PROMPT }],
-        temperature: 0.9
-      })
-      return r.choices[0]?.message?.content || '{}'
-    }},
-    { name: 'Qwen 2.5 72B', fn: async () => {
-      const { getCline } = await import('@/lib/ai/cline')
-      const r = await getCline().chat.completions.create({
-        model: 'qwen/qwen-2.5-72b-instruct:free',
-        messages: [{ role: 'user', content: AI_PROMPT }],
-        temperature: 0.9
-      })
-      return r.choices[0]?.message?.content || '{}'
-    }},
-    { name: 'Claude 3 Haiku', fn: async () => {
-      const { getCline } = await import('@/lib/ai/cline')
-      const r = await getCline().chat.completions.create({
-        model: 'meta-llama/llama-3.2-3b-instruct:free',
-        messages: [{ role: 'user', content: AI_PROMPT }],
-        temperature: 0.9
-      })
-      return r.choices[0]?.message?.content || '{}'
-    }},
+    {
+      name: 'Groq (Llama 3.3 70B)', fn: async () => {
+        const { getGroq } = await import('@/lib/ai/groq')
+        const r = await getGroq().chat.completions.create({
+          model: 'llama-3.3-70b-versatile',
+          messages: [{ role: 'user', content: AI_PROMPT }],
+          response_format: { type: 'json_object' },
+          temperature: 0.9
+        })
+        return r.choices[0]?.message?.content || '{}'
+      }
+    },
+    {
+      name: 'Gemini 2.0 Flash', fn: async () => {
+        const { getGemini } = await import('@/lib/ai/gemini')
+        const result = await getGemini().getGenerativeModel({ model: 'gemini-2.0-flash' }).generateContent(AI_PROMPT)
+        return result.response.text()
+      }
+    },
+    {
+      name: 'DeepSeek R1', fn: async () => {
+        const { getCline } = await import('@/lib/ai/cline')
+        const r = await getCline().chat.completions.create({
+          model: 'meta-llama/llama-3.2-3b-instruct:free',
+          messages: [{ role: 'user', content: AI_PROMPT }],
+          temperature: 0.9
+        })
+        return r.choices[0]?.message?.content || '{}'
+      }
+    },
+    {
+      name: 'Qwen 2.5 72B', fn: async () => {
+        const { getCline } = await import('@/lib/ai/cline')
+        const r = await getCline().chat.completions.create({
+          model: 'qwen/qwen-2.5-72b-instruct:free',
+          messages: [{ role: 'user', content: AI_PROMPT }],
+          temperature: 0.9
+        })
+        return r.choices[0]?.message?.content || '{}'
+      }
+    },
+    {
+      name: 'Claude 3 Haiku', fn: async () => {
+        const { getCline } = await import('@/lib/ai/cline')
+        const r = await getCline().chat.completions.create({
+          model: 'meta-llama/llama-3.2-3b-instruct:free',
+          messages: [{ role: 'user', content: AI_PROMPT }],
+          temperature: 0.9
+        })
+        return r.choices[0]?.message?.content || '{}'
+      }
+    },
   ];
 
   // Fire all 5 in parallel
@@ -636,7 +646,7 @@ Rules:
       try {
         const cleaned = extractJSON(result.value);
         const parsed = JSON.parse(cleaned);
-        
+
         if (parsed.categories && Array.isArray(parsed.categories)) {
           allCategories.push(...parsed.categories);
           successfulProviders.push(providers[i].name);
@@ -646,7 +656,7 @@ Rules:
         }
         if (parsed.summary && !bestSummary) bestSummary = parsed.summary;
         if (parsed.topOpportunity && !bestOpportunity) bestOpportunity = parsed.topOpportunity;
-      } catch (e) {}
+      } catch (e) { }
     }
   });
 
@@ -661,7 +671,7 @@ Rules:
       uniqueSourcesMap.set(s.url, s);
     }
   });
-  
+
   // Return merged result
   return {
     engine: successfulProviders.join(' + '),

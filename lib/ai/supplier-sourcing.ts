@@ -217,7 +217,7 @@ async function scoreAndFilterCandidates(
     const overallScore = Math.round(similarity * 60 + qualityScore * 0.4);
     const matchLabel: ScoredSupplierMatch['matchLabel'] =
       similarity >= 0.85 ? 'Excellent' :
-      similarity >= 0.75 ? 'Good' : 'Partial';
+        similarity >= 0.75 ? 'Good' : 'Partial';
 
     console.log(`  ✅ MATCHED (similarity: ${similarity.toFixed(3)}, quality: ${qualityScore}, overall: ${overallScore}): "${candidate.title.substring(0, 50)}..."`);
 
@@ -262,7 +262,7 @@ function computeQualityScore(product: SupplierProduct): number {
  */
 function buildRealSupplierUrl(productTitle: string, platform: string): string {
   const encoded = encodeURIComponent(productTitle.substring(0, 100));
-  
+
   switch (platform.toLowerCase()) {
     case 'aliexpress':
       return `https://www.aliexpress.com/wholesale?SearchText=${encoded}&shipFromCountry=US&SortType=total_tranpro_desc`;
