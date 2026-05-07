@@ -16,21 +16,21 @@ export class EtsyService {
    */
   private async searchProductsAI(keyword: string, limit: number = 3) {
     try {
-      console.log(`[EtsyService] Searching for: "${keyword}" using n8n search tool...`);
-      // 1. Search Etsy via existing n8n search tool
-      const internetContext = await fetchInternetDataViaTool(`site:etsy.com ${keyword} products`);
+      console.log(`[EtsyService] Searching for: "${keyword}" using broader query...`);
+      // 1. Search Etsy via existing n8n search tool (Broader query)
+      const internetContext = await fetchInternetDataViaTool(`etsy products ${keyword}`);
 
-      if (!internetContext) {
-        console.error(`[EtsyService] No search context returned from internet tool for: ${keyword}`);
+      if (!internetContext || internetContext.length < 50) {
+        console.warn(`[EtsyService] Insufficient search context returned for: ${keyword}`);
         return [];
       }
 
-      console.log(`[EtsyService] Internet context received (${internetContext.length} chars). Extracting with AI...`);
+      console.log(`[EtsyService] Context received. Extracting with Gemini 2.0 Flash (Fast)...`);
 
-      // 2. Extract product details using AI (DeepSeek R1 prioritized)
+      // 2. Extract product details using a FAST model (Gemini 2.0 Flash) to avoid Vercel 10s timeout
       const cline = getCline();
       const prompt = `
-        You are an Etsy product analyst. Using the LIVE INTERNET DATA below, extract the top ${limit} unique product listings for "${keyword}".
+        Using the LIVE INTERNET DATA below, extract the top ${limit} unique Etsy product listings for "${keyword}".
         
         ${internetContext}
 
@@ -41,48 +41,44 @@ export class EtsyService {
         - currency (3-letter code)
         - views (estimate or 0)
         - favorites (estimate or 0)
-        - url
+        - url (MUST be a valid Etsy URL)
         - tags (keywords)
         - shopName
         - imageUrl (null if not found)
 
-        Return ONLY a JSON array of objects.
+        Return ONLY a JSON array of objects. No reasoning text.
       `;
 
       const response = await cline.chat.completions.create({
-        model: 'deepseek/deepseek-r1:free',
+        model: 'google/gemini-2.0-flash-001', // Super fast, avoids Vercel timeout
         messages: [{ role: 'user', content: prompt }],
         temperature: 0.1
       });
 
       const content = response.choices[0]?.message?.content || '[]';
-      console.log(`[EtsyService] AI Raw Response: ${content.substring(0, 100)}...`);
-
       const cleaned = content.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim();
+      
       let products = [];
       try {
         products = JSON.parse(cleaned);
       } catch (parseError) {
-        console.error(`[EtsyService] JSON Parse error:`, parseError);
-        // Fallback to empty if AI fails to format JSON
+        console.error(`[EtsyService] Extraction failed to parse JSON:`, content);
         return [];
       }
 
       console.log(`[EtsyService] Successfully extracted ${products.length} products`);
-
       return products.map((p: any) => ({
         listingId: p.listingId?.toString() || Math.random().toString(36).substring(7),
         title: p.title || 'Unknown Product',
-        price: Number(p.price) || 0,
+        price: parseFloat(p.price) || 0,
         currency: p.currency || 'USD',
-        views: Number(p.views) || 0,
-        favorites: Number(p.favorites) || 0,
-        url: p.url || '',
+        views: parseInt(p.views) || 0,
+        favorites: parseInt(p.favorites) || 0,
+        url: p.url || 'https://www.etsy.com',
         tags: Array.isArray(p.tags) ? p.tags : [],
-        shopName: p.shopName || 'Etsy Shop',
-        imageUrl: p.imageUrl || null
+        imageUrl: p.imageUrl || null,
+        shopName: p.shopName || 'Etsy Shop'
       }));
-
     } catch (error) {
       console.error("[EtsyService] AI Research failed:", error);
       return [];

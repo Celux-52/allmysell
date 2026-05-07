@@ -61,9 +61,9 @@ export async function withRetry<T>(
  */
 export const FREE_MODEL_CHAINS = {
   analysis: [
-    'deepseek/deepseek-r1:free',
+    'google/gemini-2.0-flash-001',
     'meta-llama/llama-3.3-70b-instruct:free',
-    'google/gemini-2.0-flash-lite-preview-02-05:free',
+    'deepseek/deepseek-r1:free',
   ],
   creative: [
     'anthropic/claude-3-haiku:free',
@@ -71,8 +71,8 @@ export const FREE_MODEL_CHAINS = {
     'deepseek/deepseek-v3:free',
   ],
   extraction: [
+    'google/gemini-2.0-flash-001',
     'qwen/qwen-2.5-coder-32b-instruct:free',
-    'google/gemini-2.0-flash-lite-preview-02-05:free',
     'meta-llama/llama-3.3-70b-instruct:free',
   ],
 };
