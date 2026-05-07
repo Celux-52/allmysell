@@ -14,8 +14,7 @@ export interface DiscoveredNiche {
 export class NicheDiscoverer {
   async discover(strategy: 'mashup' | 'arbitrage' | 'problem-solver' = 'mashup') {
     const cline = getCline();
-    const [primaryModel, ...fallbacks] = FREE_MODEL_CHAINS.analysis;
-
+    
     const systemPrompt = `You are a world-class e-commerce trend hunter and niche strategist. 
 Your goal is to discover "hidden gem" niches on Etsy that have high demand but low to medium competition.
 
@@ -44,6 +43,7 @@ For each niche, provide:
 
 Return ONLY JSON.`;
 
+    // Extracting the chain correctly
     const [primaryModel, ...fallbacks] = FREE_MODEL_CHAINS.analysis;
 
     return withRetry(
@@ -72,7 +72,7 @@ Return ONLY JSON.`;
           throw new Error(`AI Service Error: ${apiError.message}`);
         }
       },
-      { maxRetries: 4, baseDelayMs: 1500, fallbackModels: fallbacks } // Robust retries
+      { maxRetries: 4, baseDelayMs: 1500, fallbackModels: fallbacks }
     );
   }
 }
