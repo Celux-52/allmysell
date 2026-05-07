@@ -66,9 +66,9 @@ export const FREE_MODEL_CHAINS = {
     'deepseek/deepseek-r1:free',
   ],
   creative: [
+    'google/gemini-2.0-flash-001',
     'anthropic/claude-3-haiku:free',
-    'google/gemma-2-9b-it:free',
-    'deepseek/deepseek-v3:free',
+    'meta-llama/llama-3.3-70b-instruct:free',
   ],
   extraction: [
     'google/gemini-2.0-flash-001',

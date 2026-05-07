@@ -13,10 +13,10 @@ export async function POST(req: Request) {
     const agent = new EtsySupplierAgent();
     const strategy = await agent.findSupplier(title, tags || [], price || 0);
 
-    // Save strategy to DB (Optional)
-    let savedSupplier: any = { ...strategy };
+    // 3. Save strategy to DB (Fail-safe)
+    let finalSupplier = { ...strategy };
     try {
-      savedSupplier = await prisma.etsySupplier.create({
+      const savedInDb = await prisma.etsySupplier.create({
         data: {
           productId,
           sourceType: strategy.sourceType,
@@ -26,11 +26,14 @@ export async function POST(req: Request) {
           notes: strategy.notes,
         }
       });
-    } catch (e) { console.warn("DB save failed", e); }
+      finalSupplier = { ...savedInDb } as any;
+    } catch (e) { 
+      console.warn("[Find Supplier] DB save failed, returning AI results only:", e); 
+    }
 
     return NextResponse.json({
       success: true,
-      supplier: savedSupplier
+      supplier: finalSupplier
     });
 
   } catch (error: any) {

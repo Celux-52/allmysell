@@ -13,10 +13,10 @@ export async function POST(req: Request) {
     const generator = new EtsyListingGenerator();
     const generatedData = await generator.generateListing(title, tags || []);
 
-    // Save generated listing to DB (Optional)
-    let savedListing: any = { seoTitle: generatedData.seoTitle, description: generatedData.description, tags: generatedData.tags };
+    // 3. Save generated listing to DB (Fail-safe: don't crash if it fails)
+    let finalListing = { ...generatedData };
     try {
-      savedListing = await prisma.etsyListing.create({
+      const savedInDb = await prisma.etsyListing.create({
         data: {
           productId,
           seoTitle: generatedData.seoTitle,
@@ -24,11 +24,14 @@ export async function POST(req: Request) {
           tags: generatedData.tags,
         }
       });
-    } catch (e) { console.warn("DB save failed", e); }
+      finalListing = { ...savedInDb } as any;
+    } catch (e) { 
+      console.warn("[Generate Listing] DB save failed, returning AI results only:", e); 
+    }
 
     return NextResponse.json({
       success: true,
-      listing: savedListing
+      listing: finalListing
     });
 
   } catch (error: any) {
