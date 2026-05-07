@@ -57,39 +57,36 @@ export async function withRetry<T>(
 
 /**
  * Free model fallback chains for different use cases.
- * Order: primary preference → backup → last resort
+ * Using ONLY verified free models from OpenRouter (Checked Live).
  */
 export const FREE_MODEL_CHAINS = {
   analysis: [
-    'meta-llama/llama-3.1-8b-instant:free'
+    'meta-llama/llama-3.2-3b-instruct:free',
+    'google/gemma-2-9b-it:free',
   ],
   creative: [
-    'meta-llama/llama-3.1-8b-instant:free'
+    'meta-llama/llama-3.2-3b-instruct:free',
+    'google/gemma-2-9b-it:free',
   ],
   extraction: [
-    'meta-llama/llama-3.1-8b-instant:free'
+    'google/gemma-2-9b-it:free',
+    'meta-llama/llama-3.2-3b-instruct:free',
   ],
 };
 
 /**
  * Cleans AI response content to extract valid JSON.
- * Handles markdown code blocks, think tags, and stray text.
  */
 export function extractJSON(content: string): string {
-  // Remove think tags (DeepSeek, etc.)
   let cleaned = content.replace(/<think>[\s\S]*?<\/think>/gi, '');
-  
-  // Remove markdown code fences
   cleaned = cleaned.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim();
   
-  // Extract JSON object
   const firstBrace = cleaned.indexOf('{');
   const lastBrace = cleaned.lastIndexOf('}');
   if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
     return cleaned.substring(firstBrace, lastBrace + 1);
   }
   
-  // Try array
   const firstBracket = cleaned.indexOf('[');
   const lastBracket = cleaned.lastIndexOf(']');
   if (firstBracket !== -1 && lastBracket !== -1 && lastBracket > firstBracket) {
