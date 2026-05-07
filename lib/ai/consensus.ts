@@ -62,75 +62,37 @@ export interface ConsensusResult {
 
 export async function fetchInternetDataViaTool(query: string): Promise<string> {
   const webhookUrl = process.env.N8N_WEBHOOK_URL || "https://n8n.allmysell.com/webhook/search";
-
-  const { getCline } = await import('./cline');
-  const cline = getCline();
-
-  const systemPrompt = `You are a web search routing agent. 
-You MUST use the "search" tool when the user asks for:
-* current information
-* trends
-* product research
-* anything requiring internet data
-
-Do NOT answer from memory if search is required.`;
-
-  const tools = [
-    {
-      type: "function" as const,
-      function: {
-        name: "search",
-        description: "Search the internet for up-to-date information",
-        parameters: {
-          type: "object",
-          properties: {
-            query: { type: "string" }
-          },
-          required: ["query"]
-        }
-      }
-    }
-  ];
+  console.log(`[InternetTool] Initiating search for: "${query}"`);
 
   try {
-    const response = await cline.chat.completions.create({
-      model: 'google/gemini-2.0-flash-001', // Extremely fast & reliable for tool calling
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: `Analyze trends and products for: ${query}` }
-      ],
-      tools: tools,
-      tool_choice: "auto"
+    // Direct call to n8n search tool instead of relying on AI to decide to search
+    // This is much more reliable for product research tasks
+    const n8nResponse = await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query: query })
     });
 
-    const message = response.choices[0]?.message;
-
-    // Check if the model decided to use the tool
-    if (message?.tool_calls && message.tool_calls.length > 0) {
-      const toolCall = message.tool_calls[0] as any;
-      if (toolCall.function.name === "search") {
-        const args = JSON.parse(toolCall.function.arguments);
-
-        // Call the n8n webhook
-        const n8nResponse = await fetch(webhookUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ query: args.query })
-        });
-
-        const data = await n8nResponse.json();
-
-        // Parse the response format standard
-        if (data && data.results && Array.isArray(data.results)) {
-          const parsedResults = data.results.map((r: any) => `Title: ${r.title}\nLink: ${r.link}\nSnippet: ${r.snippet}`).join('\n\n');
-          return `\n\n--- LIVE INTERNET DATA (n8n Search) ---\nThe following is real-time web search data for this query. You MUST base your analysis, prices, and trends on this data whenever possible:\n${parsedResults}\n---------------------------\n\n`;
-        }
-      }
+    if (!n8nResponse.ok) {
+      console.error(`[InternetTool] n8n search failed with status: ${n8nResponse.status}`);
+      return "";
     }
 
-    return ""; // Fallback if no tool was called or search failed
+    const data = await n8nResponse.json();
+
+    if (data && data.results && Array.isArray(data.results) && data.results.length > 0) {
+      console.log(`[InternetTool] Successfully retrieved ${data.results.length} results from n8n`);
+      const parsedResults = data.results
+        .map((r: any) => `Title: ${r.title}\nLink: ${r.link}\nSnippet: ${r.snippet}`)
+        .join('\n\n');
+        
+      return `\n\n--- LIVE INTERNET DATA (n8n Search) ---\nThe following is real-time web search data for this query. You MUST base your analysis, prices, and trends on this data whenever possible:\n${parsedResults}\n---------------------------\n\n`;
+    }
+
+    console.warn(`[InternetTool] n8n returned no results or invalid format:`, data);
+    return "";
   } catch (e) {
-    console.error("n8n tool search failed", e);
+    console.error("[InternetTool] n8n fetch error:", e);
     return "";
   }
 }
