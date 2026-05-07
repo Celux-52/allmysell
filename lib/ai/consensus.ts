@@ -74,22 +74,23 @@ export async function fetchInternetDataViaTool(query: string): Promise<string> {
     });
 
     if (!n8nResponse.ok) {
-      console.error(`[InternetTool] n8n search failed with status: ${n8nResponse.status}`);
+      const errorText = await n8nResponse.text();
+      console.error(`[InternetTool] n8n search failed (${n8nResponse.status}):`, errorText);
       return "";
     }
 
     const data = await n8nResponse.json();
 
     if (data && data.results && Array.isArray(data.results) && data.results.length > 0) {
-      console.log(`[InternetTool] Successfully retrieved ${data.results.length} results from n8n`);
+      console.log(`[InternetTool] Success: Found ${data.results.length} results`);
       const parsedResults = data.results
         .map((r: any) => `Title: ${r.title}\nLink: ${r.link}\nSnippet: ${r.snippet}`)
         .join('\n\n');
         
-      return `\n\n--- LIVE INTERNET DATA (n8n Search) ---\nThe following is real-time web search data for this query. You MUST base your analysis, prices, and trends on this data whenever possible:\n${parsedResults}\n---------------------------\n\n`;
+      return `\n\n--- LIVE INTERNET DATA (n8n Search) ---\n${parsedResults}\n---------------------------\n\n`;
     }
 
-    console.warn(`[InternetTool] n8n returned no results or invalid format:`, data);
+    console.warn(`[InternetTool] n8n returned no results. Data:`, JSON.stringify(data));
     return "";
   } catch (e) {
     console.error("[InternetTool] n8n fetch error:", e);
