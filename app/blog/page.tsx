@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 export const dynamic = 'force-dynamic';
 
 export default async function PublicBlogPage() {
-  let trends = [];
+  let trends: any[] = [];
   let dbError = false;
 
   try {

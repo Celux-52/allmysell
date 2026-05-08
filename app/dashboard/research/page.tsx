@@ -7,7 +7,7 @@ import { ScanButton } from "@/components/research/ScanButton";
 export const dynamic = 'force-dynamic';
 
 export default async function ResearchDashboard() {
-  let trends = [];
+  let trends: any[] = [];
   let dbError = false;
 
   try {
