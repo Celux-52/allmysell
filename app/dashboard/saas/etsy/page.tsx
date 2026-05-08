@@ -405,16 +405,44 @@ export default function EtsySaaSPanel() {
 
               <div className="space-y-3">
                 <button
-                  onClick={() => setIsGeneratingListing(true)}
-                  className="w-full py-4 bg-white text-black font-black rounded-xl hover:bg-slate-200 transition-colors flex items-center justify-center gap-2"
+                  onClick={async () => {
+                    setIsGeneratingListing(true);
+                    try {
+                      const res = await fetch("/api/etsy/generate-listing", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ product: result.product, analysis: result.analysis }),
+                      });
+                      const data = await res.json();
+                      if (data.success) setListing(data.listing);
+                    } catch (e) { console.error(e); }
+                    finally { setIsGeneratingListing(false); }
+                  }}
+                  disabled={isGeneratingListing}
+                  className="w-full py-4 bg-white text-black font-black rounded-xl hover:bg-slate-200 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
                 >
-                  <PenTool className="w-4 h-4" /> Generate Listing
+                  {isGeneratingListing ? <Loader2 className="w-4 h-4 animate-spin" /> : <PenTool className="w-4 h-4" />}
+                  Generate Listing
                 </button>
                 <button
-                  onClick={() => setIsFindingSupplier(true)}
-                  className="w-full py-4 bg-transparent border-2 border-white/10 text-white font-black rounded-xl hover:bg-white/5 transition-colors flex items-center justify-center gap-2"
+                  onClick={async () => {
+                    setIsFindingSupplier(true);
+                    try {
+                      const res = await fetch("/api/etsy/find-supplier", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ product: result.product }),
+                      });
+                      const data = await res.json();
+                      if (data.success) setSupplier(data.supplier);
+                    } catch (e) { console.error(e); }
+                    finally { setIsFindingSupplier(false); }
+                  }}
+                  disabled={isFindingSupplier}
+                  className="w-full py-4 bg-transparent border-2 border-white/10 text-white font-black rounded-xl hover:bg-white/5 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
                 >
-                  <Truck className="w-4 h-4" /> Find Suppliers
+                  {isFindingSupplier ? <Loader2 className="w-4 h-4 animate-spin" /> : <Truck className="w-4 h-4" />}
+                  Find Suppliers
                 </button>
               </div>
             </Card>
@@ -430,6 +458,91 @@ export default function EtsySaaSPanel() {
           </div>
         </div>
       )}
+
+      {/* --- MODALS --- */}
+      <AnimatePresence>
+        {listing && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-[#0d111c] border border-white/10 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-8 relative">
+              <button onClick={() => setListing(null)} className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors">✕</button>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[10px] font-black uppercase tracking-widest mb-6">
+                <Sparkles className="w-3 h-3" /> AI Optimized Listing
+              </div>
+              <h2 className="text-3xl font-black text-white mb-6">Optimized for Conversion</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">High-CTR Title</h4>
+                    <p className="text-white font-bold text-lg bg-white/5 p-4 rounded-xl border border-white/5">{listing.title}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Strategic Tags (13)</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {listing.tags.map((tag: string) => (
+                        <span key={tag} className="px-3 py-1 bg-white/5 border border-white/5 rounded-lg text-xs text-slate-300 font-medium">#{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">SEO Description</h4>
+                  <div className="text-slate-400 text-sm leading-relaxed bg-white/5 p-4 rounded-xl border border-white/5 whitespace-pre-wrap h-64 overflow-y-auto">
+                    {listing.description}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+
+        {supplier && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-[#0d111c] border border-white/10 rounded-3xl max-w-2xl w-full p-8 relative">
+              <button onClick={() => setSupplier(null)} className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors">✕</button>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-500 text-[10px] font-black uppercase tracking-widest mb-6">
+                <Truck className="w-3 h-3" /> Verified Supplier Match
+              </div>
+              <h2 className="text-3xl font-black text-white mb-6">Source from US Warehouses</h2>
+              
+              <div className="space-y-6">
+                <div className="flex items-center gap-6 p-6 bg-white/5 border border-white/10 rounded-2xl">
+                  <div className="h-16 w-16 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-500">
+                    <Factory className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold text-xl">{supplier.name}</h4>
+                    <p className="text-slate-500 text-sm">Estimated Unit Cost: <span className="text-green-400 font-bold">{supplier.estimatedCost}</span></p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+                    <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-1 flex items-center gap-1">
+                      <Zap className="h-3 w-3 text-orange-400" /> Lead Time
+                    </p>
+                    <p className="text-sm text-slate-300">{supplier.leadTime}</p>
+                  </div>
+                  <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+                    <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-1 flex items-center gap-1">
+                      <ShieldCheck className="h-3 w-3 text-green-400" /> Reliability
+                    </p>
+                    <p className="text-sm text-slate-300">{supplier.reliabilityScore}% Verified</p>
+                  </div>
+                </div>
+
+                <a 
+                  href={supplier.url} 
+                  target="_blank" 
+                  className="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20"
+                >
+                  Open Supplier Portal <ExternalLink className="w-4 h-4" />
+                </a>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -1,0 +1,152 @@
+{
+  "name": "TikTok Viral Trend Scraper to AllMySell",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": "interval",
+        "interval": 4,
+        "unit": "hours"
+      },
+      "id": "1",
+      "name": "Every 4 Hours",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/apify~tiktok-scraper/run-sync-get-dataset-items",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "hashtags",
+              "value": "[\"etsyfinds\", \"amazonfinds\", \"smallbusiness\"]"
+            },
+            {
+              "name": "resultsPerPage",
+              "value": "5"
+            },
+            {
+              "name": "shouldDownloadVideos",
+              "value": "false"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2",
+      "name": "Apify TikTok Scraper",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [450, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "YOUR_APIFY_CRED_ID",
+          "name": "Apify API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "3",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://allmysell.com/api/automation/process-trend",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "title",
+              "value": "={{ $json[\"text\"] }}"
+            },
+            {
+              "name": "videoUrl",
+              "value": "={{ $json[\"webVideoUrl\"] }}"
+            },
+            {
+              "name": "thumbnailUrl",
+              "value": "={{ $json[\"videoMeta\"][\"coverUrl\"] }}"
+            },
+            {
+              "name": "platform",
+              "value": "TikTok"
+            },
+            {
+              "name": "viewsText",
+              "value": "={{ $json[\"diggCount\"] }}"
+            },
+            {
+              "name": "platformId",
+              "value": "={{ $json[\"id\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4",
+      "name": "Send to AllMySell API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [850, 300]
+    }
+  ],
+  "connections": {
+    "Every 4 Hours": {
+      "main": [
+        [
+          {
+            "node": "Apify TikTok Scraper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apify TikTok Scraper": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Send to AllMySell API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send to AllMySell API": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

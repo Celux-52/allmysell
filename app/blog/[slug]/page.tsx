@@ -127,7 +127,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                   <p className="text-sm text-slate-400 italic">"{insights.whyItWorks}"</p>
                 </div>
 
-                <div className="pt-4 border-t border-white/5">
+                <div className="pt-4 border-t border-white/5 space-y-3">
                   <a 
                     href={trend.videoUrl}
                     target="_blank"
@@ -135,6 +135,12 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                   >
                     Watch Original <ExternalLink className="h-4 w-4" />
                   </a>
+                  <Link 
+                    href={`/dashboard/saas/etsy?q=${encodeURIComponent(trend.title)}`}
+                    className="flex items-center justify-center gap-2 w-full py-3 bg-orange-500 rounded-xl text-sm font-black text-white hover:bg-orange-600 transition-all shadow-lg shadow-orange-500/20"
+                  >
+                    <TrendingUp className="h-4 w-4" /> Start Selling This
+                  </Link>
                 </div>
               </div>
             </div>

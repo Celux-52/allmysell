@@ -20,7 +20,8 @@ export async function POST(request: NextRequest) {
     console.log(`[Automation] Processing trend: ${title} (${platform})`)
 
     // Generate SEO Slug
-    const slug = title
+    const safeTitle = (title || 'Viral Trend').toString()
+    const slug = safeTitle
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)+/g, '') + '-' + Math.random().toString(36).substring(2, 7)
@@ -37,30 +38,40 @@ export async function POST(request: NextRequest) {
 
     // 3. Generate Blog Content
     // Uses Llama 3.3 70B via Groq for high-quality, long-form content
-    const blog = await generateBlogContent(`Viral Trending Product Analysis: ${title}`)
+    // We pass the analysis summary and top product info for a more data-driven article
+    const blog = await generateBlogContent(`
+      TOPIC: Viral Trending Product Analysis - ${title}
+      PLATFORM: ${platform}
+      VIEWS: ${viewsText}
+      CONSENSUS SCORE: ${analysis.products[0]?.score || 80}%
+      MARKET ANALYSIS: ${analysis.summary}
+      WHY IT WORKS: ${topProduct.whyItWorks}
+      TARGET AUDIENCE: ${topProduct.targetAudience}
+    `);
 
-    // 4. Clean up views text to integer
-    const views = parseInt(viewsText?.replace(/[^0-9]/g, '') || '0')
-    const multiplier = viewsText?.toLowerCase().includes('k') ? 1000 : viewsText?.toLowerCase().includes('m') ? 1000000 : 1
+    // 4. Clean up views text to integer (Handle both string and number)
+    const rawViews = (viewsText || '0').toString();
+    const views = parseInt(rawViews.replace(/[^0-9]/g, '') || '0')
+    const multiplier = rawViews.toLowerCase().includes('k') ? 1000 : rawViews.toLowerCase().includes('m') ? 1000000 : 1
 
     // 5. Save to Database
     const trend = await prisma.autoTrend.create({
       data: {
-        title: blog.title || title,
+        title: (blog.title || title || "Viral Trend Analysis").toString(),
         slug,
-        content: blog.content || "Analysis in progress...",
-        videoUrl,
-        thumbnailUrl: thumbnailUrl || null,
-        platform: platform || 'TikTok',
+        content: (blog.content || "Analysis in progress...").toString(),
+        videoUrl: (videoUrl || "").toString(),
+        thumbnailUrl: (thumbnailUrl || null)?.toString(),
+        platform: (platform || 'TikTok').toString(),
         views: views * multiplier,
         consensusScore: topProduct.score || 80,
         insights: {
-          whyItWorks: topProduct.whyItWorks,
-          targetAudience: topProduct.targetAudience,
-          marketingTips: topProduct.marketingTips,
-          aiSummary: analysis.summary
+          whyItWorks: topProduct.whyItWorks || "High engagement viral content.",
+          targetAudience: topProduct.targetAudience || "General Audience",
+          marketingTips: topProduct.marketingTips || [],
+          aiSummary: analysis.summary || ""
         },
-        platformId: platformId || `auto-${Date.now()}`,
+        platformId: (platformId || `auto-${Date.now()}`).toString(),
         status: 'published'
       }
     })

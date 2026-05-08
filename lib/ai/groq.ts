@@ -233,19 +233,35 @@ Return 3-5 solutions. ONLY return valid JSON without markdown wrapping.`
 export async function generateBlogContent(topic: string): Promise<{ title: string; content: string; excerpt: string; tags: string[] }> {
   const groq = getGroq()
 
-  const prompt = `You are a professional e-commerce blog writer. Write engaging, SEO-optimized blog posts about e-commerce, dropshipping, and product trends. 
+  const prompt = `You are a world-class e-commerce investigative journalist and market analyst. 
+Write a high-authority, SEO-optimized blog post based on the following viral trend data.
 
-Topic: "${topic}"
+DATA:
+"${topic}"
+
+STRUCTURE REQUIREMENTS:
+1. Catchy, high-CTR Title.
+2. Hook Intro: Why this is viral right now.
+3. The "Why It Works" Analysis: Deep psychological and market triggers.
+4. Profit Potential: Analysis of margins and demand.
+5. Marketing Strategy: How to sell this using the viral video as a base.
+6. Target Audience Breakdown.
+7. Final Verdict (SELL or AVOID).
+
+FORMAT: 
+- Use professional yet engaging tone.
+- Use Markdown for the content (H1, H2, Bold, Lists).
+- 800-1200 words.
 
 Return JSON with: 
 { 
-  "title": "Inspiring Title", 
-  "content": "# Blog Content\\n\\n(markdown format, 800+ words)", 
-  "excerpt": "A short 2 sentence SEO description.", 
-  "tags": ["ecommerce", "trends"] 
+  "title": "Professional SEO Title", 
+  "content": "# Full Article Content in Markdown", 
+  "excerpt": "Compelling 160-character meta description.", 
+  "tags": ["ecommerce", "dropshipping", "viral-trends", "niche-analysis"] 
 }
 
-ONLY return valid JSON format no markdown tags around it.`
+ONLY return valid JSON format.`
 
   const isOpenRouter = !process.env.GROQ_API_KEY && !!process.env.OPENROUTER_API_KEY
   const model = isOpenRouter ? 'google/gemini-2.0-flash-lite-preview-02-05:free' : 'llama-3.3-70b-versatile'
