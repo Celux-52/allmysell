@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Search, Loader2, Sparkles, TrendingUp, AlertTriangle, 
-  CheckCircle, Tag, Store, Eye, Heart, ShoppingBag, 
+import {
+  Search, Loader2, Sparkles, TrendingUp, AlertTriangle,
+  CheckCircle, Tag, Store, Eye, Heart, ShoppingBag,
   PenTool, Truck, Factory, Star, BarChart3, ShieldCheck,
   Zap, Info, ExternalLink, ArrowRight
 } from "lucide-react";
@@ -62,21 +62,21 @@ export default function EtsySaaSPanel() {
       // Step 1: Search (takes ~3s)
       await new Promise(r => setTimeout(r, 1500));
       setAnalysisStep(2); // "Running Multi-AI Consensus..."
-      
+
       const res = await fetch("/api/etsy/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ keyword: searchKeyword }),
       });
-      
+
       if (!res.ok) throw new Error("Analysis failed");
 
       setAnalysisStep(3); // "Verifying with Google Trends..."
       await new Promise(r => setTimeout(r, 1000));
-      
+
       const data = await res.json();
       setResult(data);
-      
+
       if (userEmail) {
         EtsyStorage.addHistory(userEmail, searchKeyword, data.analysis.decision, data.analysis.trendScore);
       }
@@ -130,12 +130,12 @@ export default function EtsySaaSPanel() {
   };
 
   return (
-    <div className="space-y-10 pb-20 max-w-7xl mx-auto px-4 sm:px-6">
+    <div className="space-y-10 pb-20 max-w-7xl mx-auto px-4 sm:px-6 bg-gradient-to-b from-[#080c16] to-[#0a0f1a]">
       {/* --- HERO SECTION --- */}
       <div className="relative pt-8">
         <div className="absolute -top-24 -left-24 w-96 h-96 bg-orange-600/10 blur-[120px] rounded-full"></div>
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-purple-600/10 blur-[120px] rounded-full"></div>
-        
+
         <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-xs font-bold tracking-wider uppercase">
@@ -148,7 +148,7 @@ export default function EtsySaaSPanel() {
               Uncover high-profit Etsy niches with real-time market data, multi-AI consensus, and verified supplier mapping.
             </p>
           </div>
-          
+
           {/* Stats Bar (Mockup for now) */}
           <div className="flex gap-4">
             <div className="bg-white/5 border border-white/10 px-4 py-2 rounded-xl">
@@ -164,7 +164,7 @@ export default function EtsySaaSPanel() {
       </div>
 
       {/* --- SEARCH BAR --- */}
-      <motion.form 
+      <motion.form
         onSubmit={handleAnalyze}
         className="relative group z-20"
         initial={{ opacity: 0, y: 20 }}
@@ -223,11 +223,11 @@ export default function EtsySaaSPanel() {
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {isDiscovering ? (
-                [1,2,3,4].map(i => <div key={i} className="h-32 bg-white/5 rounded-xl animate-pulse" />)
+                [1, 2, 3, 4].map(i => <div key={i} className="h-32 bg-white/5 rounded-xl animate-pulse" />)
               ) : (
                 discoveredNiches.map((niche, i) => (
-                  <Card 
-                    key={i} 
+                  <Card
+                    key={i}
                     className="p-4 bg-[#0d111c] border-white/10 hover:border-orange-500/40 transition-all cursor-pointer group"
                     onClick={() => { setKeyword(niche.name); runAnalysis(niche.name); }}
                   >
@@ -253,7 +253,7 @@ export default function EtsySaaSPanel() {
         {isLoading && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="py-20 flex flex-col items-center">
             <div className="w-64 h-2 bg-white/5 rounded-full overflow-hidden mb-6">
-              <motion.div 
+              <motion.div
                 className="h-full bg-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.5)]"
                 initial={{ width: "0%" }}
                 animate={{ width: `${(analysisStep / 3) * 100}%` }}
@@ -274,7 +274,7 @@ export default function EtsySaaSPanel() {
       {/* --- RESULTS PANEL --- */}
       {result && !isLoading && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+
           {/* Left Column: Decision & Intelligence */}
           <div className="lg:col-span-8 space-y-8">
             <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
@@ -290,7 +290,7 @@ export default function EtsySaaSPanel() {
                       <div className="flex items-center gap-2 mb-2">
                         <span className="px-2 py-0.5 rounded bg-white/10 text-white text-[10px] font-black uppercase tracking-tighter">AI AGENT CONSENSUS</span>
                         <div className="flex -space-x-2">
-                          {[1,2,3,4,5].map(i => (
+                          {[1, 2, 3, 4, 5].map(i => (
                             <div key={i} className={`w-5 h-5 rounded-full border border-black flex items-center justify-center text-[8px] font-bold ${i <= (result.analysis.consensus?.agreedCount || 4) ? 'bg-green-500 text-white' : 'bg-slate-700 text-slate-400'}`}>
                               {i}
                             </div>
@@ -331,7 +331,7 @@ export default function EtsySaaSPanel() {
                           <span className="text-white">{bar.value}%</span>
                         </div>
                         <div className="h-2 bg-white/5 rounded-full overflow-hidden">
-                          <motion.div 
+                          <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: `${bar.value}%` }}
                             transition={{ duration: 1, delay: 0.5 }}
@@ -373,9 +373,9 @@ export default function EtsySaaSPanel() {
             <Card className="p-6 bg-[#0d111c] border-white/10 shadow-xl">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-slate-500 text-xs font-black uppercase">Market Reference</h3>
-                <button 
-                   onClick={handleSaveProduct}
-                   className={`p-2 rounded-lg border transition-all ${isSaved ? 'bg-amber-500/20 border-amber-500/30 text-amber-400' : 'bg-white/5 border-white/10 text-slate-500 hover:text-amber-500'}`}
+                <button
+                  onClick={handleSaveProduct}
+                  className={`p-2 rounded-lg border transition-all ${isSaved ? 'bg-amber-500/20 border-amber-500/30 text-amber-400' : 'bg-white/5 border-white/10 text-slate-500 hover:text-amber-500'}`}
                 >
                   <Star className={`w-4 h-4 ${isSaved ? 'fill-current' : ''}`} />
                 </button>
@@ -404,13 +404,13 @@ export default function EtsySaaSPanel() {
               </div>
 
               <div className="space-y-3">
-                <button 
+                <button
                   onClick={() => setIsGeneratingListing(true)}
                   className="w-full py-4 bg-white text-black font-black rounded-xl hover:bg-slate-200 transition-colors flex items-center justify-center gap-2"
                 >
                   <PenTool className="w-4 h-4" /> Generate Listing
                 </button>
-                <button 
+                <button
                   onClick={() => setIsFindingSupplier(true)}
                   className="w-full py-4 bg-transparent border-2 border-white/10 text-white font-black rounded-xl hover:bg-white/5 transition-colors flex items-center justify-center gap-2"
                 >
@@ -420,12 +420,12 @@ export default function EtsySaaSPanel() {
             </Card>
 
             <Card className="p-6 bg-gradient-to-br from-orange-500/10 to-transparent border-white/5">
-               <h3 className="text-orange-500 text-[10px] font-black uppercase mb-3 flex items-center gap-2">
-                 <ShieldCheck className="w-3 h-3" /> System Verification
-               </h3>
-               <p className="text-slate-400 text-[11px] italic">
-                 This analysis is backed by real-time internet scraping and trend validation. Estimates are based on current market dynamics as of May 2026.
-               </p>
+              <h3 className="text-orange-500 text-[10px] font-black uppercase mb-3 flex items-center gap-2">
+                <ShieldCheck className="w-3 h-3" /> System Verification
+              </h3>
+              <p className="text-slate-400 text-[11px] italic">
+                This analysis is backed by real-time internet scraping and trend validation. Estimates are based on current market dynamics as of May 2026.
+              </p>
             </Card>
           </div>
         </div>
@@ -433,6 +433,3 @@ export default function EtsySaaSPanel() {
     </div>
   );
 }
-   
- / *   t r i g g e r   s y n c   * /  
- 

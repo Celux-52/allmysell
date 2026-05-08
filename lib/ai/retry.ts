@@ -46,7 +46,7 @@ export async function withRetry<T>(
 
   // 2. ULTIMATE FAILOVER CHAIN
   const failoverChain = [
-    'meta-llama/llama-3.2-3b-instruct:free',
+    'google/gemini-2.0-flash-lite-preview-02-05:free',
     'qwen/qwen-2.5-coder-32b-instruct:free',
     'deepseek/deepseek-v3:free',
     'mistralai/mistral-7b-instruct:free',
@@ -69,9 +69,9 @@ export async function withRetry<T>(
 }
 
 export const FREE_MODEL_CHAINS = {
-  analysis: ['meta-llama/llama-3.2-3b-instruct:free'],
-  creative: ['meta-llama/llama-3.2-3b-instruct:free'],
-  extraction: ['meta-llama/llama-3.2-3b-instruct:free'],
+  analysis: ['google/gemini-2.0-flash-lite-preview-02-05:free'],
+  creative: ['google/gemini-2.0-flash-lite-preview-02-05:free'],
+  extraction: ['google/gemini-2.0-flash-lite-preview-02-05:free'],
 };
 
 /**

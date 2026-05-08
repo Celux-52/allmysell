@@ -4,13 +4,20 @@ let groqClient: OpenAI | null = null
 
 export function getGroq(): OpenAI {
   if (!groqClient) {
-    const apiKey = process.env.GROQ_API_KEY
+    const apiKey = process.env.GROQ_API_KEY || process.env.OPENROUTER_API_KEY
     if (!apiKey) {
-      throw new Error('GROQ_API_KEY is not set. Get one free at console.groq.com')
+      throw new Error('Neither GROQ_API_KEY nor OPENROUTER_API_KEY is set. Please provide one in your .env file.')
     }
+    
+    const isOpenRouter = !process.env.GROQ_API_KEY && !!process.env.OPENROUTER_API_KEY
+    
     groqClient = new OpenAI({ 
       apiKey,
-      baseURL: "https://api.groq.com/openai/v1" 
+      baseURL: isOpenRouter ? "https://openrouter.ai/api/v1" : "https://api.groq.com/openai/v1",
+      defaultHeaders: isOpenRouter ? {
+        "HTTP-Referer": "https://allmysell.com",
+        "X-Title": "AllMySell"
+      } : undefined
     })
   }
   return groqClient
@@ -79,8 +86,15 @@ Rules:
 - CRITICAL: Provide real world verifiable sources/URLs in the "sources" fields to back your data
 - ONLY return valid JSON without markdown wrapping.`
 
+  const isOpenRouter = !process.env.GROQ_API_KEY && !!process.env.OPENROUTER_API_KEY
+  
+  // Use a reliable free model list for OpenRouter
+  const model = isOpenRouter 
+    ? 'google/gemini-2.0-flash-lite-preview-02-05:free' // Highly available and fast
+    : 'llama-3.3-70b-versatile'
+
   const response = await groq.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
+    model,
     messages: [
       { role: 'system', content: prompt },
       { role: 'user', content: query }
@@ -146,8 +160,11 @@ Rules:
 - CRITICAL: Provide real world verifiable sources/URLs in the "sources" fields to back your data
 - ONLY return valid JSON without markdown wrapping.`
 
+  const isOpenRouter = !process.env.GROQ_API_KEY && !!process.env.OPENROUTER_API_KEY
+  const model = isOpenRouter ? 'google/gemini-2.0-flash-lite-preview-02-05:free' : 'llama-3.3-70b-versatile'
+
   const response = await groq.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
+    model,
     messages: [{ role: 'user', content: prompt }],
     response_format: { type: 'json_object' },
     temperature: 0.7
@@ -199,8 +216,11 @@ Find product solutions that solve this problem. Return JSON:
 
 Return 3-5 solutions. ONLY return valid JSON without markdown wrapping.`
 
+  const isOpenRouter = !process.env.GROQ_API_KEY && !!process.env.OPENROUTER_API_KEY
+  const model = isOpenRouter ? 'google/gemini-2.0-flash-lite-preview-02-05:free' : 'llama-3.3-70b-versatile'
+
   const response = await groq.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
+    model,
     messages: [{ role: 'user', content: prompt }],
     response_format: { type: 'json_object' },
     temperature: 0.7
@@ -227,8 +247,11 @@ Return JSON with:
 
 ONLY return valid JSON format no markdown tags around it.`
 
+  const isOpenRouter = !process.env.GROQ_API_KEY && !!process.env.OPENROUTER_API_KEY
+  const model = isOpenRouter ? 'google/gemini-2.0-flash-lite-preview-02-05:free' : 'llama-3.3-70b-versatile'
+
   const response = await groq.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
+    model,
     messages: [{ role: 'user', content: prompt }],
     response_format: { type: 'json_object' },
     temperature: 0.8

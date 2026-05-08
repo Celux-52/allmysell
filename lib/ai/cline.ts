@@ -19,7 +19,7 @@ export function getCline(): OpenAI {
 
 // ✅ Free AI Models List (completely free, rate-limited)
 export const FREE_AI_MODELS = [
-    { id: 'meta-llama/llama-3.2-3b-instruct:free', name: 'Llama 3.2 3B (Free)', provider: 'Meta', speed: 'Very Fast', quality: 'Excellent', free: true },
+    { id: 'google/gemini-2.0-flash-lite-preview-02-05:free', name: 'Gemini 2.0 Flash Lite (Free)', provider: 'Google', speed: '⚡ Fastest', quality: 'Excellent', free: true },
     { id: 'qwen/qwen-2.5-coder-32b-instruct:free', name: 'Qwen 2.5 Coder (Free)', provider: 'Alibaba', speed: 'Very Fast', quality: 'Best Code', free: true },
     { id: 'anthropic/claude-3-haiku:free', name: 'Claude 3 Haiku (Free)', provider: 'Anthropic', speed: 'Very Fast', quality: 'Very Good', free: true },
     { id: 'google/gemini-2.0-flash-lite-preview-02-05:free', name: 'Gemini 2.0 Flash Lite (Free)', provider: 'Google', speed: '⚡ Fastest', quality: 'Excellent', free: true },
@@ -65,7 +65,7 @@ export async function researchProductsWithCline(query: string) {
 
     try {
         const response = await cline.chat.completions.create({
-            model: 'meta-llama/llama-3.2-3b-instruct:free', // Using a real model instead of fake cline-free
+            model: 'google/gemini-2.0-flash-lite-preview-02-05:free', // Using a real model instead of fake cline-free
             messages: [
                 { role: 'system', content: prompt },
                 { role: 'user', content: query }
@@ -93,7 +93,7 @@ export async function clineAssistant(message: string, context?: string) {
 
     try {
         const response = await cline.chat.completions.create({
-            model: 'meta-llama/llama-3.2-3b-instruct:free',
+            model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
             messages: [
                 { role: 'system', content: systemPrompt },
                 { role: 'user', content: message }

@@ -2,11 +2,15 @@
 // Supabase PostgreSQL via Prisma ORM
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  engineType    = "binary"
+  binaryTargets = ["native"]
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // ============================================
@@ -341,4 +345,31 @@ model EtsyListing {
 
   @@index([productId])
   @@map("etsy_listings")
+}
+
+// ============================================
+// AUTOMATION & TRENDS
+// ============================================
+
+/// Automated trending products from TikTok/FB Ads
+model AutoTrend {
+  id              String   @id @default(cuid())
+  title           String
+  slug            String   @unique @default("")
+  content         String   @db.Text
+  videoUrl        String   @map("video_url")
+  thumbnailUrl    String?  @map("thumbnail_url")
+  platform        String   // TikTok, FB, etc.
+  platformId      String   @map("platform_id")
+  views           Int      @default(0)
+  consensusScore  Int      @default(0) @map("consensus_score")
+  insights        Json?    // { whyItWorks: string, targetAudience: string, marketingTips: string[] }
+  status          String   @default("published")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  @@index([platform])
+  @@index([status])
+  @@index([createdAt])
+  @@unique([platform, platformId])
+  @@map("auto_trends")
 }

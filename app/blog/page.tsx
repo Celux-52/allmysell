@@ -1,84 +1,97 @@
-"use client";
-
-import { motion } from "framer-motion";
+import { prisma } from "@/lib/prisma";
 import { Particles } from "@/components/ui/particles";
-import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
-import { BorderBeam } from "@/components/ui/border-beam";
-import { Hammer, Wrench, Lock, BookOpen } from "lucide-react";
+import { TrendingUp, Sparkles, Calendar, ChevronRight, Play } from "lucide-react";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
-export default function BlogPage() {
+export const revalidate = 3600; // Revalidate every hour
+
+export default async function PublicBlogPage() {
+  // Fetch only published trends
+  const trends = await prisma.autoTrend.findMany({
+    orderBy: { createdAt: 'desc' },
+    take: 20
+  });
+
   return (
-    <div className="min-h-screen bg-[#030712] text-white flex flex-col items-center justify-center relative overflow-hidden selection:bg-orange-500/30">
-      <Particles className="absolute inset-0 z-0" quantity={100} color="#F97316" ease={50} />
+    <div className="min-h-screen bg-[#030712] text-white pt-32 pb-20 relative overflow-hidden">
+      <Particles className="absolute inset-0 z-0" quantity={150} color="#F97316" ease={50} />
       
-      {/* Heavy Glowing Background Orbs */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-orange-600/10 rounded-full filter blur-[150px] animate-pulse-glow pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-amber-500/10 rounded-full filter blur-[100px] animate-pulse-glow delay-700 pointer-events-none" />
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-600/5 rounded-full filter blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full filter blur-[120px] pointer-events-none" />
 
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, type: "spring", bounce: 0.5 }}
-        className="relative z-10 p-8 md:p-16 rounded-3xl bg-slate-950/60 border border-white/10 backdrop-blur-xl shadow-2xl max-w-3xl w-full mx-4 text-center overflow-hidden"
-      >
-        <BorderBeam size={300} duration={8} delay={0} colorFrom="#f97316" colorTo="#fbbf24" />
-        
-        <motion.div
-          animate={{ rotate: [0, -10, 10, -10, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-          className="inline-block mb-6"
-        >
-          <div className="relative">
-            <BookOpen className="h-20 w-20 text-orange-500 opacity-50" />
-            <Lock className="h-10 w-10 text-white absolute bottom-0 right-0" />
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Header Section */}
+        <div className="max-w-3xl mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold uppercase tracking-wider mb-6">
+            <Sparkles className="h-3.5 w-3.5" />
+            Live Viral Pulse
           </div>
-        </motion.div>
+          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+            Discover What's <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-300">Trending Now</span>
+          </h1>
+          <p className="text-lg text-slate-400 leading-relaxed max-w-2xl">
+            Autonomous AI agents tracking TikTok & Facebook 24/7. We analyze the most viral products so you can sell them before they saturate the market.
+          </p>
+        </div>
 
-        <AnimatedGradientText className="mb-6 mx-auto">
-          <span className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest">
-            <Hammer className="h-4 w-4" />
-            Under Construction
-            <Wrench className="h-4 w-4" />
-          </span>
-        </AnimatedGradientText>
+        {/* Blog Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {trends.length === 0 ? (
+            <div className="col-span-full py-20 text-center border border-white/5 bg-white/[0.02] rounded-3xl">
+              <p className="text-slate-500">No viral trends discovered yet. Our agents are scanning the web...</p>
+            </div>
+          ) : (
+            trends.map((trend) => (
+              <Link 
+                key={trend.id} 
+                href={`/blog/${trend.slug}`}
+                className="group relative flex flex-col bg-slate-950/40 border border-white/10 rounded-3xl overflow-hidden hover:border-orange-500/50 transition-all hover:shadow-[0_0_30px_rgba(249,115,22,0.1)]"
+              >
+                <div className="aspect-video relative overflow-hidden">
+                  {trend.thumbnailUrl ? (
+                    <img 
+                      src={trend.thumbnailUrl} 
+                      alt={trend.title} 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-slate-800 flex items-center justify-center">
+                      <Play className="h-10 w-10 text-white/20" />
+                    </div>
+                  )}
+                  <div className="absolute top-4 left-4">
+                    <Badge className="bg-black/60 backdrop-blur-md border-white/10">{trend.platform}</Badge>
+                  </div>
+                </div>
 
-        <motion.h1 
-          className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-        >
-          The Blog is <br/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-300 to-orange-500 animate-text-shimmer">
-            Getting a Makeover
-          </span>
-        </motion.h1>
-
-        <motion.p 
-          className="text-lg md:text-xl text-slate-400 mb-10 max-w-lg mx-auto leading-relaxed"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
-          We're writing the most actionable e-commerce strategies and guides. Our knowledge hub will be unlocked very soon. Stay tuned!
-        </motion.p>
-
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-          className="flex justify-center"
-        >
-          <Link 
-            href="/"
-            className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-semibold text-black transition-all hover:bg-slate-200 hover:scale-105"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-amber-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
-            Return Home
-          </Link>
-        </motion.div>
-      </motion.div>
+                <div className="p-6 flex flex-col flex-1">
+                  <div className="flex items-center gap-4 text-xs text-slate-500 mb-4">
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="h-3.5 w-3.5" />
+                      {new Date(trend.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <TrendingUp className="h-3.5 w-3.5 text-orange-400" />
+                      {trend.consensusScore}% Potential
+                    </span>
+                  </div>
+                  
+                  <h2 className="text-xl font-bold text-white mb-4 line-clamp-2 group-hover:text-orange-400 transition-colors">
+                    {trend.title}
+                  </h2>
+                  
+                  <div className="mt-auto pt-4 flex items-center justify-between border-t border-white/5">
+                    <span className="text-sm font-semibold text-slate-300">Read Analysis</span>
+                    <ChevronRight className="h-5 w-5 text-slate-500 group-hover:text-white group-hover:translate-x-1 transition-all" />
+                  </div>
+                </div>
+              </Link>
+            ))
+          )}
+        </div>
+      </div>
     </div>
   );
 }
