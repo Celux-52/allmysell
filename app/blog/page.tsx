@@ -7,15 +7,30 @@ import { Badge } from "@/components/ui/badge";
 export const dynamic = 'force-dynamic';
 
 export default async function PublicBlogPage() {
-  // Fetch only published trends
-  const trends = await prisma.autoTrend.findMany({
-    orderBy: { createdAt: 'desc' },
-    take: 20
-  });
+  let trends = [];
+  let dbError = false;
+
+  try {
+    trends = await prisma.autoTrend.findMany({
+      where: { isPublished: true },
+      orderBy: { createdAt: 'desc' }
+    });
+  } catch (error) {
+    console.error("Blog database error:", error);
+    dbError = true;
+  }
 
   return (
     <div className="min-h-screen bg-[#030712] text-white pt-32 pb-20 relative overflow-hidden">
-      <Particles className="absolute inset-0 z-0" quantity={150} color="#F97316" ease={50} />
+      <Particles className="absolute inset-0 z-0" quantity={80} color="#F97316" ease={50} />
+      
+      <div className="container mx-auto px-4 relative z-10">
+        {dbError && (
+          <div className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-sm">
+            Veritabanı bağlantı hatası: Blog içerikleri şu an yüklenemiyor.
+          </div>
+        )}
+      </div>
       
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-600/5 rounded-full filter blur-[120px] pointer-events-none" />

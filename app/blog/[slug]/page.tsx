@@ -24,9 +24,28 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const trend = await prisma.autoTrend.findUnique({
-    where: { slug }
-  });
+  let trend = null;
+  let dbError = false;
+
+  try {
+    trend = await prisma.autoTrend.findUnique({
+      where: { slug }
+    });
+  } catch (error) {
+    console.error("Blog detail DB error:", error);
+    dbError = true;
+  }
+
+  if (dbError) {
+    return (
+      <div className="min-h-screen bg-[#030712] text-white pt-32 flex items-center justify-center">
+        <p className="text-red-400 font-bold px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl text-center">
+          Veritabanı bağlantı hatası.<br/>
+          Lütfen Vercel üzerindeki DATABASE_URL ayarlarını kontrol edin.
+        </p>
+      </div>
+    );
+  }
 
   if (!trend) notFound();
 
