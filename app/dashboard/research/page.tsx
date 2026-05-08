@@ -4,6 +4,8 @@ import { Particles } from "@/components/ui/particles";
 import { TrendCard } from "@/components/research/TrendCard";
 import { ScanButton } from "@/components/research/ScanButton";
 
+export const dynamic = 'force-dynamic';
+
 export default async function ResearchDashboard() {
   const trends = await prisma.autoTrend.findMany({
     orderBy: { createdAt: 'desc' },

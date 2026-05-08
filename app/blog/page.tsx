@@ -4,7 +4,7 @@ import { TrendingUp, Sparkles, Calendar, ChevronRight, Play } from "lucide-react
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
-export const revalidate = 3600; // Revalidate every hour
+export const dynamic = 'force-dynamic';
 
 export default async function PublicBlogPage() {
   // Fetch only published trends
