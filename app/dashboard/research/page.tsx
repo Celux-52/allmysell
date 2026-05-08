@@ -7,15 +7,28 @@ import { ScanButton } from "@/components/research/ScanButton";
 export const dynamic = 'force-dynamic';
 
 export default async function ResearchDashboard() {
-  const trends = await prisma.autoTrend.findMany({
-    orderBy: { createdAt: 'desc' },
-    take: 20
-  });
+  let trends = [];
+  let dbError = false;
+
+  try {
+    trends = await prisma.autoTrend.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: 20
+    });
+  } catch (error) {
+    console.error("Database connection failed:", error);
+    dbError = true;
+  }
 
   return (
     <div className="min-h-screen bg-[#030712] text-white pt-24 pb-20 relative overflow-hidden">
       <Particles className="absolute inset-0 z-0" quantity={100} color="#F97316" />
       <div className="container mx-auto px-4 relative z-10">
+        {dbError && (
+          <div className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-sm">
+            Warning: Database connection issue detected. Live research results may be unavailable.
+          </div>
+        )}
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
           <div>
             <h1 className="text-3xl md:text-5xl font-extrabold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
