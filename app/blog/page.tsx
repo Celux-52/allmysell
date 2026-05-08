@@ -12,7 +12,7 @@ export default async function PublicBlogPage() {
 
   try {
     trends = await prisma.autoTrend.findMany({
-      where: { isPublished: true },
+      where: { status: "published" },
       orderBy: { createdAt: 'desc' }
     });
   } catch (error) {
