@@ -881,9 +881,10 @@ export default function EtsySaaSPanel() {
         )}
       </AnimatePresence>
 
+      <AnimatePresence>
         {supplier && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-[#0d111c] border border-white/10 rounded-3xl max-w-2xl w-full p-8 relative">
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-[#0d111c] border border-white/10 rounded-3xl max-w-2xl w-full p-8 relative">
               <button onClick={() => setSupplier(null)} className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors">✕</button>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-500 text-[10px] font-black uppercase tracking-widest mb-6">
                 <Truck className="w-3 h-3" /> Verified Supplier Match
