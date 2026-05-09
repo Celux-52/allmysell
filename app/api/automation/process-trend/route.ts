@@ -54,9 +54,28 @@ export async function POST(request: NextRequest) {
     const views = parseInt(rawViews.replace(/[^0-9]/g, '') || '0')
     const multiplier = rawViews.toLowerCase().includes('k') ? 1000 : rawViews.toLowerCase().includes('m') ? 1000000 : 1
 
-    // 5. Save to Database
-    const trend = await prisma.autoTrend.create({
-      data: {
+    // 5. Save to Database (Upsert: Update if exists, Create if not)
+    const trend = await prisma.autoTrend.upsert({
+      where: {
+        platform_platformId: {
+          platform: (platform || 'TikTok').toString(),
+          platformId: (platformId || `auto-${Date.now()}`).toString(),
+        }
+      },
+      update: {
+        title: (blog.title || title || "Viral Trend Analysis").toString(),
+        content: (blog.content || "Analysis in progress...").toString(),
+        views: views * multiplier,
+        consensusScore: topProduct.score || 80,
+        insights: {
+          whyItWorks: topProduct.whyItWorks || "High engagement viral content.",
+          targetAudience: topProduct.targetAudience || "General Audience",
+          marketingTips: topProduct.marketingTips || [],
+          aiSummary: analysis.summary || ""
+        },
+        status: 'published'
+      },
+      create: {
         title: (blog.title || title || "Viral Trend Analysis").toString(),
         slug,
         content: (blog.content || "Analysis in progress...").toString(),

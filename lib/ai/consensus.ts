@@ -190,7 +190,7 @@ async function queryDeepSeek(query: string, internetContext: string): Promise<{ 
     const { getCline } = await import('./cline');
     const cline = getCline();
     const response = await cline.chat.completions.create({
-      model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
+      model: 'google/gemini-2.0-flash',
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
         { role: 'user', content: query }
@@ -211,7 +211,7 @@ async function queryQwen(query: string, internetContext: string): Promise<{ prod
     const { getCline } = await import('./cline');
     const cline = getCline();
     const response = await cline.chat.completions.create({
-      model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
+      model: 'google/gemini-2.0-flash',
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
         { role: 'user', content: query }
@@ -232,7 +232,7 @@ async function queryLlamaScout(query: string, internetContext: string): Promise<
     const { getCline } = await import('./cline');
     const cline = getCline();
     const response = await cline.chat.completions.create({
-      model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
+      model: 'google/gemini-2.0-flash',
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
         { role: 'user', content: query }
@@ -303,7 +303,7 @@ ${internetContext}
     const cline = getCline();
 
     const validationResponse = await cline.chat.completions.create({
-      model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
+      model: 'google/gemini-2.0-flash',
       messages: [{ role: 'user', content: validationPrompt }],
       temperature: 0.1
     });
@@ -601,7 +601,7 @@ Rules:
       name: 'DeepSeek R1', fn: async () => {
         const { getCline } = await import('@/lib/ai/cline')
         const r = await getCline().chat.completions.create({
-          model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
+          model: 'google/gemini-2.0-flash',
           messages: [{ role: 'user', content: AI_PROMPT }],
           temperature: 0.9
         })
@@ -612,7 +612,7 @@ Rules:
       name: 'Qwen 2.5 72B', fn: async () => {
         const { getCline } = await import('@/lib/ai/cline')
         const r = await getCline().chat.completions.create({
-          model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
+          model: 'google/gemini-2.0-flash',
           messages: [{ role: 'user', content: AI_PROMPT }],
           temperature: 0.9
         })
@@ -623,7 +623,7 @@ Rules:
       name: 'Claude 3 Haiku', fn: async () => {
         const { getCline } = await import('@/lib/ai/cline')
         const r = await getCline().chat.completions.create({
-          model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
+          model: 'google/gemini-2.0-flash',
           messages: [{ role: 'user', content: AI_PROMPT }],
           temperature: 0.9
         })
