@@ -7,7 +7,7 @@ import {
   Search, Loader2, Sparkles, TrendingUp, AlertTriangle,
   CheckCircle, Tag, Store, Eye, Heart, ShoppingBag,
   PenTool, Truck, Factory, Star, BarChart3, ShieldCheck,
-  Zap, Info, ExternalLink, ArrowRight, Brain
+  Zap, Info, ExternalLink, ArrowRight, Brain, X
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { EtsyStorage } from "@/modules/etsy-automation/services/etsyStorage";
@@ -340,72 +340,72 @@ export default function EtsySaaSPanel() {
 
       {/* --- LIVE ANALYSIS ENGINE (CINEMATIC LOADING) --- */}
       <AnimatePresence>
-        {isLoading && (
-          <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            exit={{ opacity: 0 }} 
-            className="py-24 flex flex-col items-center justify-center relative min-h-[500px]"
-          >
-            {/* Background cinematic effects */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-20">
-               <div className="w-[400px] h-[400px] bg-orange-500/20 rounded-full blur-[100px] animate-pulse"></div>
-            </div>
+      {isLoading ? (
+        <motion.div 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          exit={{ opacity: 0 }} 
+          className="py-24 flex flex-col items-center justify-center relative min-h-[500px]"
+        >
+          {/* Background cinematic effects */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-20">
+             <div className="w-[400px] h-[400px] bg-orange-500/20 rounded-full blur-[100px] animate-pulse"></div>
+          </div>
 
-            <div className="relative space-y-12 w-full max-w-xl">
-              <div className="flex flex-col items-center space-y-6">
-                <div className="relative">
-                   <div className="absolute inset-0 bg-orange-500/20 blur-2xl rounded-full"></div>
-                   <Loader2 className="h-20 w-20 animate-spin text-orange-500 relative z-10 stroke-[1px]" />
-                </div>
-                <div className="text-center">
-                   <h3 className="text-3xl font-black text-white tracking-tighter mb-2">ENGINES FIRING UP</h3>
-                   <p className="text-slate-500 font-medium tracking-widest text-xs uppercase">Initializing Multi-Agent Intelligence</p>
-                </div>
+          <div className="relative space-y-12 w-full max-w-xl">
+            <div className="flex flex-col items-center space-y-6">
+              <div className="relative">
+                 <div className="absolute inset-0 bg-orange-500/20 blur-2xl rounded-full"></div>
+                 <Loader2 className="h-20 w-20 animate-spin text-orange-500 relative z-10 stroke-[1px]" />
               </div>
-
-              {/* Progress Checklist */}
-              <div className="grid grid-cols-1 gap-3">
-                {[
-                  { label: 'Scanning Etsy saturation & pricing', step: 1 },
-                  { label: 'Detecting TikTok trend overlap', step: 2 },
-                  { label: 'Analyzing emotional-buy triggers', step: 2 },
-                  { label: 'Verifying US/CN supplier density', step: 3 },
-                  { label: 'Calculating SEO gap & opportunity', step: 3 },
-                  { label: 'Measuring virality potential', step: 3 },
-                ].map((step, i) => (
-                  <motion.div 
-                    key={i}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ 
-                      opacity: analysisStep >= step.step ? 1 : 0.3,
-                      x: 0,
-                      filter: analysisStep >= step.step ? "blur(0px)" : "blur(1px)"
-                    }}
-                    className="flex items-center gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm"
-                  >
-                    <div className={`w-5 h-5 rounded-full flex items-center justify-center ${analysisStep >= step.step ? 'bg-orange-500 text-white' : 'bg-white/10 text-slate-700'}`}>
-                      {analysisStep >= step.step ? <CheckCircle className="w-3 h-3" /> : <div className="w-1.5 h-1.5 bg-white/20 rounded-full animate-pulse" />}
-                    </div>
-                    <span className={`text-sm font-bold tracking-tight ${analysisStep >= step.step ? 'text-white' : 'text-slate-600'}`}>
-                      {step.label}
-                    </span>
-                    {analysisStep === step.step && (
-                      <motion.span 
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="ml-auto text-[10px] font-black text-orange-500 animate-pulse"
-                      >
-                        PROCESSING...
-                      </motion.span>
-                    )}
-                  </motion.div>
-                ))}
+              <div className="text-center">
+                 <h3 className="text-3xl font-black text-white tracking-tighter mb-2">ENGINES FIRING UP</h3>
+                 <p className="text-slate-500 font-medium tracking-widest text-xs uppercase">Initializing Multi-Agent Intelligence</p>
               </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+            {/* Progress Checklist */}
+            <div className="grid grid-cols-1 gap-3">
+              {[
+                { label: 'Scanning Etsy saturation & pricing', step: 1 },
+                { label: 'Detecting TikTok trend overlap', step: 2 },
+                { label: 'Analyzing emotional-buy triggers', step: 2 },
+                { label: 'Verifying US/CN supplier density', step: 3 },
+                { label: 'Calculating SEO gap & opportunity', step: 3 },
+                { label: 'Measuring virality potential', step: 3 },
+              ].map((step, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ 
+                    opacity: analysisStep >= step.step ? 1 : 0.3,
+                    x: 0,
+                    filter: analysisStep >= step.step ? "blur(0px)" : "blur(1px)"
+                  }}
+                  className="flex items-center gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm"
+                >
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center ${analysisStep >= step.step ? 'bg-orange-500 text-white' : 'bg-white/10 text-slate-700'}`}>
+                    {analysisStep >= step.step ? <CheckCircle className="w-3 h-3" /> : <div className="w-1.5 h-1.5 bg-white/20 rounded-full animate-pulse" />}
+                  </div>
+                  <span className={`text-sm font-bold tracking-tight ${analysisStep >= step.step ? 'text-white' : 'text-slate-600'}`}>
+                    {step.label}
+                  </span>
+                  {analysisStep === step.step && (
+                    <motion.span 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="ml-auto text-[10px] font-black text-orange-500 animate-pulse"
+                    >
+                      PROCESSING...
+                    </motion.span>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
 
       {/* --- RESULTS PANEL (NEXT GEN) --- */}
       {result && !isLoading && (
@@ -796,7 +796,7 @@ export default function EtsySaaSPanel() {
                     <span className="block text-[10px] font-bold text-slate-500 uppercase">EST. CTR</span>
                     <span className="text-2xl font-black text-blue-500">4.2%</span>
                   </div>
-                  <button onClick={() => setListing(null)} className="ml-4 p-3 hover:bg-white/5 rounded-full transition-colors text-slate-500 hover:text-white">✕</button>
+                  <button onClick={() => setListing(null)} className="ml-4 p-3 hover:bg-white/5 rounded-full transition-colors text-slate-500 hover:text-white"><X className="w-4 h-4" /></button>
                 </div>
               </div>
 
@@ -885,7 +885,7 @@ export default function EtsySaaSPanel() {
         {supplier && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-[#0d111c] border border-white/10 rounded-3xl max-w-2xl w-full p-8 relative">
-              <button onClick={() => setSupplier(null)} className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors">✕</button>
+              <button onClick={() => setSupplier(null)} className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors"><X className="w-5 h-5" /></button>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-500 text-[10px] font-black uppercase tracking-widest mb-6">
                 <Truck className="w-3 h-3" /> Verified Supplier Match
               </div>
