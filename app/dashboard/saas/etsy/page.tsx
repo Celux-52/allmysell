@@ -1,3 +1,4 @@
+// Etsy Sniper OS - Cinematic AI Evolution v4.2
 "use client";
 
 import { useState, useEffect } from "react";
