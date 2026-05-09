@@ -138,6 +138,7 @@ export default function EtsySaaSPanel() {
   };
 
   return (
+    <div className="space-y-10 pb-20 max-w-7xl mx-auto px-4 sm:px-6 bg-gradient-to-b from-[#080c16] to-[#0a0f1a]">
       {/* --- CINEMATIC HERO & AI CONTROL CENTER --- */}
       <div className="relative pt-12 pb-6 overflow-hidden">
         {/* Atmospheric Glows */}
