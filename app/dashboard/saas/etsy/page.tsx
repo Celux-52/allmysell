@@ -525,7 +525,7 @@ export default function EtsySaaSPanel() {
                   </div>
                 </div>
               </Card>
-            </motion.div>tion.div>
+            </motion.div>
 
             {/* --- AI CONFIDENCE ENGINE & VIRALITY ENGINE --- */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -630,6 +630,7 @@ export default function EtsySaaSPanel() {
                   </div>
                 </div>
               ))}
+            </div>
             {/* Market Evolution Insight */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
