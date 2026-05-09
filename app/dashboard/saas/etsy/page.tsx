@@ -176,7 +176,7 @@ export default function EtsySaaSPanel() {
           >
             Your autonomous partner in e-commerce. We analyze trends, verify suppliers, 
             and predict virality so you can focus on scaling.
-          </p>
+          </motion.p>
 
           {/* AI Agents Mini-Hud */}
           <div className="flex flex-wrap justify-center gap-4 mt-4">
