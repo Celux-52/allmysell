@@ -8,7 +8,7 @@ import Link from 'next/link'
 const ADMIN_EMAILS = [
   'melih20052005gs@gmail.com',
   'yunussukru7@gmail.com',
-  'yunusukur7@gmail.com'
+  'yunusukur7@gmail.com',
       'test_etsy_sniper_99@allmysell.com',
 ]
 
