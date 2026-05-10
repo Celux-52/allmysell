@@ -81,7 +81,7 @@ export class EtsyService {
           currency: p.currency || 'USD',
           views: parseInt(p.views) || Math.floor(Math.random() * 5000),
           favorites: parseInt(p.favorites) || Math.floor(Math.random() * 500),
-          url: p.url || `https://www.etsy.com/search?q=${encodeURIComponent(keyword)}`,
+          url: `https://www.etsy.com/search?q=${encodeURIComponent(p.title || keyword)}`,
           tags: Array.isArray(p.tags) ? p.tags : [keyword],
           imageUrl: p.imageUrl || null,
           shopName: p.shopName || 'Etsy Boutique'
