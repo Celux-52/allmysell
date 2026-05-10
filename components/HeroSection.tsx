@@ -64,6 +64,7 @@ export default function HeroSection({ isPreview = false }: { isPreview?: boolean
     }
 
     setIsLoading(true);
+    try {
       const res = await fetch("/api/etsy/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
