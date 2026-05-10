@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Sparkles, Brain, Truck, Globe2, Loader2, AlertCircle, TrendingUp, BarChart3, Zap, ArrowRight, ShieldCheck } from "lucide-react";
+import { Search, Sparkles, Brain, Truck, Globe2, Loader2, AlertCircle, TrendingUp, BarChart3, Zap, ArrowRight, ShieldCheck, Store, ExternalLink } from "lucide-react";
 import { useState } from "react";
 import { MagicCard } from "@/components/ui/magic-card";
 import { BorderBeam } from "@/components/ui/border-beam";
@@ -285,10 +285,21 @@ export default function ResearchDashboard() {
                        <h4 className="text-orange-400 text-xs font-black uppercase tracking-widest flex items-center gap-2 mb-3">
                          <Truck className="w-4 h-4"/> SUPPLIERS ({product.suppliers?.length || 0})
                        </h4>
-                       <div className="space-y-2">
+                       <div className="space-y-2 mb-4">
                          {product.suppliers?.slice(0,3).map((sup: any, i: number) => (
                            <a key={i} href={sup.url} target="_blank" className="flex items-center gap-2 text-xs text-slate-400 hover:text-white transition-colors">
                              <ArrowRight className="w-3 h-3" /> {sup.name}
+                           </a>
+                         ))}
+                       </div>
+
+                       <h4 className="text-pink-400 text-xs font-black uppercase tracking-widest flex items-center gap-2 mb-3 mt-6">
+                         <Store className="w-4 h-4"/> MARKETPLACE SPY
+                       </h4>
+                       <div className="flex flex-wrap gap-2">
+                         {product.competitorLinks?.slice(0,4).map((comp: any, i: number) => (
+                           <a key={i} href={comp.url} target="_blank" className="px-3 py-1.5 bg-white/5 border border-white/10 hover:border-pink-500/30 rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-pink-500/10 transition-all flex items-center gap-1.5 shadow-sm shadow-black/20">
+                             <ExternalLink className="w-3 h-3" /> {comp.platform}
                            </a>
                          ))}
                        </div>
