@@ -173,6 +173,7 @@ Return ONLY valid JSON in this exact structure:
   "summary": "Comprehensive market overview"
 }
 
+CRITICAL INSTRUCTION: You MUST include "failureModes", "saturationIndex", "copycatRisk", "trendLifespan", "scalabilityScore", and "doNotBuild" in every product object. DO NOT SKIP THEM.
 Return 4-6 products. At least 1 product MUST be marked as doNotBuild:true if competition is oversaturated. ONLY return valid JSON.`;
 
 function safeParseJSON(text: string): any {
