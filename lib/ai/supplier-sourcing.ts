@@ -271,8 +271,11 @@ function buildRealSupplierUrl(productTitle: string, platform: string): string {
     case 'temu':
       return `https://www.temu.com/search_result.html?search_key=${shortKeyword}`;
     case 'cjdropshipping':
-    case 'cj':
-      return `https://cjdropshipping.com/product-list?keyword=${shortKeyword}`;
+    case 'cj': {
+      // CJ Dropshipping expects: /search/Word+Word.html
+      const cjKeyword = productTitle.split(' ').slice(0, 5).join('+');
+      return `https://cjdropshipping.com/search/${cjKeyword}.html`;
+    }
     case 'alibaba':
       return `https://www.alibaba.com/trade/search?SearchText=${shortKeyword}`;
     case 'dhgate':
@@ -299,7 +302,7 @@ function buildFallbackLinks(keyword: string): { name: string; url: string }[] {
     },
     {
       name: `CJ Dropshipping — "${keyword}"`,
-      url: `https://cjdropshipping.com/product-list?keyword=${encoded}`,
+      url: `https://cjdropshipping.com/search/${keyword.split(' ').join('+')}.html`,
     },
     {
       name: `Temu — "${keyword}"`,
