@@ -8,7 +8,7 @@ import { MagicCard } from "@/components/ui/magic-card";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Button } from "@/components/ui/button";
 
-const tiers = [
+const smartTiers = [
   {
     name: "Starter",
     price: { monthly: 19, annual: 15 },
@@ -70,8 +70,72 @@ const tiers = [
   }
 ];
 
+const etsyTiers = [
+  {
+    name: "Starter",
+    price: { monthly: 9, annual: 7 },
+    description: "Quick entry into Etsy market dominance.",
+    icon: <Zap className="h-6 w-6 text-orange-400" />,
+    features: [
+      "200 Sniper Queries / mo",
+      "Basic Analysis (Trend/Magic)",
+      "Trend Lifespan Insights",
+      "Quick Idea Discovery",
+      "Basic SEO Tips",
+      "Community Support"
+    ],
+    cta: "Deploy Sniper",
+    color: "from-orange-500/20 to-orange-500/5",
+    borderColor: "border-orange-500/20",
+    glowColor: "#f97316"
+  },
+  {
+    name: "Growth",
+    price: { monthly: 39, annual: 31 },
+    description: "Deep tactical intelligence for high-value niches.",
+    icon: <Rocket className="h-6 w-6 text-amber-400" />,
+    popular: true,
+    features: [
+      "40 Deep Queries / mo",
+      "Everything in Starter",
+      "💀 Failure Mode Analysis",
+      "🧬 Saturation Risk Engine",
+      "💰 Profit Reality Check",
+      "🔗 Supplier Matching",
+      "Competitor Links",
+      "Conversion Funnel Analysis"
+    ],
+    cta: "Master Market",
+    color: "from-amber-500/20 to-amber-500/5",
+    borderColor: "border-amber-500/30",
+    glowColor: "#f59e0b"
+  },
+  {
+    name: "Pro / Agency",
+    price: { monthly: 99, annual: 79 },
+    description: "The ultimate weapon for Etsy power sellers.",
+    icon: <Building2 className="h-6 w-6 text-purple-400" />,
+    features: [
+      "Unlimited Sniper Queries",
+      "Everything in Growth",
+      "API Entegrayonu",
+      "Multi-User Access",
+      "Priority Model Rotation",
+      "Strategic Model Guarantee",
+      "Early Access Beta"
+    ],
+    cta: "Go Unlimited",
+    color: "from-purple-500/20 to-purple-500/5",
+    borderColor: "border-purple-500/20",
+    glowColor: "#a855f7"
+  }
+];
+
 export default function PricingPage() {
   const [isAnnual, setIsAnnual] = useState(true);
+  const [productType, setProductType] = useState<"smart" | "etsy">("smart");
+
+  const tiers = productType === "smart" ? smartTiers : etsyTiers;
 
   return (
     <div className="bg-[#050810] min-h-screen text-white selection:bg-orange-500/30 relative overflow-hidden pb-24">
@@ -113,6 +177,29 @@ export default function PricingPage() {
             Scale your market dominance with tiered intelligence protocols. 
             Save 20% on annual deployment.
           </motion.p>
+
+          {/* Product Toggle */}
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 }}
+            className="flex justify-center mb-10"
+          >
+            <div className="bg-white/5 border border-white/10 p-1 rounded-2xl flex gap-1 backdrop-blur-md">
+              <button
+                onClick={() => setProductType("smart")}
+                className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${productType === "smart" ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20' : 'text-slate-500 hover:text-slate-300'}`}
+              >
+                Market Intelligence
+              </button>
+              <button
+                onClick={() => setProductType("etsy")}
+                className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${productType === "etsy" ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20' : 'text-slate-500 hover:text-slate-300'}`}
+              >
+                Etsy Sniper
+              </button>
+            </div>
+          </motion.div>
 
           {/* Billing Toggle */}
           <motion.div 

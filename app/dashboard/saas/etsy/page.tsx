@@ -13,6 +13,7 @@ import {
 import { Card } from "@/components/ui/card";
 import { EtsyStorage } from "@/modules/etsy-automation/services/etsyStorage";
 import { createClient } from "@/lib/supabase/client";
+import Link from "next/link";
 
 export default function EtsySaaSPanel() {
   const [keyword, setKeyword] = useState("");
@@ -29,12 +30,19 @@ export default function EtsySaaSPanel() {
   const [isDiscovering, setIsDiscovering] = useState(false);
   const [discoveredNiches, setDiscoveredNiches] = useState<any[]>([]);
   const [isAutonomousMode, setIsAutonomousMode] = useState(true);
+  const [usage, setUsage] = useState<any>(null);
 
   useEffect(() => {
     const init = async () => {
       const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
       if (user?.email) setUserEmail(user.email);
+      
+      const usageRes = await fetch("/api/user/usage");
+      if (usageRes.ok) {
+        const usageData = await usageRes.json();
+        setUsage(usageData);
+      }
     };
     init();
   }, []);
@@ -206,6 +214,45 @@ export default function EtsySaaSPanel() {
           </div>
         </div>
       </div>
+
+      {/* Usage HUD */}
+      {usage && (
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full max-w-4xl mx-auto mb-8 flex items-center justify-between bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md shadow-2xl"
+        >
+          <div className="flex-1 mr-10">
+            <div className="flex justify-between items-center mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">
+                  {usage.status} - Etsy Sniper Protocol
+                </span>
+              </div>
+              <span className="text-xs font-black text-white bg-white/5 px-3 py-1 rounded-lg border border-white/10">
+                {usage.etsy.count} / {usage.etsy.limit} <span className="text-slate-600 ml-1 uppercase text-[8px]">Queries</span>
+              </span>
+            </div>
+            <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/5 p-0.5">
+              <motion.div 
+                initial={{ width: 0 }}
+                animate={{ width: `${(usage.etsy.count / usage.etsy.limit) * 100}%` }}
+                className={`h-full rounded-full bg-gradient-to-r ${usage.etsy.count >= usage.etsy.limit ? 'from-red-500 to-orange-500' : 'from-orange-600 via-amber-500 to-orange-600'} shadow-[0_0_15px_rgba(249,115,22,0.3)]`}
+              />
+            </div>
+          </div>
+          {usage.status !== 'PRO_AGENCY' && (
+            <Link 
+              href="/pricing" 
+              className="flex items-center gap-2 px-6 py-3 bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[10px] font-black uppercase tracking-widest rounded-2xl hover:bg-orange-500/20 hover:scale-105 active:scale-95 transition-all shadow-lg shadow-orange-500/5"
+            >
+              <Zap className="w-3 h-3" />
+              Upgrade Access
+            </Link>
+          )}
+        </motion.div>
+      )}
 
       {/* --- COMMAND CENTER SEARCH --- */}
       <motion.form

@@ -15,6 +15,56 @@ export async function POST(req: Request) {
     const etsyService = new EtsyService();
     const aiEngine = new EtsyAIEngine();
 
+    // --- TIERED RATE LIMITING ---
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const startOfMonth = new Date()
+    startOfMonth.setDate(1)
+    startOfMonth.setHours(0, 0, 0, 0)
+
+    try {
+      const profile = await prisma.profile.findUnique({
+        where: { id: user.id },
+        select: { subscriptionStatus: true }
+      })
+
+      const status = profile?.subscriptionStatus || 'FREE'
+
+      const etsyCount = await prisma.searchHistory.count({
+        where: {
+          userId: user.id,
+          queryType: 'etsy',
+          createdAt: { gte: startOfMonth }
+        }
+      })
+
+      const ETSY_LIMITS: Record<string, number> = {
+        'FREE': 1,
+        'STARTER': 200,
+        'GROWTH': 40,
+        'PRO_AGENCY': 1000000
+      }
+
+      const limit = ETSY_LIMITS[status] || 1
+
+      if (etsyCount >= limit) {
+        return NextResponse.json(
+          { 
+            error: `You have reached your monthly Etsy Sniper limit for the ${status} plan (${limit}).`,
+            code: 'LIMIT_REACHED'
+          },
+          { status: 429 }
+        )
+      }
+    } catch (dbError) {
+      console.warn('[Etsy API] Rate limit check failed:', dbError)
+    }
+
     // 1. Fetch top product for this keyword
     const products = await etsyService.searchProducts(keyword, 1);
     

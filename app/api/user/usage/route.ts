@@ -26,22 +26,45 @@ export async function GET(request: NextRequest) {
     const searchCount = await prisma.searchHistory.count({
       where: {
         userId: user.id,
+        queryType: 'general',
         createdAt: { gte: startOfMonth }
       }
     })
 
-    const LIMITS: Record<string, number> = {
+    const etsyCount = await prisma.searchHistory.count({
+      where: {
+        userId: user.id,
+        queryType: 'etsy',
+        createdAt: { gte: startOfMonth }
+      }
+    })
+
+    const GENERAL_LIMITS: Record<string, number> = {
       'FREE': 3,
       'STARTER': 50,
       'GROWTH': 200,
       'PRO_AGENCY': 1000000
     }
 
+    const ETSY_LIMITS: Record<string, number> = {
+      'FREE': 1,
+      'STARTER': 200,
+      'GROWTH': 40,
+      'PRO_AGENCY': 1000000
+    }
+
     return NextResponse.json({
       status,
-      searchCount,
-      limit: LIMITS[status] || 3,
-      remaining: Math.max(0, (LIMITS[status] || 3) - searchCount)
+      general: {
+        count: searchCount,
+        limit: GENERAL_LIMITS[status] || 3,
+        remaining: Math.max(0, (GENERAL_LIMITS[status] || 3) - searchCount)
+      },
+      etsy: {
+        count: etsyCount,
+        limit: ETSY_LIMITS[status] || 1,
+        remaining: Math.max(0, (ETSY_LIMITS[status] || 1) - etsyCount)
+      }
     })
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 })

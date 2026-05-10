@@ -103,17 +103,17 @@ export default function ResearchDashboard() {
           <div className="flex-1 mr-8">
             <div className="flex justify-between items-center mb-2">
               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
-                {usage.status} Search Quota
+                {usage.status} - Market Intelligence Quota
               </span>
               <span className="text-[10px] font-black text-slate-400">
-                {usage.searchCount} / {usage.limit}
+                {usage.general.count} / {usage.general.limit}
               </span>
             </div>
             <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
               <motion.div 
                 initial={{ width: 0 }}
-                animate={{ width: `${(usage.searchCount / usage.limit) * 100}%` }}
-                className={`h-full bg-gradient-to-r ${usage.searchCount >= usage.limit ? 'from-red-500 to-orange-500' : 'from-orange-500 to-amber-500'}`}
+                animate={{ width: `${(usage.general.count / usage.general.limit) * 100}%` }}
+                className={`h-full bg-gradient-to-r ${usage.general.count >= usage.general.limit ? 'from-red-500 to-orange-500' : 'from-orange-500 to-amber-500'}`}
               />
             </div>
           </div>
