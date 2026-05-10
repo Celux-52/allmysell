@@ -8,7 +8,7 @@ import {
   ShieldCheck, Loader2, CheckCircle, Store, Tag, Heart, Eye, 
   ExternalLink, PenTool, Factory, Star, Globe, Cpu, Layers, 
   Database, Layout, X, ShoppingBag, Brain, AlertTriangle, Truck,
-  ListTodo, SearchCode, BookOpen, Image as ImageIcon
+  ListTodo, SearchCode, BookOpen, Image as ImageIcon, Filter, Users
 } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { EtsyStorage } from "@/modules/etsy-automation/services/etsyStorage";
@@ -609,6 +609,70 @@ export default function EtsySaaSPanel() {
                       <div>
                         <div className="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1 flex items-center gap-1"><BookOpen className="w-3 h-3 text-blue-400"/> Title Gap</div>
                         <div className="text-blue-300/90 text-xs font-bold leading-relaxed bg-blue-500/5 p-3 rounded-xl border border-blue-500/10">{result.analysis.serpSimulation.titleGap}</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* 漏 CONVERSION FUNNEL (Faz 2) */}
+                {result.analysis.conversionFunnel && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="bg-[#0b0f19] border border-red-500/20 rounded-[2rem] p-8 shadow-[0_0_40px_-15px_rgba(239,68,68,0.1)] relative"
+                  >
+                    <h4 className="text-red-400 font-black mb-6 flex items-center gap-2 text-sm uppercase tracking-widest">
+                      <Filter className="w-5 h-5" /> CONVERSION LEAK
+                    </h4>
+                    <div className="space-y-4">
+                      <div className="bg-red-500/5 border border-red-500/10 p-4 rounded-2xl relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-red-500"></div>
+                        <div className="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1 flex items-center gap-1">
+                          <AlertTriangle className="w-3 h-3 text-red-500"/> Traffic Leak
+                        </div>
+                        <div className="text-red-300 text-sm font-medium leading-relaxed">{result.analysis.conversionFunnel.trafficLeak}</div>
+                      </div>
+                      <div className="bg-green-500/5 border border-green-500/10 p-4 rounded-2xl relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
+                        <div className="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1 flex items-center gap-1">
+                          <ShieldCheck className="w-3 h-3 text-green-500"/> Conversion Fix
+                        </div>
+                        <div className="text-green-300 text-sm font-medium leading-relaxed">{result.analysis.conversionFunnel.conversionFix}</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* 🎯 PERSONA SEGMENTATION (Faz 2) */}
+                {result.analysis.personaTargeting && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    className="bg-[#0b0f19] border border-purple-500/20 rounded-[2rem] p-8 shadow-[0_0_40px_-15px_rgba(168,85,247,0.1)] relative"
+                  >
+                    <h4 className="text-purple-400 font-black mb-6 flex items-center gap-2 text-sm uppercase tracking-widest">
+                      <Users className="w-5 h-5" /> PERSONA TARGETING
+                    </h4>
+                    <div className="space-y-5">
+                      <div>
+                        <div className="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1">Primary Buyer Persona</div>
+                        <div className="text-white text-sm font-bold bg-purple-500/10 p-3 rounded-xl border border-purple-500/20">
+                          {result.analysis.personaTargeting.primaryPersona}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-2 flex items-center gap-1">
+                          <Brain className="w-3 h-3 text-purple-400"/> Psychographic Keywords
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {result.analysis.personaTargeting.psychographicKeywords.map((kw: string, i: number) => (
+                            <span key={i} className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-medium text-purple-300">
+                              {kw}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </motion.div>

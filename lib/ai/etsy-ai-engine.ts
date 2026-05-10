@@ -36,6 +36,14 @@ export interface DetailedAnalysis {
     thumbnailGap: string;
     titleGap: string;
   };
+  conversionFunnel?: {
+    trafficLeak: string;
+    conversionFix: string;
+  };
+  personaTargeting?: {
+    primaryPersona: string;
+    psychographicKeywords: string[];
+  };
 }
 
 export class EtsyAIEngine {
@@ -80,7 +88,13 @@ Evaluate real profit structure, price strength, upsell potential, and ads depend
 ### 7. ACTION PRIORITY ENGINE
 Instead of just giving data, provide a strict 3-step action plan in "actionPriority". Tell the seller exactly what to do first, second, and third to beat the competition (e.g., "1. Change thumbnail to dark background to stand out from 10 white competitors").
 
-### 8. WIN / LOSE DECISION
+### 8. CONVERSION FUNNEL MAPPING
+Find where the seller is losing customers. What causes a "View" to drop before "Sale"? Identify the "trafficLeak" and the "conversionFix".
+
+### 9. PERSONA SEGMENTATION
+Define the exact buyer persona (e.g. "Anxious bride-to-be", "Nostalgic millennial") and provide 3-4 "psychographicKeywords" they actually search for (not generic tags, but emotional long-tail searches).
+
+### 10. WIN / LOSE DECISION
 Final classification: WINNER, HYPER WINNER, AVOID, SPECULATIVE
 
 PRODUCT DATA TO ANALYZE:
@@ -129,7 +143,15 @@ You MUST output ONLY a valid JSON object matching the interface below. No markdo
       "priority": "Urgent",
       "impact": "Why this matters (e.g. 'Undercuts the primary cluster')"
     }
-  ]
+  ],
+  "conversionFunnel": {
+    "trafficLeak": "Why are people viewing but not buying? (e.g. 'No sizing chart in images')",
+    "conversionFix": "How to fix it (e.g. 'Add a visual scale reference in image #2')"
+  },
+  "personaTargeting": {
+    "primaryPersona": "Who exactly is buying this? (e.g. 'Stressed dog moms')",
+    "psychographicKeywords": ["keyword 1", "keyword 2", "keyword 3"]
+  }
 }`;
 
     return withRetry(
