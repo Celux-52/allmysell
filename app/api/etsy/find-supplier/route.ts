@@ -12,28 +12,30 @@ export async function POST(req: Request) {
 
     const agent = new EtsySupplierAgent();
     const strategy = await agent.findSupplier(title, tags || [], price || 0);
+    const suppliersList = strategy.suppliers || [strategy]; // Fallback if AI forgets array wrapper
 
     // 3. Save strategy to DB (Fail-safe)
-    let finalSupplier = { ...strategy };
     try {
-      const savedInDb = await prisma.etsySupplier.create({
-        data: {
-          productId,
-          sourceType: strategy.sourceType,
-          supplierName: strategy.name || strategy.supplierName || "Unknown Supplier",
-          estimatedCost: strategy.estimatedCost,
-          riskLevel: strategy.riskLevel,
-          notes: strategy.notes,
-        }
-      });
-      finalSupplier = { ...strategy, id: savedInDb.id };
+      if (suppliersList.length > 0) {
+        const firstSupplier = suppliersList[0];
+        await prisma.etsySupplier.create({
+          data: {
+            productId,
+            sourceType: firstSupplier.sourceType,
+            supplierName: firstSupplier.name || firstSupplier.supplierName || "Unknown Supplier",
+            estimatedCost: firstSupplier.estimatedCost,
+            riskLevel: firstSupplier.riskLevel,
+            notes: firstSupplier.notes,
+          }
+        });
+      }
     } catch (e) { 
-      console.warn("[Find Supplier] DB save failed, returning AI results only:", e); 
+      console.warn("[Find Supplier] DB save failed:", e); 
     }
 
     return NextResponse.json({
       success: true,
-      supplier: finalSupplier
+      suppliers: suppliersList
     });
 
   } catch (error: any) {

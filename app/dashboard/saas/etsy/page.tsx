@@ -21,7 +21,7 @@ export default function EtsySaaSPanel() {
   const [isFindingSupplier, setIsFindingSupplier] = useState(false);
   const [result, setResult] = useState<any>(null);
   const [listing, setListing] = useState<any>(null);
-  const [supplier, setSupplier] = useState<any>(null);
+  const [suppliers, setSuppliers] = useState<any[] | null>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [isSaved, setIsSaved] = useState(false);
   const [hasAutoRun, setHasAutoRun] = useState(false);
@@ -64,7 +64,7 @@ export default function EtsySaaSPanel() {
     setAnalysisStep(1); // "Searching Etsy..."
     setResult(null);
     setListing(null);
-    setSupplier(null);
+    setSuppliers(null);
     setIsSaved(false);
 
     try {
@@ -612,7 +612,7 @@ export default function EtsySaaSPanel() {
                       });
                       const data = await res.json();
                       if (data.success) {
-                        setSupplier(data.supplier);
+                        setSuppliers(data.suppliers);
                       } else {
                         console.error("[Find Supplier] Failed:", data.error);
                       }
@@ -832,48 +832,56 @@ export default function EtsySaaSPanel() {
       </AnimatePresence>
 
       <AnimatePresence>
-        {supplier && (
+        {suppliers && suppliers.length > 0 && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-[#0d111c] border border-white/10 rounded-3xl max-w-2xl w-full p-8 relative">
-              <button onClick={() => setSupplier(null)} className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors"><X className="w-5 h-5" /></button>
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-[#0d111c] border border-white/10 rounded-3xl max-w-4xl w-full p-8 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+              <button onClick={() => setSuppliers(null)} className="absolute top-6 right-6 text-slate-500 hover:text-white transition-colors"><X className="w-5 h-5" /></button>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-500 text-[10px] font-black uppercase tracking-widest mb-6">
-                <Truck className="w-3 h-3" /> Verified Supplier Match
+                <Truck className="w-3 h-3" /> Verified Supplier Matches
               </div>
-              <h2 className="text-3xl font-black text-white mb-6">Source from US Warehouses</h2>
+              <h2 className="text-3xl font-black text-white mb-6">Global Sourcing Options</h2>
               
-              <div className="space-y-6">
-                <div className="flex items-center gap-6 p-6 bg-white/5 border border-white/10 rounded-2xl">
-                  <div className="h-16 w-16 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-500">
-                    <Factory className="w-8 h-8" />
-                  </div>
-                  <div>
-                    <h4 className="text-white font-bold text-xl">{supplier.name}</h4>
-                    <p className="text-slate-500 text-sm">Estimated Unit Cost: <span className="text-green-400 font-bold">{supplier.estimatedCost}</span></p>
-                  </div>
-                </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {suppliers.map((sup: any, idx: number) => (
+                  <div key={idx} className="flex flex-col space-y-4 bg-white/5 border border-white/10 p-6 rounded-2xl relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="flex items-center gap-4 relative z-10">
+                      <div className="h-12 w-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-500 flex-shrink-0">
+                        <Factory className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-bold text-lg leading-tight line-clamp-1">{sup.name}</h4>
+                        <p className="text-[10px] text-slate-500 uppercase font-black tracking-wider">{sup.sourceType}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-3 relative z-10 flex-grow">
+                      <div className="flex justify-between items-center border-b border-white/5 pb-2">
+                         <span className="text-slate-400 text-xs">Est. Unit Cost:</span>
+                         <span className="text-green-400 font-bold text-sm">${sup.estimatedCost}</span>
+                      </div>
+                      <div className="flex justify-between items-center border-b border-white/5 pb-2">
+                         <span className="text-slate-400 text-xs">Lead Time:</span>
+                         <span className="text-slate-300 font-medium text-sm">{sup.leadTime}</span>
+                      </div>
+                      <div className="flex justify-between items-center pb-2">
+                         <span className="text-slate-400 text-xs">Reliability:</span>
+                         <span className="text-slate-300 font-medium text-sm flex items-center gap-1"><ShieldCheck className="w-3 h-3 text-blue-400"/> {sup.reliabilityScore}%</span>
+                      </div>
+                      <p className="text-[11px] text-slate-500 italic mt-2 line-clamp-4 leading-relaxed bg-black/20 p-3 rounded-lg border border-white/5">
+                        "{sup.notes}"
+                      </p>
+                    </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 rounded-xl bg-white/5 border border-white/5">
-                    <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-1 flex items-center gap-1">
-                      <Zap className="h-3 w-3 text-orange-400" /> Lead Time
-                    </p>
-                    <p className="text-sm text-slate-300">{supplier.leadTime}</p>
+                    <a 
+                      href={sup.url || `https://www.alibaba.com/trade/search?SearchText=${encodeURIComponent(result?.product?.title || '')}`} 
+                      target="_blank" 
+                      className="w-full mt-auto py-3 bg-blue-600/10 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/20 font-black rounded-xl transition-all flex items-center justify-center gap-2 relative z-10 text-sm"
+                    >
+                      Open Portal <ExternalLink className="w-3 h-3" />
+                    </a>
                   </div>
-                  <div className="p-4 rounded-xl bg-white/5 border border-white/5">
-                    <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-1 flex items-center gap-1">
-                      <ShieldCheck className="h-3 w-3 text-green-400" /> Reliability
-                    </p>
-                    <p className="text-sm text-slate-300">{supplier.reliabilityScore}% Verified</p>
-                  </div>
-                </div>
-
-                <a 
-                  href={supplier.url} 
-                  target="_blank" 
-                  className="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20"
-                >
-                  Open Supplier Portal <ExternalLink className="w-4 h-4" />
-                </a>
+                ))}
               </div>
             </motion.div>
           </div>

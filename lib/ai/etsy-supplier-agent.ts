@@ -20,16 +20,20 @@ export class EtsySupplierAgent {
       3. What is the risk level for a new seller?
       4. Which specific supplier type or platform is best?
 
-      Return ONLY the following JSON format:
+      Return ONLY the following JSON format containing exactly 3 distinct supplier options (e.g. Alibaba, Print-on-Demand, AliExpress, Local):
       {
-        "sourceType": "Alibaba" | "1688" | "Print-on-Demand" | "Local Handmade" | "Wholesale",
-        "name": "Specific platform or supplier recommendation",
-        "estimatedCost": number (in USD),
-        "riskLevel": "Low" | "Medium" | "High",
-        "notes": "Detailed sourcing strategy and recommendations in English",
-        "leadTime": "e.g. 7-14 Days",
-        "reliabilityScore": 95,
-        "url": "Valid search URL (e.g. https://www.alibaba.com/trade/search?SearchText=...)"
+        "suppliers": [
+          {
+            "sourceType": "Alibaba" | "1688" | "Print-on-Demand" | "Local Handmade" | "Wholesale",
+            "name": "Specific platform or supplier recommendation",
+            "estimatedCost": number (in USD),
+            "riskLevel": "Low" | "Medium" | "High",
+            "notes": "Detailed sourcing strategy and recommendations in English",
+            "leadTime": "e.g. 7-14 Days",
+            "reliabilityScore": 95,
+            "url": "Valid search URL (e.g. https://www.alibaba.com/trade/search?SearchText=...)"
+          }
+        ]
       }
     `;
 
