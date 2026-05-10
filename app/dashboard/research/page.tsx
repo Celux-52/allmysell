@@ -194,12 +194,110 @@ export default function ResearchDashboard() {
           animate={{ opacity: 1, y: 0 }}
           className="w-full max-w-6xl space-y-8"
         >
-          {/* Result cards would go here */}
-          <div className="p-8 rounded-2xl border border-white/10 bg-[#0d1117] text-center">
-             <h2 className="text-2xl font-bold text-white mb-4">Research Complete</h2>
-             <p className="text-slate-400">Analysis for &quot;{searchQuery}&quot; is ready.</p>
-             {/* Simplified for now to match UI focus */}
-             <button onClick={() => setResearchData(null)} className="mt-4 text-orange-500 hover:underline">Start New Search</button>
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-white">Research Complete</h2>
+            <button onClick={() => setResearchData(null)} className="text-sm font-bold text-orange-500 hover:text-orange-400 bg-orange-500/10 hover:bg-orange-500/20 px-4 py-2 rounded-xl transition-all">Start New Search</button>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {researchData.products?.map((product: any, idx: number) => {
+              const profitScore = parseInt(product.profitMargin) || 75;
+              const competeScore = product.competition?.toLowerCase().includes('low') ? 25 : product.competition?.toLowerCase().includes('high') ? 85 : 55;
+              const isRising = product.trend?.toLowerCase().includes('rising');
+              
+              return (
+                <div key={idx} className="bg-[#0b0f19] border border-white/5 rounded-3xl p-6 relative overflow-hidden group hover:border-orange-500/20 transition-all">
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-duration-500 pointer-events-none"></div>
+                  
+                  {/* Header */}
+                  <div className="flex justify-between items-start mb-6">
+                    <div className="flex gap-4 items-center">
+                      <span className="text-orange-500 font-black text-3xl">{product.score}</span>
+                      <div>
+                        <h3 className="text-white font-bold text-xl leading-tight line-clamp-1">{product.name}</h3>
+                        <p className="text-slate-500 text-xs uppercase tracking-widest">{product.category}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Badges */}
+                  <div className="flex justify-between items-center mb-6">
+                     <span className="px-3 py-1 bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-xs font-bold rounded-full">
+                       {product.competition} Competition
+                     </span>
+                     <span className={`px-3 py-1 border text-xs font-bold rounded-full flex items-center gap-1 ${isRising ? 'bg-green-500/10 border-green-500/20 text-green-400' : 'bg-red-500/10 border-red-500/20 text-red-400'}`}>
+                       {isRising ? '↑ Rising' : '↓ Declining'}
+                     </span>
+                  </div>
+
+                  {/* Progress Bars */}
+                  <div className="grid grid-cols-3 gap-4 mb-8">
+                     <div className="space-y-2">
+                       <div className="flex justify-between text-[10px] text-slate-400 uppercase font-bold"><span className="flex items-center gap-1"><Sparkles className="w-3 h-3 text-green-400"/> Profit</span></div>
+                       <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-green-400 to-emerald-400" style={{ width: `${profitScore}%` }}></div></div>
+                       <div className="text-[10px] text-slate-500">{profitScore}</div>
+                     </div>
+                     <div className="space-y-2">
+                       <div className="flex justify-between text-[10px] text-slate-400 uppercase font-bold"><span className="flex items-center gap-1"><Zap className="w-3 h-3 text-orange-400"/> Compete</span></div>
+                       <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-orange-400 to-amber-400" style={{ width: `${competeScore}%` }}></div></div>
+                       <div className="text-[10px] text-slate-500">{competeScore}</div>
+                     </div>
+                     <div className="space-y-2">
+                       <div className="flex justify-between text-[10px] text-slate-400 uppercase font-bold"><span className="flex items-center gap-1"><ShieldCheck className="w-3 h-3 text-purple-400"/> Opportunity</span></div>
+                       <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-purple-400 to-indigo-400" style={{ width: `${product.score}%` }}></div></div>
+                       <div className="text-[10px] text-slate-500">{product.score}</div>
+                     </div>
+                  </div>
+
+                  {/* Why it will sell */}
+                  <div className="bg-[#121826] rounded-2xl p-4 mb-6 border border-white/5">
+                    <h4 className="text-orange-400 text-xs font-black uppercase tracking-widest flex items-center gap-2 mb-3">
+                       <Sparkles className="w-3 h-3"/> WHY THIS WILL SELL
+                    </h4>
+                    <p className="text-sm text-slate-300 flex gap-2"><span className="text-pink-400">🎯</span> <span className="font-bold text-slate-400">Target:</span> {product.targetAudience}</p>
+                  </div>
+
+                  <p className="text-slate-400 text-sm mb-6 leading-relaxed line-clamp-2">{product.description}</p>
+
+                  {/* Pricing Table */}
+                  <div className="grid grid-cols-3 gap-2 text-center bg-white/5 rounded-2xl p-4 mb-6 border border-white/5">
+                     <div>
+                       <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Wholesale</p>
+                       <p className="text-white font-bold">{product.wholesalePrice}</p>
+                     </div>
+                     <div>
+                       <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Retail</p>
+                       <p className="text-white font-bold">{product.retailPrice}</p>
+                     </div>
+                     <div>
+                       <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Margin</p>
+                       <p className="text-green-400 font-bold">{product.profitMargin}</p>
+                     </div>
+                  </div>
+
+                  {/* Trends & Suppliers */}
+                  <div className="space-y-4">
+                     <div className="flex gap-3 bg-blue-500/5 border border-blue-500/10 rounded-xl p-4">
+                       <Globe2 className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                       <p className="text-xs text-blue-200 leading-relaxed">{product.googleTrendsInsight}</p>
+                     </div>
+
+                     <div className="pt-4 border-t border-white/5">
+                       <h4 className="text-orange-400 text-xs font-black uppercase tracking-widest flex items-center gap-2 mb-3">
+                         <Truck className="w-4 h-4"/> SUPPLIERS ({product.suppliers?.length || 0})
+                       </h4>
+                       <div className="space-y-2">
+                         {product.suppliers?.slice(0,3).map((sup: any, i: number) => (
+                           <a key={i} href={sup.url} target="_blank" className="flex items-center gap-2 text-xs text-slate-400 hover:text-white transition-colors">
+                             <ArrowRight className="w-3 h-3" /> {sup.name}
+                           </a>
+                         ))}
+                       </div>
+                     </div>
+                  </div>
+
+                </div>
+              );
+            })}
           </div>
         </motion.div>
       )}
