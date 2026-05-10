@@ -8,7 +8,7 @@ import {
   ShieldCheck, Loader2, CheckCircle, Store, Tag, Heart, Eye, 
   ExternalLink, PenTool, Factory, Star, Globe, Cpu, Layers, 
   Database, Layout, X, ShoppingBag, Brain, AlertTriangle, Truck,
-  ListTodo, SearchCode, BookOpen, Image as ImageIcon, Filter, Users
+  ListTodo, SearchCode, BookOpen, Image as ImageIcon, Filter, Users, FlaskConical
 } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { EtsyStorage } from "@/modules/etsy-automation/services/etsyStorage";
@@ -674,6 +674,35 @@ export default function EtsySaaSPanel() {
                           ))}
                         </div>
                       </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* 🧪 A/B TEST SIMULATION (Faz 3) */}
+                {result.analysis.abTestSimulation && result.analysis.abTestSimulation.length > 0 && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                    className="bg-[#0b0f19] border border-emerald-500/20 rounded-[2rem] p-8 shadow-[0_0_40px_-15px_rgba(16,185,129,0.1)] relative md:col-span-2"
+                  >
+                    <h4 className="text-emerald-400 font-black mb-6 flex items-center gap-2 text-sm uppercase tracking-widest">
+                      <FlaskConical className="w-5 h-5" /> A/B TEST SIMULATIONS
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {result.analysis.abTestSimulation.map((test: any, idx: number) => (
+                        <div key={idx} className="bg-emerald-500/5 border border-emerald-500/10 p-5 rounded-2xl">
+                          <div className="flex justify-between items-start mb-3">
+                            <span className="bg-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider">
+                              {test.variable}
+                            </span>
+                            <span className="text-emerald-300 font-black text-sm flex items-center gap-1">
+                              <TrendingUp className="w-4 h-4" /> {test.predictedLift}
+                            </span>
+                          </div>
+                          <p className="text-slate-300 text-sm font-medium leading-relaxed">{test.action}</p>
+                        </div>
+                      ))}
                     </div>
                   </motion.div>
                 )}

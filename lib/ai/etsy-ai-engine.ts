@@ -44,6 +44,11 @@ export interface DetailedAnalysis {
     primaryPersona: string;
     psychographicKeywords: string[];
   };
+  abTestSimulation?: Array<{
+    variable: string;
+    action: string;
+    predictedLift: string;
+  }>;
 }
 
 export class EtsyAIEngine {
@@ -94,7 +99,10 @@ Find where the seller is losing customers. What causes a "View" to drop before "
 ### 9. PERSONA SEGMENTATION
 Define the exact buyer persona (e.g. "Anxious bride-to-be", "Nostalgic millennial") and provide 3-4 "psychographicKeywords" they actually search for (not generic tags, but emotional long-tail searches).
 
-### 10. WIN / LOSE DECISION
+### 10. A/B TEST SIMULATION
+Provide 2-3 specific A/B tests the seller should run on this listing. What is the "variable" (e.g., Thumbnail, Title, Price), what is the "action", and what is the "predictedLift" (e.g., "+15% CTR").
+
+### 11. WIN / LOSE DECISION
 Final classification: WINNER, HYPER WINNER, AVOID, SPECULATIVE
 
 PRODUCT DATA TO ANALYZE:
@@ -151,7 +159,14 @@ You MUST output ONLY a valid JSON object matching the interface below. No markdo
   "personaTargeting": {
     "primaryPersona": "Who exactly is buying this? (e.g. 'Stressed dog moms')",
     "psychographicKeywords": ["keyword 1", "keyword 2", "keyword 3"]
-  }
+  },
+  "abTestSimulation": [
+    {
+      "variable": "Thumbnail",
+      "action": "Test dark background vs light background",
+      "predictedLift": "+15% CTR"
+    }
+  ]
 }`;
 
     return withRetry(
