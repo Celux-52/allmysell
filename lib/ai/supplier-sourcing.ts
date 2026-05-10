@@ -262,20 +262,27 @@ function computeQualityScore(product: SupplierProduct): number {
  */
 function buildRealSupplierUrl(productTitle: string, platform: string): string {
   const encoded = encodeURIComponent(productTitle.substring(0, 100));
+  // Use shorter, cleaner keywords for better search results
+  const shortKeyword = encodeURIComponent(productTitle.split(' ').slice(0, 5).join(' '));
 
   switch (platform.toLowerCase()) {
     case 'aliexpress':
-      return `https://www.aliexpress.com/wholesale?SearchText=${encoded}&shipFromCountry=US&SortType=total_tranpro_desc`;
+      return `https://www.aliexpress.com/wholesale?SearchText=${shortKeyword}&SortType=total_tranpro_desc`;
     case 'temu':
-      return `https://www.temu.com/search_result.html?search_key=${encoded}`;
+      return `https://www.temu.com/search_result.html?search_key=${shortKeyword}`;
     case 'cjdropshipping':
-      return `https://cjdropshipping.com/search.html?key=${encoded}&warehouse=US`;
+    case 'cj':
+      return `https://cjdropshipping.com/product-list?keyword=${shortKeyword}`;
     case 'alibaba':
-      return `https://www.alibaba.com/trade/search?SearchText=${encoded}&country=US`;
+      return `https://www.alibaba.com/trade/search?SearchText=${shortKeyword}`;
     case 'dhgate':
-      return `https://www.dhgate.com/wholesale/search.do?searchkey=${encoded}&shipcountry=us`;
+      return `https://www.dhgate.com/wholesale/search.do?searchkey=${shortKeyword}&shipcountry=us`;
+    case '1688':
+      return `https://s.1688.com/selloffer/offer_search.htm?keywords=${shortKeyword}`;
+    case 'made-in-china':
+      return `https://www.made-in-china.com/products-search/hot-china-products/${shortKeyword}.html`;
     default:
-      return `https://www.aliexpress.com/wholesale?SearchText=${encoded}&SortType=total_tranpro_desc`;
+      return `https://www.aliexpress.com/wholesale?SearchText=${shortKeyword}&SortType=total_tranpro_desc`;
   }
 }
 
@@ -287,20 +294,32 @@ function buildFallbackLinks(keyword: string): { name: string; url: string }[] {
   const encoded = encodeURIComponent(keyword);
   return [
     {
-      name: `AliExpress (US Ship) — "${keyword}"`,
-      url: `https://www.aliexpress.com/wholesale?SearchText=${encoded}&shipFromCountry=US&SortType=total_tranpro_desc`,
+      name: `AliExpress — "${keyword}"`,
+      url: `https://www.aliexpress.com/wholesale?SearchText=${encoded}&SortType=total_tranpro_desc`,
     },
     {
       name: `CJ Dropshipping — "${keyword}"`,
-      url: `https://cjdropshipping.com/search.html?key=${encoded}&warehouse=US`,
+      url: `https://cjdropshipping.com/product-list?keyword=${encoded}`,
     },
     {
       name: `Temu — "${keyword}"`,
       url: `https://www.temu.com/search_result.html?search_key=${encoded}`,
     },
     {
-      name: `Alibaba — "${keyword}"`,
-      url: `https://www.alibaba.com/trade/search?SearchText=${encoded}&country=US`,
+      name: `Alibaba (Wholesale) — "${keyword}"`,
+      url: `https://www.alibaba.com/trade/search?SearchText=${encoded}`,
+    },
+    {
+      name: `DHgate — "${keyword}"`,
+      url: `https://www.dhgate.com/wholesale/search.do?searchkey=${encoded}&shipcountry=us`,
+    },
+    {
+      name: `1688 (China Factory) — "${keyword}"`,
+      url: `https://s.1688.com/selloffer/offer_search.htm?keywords=${encoded}`,
+    },
+    {
+      name: `Made-in-China — "${keyword}"`,
+      url: `https://www.made-in-china.com/products-search/hot-china-products/${encoded}.html`,
     },
   ];
 }
