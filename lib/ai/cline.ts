@@ -26,7 +26,7 @@ export const FREE_AI_MODELS = [
     { id: 'deepseek/deepseek-v3:free', name: 'DeepSeek V3 (Free)', provider: 'DeepSeek', speed: 'Very Fast', quality: 'Excellent', free: true },
 ]
 
-import { fetchInternetDataViaTool } from './consensus';
+import { fetchInternetDataViaTool } from './internet-search';
 import { extractJSON } from './retry';
 
 export async function researchProductsWithCline(query: string) {

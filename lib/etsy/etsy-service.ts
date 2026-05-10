@@ -1,6 +1,6 @@
 import { getCline } from '../ai/cline';
 import { extractJSON, withRetry } from '../ai/retry';
-import { fetchInternetDataViaTool } from '../ai/consensus';
+import { fetchInternetDataViaTool } from '../ai/internet-search';
 
 export class EtsyService {
   constructor() {

@@ -17,6 +17,7 @@
 import { getGoogleTrendsData, buildCompetitorLinks, type GoogleTrendsData } from './google-trends';
 import { sourceSuppliersBatch, type ScoredSupplierMatch, type SupplierSourceResult } from './supplier-sourcing';
 import { extractJSON, withRetry } from './retry';
+import { fetchInternetDataViaTool } from './internet-search';
 
 interface SupplierLink {
   name: string;
@@ -87,43 +88,7 @@ export interface ConsensusResult {
   consensusMethod: string;
 }
 
-export async function fetchInternetDataViaTool(query: string): Promise<string> {
-  const webhookUrl = process.env.N8N_WEBHOOK_URL || "https://n8n.allmysell.com/webhook/search";
-  console.log(`[InternetTool] Initiating search for: "${query}"`);
 
-  try {
-    // Direct call to n8n search tool instead of relying on AI to decide to search
-    // This is much more reliable for product research tasks
-    const n8nResponse = await fetch(webhookUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ query: query })
-    });
-
-    if (!n8nResponse.ok) {
-      const errorText = await n8nResponse.text();
-      console.error(`[InternetTool] n8n search failed (${n8nResponse.status}):`, errorText);
-      return "";
-    }
-
-    const data = await n8nResponse.json();
-
-    if (data && data.results && Array.isArray(data.results) && data.results.length > 0) {
-      console.log(`[InternetTool] Success: Found ${data.results.length} results`);
-      const parsedResults = data.results
-        .map((r: any) => `Title: ${r.title}\nLink: ${r.link}\nSnippet: ${r.snippet}`)
-        .join('\n\n');
-
-      return `\n\n--- LIVE INTERNET DATA (n8n Search) ---\n${parsedResults}\n---------------------------\n\n`;
-    }
-
-    console.warn(`[InternetTool] n8n returned no results. Data:`, JSON.stringify(data));
-    return "";
-  } catch (e) {
-    console.error("[InternetTool] n8n fetch error:", e);
-    return "";
-  }
-}
 
 const RESEARCH_PROMPT = (query: string, internetContext: string = "", tier: string = 'FREE') => {
   const isBasic = tier === 'FREE' || tier === 'STARTER';
@@ -202,8 +167,8 @@ Return ONLY valid JSON in this exact structure:
   "summary": "Comprehensive market overview"
 }
 
-CRITICAL INSTRUCTION: You MUST include "failureModes", "saturationIndex", "copycatRisk", "trendLifespan", "scalabilityScore", and "doNotBuild" in every product object. DO NOT SKIP THEM.
 Return 4-6 products. At least 1 product MUST be marked as doNotBuild:true if competition is oversaturated. ONLY return valid JSON.`;
+};
 
 function safeParseJSON(text: string): any {
   try {
