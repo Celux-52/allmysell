@@ -37,8 +37,9 @@ export default async function DashboardLayout({
       redirect('/pricing')
     }
   } catch (dbError) {
-    // If DB is unreachable, let user through rather than crashing
+    // If DB is unreachable, block access to be safe
     console.warn('[Dashboard Layout] Profile check failed:', dbError)
+    redirect('/pricing')
   }
 
   return <DashboardShell>{children}</DashboardShell>

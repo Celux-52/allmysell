@@ -2,7 +2,7 @@ import { BorderBeam } from "@/components/ui/border-beam";
 import { MagicCard } from "@/components/ui/magic-card";
 import HeroSection from "@/components/HeroSection";
 import type { Metadata } from "next";
-import { ArrowRight, BarChart3, Globe, LineChart, Cpu, LayoutDashboard, ShoppingCart, Users, Zap, Terminal, Shield, Activity } from "lucide-react";
+import { ArrowRight, BarChart3, Globe, LineChart, Cpu, LayoutDashboard, ShoppingCart, Users, Zap, Terminal, Shield } from "lucide-react";
 import Link from "next/link";
 import TrustBadges from "@/components/TrustBadges";
 import Testimonials from "@/components/Testimonials";
@@ -54,19 +54,8 @@ export default function HomePage() {
         <div className="absolute bottom-10 right-10 w-20 h-20 border-b-2 border-r-2 border-orange-500/10 rounded-br-3xl"></div>
       </div>
 
-      {/* Floating HUD status indicator */}
-      <div className="fixed top-24 left-10 z-50 hidden xl:flex flex-col gap-4">
-        <div className="flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full">
-           <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></div>
-           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-200">OS V2.0 ACTIVE</span>
-        </div>
-        <div className="flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full">
-           <Activity className="w-3 h-3 text-purple-400" />
-           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-purple-200">NEURAL LINK: STABLE</span>
-        </div>
-      </div>
 
-      <HeroSection isPreview={true} />
+      <HeroSection />
 
       {/* SaaS Dashboard Preview Section */}
       <section className="relative py-24 sm:py-32 overflow-hidden border-t border-white/5">
@@ -100,7 +89,7 @@ export default function HomePage() {
                   <div className="flex-1 text-center">
                     <div className="inline-flex items-center gap-2 rounded-lg bg-white/5 px-4 py-1.5 text-[10px] font-black text-slate-500 uppercase tracking-widest">
                       <LayoutDashboard className="h-3 w-3" />
-                      OS.ETSY-SNIPER.INTEL
+                      ALLMYSELL.DASHBOARD
                     </div>
                   </div>
                 </div>
