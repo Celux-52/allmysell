@@ -4,11 +4,11 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Search, Loader2, Sparkles, TrendingUp, AlertTriangle,
-  CheckCircle, Tag, Store, Eye, Heart, ShoppingBag,
-  PenTool, Truck, Factory, Star, BarChart3, ShieldCheck,
-  Zap, Info, ExternalLink, ArrowRight, Brain, X
-} from "lucide-react";
+  Search, Sparkles, TrendingUp, BarChart3, ArrowRight, Zap, 
+  ShieldCheck, Loader2, CheckCircle, Store, Tag, Heart, Eye, 
+  ExternalLink, PenTool, Factory, Star, Globe, Cpu, Layers, 
+  Database, Layout, X, ShoppingBag, Brain, AlertTriangle, Truck
+} from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { EtsyStorage } from "@/modules/etsy-automation/services/etsyStorage";
 import { createClient } from "@/lib/supabase/client";
@@ -43,7 +43,7 @@ export default function EtsySaaSPanel() {
     if (isAutonomousMode && !isDiscovering && discoveredNiches.length === 0) {
        handleDiscover('mashup');
     }
-  }, [isAutonomousMode, isDiscovering]);
+  }, [isAutonomousMode, isDiscovering, discoveredNiches.length]);
 
   useEffect(() => {
     if (!hasAutoRun && typeof window !== 'undefined') {
@@ -90,7 +90,7 @@ export default function EtsySaaSPanel() {
         EtsyStorage.addHistory(userEmail, searchKeyword, data.analysis.decision, data.analysis.trendScore);
       }
     } catch (error: any) {
-      alert(error.message || "Something went wrong.");
+      console.error("[Analysis] Failed:", error);
     } finally {
       setIsLoading(false);
       setAnalysisStep(0);
@@ -104,7 +104,6 @@ export default function EtsySaaSPanel() {
 
   const handleDiscover = async (strategy: string) => {
     setIsDiscovering(true);
-    setDiscoveredNiches([]);
     try {
       const res = await fetch("/api/etsy/discover-niches", {
         method: "POST",
@@ -112,9 +111,11 @@ export default function EtsySaaSPanel() {
         body: JSON.stringify({ strategy }),
       });
       const data = await res.json();
-      if (data.success) setDiscoveredNiches(data.niches);
-    } catch (error) {
-      console.error(error);
+      if (data.success) {
+        setDiscoveredNiches(data.niches);
+      }
+    } catch (err) {
+      console.error("[Discover] Failed:", err);
     } finally {
       setIsDiscovering(false);
     }
@@ -559,10 +560,19 @@ export default function EtsySaaSPanel() {
                       const res = await fetch("/api/etsy/generate-listing", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ product: result.product }),
+                        body: JSON.stringify({ 
+                          productId: result.product.id,
+                          title: result.product.title,
+                          tags: result.product.tags
+                        }),
                       });
-                      const data = await res.json();
-                      setListing(data);
+                      if (data.success) {
+                        setListing(data.listing);
+                      } else {
+                        console.error("[Generate Listing] Failed:", data.error);
+                      }
+                    } catch (err) {
+                      console.error("[Generate Listing] API Error:", err);
                     } finally {
                       setIsGeneratingListing(false);
                     }
@@ -589,13 +599,23 @@ export default function EtsySaaSPanel() {
                   onClick={async () => {
                     setIsFindingSupplier(true);
                     try {
-                      const res = await fetch("/api/etsy/find-suppliers", {
+                      const res = await fetch("/api/etsy/find-supplier", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ product: result.product }),
+                        body: JSON.stringify({ 
+                          productId: result.product.id,
+                          title: result.product.title,
+                          tags: result.product.tags,
+                          price: result.product.price
+                        }),
                       });
-                      const data = await res.json();
-                      setSupplier(data.suppliers[0]);
+                      if (data.success) {
+                        setSupplier(data.supplier);
+                      } else {
+                        console.error("[Find Supplier] Failed:", data.error);
+                      }
+                    } catch (err) {
+                      console.error("[Find Supplier] API Error:", err);
                     } finally {
                       setIsFindingSupplier(false);
                     }

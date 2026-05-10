@@ -66,7 +66,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      <HeroSection />
+      <HeroSection isPreview={true} />
 
       {/* SaaS Dashboard Preview Section */}
       <section className="relative py-24 sm:py-32 overflow-hidden border-t border-white/5">

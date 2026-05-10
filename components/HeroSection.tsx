@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { EtsyStorage } from "@/modules/etsy-automation/services/etsyStorage";
 import { createClient } from "@/lib/supabase/client";
 
-export default function HeroSection() {
+export default function HeroSection({ isPreview = false }: { isPreview?: boolean }) {
   const [keyword, setKeyword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [analysisStep, setAnalysisStep] = useState(0);
@@ -50,18 +50,20 @@ export default function HeroSection() {
   };
 
   const runAnalysis = async (query: string) => {
+    if (isPreview) {
+      // Mock loading for preview
+      setIsLoading(true);
+      setAnalysisStep(1);
+      setTimeout(() => setAnalysisStep(2), 1000);
+      setTimeout(() => {
+        setIsLoading(false);
+        setAnalysisStep(0);
+        alert("This is a preview. Please log in to view real market data.");
+      }, 2000);
+      return;
+    }
+
     setIsLoading(true);
-    setAnalysisStep(1);
-    setResult(null);
-    setListing(null);
-    setSupplier(null);
-    setIsSaved(false);
-
-    // Simulate steps
-    setTimeout(() => setAnalysisStep(2), 1500);
-    setTimeout(() => setAnalysisStep(3), 3000);
-
-    try {
       const res = await fetch("/api/etsy/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -78,6 +80,10 @@ export default function HeroSection() {
   };
 
   const handleDiscover = async (strategy: string) => {
+    if (isPreview) {
+      alert("Please log in to use autonomous discovery.");
+      return;
+    }
     setIsDiscovering(true);
     try {
       const res = await fetch("/api/etsy/discover-niches", {
@@ -620,13 +626,17 @@ export default function HeroSection() {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ 
-                          productId: result.product.productId, 
+                          productId: result.product.id, 
                           title: result.product.title, 
                           tags: result.product.tags 
                         }),
                       });
                       const data = await res.json();
-                      setListing(data.listing);
+                      if (data.success) {
+                        setListing(data.listing);
+                      } else {
+                        alert(data.error || "Failed to generate listing");
+                      }
                     } finally {
                       setIsGeneratingListing(false);
                     }
@@ -657,14 +667,18 @@ export default function HeroSection() {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ 
-                          productId: result.product.productId, 
+                          productId: result.product.id, 
                           title: result.product.title, 
                           tags: result.product.tags,
                           price: result.product.price
                         }),
                       });
                       const data = await res.json();
-                      setSupplier(data.supplier);
+                      if (data.success) {
+                        setSupplier(data.supplier);
+                      } else {
+                        alert(data.error || "Failed to find supplier");
+                      }
                     } finally {
                       setIsFindingSupplier(false);
                     }
