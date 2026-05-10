@@ -99,7 +99,7 @@ export async function fetchInternetDataViaTool(query: string): Promise<string> {
   }
 }
 
-const RESEARCH_PROMPT = (query: string, internetContext: string = "") => `You are a world-class e-commerce product research analyst.
+const RESEARCH_PROMPT = (query: string, internetContext: string = "") => `You are a world-class e-commerce product research analyst with a BRUTALLY HONEST approach.
 The user is researching: "${query}"${internetContext}
 
 CRITICAL INSTRUCTIONS:
@@ -108,6 +108,15 @@ CRITICAL INSTRUCTIONS:
 3. Score each product 0-100 based on: demand (30%), margin (25%), competition (20%), trend momentum (15%), ease of sourcing (10%).
 4. For each product, give a short keyword that best represents it for supplier searches (in the "searchKeyword" field).
 5. For "painPoint", "sellingAngle", and "viralPotential": write MAX 1 short sentence each. Be specific, no fluff.
+
+⛔ "DO NOT BUILD" RULE:
+If a product has HIGH competition + LOW margin + DECLINING trend, you MUST set "doNotBuild": true and explain why in "doNotBuildReason". Do NOT sugarcoat bad opportunities. A seller losing money is worse than no recommendation.
+
+📊 REALITY LAYER RULE:
+For each data point, honestly assess your confidence. If you are guessing or extrapolating, say so. Set "confidenceLevel" to "high" ONLY if you have strong evidence. Most products should be "medium". Use "low" when data is scarce.
+
+💰 PROFIT REALITY CHECK RULE:
+Calculate "realProfitMargin" by deducting platform fees (~15% for Etsy, ~15% for Amazon, ~13% for eBay), estimated shipping (~$3-8), and estimated ads cost (~15-25% of revenue for new sellers). Show the REAL take-home profit, not the gross margin.
 
 Return ONLY valid JSON in this exact structure:
 {
@@ -119,9 +128,18 @@ Return ONLY valid JSON in this exact structure:
       "wholesalePrice": "$X-Y",
       "retailPrice": "$X-Y",
       "profitMargin": "XX-XX%",
+      "realProfitMargin": "XX-XX%",
+      "platformFees": "~$X (Etsy 15% + shipping $X + ads $X)",
       "competition": "Low|Medium|High",
       "trend": "Rising|Stable|Declining",
       "score": 85,
+      "confidenceLevel": "high|medium|low",
+      "confidencePercent": 75,
+      "dataSource": "AI Estimate|Market Data|Google Trends Verified",
+      "doNotBuild": false,
+      "doNotBuildReason": "",
+      "trafficSource": "TikTok Viral|Pinterest Organic|Etsy Search|Google Shopping|Instagram Ads",
+      "failureRisks": ["Risk 1: specific reason", "Risk 2: specific reason"],
       "description": "Detailed description",
       "platforms": ["eBay", "Etsy", "Amazon", "Shopify"],
       "whyItWorks": "Deep market analysis",
@@ -136,7 +154,7 @@ Return ONLY valid JSON in this exact structure:
   "summary": "Comprehensive market overview"
 }
 
-Return 4-6 products. ONLY return valid JSON.`;
+Return 4-6 products. At least 1 product MUST be marked as doNotBuild:true if competition is oversaturated. ONLY return valid JSON.`;
 
 function safeParseJSON(text: string): any {
   try {

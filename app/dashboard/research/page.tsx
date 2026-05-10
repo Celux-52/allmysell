@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Sparkles, Brain, Truck, Globe2, Loader2, AlertCircle, TrendingUp, BarChart3, Zap, ArrowRight, ShieldCheck, Store, ExternalLink } from "lucide-react";
+import { Search, Sparkles, Brain, Truck, Globe2, Loader2, AlertCircle, TrendingUp, BarChart3, Zap, ArrowRight, ShieldCheck, Store, ExternalLink, AlertTriangle, Info, Radio } from "lucide-react";
 import { useState } from "react";
 import { MagicCard } from "@/components/ui/magic-card";
 import { BorderBeam } from "@/components/ui/border-beam";
@@ -205,18 +205,50 @@ export default function ResearchDashboard() {
               const isRising = product.trend?.toLowerCase().includes('rising');
               
               return (
-                <div key={idx} className="bg-[#0b0f19] border border-white/5 rounded-3xl p-6 relative overflow-hidden group hover:border-orange-500/20 transition-all">
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-duration-500 pointer-events-none"></div>
+                <div key={idx} className={`bg-[#0b0f19] border rounded-3xl p-6 relative overflow-hidden group transition-all ${product.doNotBuild ? 'border-red-500/30 hover:border-red-500/50' : 'border-white/5 hover:border-orange-500/20'}`}>
+                  <div className={`absolute inset-0 ${product.doNotBuild ? 'bg-gradient-to-br from-red-500/5 to-transparent opacity-100' : 'bg-gradient-to-br from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100'} transition-duration-500 pointer-events-none`}></div>
                   
-                  {/* Header */}
-                  <div className="flex justify-between items-start mb-6">
-                    <div className="flex gap-4 items-center">
-                      <span className="text-orange-500 font-black text-3xl">{product.score}</span>
+                  {/* ⛔ DO NOT BUILD Banner */}
+                  {product.doNotBuild && (
+                    <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-4 mb-6 flex gap-3 items-start relative z-10">
+                      <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
                       <div>
-                        <h3 className="text-white font-bold text-xl leading-tight line-clamp-1">{product.name}</h3>
+                        <p className="text-red-400 font-black text-sm uppercase tracking-wider">⛔ DO NOT BUILD</p>
+                        <p className="text-red-300/70 text-xs mt-1 leading-relaxed">{product.doNotBuildReason || 'High competition, low margin, declining trend detected.'}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Header */}
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex gap-4 items-center">
+                      <span className={`font-black text-3xl ${product.doNotBuild ? 'text-red-500' : 'text-orange-500'}`}>{product.score}</span>
+                      <div>
+                        <h3 className={`font-bold text-xl leading-tight line-clamp-1 ${product.doNotBuild ? 'text-red-300/80 line-through' : 'text-white'}`}>{product.name}</h3>
                         <p className="text-slate-500 text-xs uppercase tracking-widest">{product.category}</p>
                       </div>
                     </div>
+                  </div>
+
+                  {/* 📊 Reality Layer: Confidence + Data Source + Traffic */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    <span className={`px-2.5 py-1 text-[10px] font-black uppercase tracking-wider rounded-full border flex items-center gap-1 ${
+                      product.confidenceLevel === 'high' ? 'bg-green-500/10 border-green-500/20 text-green-400' :
+                      product.confidenceLevel === 'low' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
+                      'bg-yellow-500/10 border-yellow-500/20 text-yellow-400'
+                    }`}>
+                      <Info className="w-3 h-3" /> {product.confidencePercent || '?'}% Confidence
+                    </span>
+                    {product.dataSource && (
+                      <span className="px-2.5 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-wider rounded-full">
+                        {product.dataSource}
+                      </span>
+                    )}
+                    {product.trafficSource && (
+                      <span className="px-2.5 py-1 bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-bold uppercase tracking-wider rounded-full flex items-center gap-1">
+                        <Radio className="w-3 h-3" /> {product.trafficSource}
+                      </span>
+                    )}
                   </div>
 
                   {/* Badges */}
@@ -258,21 +290,46 @@ export default function ResearchDashboard() {
 
                   <p className="text-slate-400 text-sm mb-6 leading-relaxed line-clamp-2">{product.description}</p>
 
-                  {/* Pricing Table */}
-                  <div className="grid grid-cols-3 gap-2 text-center bg-white/5 rounded-2xl p-4 mb-6 border border-white/5">
-                     <div>
-                       <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Wholesale</p>
-                       <p className="text-white font-bold">{product.wholesalePrice}</p>
+                  {/* 💰 Pricing Table — Gross vs Real Profit */}
+                  <div className="bg-white/5 rounded-2xl p-4 mb-4 border border-white/5">
+                     <div className="grid grid-cols-4 gap-2 text-center">
+                       <div>
+                         <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Wholesale</p>
+                         <p className="text-white font-bold">{product.wholesalePrice}</p>
+                       </div>
+                       <div>
+                         <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Retail</p>
+                         <p className="text-white font-bold">{product.retailPrice}</p>
+                       </div>
+                       <div>
+                         <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Gross</p>
+                         <p className="text-yellow-400 font-bold">{product.profitMargin}</p>
+                       </div>
+                       <div>
+                         <p className="text-[10px] text-green-400 uppercase tracking-widest mb-1 font-black">NET Profit</p>
+                         <p className="text-green-400 font-black text-lg">{product.realProfitMargin || product.profitMargin}</p>
+                       </div>
                      </div>
-                     <div>
-                       <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Retail</p>
-                       <p className="text-white font-bold">{product.retailPrice}</p>
-                     </div>
-                     <div>
-                       <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Margin</p>
-                       <p className="text-green-400 font-bold">{product.profitMargin}</p>
-                     </div>
+                     {product.platformFees && (
+                       <p className="text-[10px] text-slate-600 text-center mt-3 border-t border-white/5 pt-2 italic">
+                         💸 {product.platformFees}
+                       </p>
+                     )}
                   </div>
+
+                  {/* ⚠️ Failure Risks */}
+                  {product.failureRisks && product.failureRisks.length > 0 && (
+                    <div className="bg-red-500/5 border border-red-500/10 rounded-xl p-3 mb-6">
+                      <h4 className="text-red-400 text-[10px] font-black uppercase tracking-widest flex items-center gap-1 mb-2">
+                        <AlertTriangle className="w-3 h-3" /> FAILURE RISKS
+                      </h4>
+                      <ul className="space-y-1">
+                        {product.failureRisks.map((risk: string, i: number) => (
+                          <li key={i} className="text-[11px] text-red-300/60 leading-relaxed">• {risk}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                   {/* Trends & Suppliers */}
                   <div className="space-y-4">
