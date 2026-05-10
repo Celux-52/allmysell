@@ -182,54 +182,29 @@ function RegisterForm() {
           <div className="absolute -inset-1 bg-gradient-to-r from-orange-500/20 to-blue-500/20 rounded-[2.5rem] blur opacity-75 group-hover:opacity-100 transition duration-1000"></div>
           <div className="relative bg-[#0d111c]/70 backdrop-blur-3xl rounded-[2.5rem] shadow-2xl p-10 border border-white/10 overflow-hidden">
             
+            {/* Steps Progress Indicator */}
+            {!success && (
+               <div className="flex items-center justify-center gap-2 mb-10">
+                 <div className={`h-1 flex-1 rounded-full transition-all duration-500 ${step === 1 ? 'bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.5)]' : 'bg-orange-500/20'}`} />
+                 <div className={`h-1 flex-1 rounded-full transition-all duration-500 ${step === 2 ? 'bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.5)]' : 'bg-white/5'}`} />
+               </div>
+            )}
+
             <AnimatePresence mode="wait">
               {!success ? (
                 <motion.div
-                  key="form"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  key={step}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  {/* Gateway Override */}
-                  {step === 1 && (
-                    <>
-                      <div className="grid grid-cols-2 gap-4 mb-8">
-                        <button
-                          onClick={() => handleSocialLogin('google')}
-                          disabled={!!socialLoading}
-                          className="flex items-center justify-center gap-3 py-4 px-4 rounded-2xl bg-white/5 border border-white/10 text-slate-400 hover:bg-white/10 hover:border-orange-500/40 transition-all duration-300 font-black text-[10px] uppercase tracking-widest disabled:opacity-50"
-                        >
-                          {socialLoading === 'google' ? <div className="w-4 h-4 border-2 border-slate-400 border-t-transparent rounded-full animate-spin"></div> : (
-                            <svg className="w-4 h-4" viewBox="0 0 24 24">
-                              <path fill="currentColor" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v2.97h3.86c2.26-2.09 3.56-5.17 3.56-8.79z"/>
-                              <path fill="currentColor" className="opacity-60" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-2.97c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.06C3.555 21.31 7.565 24 12.255 24z"/>
-                            </svg>
-                          )}
-                          Node.Google
-                        </button>
-                        <button
-                          onClick={() => handleSocialLogin('github')}
-                          disabled={!!socialLoading}
-                          className="flex items-center justify-center gap-3 py-4 px-4 rounded-2xl bg-white/5 border border-white/10 text-slate-400 hover:bg-white/10 hover:border-orange-500/40 transition-all duration-300 font-black text-[10px] uppercase tracking-widest disabled:opacity-50"
-                        >
-                          {socialLoading === 'github' ? <div className="w-4 h-4 border-2 border-slate-400 border-t-transparent rounded-full animate-spin"></div> : <Github className="w-4 h-4" />}
-                          Node.GitHub
-                        </button>
-                      </div>
-
-                      <div className="relative mb-10">
-                        <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/5"></div></div>
-                        <div className="relative flex justify-center text-[9px]"><span className="px-6 bg-[#131926] text-slate-600 font-black uppercase tracking-[0.4em]">Secure Protocol</span></div>
-                      </div>
-                    </>
-                  )}
-
                   <div className="mb-8">
                     <h2 className="text-2xl font-black text-white uppercase tracking-tight italic">
                       {step === 1 ? 'IDENTITY INPUT' : 'ACCESS CIPHER'}
                     </h2>
                     <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mt-1">
-                      {step === 1 ? 'Primary Data Collection' : 'Encryption Setup'}
+                      {step === 1 ? 'Step 01: Global Verification' : 'Step 02: Neural Encryption'}
                     </p>
                   </div>
 
@@ -245,17 +220,42 @@ function RegisterForm() {
                   )}
 
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    <AnimatePresence mode="wait">
-                      {step === 1 ? (
-                        <motion.div
-                          key="step1"
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: -20 }}
-                          className="space-y-6"
-                        >
+                    {step === 1 ? (
+                      <>
+                        <div className="grid grid-cols-2 gap-4 mb-8">
+                          <button
+                            type="button"
+                            onClick={() => handleSocialLogin('google')}
+                            disabled={!!socialLoading}
+                            className="flex items-center justify-center gap-3 py-4 px-4 rounded-2xl bg-white/5 border border-white/10 text-slate-400 hover:bg-white/10 hover:border-orange-500/40 transition-all duration-300 font-black text-[10px] uppercase tracking-widest disabled:opacity-50"
+                          >
+                            {socialLoading === 'google' ? <div className="w-4 h-4 border-2 border-slate-400 border-t-transparent rounded-full animate-spin"></div> : (
+                              <svg className="w-4 h-4" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v2.97h3.86c2.26-2.09 3.56-5.17 3.56-8.79z"/>
+                                <path fill="currentColor" className="opacity-60" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-2.97c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.06C3.555 21.31 7.565 24 12.255 24z"/>
+                              </svg>
+                            )}
+                            Node.Google
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleSocialLogin('github')}
+                            disabled={!!socialLoading}
+                            className="flex items-center justify-center gap-3 py-4 px-4 rounded-2xl bg-white/5 border border-white/10 text-slate-400 hover:bg-white/10 hover:border-orange-500/40 transition-all duration-300 font-black text-[10px] uppercase tracking-widest disabled:opacity-50"
+                          >
+                            {socialLoading === 'github' ? <div className="w-4 h-4 border-2 border-slate-400 border-t-transparent rounded-full animate-spin"></div> : <Github className="w-4 h-4" />}
+                            Node.GitHub
+                          </button>
+                        </div>
+
+                        <div className="relative mb-10">
+                          <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/5"></div></div>
+                          <div className="relative flex justify-center text-[9px]"><span className="px-6 bg-[#0d111c] text-slate-600 font-black uppercase tracking-[0.4em]">Secure Protocol</span></div>
+                        </div>
+
+                        <div className="space-y-6">
                           <div className="space-y-3">
-                            <label htmlFor="fullName" className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Legal Designation</label>
+                            <label htmlFor="fullName" className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Full Legal Name</label>
                             <div className="relative group/input">
                               <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within/input:text-orange-500 transition-colors" size={20} />
                               <input
@@ -263,7 +263,7 @@ function RegisterForm() {
                                 type="text"
                                 value={fullName}
                                 onChange={(e) => setFullName(e.target.value)}
-                                placeholder="OPERATIVE NAME"
+                                placeholder="ENTER NAME"
                                 required
                                 className="w-full pl-12 pr-4 py-5 bg-white/5 border border-white/5 rounded-2xl text-white text-sm placeholder:text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500/50 transition-all font-medium"
                               />
@@ -271,7 +271,7 @@ function RegisterForm() {
                           </div>
 
                           <div className="space-y-3">
-                            <label htmlFor="email" className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Comm Channel</label>
+                            <label htmlFor="email" className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Identity Vector (Email)</label>
                             <div className="relative group/input">
                               <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within/input:text-orange-500 transition-colors" size={20} />
                               <input
@@ -279,82 +279,76 @@ function RegisterForm() {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder="VECTOR@ETSY.AI"
+                                placeholder="OPERATIVE@EMAIL.COM"
                                 required
                                 className="w-full pl-12 pr-4 py-5 bg-white/5 border border-white/5 rounded-2xl text-white text-sm placeholder:text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500/50 transition-all font-medium"
                               />
                             </div>
                           </div>
-                        </motion.div>
-                      ) : (
-                        <motion.div
-                          key="step2"
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: -20 }}
-                          className="space-y-6"
-                        >
-                          <div className="space-y-3">
-                            <label htmlFor="password" className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Access Protocol</label>
-                            <div className="relative group/input">
-                              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within/input:text-orange-500 transition-colors" size={20} />
-                              <input
-                                id="password"
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="MIN. 6 CHARS"
-                                required
-                                minLength={6}
-                                className="w-full pl-12 pr-4 py-5 bg-white/5 border border-white/5 rounded-2xl text-white text-sm placeholder:text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500/50 transition-all font-medium"
-                              />
-                            </div>
-                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="space-y-6">
+                        <div className="p-4 bg-orange-500/10 border border-orange-500/20 rounded-2xl mb-8 flex items-center justify-between">
+                           <div>
+                              <p className="text-[10px] font-black text-orange-500 uppercase tracking-widest">Identified As</p>
+                              <p className="text-white text-xs font-bold truncate max-w-[180px]">{email}</p>
+                           </div>
+                           <button type="button" onClick={() => setStep(1)} className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-widest border border-white/10 px-3 py-1 rounded-lg">EDIT</button>
+                        </div>
 
-                          <div className="space-y-3">
-                            <label htmlFor="confirmPassword" className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Verify Cipher</label>
-                            <div className="relative group/input">
-                              <ShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within/input:text-orange-500 transition-colors" size={20} />
-                              <input
-                                id="confirmPassword"
-                                type="password"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                placeholder="RE-ENTER PROTOCOL"
-                                required
-                                minLength={6}
-                                className="w-full pl-12 pr-4 py-5 bg-white/5 border border-white/5 rounded-2xl text-white text-sm placeholder:text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500/50 transition-all font-medium"
-                              />
-                            </div>
+                        <div className="space-y-3">
+                          <label htmlFor="password" className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Access Protocol (Password)</label>
+                          <div className="relative group/input">
+                            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within/input:text-orange-500 transition-colors" size={20} />
+                            <input
+                              id="password"
+                              type="password"
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                              placeholder="MIN. 6 CHARACTERS"
+                              required
+                              minLength={6}
+                              autoFocus
+                              className="w-full pl-12 pr-4 py-5 bg-white/5 border border-white/5 rounded-2xl text-white text-sm placeholder:text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500/50 transition-all font-medium"
+                            />
                           </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                        </div>
+
+                        <div className="space-y-3">
+                          <label htmlFor="confirmPassword" className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Verify Cipher</label>
+                          <div className="relative group/input">
+                            <ShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within/input:text-orange-500 transition-colors" size={20} />
+                            <input
+                              id="confirmPassword"
+                              type="password"
+                              value={confirmPassword}
+                              onChange={(e) => setConfirmPassword(e.target.value)}
+                              placeholder="MATCH PROTOCOL"
+                              required
+                              minLength={6}
+                              className="w-full pl-12 pr-4 py-5 bg-white/5 border border-white/5 rounded-2xl text-white text-sm placeholder:text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500/50 transition-all font-medium"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
                     <div className="flex gap-4 pt-6">
-                      {step === 2 && (
-                        <button
-                          type="button"
-                          onClick={() => { setStep(1); setError(''); }}
-                          className="flex-1 py-5 px-4 bg-white/5 border border-white/10 rounded-2xl text-slate-400 hover:text-white hover:bg-white/10 transition-all font-black text-[10px] uppercase tracking-widest italic"
-                        >
-                          RELOAD
-                        </button>
-                      )}
                       <motion.button
                         whileHover={{ scale: 1.01 }}
                         whileTap={{ scale: 0.99 }}
                         type="submit"
                         disabled={loading}
-                        className="flex-[2] bg-gradient-to-r from-orange-600 to-orange-700 py-5 rounded-2xl font-black text-white uppercase tracking-[0.2em] text-sm shadow-2xl shadow-orange-600/30 hover:shadow-orange-600/50 transition-all flex items-center justify-center gap-3 disabled:opacity-50 overflow-hidden relative group/btn"
+                        className="w-full bg-gradient-to-r from-orange-600 to-orange-700 py-5 rounded-2xl font-black text-white uppercase tracking-[0.2em] text-sm shadow-2xl shadow-orange-600/30 hover:shadow-orange-600/50 transition-all flex items-center justify-center gap-3 disabled:opacity-50 overflow-hidden relative group/btn"
                       >
                         <div className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000"></div>
                         {loading ? (
                           <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                         ) : step === 1 ? (
-                          <>NEXT PHASE <ArrowRight size={20} /></>
+                          <>CONFIRM IDENTITY <ArrowRight size={20} /></>
                         ) : (
-                          <>INITIATE LINK <Zap size={18} /></>
+                          <>INITIATE CORE LINK <Zap size={18} /></>
                         )}
                       </motion.button>
                     </div>
@@ -362,7 +356,7 @@ function RegisterForm() {
 
                   <div className="mt-10 text-center">
                     <p className="text-[10px] font-black text-slate-600 uppercase tracking-[0.2em]">
-                      Existing Operative?{' '}
+                      Operative enrolled?{' '}
                       <Link href="/login" className="text-orange-500 hover:text-orange-400 transition-colors ml-1 border-b border-orange-500/20 pb-0.5">
                         Initiate Login <ArrowRight className="inline w-3 h-3 mb-0.5" />
                       </Link>
@@ -395,24 +389,7 @@ function RegisterForm() {
             </AnimatePresence>
           </div>
         </div>
-
-        {/* Neural Link Progress */}
-        {!success && (
-          <div className="mt-12 flex justify-center items-center gap-8">
-            <div className="flex flex-col items-center gap-3">
-              <div className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black text-xs transition-all duration-700 ${step >= 1 ? 'bg-orange-500 text-white shadow-2xl shadow-orange-500/40' : 'bg-white/5 text-slate-700'}`}>01</div>
-              <p className={`text-[9px] font-black uppercase tracking-[0.3em] ${step >= 1 ? 'text-orange-500' : 'text-slate-800'}`}>IDENT</p>
-            </div>
-            <div className={`h-[1px] w-16 transition-all duration-1000 ${step >= 2 ? 'bg-orange-500 shadow-[0_0_10px_rgba(234,88,12,0.5)]' : 'bg-white/5'}`}></div>
-            <div className="flex flex-col items-center gap-3">
-              <div className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black text-xs transition-all duration-700 ${step >= 2 ? 'bg-orange-500 text-white shadow-2xl shadow-orange-500/40' : 'bg-white/5 text-slate-700'}`}>02</div>
-              <p className={`text-[9px] font-black uppercase tracking-[0.3em] ${step >= 2 ? 'text-orange-500' : 'text-slate-800'}`}>CIPHER</p>
-            </div>
-          </div>
-        )}
       </motion.div>
     </div>
   );
 }
-
-
