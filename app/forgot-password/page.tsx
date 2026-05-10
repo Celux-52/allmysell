@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
-import { Mail, AlertCircle, CheckCircle, ArrowLeft } from 'lucide-react';
+import { Mail, AlertCircle, CheckCircle, ArrowLeft, Sparkles, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
@@ -42,86 +43,132 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF9] relative flex items-center justify-center py-12 px-4 overflow-hidden">
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-[#E8750A]/15 blur-[120px] animate-pulse"></div>
+    <div className="min-h-screen bg-[#050810] flex items-center justify-center p-4 relative overflow-hidden font-sans">
+      {/* --- CINEMATIC BACKGROUND --- */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-orange-600/10 blur-[120px] rounded-full animate-pulse"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-600/10 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+      </div>
 
-      <div className="max-w-md w-full relative z-10">
-        <div className="text-center mb-8">
-          <div className="mx-auto h-16 w-16 bg-gradient-to-tr from-[#E8750A] to-[#F59E0B] rounded-2xl flex items-center justify-center shadow-2xl shadow-stone-200/50 mb-6">
-            <span className="text-2xl font-extrabold text-stone-900">A</span>
-          </div>
-          <h2 className="text-3xl font-extrabold text-stone-900">Reset Password</h2>
-          <p className="mt-2 text-stone-500 text-sm">
-            Enter your email and we&apos;ll send you a reset link
-          </p>
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="max-w-md w-full relative z-10"
+      >
+        {/* LOGO AREA */}
+        <div className="text-center mb-10">
+          <motion.div 
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", damping: 12 }}
+            className="mx-auto w-20 h-20 bg-gradient-to-tr from-orange-500 to-orange-600 rounded-[2rem] flex items-center justify-center shadow-2xl shadow-orange-500/20 mb-6 relative group"
+          >
+            <div className="absolute inset-0 bg-white/20 rounded-[2rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <Sparkles className="w-10 h-10 text-white relative z-10" />
+          </motion.div>
+          
+          <h2 className="text-4xl font-black text-white tracking-tighter mb-2 italic">RESET CIPHER</h2>
+          <p className="text-slate-500 text-sm font-medium tracking-wide uppercase">Request Access Restoration</p>
         </div>
 
-        <div className="bg-[#151515]/80 backdrop-blur-xl py-8 px-8 shadow-2xl rounded-3xl border border-stone-200/60">
-          {error && (
-            <div className="mb-6 bg-red-500/10 border border-red-500/50 p-4 rounded-xl flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
-              <p className="text-sm text-red-200">{error}</p>
-            </div>
-          )}
-
-          {success ? (
-            <div className="text-center py-4">
-              <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="text-green-500" size={32} />
-              </div>
-              <h3 className="text-xl font-bold text-stone-900 mb-2">Check Your Email</h3>
-              <p className="text-stone-500 mb-6">
-                We&apos;ve sent a password reset link to <span className="text-stone-900 font-medium">{email}</span>
-              </p>
-              <Link
-                href="/login"
-                className="inline-flex items-center gap-2 text-stone-800 hover:underline font-semibold"
+        <div className="bg-white/5 backdrop-blur-2xl p-10 rounded-[3rem] border border-white/10 shadow-2xl relative overflow-hidden">
+          {/* Internal Glow */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 blur-3xl rounded-full"></div>
+          
+          <AnimatePresence mode="wait">
+            {success ? (
+              <motion.div 
+                key="success"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center py-6"
               >
-                <ArrowLeft size={16} /> Back to Login
-              </Link>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-stone-600 mb-2">
-                  Email Address
-                </label>
-                <div className="relative group">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <Mail className="h-5 w-5 text-stone-400 group-focus-within:text-stone-800 transition-colors" />
-                  </div>
-                  <input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="block w-full pl-12 pr-4 py-3.5 border border-white/10 rounded-xl bg-[#FAFAF9] text-stone-900 placeholder-gray-600 focus:ring-2 focus:ring-[#E8750A]/50 focus:border-[#E8750A] transition-all sm:text-sm"
-                    placeholder="example@email.com"
-                  />
+                <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-500/20">
+                  <CheckCircle className="text-green-500 w-10 h-10" />
                 </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-4 px-4 bg-stone-900 !text-white hover:bg-stone-800 text-stone-900 font-bold rounded-xl hover:shadow-lg hover:shadow-stone-200/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? 'Sending...' : 'Send Reset Link'}
-              </button>
-
-              <div className="text-center">
+                <h3 className="text-2xl font-bold text-white mb-3">Transmission Sent</h3>
+                <p className="text-slate-400 mb-8 text-sm leading-relaxed">
+                  We&apos;ve sent a reset link to <span className="text-orange-400 font-bold">{email}</span>. Check your encrypted inbox.
+                </p>
                 <Link
                   href="/login"
-                  className="inline-flex items-center gap-2 text-sm text-stone-500 hover:text-stone-800 transition-colors"
+                  className="inline-flex items-center gap-2 text-white bg-white/10 hover:bg-white/20 px-8 py-4 rounded-2xl font-bold transition-all border border-white/10"
                 >
-                  <ArrowLeft size={14} /> Back to Login
+                  <ArrowLeft size={18} /> BACK TO TERMINAL
                 </Link>
-              </div>
-            </form>
-          )}
+              </motion.div>
+            ) : (
+              <motion.form 
+                key="form"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                onSubmit={handleSubmit} 
+                className="space-y-8 relative z-10"
+              >
+                {error && (
+                  <motion.div 
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    className="bg-red-500/10 border border-red-500/20 p-4 rounded-2xl flex items-center gap-3"
+                  >
+                    <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
+                    <p className="text-xs font-bold text-red-200 uppercase tracking-tight">{error}</p>
+                  </motion.div>
+                )}
+
+                <div className="space-y-3">
+                  <label htmlFor="email" className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">
+                    Registered Email
+                  </label>
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                      <Mail className="h-5 w-5 text-slate-500 group-focus-within:text-orange-500 transition-colors" />
+                    </div>
+                    <input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="block w-full pl-14 pr-6 py-5 bg-white/[0.03] border border-white/10 rounded-2xl text-white placeholder-slate-600 focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 transition-all text-sm font-medium"
+                      placeholder="Enter identity email"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white font-black rounded-2xl shadow-xl shadow-orange-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-widest text-xs flex items-center justify-center gap-3"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      RESTORING...
+                    </>
+                  ) : (
+                    'SEND RESET SIGNAL'
+                  )}
+                </button>
+
+                <div className="text-center pt-4">
+                  <Link
+                    href="/login"
+                    className="inline-flex items-center gap-2 text-xs font-black text-slate-500 hover:text-white transition-colors uppercase tracking-[0.2em]"
+                  >
+                    <ArrowLeft size={14} /> Back to Login
+                  </Link>
+                </div>
+              </motion.form>
+            )}
+          </AnimatePresence>
         </div>
-      </div>
+        
+        <p className="mt-10 text-center text-[10px] text-slate-600 font-bold uppercase tracking-[0.3em]">
+          AllMySell &copy; 2024 • Intelligence OS
+        </p>
+      </motion.div>
     </div>
   );
 }
