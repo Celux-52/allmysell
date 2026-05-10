@@ -32,16 +32,27 @@ export async function middleware(req: NextRequest) {
     }
   );
 
+  // IMPORTANT: This call refreshes the session and may trigger setAll()
   const { data: { user } } = await supabase.auth.getUser();
 
   const pathname = req.nextUrl.pathname;
+
+  // Helper: create a redirect that preserves refreshed session cookies
+  function redirectWithCookies(destination: string) {
+    const redirectRes = NextResponse.redirect(new URL(destination, req.url));
+    // Copy all refreshed session cookies to the redirect response
+    res.cookies.getAll().forEach((cookie) => {
+      redirectRes.cookies.set(cookie.name, cookie.value);
+    });
+    return redirectRes;
+  }
 
   // 1. Authenticated users should NOT see login/register pages
   const authPaths = ['/login', '/register'];
   const isAuthPath = authPaths.some(path => pathname.startsWith(path));
 
   if (isAuthPath && user) {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
+    return redirectWithCookies("/dashboard");
   }
 
   // 2. Protected routes: redirect to login if not authenticated
@@ -52,13 +63,17 @@ export async function middleware(req: NextRequest) {
     const url = req.nextUrl.clone();
     url.pathname = '/login';
     url.searchParams.set('redirect', pathname);
-    return NextResponse.redirect(url);
+    const redirectRes = NextResponse.redirect(url);
+    res.cookies.getAll().forEach((cookie) => {
+      redirectRes.cookies.set(cookie.name, cookie.value);
+    });
+    return redirectRes;
   }
 
   // 3. Admin-only routes
   if (pathname.startsWith("/admin") && user) {
     if (!isAdmin(user.email)) {
-      return NextResponse.redirect(new URL("/dashboard", req.url));
+      return redirectWithCookies("/dashboard");
     }
   }
 
