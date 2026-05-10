@@ -325,6 +325,7 @@ YOUR TASK:
 4. Flag fabricated or unrealistic data
 5. Calculate the MOST ACCURATE average values for each product
 6. Do not allow any AI to make errors
+7. CRITICAL: You MUST KEEP all advanced fields (doNotBuild, failureModes, saturationIndex, copycatRisk, trendLifespan, scalabilityScore, realProfitMargin) in your final output. DO NOT strip them!
 
 ✅ Return ONLY corrected and validated JSON. Do not add any explanations.
 
