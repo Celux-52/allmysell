@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Settings, Menu, X, Zap, History, Star, LogOut
+  Settings, Menu, X, Zap, History, Star, LogOut, CreditCard
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
@@ -15,7 +15,7 @@ const navigation = [
   { name: "SaaS Panel", href: "/dashboard/saas", icon: Zap },
   { name: "Saved Items", href: "/dashboard/saved", icon: Star },
   { name: "History", href: "/dashboard/history", icon: History },
-  { name: "Pricing", href: "/pricing", icon: Zap },
+  { name: "Pricing", href: "/pricing", icon: CreditCard },
 ];
 
 export default function DashboardShell({

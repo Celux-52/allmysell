@@ -118,7 +118,7 @@ const etsyTiers = [
     features: [
       "Unlimited Sniper Queries",
       "Everything in Growth",
-      "API Entegrayonu",
+      "API Integration",
       "Multi-User Access",
       "Priority Model Rotation",
       "Strategic Model Guarantee",

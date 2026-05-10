@@ -25,6 +25,9 @@ export async function POST(request: NextRequest) {
     startOfMonth.setDate(1)
     startOfMonth.setHours(0, 0, 0, 0)
 
+    // Default status - will be overridden if DB check succeeds
+    let status = 'FREE'
+
     try {
       // 1. Get user profile for subscription status
       const profile = await prisma.profile.findUnique({
@@ -36,7 +39,7 @@ export async function POST(request: NextRequest) {
       const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase())
       const isUserAdmin = user.email && adminEmails.includes(user.email.toLowerCase())
       
-      const status = isUserAdmin ? 'PRO_AGENCY' : (profile?.subscriptionStatus || 'FREE')
+      status = isUserAdmin ? 'PRO_AGENCY' : (profile?.subscriptionStatus || 'FREE')
 
       // 2. Count searches this month
       const searchCount = await prisma.searchHistory.count({

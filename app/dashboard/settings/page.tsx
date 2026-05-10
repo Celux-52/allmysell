@@ -80,9 +80,9 @@ export default function SettingsPage() {
       >
         <div className="flex items-center gap-2 mb-2">
           <Lock className="h-4 w-4 text-slate-400" />
-          <p className="text-sm font-semibold text-slate-300">Admin Access Only</p>
+          <p className="text-sm font-semibold text-slate-300">Subscription Required</p>
         </div>
-        <p className="text-xs text-slate-500">This dashboard and its AI capabilities are currently restricted to authorized administrators.</p>
+        <p className="text-xs text-slate-500">Full access to AI models and research capabilities requires an active subscription plan. Visit the Pricing page to select your tier.</p>
       </motion.div>
     </div>
   );
