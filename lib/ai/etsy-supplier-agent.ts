@@ -23,10 +23,13 @@ export class EtsySupplierAgent {
       Return ONLY the following JSON format:
       {
         "sourceType": "Alibaba" | "1688" | "Print-on-Demand" | "Local Handmade" | "Wholesale",
-        "supplierName": "Specific platform or supplier recommendation",
+        "name": "Specific platform or supplier recommendation",
         "estimatedCost": number (in USD),
         "riskLevel": "Low" | "Medium" | "High",
-        "notes": "Detailed sourcing strategy and recommendations in English"
+        "notes": "Detailed sourcing strategy and recommendations in English",
+        "leadTime": "e.g. 7-14 Days",
+        "reliabilityScore": 95,
+        "url": "Valid search URL (e.g. https://www.alibaba.com/trade/search?SearchText=...)"
       }
     `;
 

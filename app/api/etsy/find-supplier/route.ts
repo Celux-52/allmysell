@@ -20,13 +20,13 @@ export async function POST(req: Request) {
         data: {
           productId,
           sourceType: strategy.sourceType,
-          supplierName: strategy.supplierName,
+          supplierName: strategy.name || strategy.supplierName || "Unknown Supplier",
           estimatedCost: strategy.estimatedCost,
           riskLevel: strategy.riskLevel,
           notes: strategy.notes,
         }
       });
-      finalSupplier = { ...savedInDb } as any;
+      finalSupplier = { ...strategy, id: savedInDb.id };
     } catch (e) { 
       console.warn("[Find Supplier] DB save failed, returning AI results only:", e); 
     }
