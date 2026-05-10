@@ -271,7 +271,7 @@ export default function PricingPage() {
                   ))}
                 </div>
 
-                <Link href="/register" className="w-full">
+                <a href={`https://wa.me/905537065912?text=${encodeURIComponent(`Hi! I want to subscribe to the ${tier.name} plan (${productType === 'smart' ? 'Market Intelligence' : 'Etsy Sniper'}) - $${isAnnual ? tier.price.annual : tier.price.monthly}/mo`)}`} target="_blank" rel="noopener noreferrer" className="w-full">
                   <Button 
                     className={`w-full rounded-2xl py-7 font-black uppercase tracking-widest transition-all ${
                       tier.popular 
@@ -282,7 +282,7 @@ export default function PricingPage() {
                     {tier.cta}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
-                </Link>
+                </a>
               </MagicCard>
             </motion.div>
           ))}
