@@ -407,363 +407,291 @@ export default function EtsySaaSPanel() {
       ) : null}
     </AnimatePresence>
 
-      {/* --- RESULTS PANEL (NEXT GEN) --- */}
+      {/* --- RESULTS PANEL (NEXT GEN V2.0) --- */}
       {result && !isLoading && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pt-10">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="space-y-12 pt-10"
+        >
+          {/* --- TOP VERDICT BAR --- */}
+          <motion.div 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="relative p-1 rounded-[2.5rem] bg-gradient-to-r from-orange-600 via-amber-500 to-orange-600 shadow-2xl shadow-orange-500/20"
+          >
+            <div className="bg-[#050810] rounded-[2.4rem] p-8 flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 blur-[80px] rounded-full -mr-20 -mt-20"></div>
+              
+              <div className="flex-1 space-y-2 relative z-10 text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
+                  <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+                  <span className="text-[10px] font-black text-orange-500 uppercase tracking-[0.3em]">Strategic Decision Engine</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-black text-white leading-tight">
+                  {result.analysis.verdict}
+                </h2>
+              </div>
 
-          {/* Left Column: Decision & Intelligence */}
-          <div className="lg:col-span-8 space-y-10">
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }} 
-              animate={{ opacity: 1, y: 0 }}
-              className="relative"
-            >
-              <div className={`absolute -inset-1 rounded-[2.5rem] blur-2xl opacity-10 ${result.analysis.decision === 'SELL' ? 'bg-green-500' : 'bg-red-500'}`}></div>
-              <Card className="overflow-hidden border-white/10 bg-[#0d111c]/80 backdrop-blur-3xl rounded-[2.5rem] shadow-2xl relative">
-                <motion.div 
-                  className="absolute inset-0 pointer-events-none"
-                  animate={{ 
-                    boxShadow: result.analysis.decision === 'SELL' 
-                      ? ['0 0 20px rgba(34,197,94,0)', '0 0 20px rgba(34,197,94,0.1)', '0 0 20px rgba(34,197,94,0)']
-                      : ['0 0 20px rgba(239,68,68,0)', '0 0 20px rgba(239,68,68,0.1)', '0 0 20px rgba(239,68,68,0)']
-                  }}
-                  transition={{ duration: 4, repeat: Infinity }}
-                />
-                
-                <div className="p-10 relative">
-                  <div className="flex flex-col md:flex-row md:items-start justify-between gap-8 mb-12">
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-3">
-                        <div className="flex -space-x-2">
-                          {[1, 2, 3, 4, 5].map(i => (
-                            <div key={i} className={`w-6 h-6 rounded-full border-2 border-[#0d111c] flex items-center justify-center text-[10px] font-black ${i <= (result.analysis.consensus?.agreedCount || 4) ? 'bg-orange-500 text-white' : 'bg-slate-800 text-slate-500'}`}>
-                              {i}
-                            </div>
-                          ))}
-                        </div>
-                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Autonomous Consensus</span>
-                      </div>
-                      
-                      <h2 className="text-8xl font-black italic tracking-tighter leading-none">
-                        <span className={result.analysis.decision === 'SELL' ? 'text-green-500' : 'text-red-500'}>
-                          {result.analysis.decision === 'SELL' ? 'OPPORTUNITY' : 'OVERLOADED'}
-                        </span>
-                      </h2>
-                      <p className="text-slate-400 font-bold text-xl uppercase tracking-tighter flex items-center gap-2">
-                        {result.analysis.decision === 'SELL' ? <TrendingUp className="w-6 h-6 text-green-500" /> : <AlertTriangle className="w-6 h-6 text-red-500" />}
-                        {result.analysis.decision === 'SELL' ? 'High Growth Potential Detected' : 'Market Saturation Warning'}
-                      </p>
-                    </div>
-
-                    <div className="relative group">
-                       <div className={`absolute inset-0 blur-2xl opacity-20 ${result.analysis.decision === 'SELL' ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                       <div className="relative flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-[2.5rem] px-12 py-10 text-center backdrop-blur-md">
-                        <span className="text-slate-500 text-[10px] font-black uppercase mb-2 tracking-widest">Confidence Score</span>
-                        <span className="text-7xl font-black text-white leading-none">{result.analysis.trendScore}</span>
-                        <div className="h-1.5 w-full bg-white/5 rounded-full mt-4 overflow-hidden">
-                           <motion.div 
-                              initial={{ width: 0 }}
-                              animate={{ width: `${result.analysis.trendScore}%` }}
-                              className={`h-full ${result.analysis.trendScore > 80 ? 'bg-green-500' : 'bg-orange-500'}`}
-                           />
-                        </div>
-                      </div>
-                    </div>
+              <div className="flex-shrink-0 flex items-center gap-6 relative z-10">
+                <div className="text-center">
+                  <div className="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1">Status</div>
+                  <div className={`px-4 py-2 rounded-xl border font-black text-xs ${
+                    result.analysis.opportunityStatus === 'WINNER' ? 'bg-green-500/10 border-green-500/20 text-green-500' :
+                    result.analysis.opportunityStatus === 'SAFE HAVEN' ? 'bg-blue-500/10 border-blue-500/20 text-blue-400' :
+                    'bg-red-500/10 border-red-500/20 text-red-500'
+                  }`}>
+                    {result.analysis.opportunityStatus}
                   </div>
+                </div>
+                <div className="h-12 w-px bg-white/10 hidden md:block"></div>
+                <div className="text-center">
+                  <div className="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1">Alpha Score</div>
+                  <div className="text-4xl font-black text-white">{result.analysis.trendScore}</div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
 
-                  {/* --- WHY AI CHOSE THIS (REASONING PANEL) --- */}
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
-                    <div className="md:col-span-7 bg-white/5 border border-white/10 rounded-3xl p-8 relative overflow-hidden">
-                      <div className="absolute top-0 right-0 p-4 opacity-5">
-                         <Brain className="w-32 h-32 text-white" />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+            {/* Left Column: Data & Product */}
+            <div className="lg:col-span-8 space-y-8">
+              
+              {/* Product Dossier */}
+              <Card className="overflow-hidden border-white/10 bg-[#0d111c]/60 backdrop-blur-xl rounded-[2.5rem] p-1 shadow-2xl">
+                <div className="p-8">
+                  <div className="flex flex-col md:flex-row gap-8">
+                    <div className="w-full md:w-56 shrink-0">
+                      <div className="relative group rounded-3xl overflow-hidden aspect-square shadow-2xl border border-white/5">
+                        <img src={result.product.imageUrl} alt={result.product.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#050810]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                           <span className="text-[10px] font-bold text-white uppercase tracking-widest">View Source Listing</span>
+                        </div>
                       </div>
-                      <h3 className="text-white font-black mb-4 flex items-center gap-3 text-lg uppercase tracking-tight">
-                        <Zap className="w-5 h-5 text-orange-500" /> AI REASONING ENGINE
-                      </h3>
-                      <p className="text-slate-300 text-lg leading-relaxed font-medium">
-                        {result.analysis.summary}
-                      </p>
-                      
-                      <div className="mt-8 pt-8 border-t border-white/5 grid grid-cols-2 gap-4">
-                         {[
-                           { label: 'SEO Intent', value: 'High Keyword Velocity', color: 'blue' },
-                           { label: 'TikTok Sync', value: 'Trend Crossover Detected', color: 'purple' },
-                         ].map(insight => (
-                           <div key={insight.label} className="bg-white/5 p-4 rounded-2xl border border-white/5">
-                              <span className="block text-[9px] font-black text-slate-500 uppercase mb-1 tracking-widest">{insight.label}</span>
-                              <span className="block text-xs font-bold text-white">{insight.value}</span>
-                           </div>
+                    </div>
+
+                    <div className="flex-1 space-y-6">
+                      <div className="flex justify-between items-start">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <Store className="w-3 h-3 text-orange-500" />
+                            <span className="text-orange-500 font-black text-[10px] uppercase tracking-widest">{result.product.shopName}</span>
+                          </div>
+                          <h3 className="text-2xl font-bold text-white leading-tight tracking-tight">{result.product.title}</h3>
+                        </div>
+                        <a href={result.product.url} target="_blank" className="p-3 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 transition-all group">
+                          <ExternalLink className="w-5 h-5 text-slate-400 group-hover:text-white" />
+                        </a>
+                      </div>
+
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {[
+                          { label: 'Price Points', val: `${result.product.price} ${result.product.currency}`, icon: <Tag className="w-3 h-3" /> },
+                          { label: 'Market Demand', val: result.product.favorites, icon: <Heart className="w-3 h-3" />, sub: 'favorites' },
+                          { label: 'Visibility', val: result.product.views, icon: <Eye className="w-3 h-3" />, sub: 'views' },
+                          { label: 'Ranking', val: result.product.badge || 'Standard', icon: <Star className="w-3 h-3" /> },
+                        ].map((stat, i) => (
+                          <div key={i} className="p-4 bg-white/[0.03] rounded-2xl border border-white/5 group hover:bg-white/[0.05] transition-colors">
+                            <div className="flex items-center gap-2 text-slate-500 mb-2 group-hover:text-orange-500 transition-colors">
+                              {stat.icon}
+                              <span className="text-[9px] font-black uppercase tracking-widest">{stat.label}</span>
+                            </div>
+                            <div className="text-white font-black text-lg">{stat.val}</div>
+                            {stat.sub && <div className="text-[8px] font-bold text-slate-600 uppercase mt-0.5">{stat.sub}</div>}
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="flex flex-wrap gap-2">
+                         {result.product.tags?.slice(0, 6).map((tag: string, i: number) => (
+                           <span key={i} className="px-3 py-1.5 bg-white/5 border border-white/5 rounded-xl text-[10px] font-bold text-slate-400 hover:text-orange-400 transition-colors cursor-default">#{tag.replace(/\s+/g, '')}</span>
                          ))}
                       </div>
-                    </div>
-
-                    {/* --- HEATMAP SYSTEM --- */}
-                    <div className="md:col-span-5 flex flex-col gap-4">
-                      {[
-                        { label: 'Demand Strength', value: result.analysis.scores?.demand || 80, color: 'blue', glow: 'rgba(59,130,246,0.3)' },
-                        { label: 'Competition Gap', value: result.analysis.scores?.competition || 60, color: 'purple', glow: 'rgba(168,85,247,0.3)' },
-                        { label: 'Trend Momentum', value: result.analysis.scores?.trend || 90, color: 'orange', glow: 'rgba(249,115,22,0.3)' },
-                        { label: 'Emotional Buy', value: 85, color: 'pink', glow: 'rgba(236,72,153,0.3)' },
-                      ].map((bar) => (
-                        <div key={bar.label} className="bg-white/5 border border-white/10 p-5 rounded-3xl relative overflow-hidden group">
-                          <div className="flex justify-between items-center mb-3">
-                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{bar.label}</span>
-                            <span className="text-white font-black text-sm">{bar.value}%</span>
-                          </div>
-                          <div className="h-3 bg-white/5 rounded-full overflow-hidden">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              animate={{ width: `${bar.value}%` }}
-                              transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-                              className={`h-full bg-${bar.color}-500 shadow-[0_0_15px_${bar.glow}] relative`}
-                            >
-                               <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 animate-shimmer"></div>
-                            </motion.div>
-                          </div>
-                        </div>
-                      ))}
                     </div>
                   </div>
                 </div>
               </Card>
-            </motion.div>
 
-            {/* --- AI CONFIDENCE ENGINE & VIRALITY ENGINE --- */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }} 
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.7 }}
-                className="bg-white/5 border border-white/10 rounded-[2rem] p-8 backdrop-blur-md relative overflow-hidden"
-              >
-                <div className="absolute top-0 right-0 p-4 opacity-5">
-                   <ShieldCheck className="w-24 h-24 text-white" />
-                </div>
-                <h3 className="text-white font-black mb-6 flex items-center gap-3 text-sm uppercase tracking-widest">
-                  <ShieldCheck className="w-5 h-5 text-blue-500" /> AI Confidence Engine
-                </h3>
-                
-                <div className="space-y-6">
-                  {[
-                    { label: 'SEO Stability', value: 92, color: 'blue' },
-                    { label: 'Trend Longevity', value: 85, color: 'orange' },
-                    { label: 'Supplier Reliability', value: 78, color: 'purple' },
-                    { label: 'Profit Predictability', value: 94, color: 'green' },
-                  ].map((stat) => (
-                    <div key={stat.label} className="flex items-center gap-4">
-                       <div className="w-32">
-                          <span className="text-[10px] font-bold text-slate-500 uppercase">{stat.label}</span>
-                       </div>
-                       <div className="flex-1 h-1.5 bg-white/5 rounded-full overflow-hidden">
-                          <motion.div 
-                            initial={{ width: 0 }}
-                            animate={{ width: `${stat.value}%` }}
-                            className={`h-full bg-${stat.color}-500`}
-                          />
-                       </div>
-                       <div className="w-10 text-right">
-                          <span className="text-xs font-black text-white">{stat.value}%</span>
-                       </div>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-
-              <motion.div 
-                initial={{ opacity: 0, x: 20 }} 
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.8 }}
-                className="bg-white/5 border border-white/10 rounded-[2rem] p-8 backdrop-blur-md relative overflow-hidden"
-              >
-                <div className="absolute top-0 right-0 p-4 opacity-5">
-                   <TrendingUp className="w-24 h-24 text-white" />
-                </div>
-                <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-white font-black flex items-center gap-3 text-sm uppercase tracking-widest">
-                    <Zap className="w-5 h-5 text-orange-500" /> Virality Engine
-                  </h3>
-                  <div className="px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full text-green-500 text-[10px] font-black animate-pulse">
-                    MOMENTUM UP
-                  </div>
-                </div>
-
-                <div className="flex items-end gap-3 h-32 mb-6">
-                   {[40, 20, 60, 45, 90, 70, 85].map((h, i) => (
-                     <motion.div 
-                        key={i}
-                        initial={{ height: 0 }}
-                        animate={{ height: `${h}%` }}
-                        transition={{ delay: 1 + (i * 0.1), type: "spring" }}
-                        className={`flex-1 rounded-t-lg bg-gradient-to-t ${i === 6 ? 'from-orange-600 to-orange-400' : 'from-white/5 to-white/20'}`}
-                     />
-                   ))}
-                </div>
-                
-                <div className="flex justify-between items-center border-t border-white/5 pt-4">
-                   <div>
-                      <span className="block text-[10px] font-bold text-slate-500 uppercase">Trend Score</span>
-                      <span className="text-2xl font-black text-white">↗ +42%</span>
-                   </div>
-                   <div className="text-right">
-                      <span className="block text-[10px] font-bold text-slate-500 uppercase">Predicted Cap</span>
-                      <span className="text-lg font-bold text-slate-300">12.5k sales/mo</span>
-                   </div>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* AI Agents Detailed Insights */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {[
-                { agent: 'Trend Agent', role: 'TikTok Analysis', insight: 'Increasing visibility in #HandmadeGift communities. High engagement on process videos.', icon: <Sparkles className="w-5 h-5" />, color: 'orange' },
-                { agent: 'SEO Agent', role: 'Keyword Gap', insight: 'Weak competition for specific long-tail keywords. Opportunity for high organic ranking.', icon: <Search className="w-5 h-5" />, color: 'blue' },
-              ].map((agent) => (
-                <div key={agent.agent} className="bg-white/5 border border-white/10 p-6 rounded-3xl flex gap-5 group hover:bg-white/[0.07] transition-all">
-                  <div className={`p-4 rounded-2xl bg-${agent.color}-500/10 text-${agent.color}-500 h-fit`}>
-                    {agent.icon}
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <h4 className="text-white font-black text-sm">{agent.agent}</h4>
-                      <span className="text-[9px] font-bold text-slate-600 uppercase tracking-widest">{agent.role}</span>
-                    </div>
-                    <p className="text-slate-400 text-sm leading-snug">{agent.insight}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            {/* Market Evolution Insight */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.1 }}
-              className="bg-gradient-to-br from-blue-600/10 via-purple-600/10 to-orange-600/10 border border-white/10 rounded-[2.5rem] p-10 relative overflow-hidden group mt-10"
-            >
-               <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:scale-110 transition-transform duration-1000">
-                  <TrendingUp className="w-40 h-40 text-white" />
-               </div>
-               <div className="relative z-10 space-y-6">
-                 <div className="flex items-center gap-4">
-                    <div className="p-3 rounded-2xl bg-white/10 backdrop-blur-md text-white">
-                       <Zap className="w-8 h-8 text-orange-500" />
-                    </div>
-                    <div>
-                       <h3 className="text-2xl font-black text-white tracking-tight">Market Evolution Forecast</h3>
-                       <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">AI Strategic Projection for 2027</p>
-                    </div>
-                 </div>
-                 
-                 <p className="text-slate-300 text-xl font-medium leading-relaxed max-w-2xl">
-                   &quot;Our algorithms predict this niche will evolve towards <span className="text-white font-black underline decoration-orange-500 decoration-4">high-end memorial kits</span> and <span className="text-white font-black underline decoration-blue-500 decoration-4">interactive personalized experiences</span>. Early movers should focus on eco-friendly materials to capture the next wave.&quot;
-                 </p>
-                 
-                 <div className="flex flex-wrap gap-4 pt-4">
-                    {['Eco-Materials', 'AR Previews', 'Bundle Strategies'].map(tag => (
-                      <span key={tag} className="px-5 py-2 bg-white/5 border border-white/10 rounded-full text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                        Future Tag: {tag}
-                      </span>
-                    ))}
-                 </div>
-               </div>
-            </motion.div>
-          </div>
-
-          {/* Right Column: Reference & Actions */}
-          <div className="lg:col-span-4 space-y-8">
-            <Card className="p-8 bg-[#0d111c]/80 backdrop-blur-2xl border-white/10 shadow-2xl rounded-[2.5rem] relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
-                 <Store className="w-32 h-32 text-white" />
-              </div>
-              
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-slate-500 text-[10px] font-black uppercase tracking-widest">Market Reference</h3>
-                <button
-                  onClick={handleSaveProduct}
-                  className={`p-3 rounded-xl border transition-all ${isSaved ? 'bg-amber-500/20 border-amber-500/30 text-amber-400' : 'bg-white/5 border-white/10 text-slate-500 hover:text-amber-500 hover:bg-white/10'}`}
+              {/* Advanced Analytics Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Revenue Forecast Card */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="bg-white/[0.03] border border-white/10 rounded-[2rem] p-8 relative overflow-hidden group"
                 >
-                  <Star className={`w-5 h-5 ${isSaved ? 'fill-current' : ''}`} />
-                </button>
-              </div>
-
-              {result.product.imageUrl && (
-                <div className="relative aspect-square rounded-[2rem] overflow-hidden mb-6 group border border-white/10 shadow-xl">
-                  <img src={result.product.imageUrl} alt="Ref" className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-1000" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-end pb-8">
-                    <a href={result.product.url} target="_blank" className="px-6 py-3 bg-white text-black rounded-xl font-bold flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform">
-                      View on Etsy <ExternalLink className="w-4 h-4" />
-                    </a>
+                  <div className="absolute top-0 right-0 p-6 opacity-[0.03] group-hover:opacity-10 transition-opacity">
+                    <BarChart3 className="w-24 h-24 text-white" />
                   </div>
-                </div>
-              )}
+                  <h4 className="text-white font-black mb-4 flex items-center gap-2 text-sm uppercase tracking-widest">
+                    <TrendingUp className="w-4 h-4 text-green-500" /> Revenue Forecast
+                  </h4>
+                  <div className="text-3xl font-black text-white mb-2">{result.analysis.revenueForecast}</div>
+                  <p className="text-slate-500 text-sm leading-relaxed font-medium">Predicted monthly yield based on current market velocity and competition gaps.</p>
+                </motion.div>
 
-              <h4 className="text-white font-black text-xl leading-tight mb-6">{result.product.title}</h4>
-
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                <div className="bg-white/5 p-4 rounded-2xl border border-white/5">
-                  <span className="text-[9px] text-slate-500 uppercase font-black block mb-1">Etsy Price</span>
-                  <span className="text-green-500 font-black text-2xl tracking-tighter">{result.product.price} <span className="text-xs">{result.product.currency}</span></span>
-                </div>
-                <div className="bg-white/5 p-4 rounded-2xl border border-white/5">
-                  <span className="text-[9px] text-slate-500 uppercase font-black block mb-1">Popularity</span>
-                  <span className="text-white font-black text-2xl tracking-tighter">{result.product.favorites}<span className="text-xs text-slate-600 ml-1">♥</span></span>
-                </div>
+                {/* Sniper Strategy Card */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="bg-white/[0.03] border border-white/10 rounded-[2rem] p-8 relative overflow-hidden group"
+                >
+                  <div className="absolute top-0 right-0 p-6 opacity-[0.03] group-hover:opacity-10 transition-opacity">
+                    <Zap className="w-24 h-24 text-white" />
+                  </div>
+                  <h4 className="text-white font-black mb-4 flex items-center gap-2 text-sm uppercase tracking-widest">
+                    <Zap className="w-4 h-4 text-orange-500" /> Tactical Move
+                  </h4>
+                  <div className="text-lg font-bold text-orange-400 mb-2">{result.analysis.sniperStrategy}</div>
+                  <p className="text-slate-500 text-xs leading-relaxed font-medium italic">&quot;Execution window is currently optimal.&quot;</p>
+                </motion.div>
               </div>
 
-              <div className="space-y-4">
-                <button
+              {/* Execution Actions */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button 
                   onClick={async () => {
                     setIsGeneratingListing(true);
                     try {
                       const res = await fetch("/api/etsy/generate-listing", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ product: result.product, analysis: result.analysis }),
+                        body: JSON.stringify({ product: result.product }),
                       });
                       const data = await res.json();
-                      if (data.success) setListing(data.listing);
-                    } catch (e) { console.error(e); }
-                    finally { setIsGeneratingListing(false); }
+                      setListing(data);
+                    } finally {
+                      setIsGeneratingListing(false);
+                    }
                   }}
                   disabled={isGeneratingListing}
-                  className="w-full py-5 bg-white text-black font-black rounded-2xl hover:bg-slate-200 transition-all flex items-center justify-center gap-3 disabled:opacity-50 active:scale-95 shadow-xl"
+                  className="group relative h-24 bg-[#0d111c] border border-white/10 rounded-[2rem] overflow-hidden transition-all hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/5"
                 >
-                  {isGeneratingListing ? <Loader2 className="w-5 h-5 animate-spin" /> : <PenTool className="w-5 h-5" />}
-                  Generate AI Listing
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="relative flex items-center justify-between px-8">
+                    <div className="flex items-center gap-5 text-left">
+                      <div className="p-4 bg-orange-500/10 text-orange-500 rounded-2xl group-hover:scale-110 group-hover:bg-orange-500/20 transition-all duration-500">
+                        {isGeneratingListing ? <Loader2 className="w-6 h-6 animate-spin" /> : <PenTool className="w-6 h-6" />}
+                      </div>
+                      <div>
+                        <div className="text-white font-black text-base uppercase tracking-wider">AI Listing Forge</div>
+                        <div className="text-slate-500 text-xs font-medium">Generate SEO-Killer Content</div>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-6 h-6 text-slate-700 group-hover:text-orange-500 group-hover:translate-x-1 transition-all" />
+                  </div>
                 </button>
-                <button
+
+                <button 
                   onClick={async () => {
                     setIsFindingSupplier(true);
                     try {
-                      const res = await fetch("/api/etsy/find-supplier", {
+                      const res = await fetch("/api/etsy/find-suppliers", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ product: result.product }),
                       });
                       const data = await res.json();
-                      if (data.success) setSupplier(data.supplier);
-                    } catch (e) { console.error(e); }
-                    finally { setIsFindingSupplier(false); }
+                      setSupplier(data.suppliers[0]);
+                    } finally {
+                      setIsFindingSupplier(false);
+                    }
                   }}
                   disabled={isFindingSupplier}
-                  className="w-full py-5 bg-transparent border-2 border-white/10 text-white font-black rounded-2xl hover:bg-white/5 transition-all flex items-center justify-center gap-3 disabled:opacity-50 active:scale-95"
+                  className="group relative h-24 bg-[#0d111c] border border-white/10 rounded-[2rem] overflow-hidden transition-all hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/5"
                 >
-                  {isFindingSupplier ? <Loader2 className="w-5 h-5 animate-spin" /> : <Truck className="w-5 h-5" />}
-                  Source Suppliers
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="relative flex items-center justify-between px-8">
+                    <div className="flex items-center gap-5 text-left">
+                      <div className="p-4 bg-blue-500/10 text-blue-400 rounded-2xl group-hover:scale-110 group-hover:bg-blue-500/20 transition-all duration-500">
+                        {isFindingSupplier ? <Loader2 className="w-6 h-6 animate-spin" /> : <Factory className="w-6 h-6" />}
+                      </div>
+                      <div>
+                        <div className="text-white font-black text-base uppercase tracking-wider">Source Nexus</div>
+                        <div className="text-slate-500 text-xs font-medium">Discover High-Margin Suppliers</div>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-6 h-6 text-slate-700 group-hover:text-blue-400 group-hover:translate-x-1 transition-all" />
+                  </div>
                 </button>
               </div>
-            </Card>
+            </div>
 
-            <div className="p-6 rounded-3xl bg-gradient-to-br from-orange-500/10 to-transparent border border-white/5 backdrop-blur-sm relative overflow-hidden group">
-               <div className="absolute inset-0 bg-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-               <h3 className="text-orange-500 text-[10px] font-black uppercase mb-3 flex items-center gap-2 tracking-widest">
-                <ShieldCheck className="w-3 h-3" /> System Verification
-              </h3>
-              <p className="text-slate-400 text-[11px] font-medium leading-relaxed italic">
-                Cross-referenced with 5 AI models and verified against live Etsy/TikTok data streams. Prediction confidence: 94.2%.
-              </p>
+            {/* Right Column: AI Reasoning & Buyer Psych */}
+            <div className="lg:col-span-4 space-y-6">
+              
+              {/* Strategic Reasoning */}
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="p-8 rounded-[2.5rem] bg-[#0d111c] border border-white/10 relative overflow-hidden"
+              >
+                <div className="absolute top-0 right-0 p-8 opacity-[0.02]">
+                  <Brain className="w-32 h-32 text-white" />
+                </div>
+                <div className="relative z-10 space-y-6">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-purple-500/10 rounded-lg text-purple-400">
+                      <Brain className="w-4 h-4" />
+                    </div>
+                    <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">AI Intelligence Feed</span>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h5 className="text-white font-bold text-lg leading-snug">Strategic Breakdown</h5>
+                    <p className="text-slate-400 text-sm leading-relaxed font-medium italic">
+                      &quot;{result.analysis.summary.replace(result.analysis.verdict, '').trim()}&quot;
+                    </p>
+                  </div>
+
+                  <div className="pt-6 border-t border-white/5 space-y-4">
+                    <div className="flex items-start gap-3">
+                       <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                       <div>
+                         <span className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Critical Risk</span>
+                         <span className="text-xs font-bold text-white leading-tight block">{result.analysis.riskEvaluation}</span>
+                       </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Buyer Psychology */}
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 }}
+                className="p-8 rounded-[2.5rem] bg-gradient-to-br from-indigo-900/20 to-purple-900/20 border border-indigo-500/20 relative overflow-hidden"
+              >
+                <div className="relative z-10 space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-indigo-500/10 rounded-lg text-indigo-400">
+                      <ShoppingBag className="w-4 h-4" />
+                    </div>
+                    <span className="text-[10px] font-black text-indigo-300 uppercase tracking-[0.2em]">Buyer Psychology</span>
+                  </div>
+                  <h5 className="text-white font-bold text-lg">Why They Buy</h5>
+                  <p className="text-indigo-200/60 text-sm leading-relaxed font-medium">
+                    {result.analysis.buyerPsychology}
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Save Button */}
+              <button 
+                onClick={handleSaveProduct}
+                disabled={isSaved}
+                className={`w-full py-6 rounded-[2rem] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-3 border shadow-2xl ${isSaved ? 'bg-white/5 border-white/10 text-slate-500 cursor-not-allowed' : 'bg-orange-500 border-orange-400 text-white hover:scale-[1.02] active:scale-[0.98] hover:shadow-orange-500/20'}`}
+              >
+                {isSaved ? <CheckCircle className="w-6 h-6" /> : <ShoppingBag className="w-6 h-6" />}
+                {isSaved ? 'PRODUCT SECURED' : 'SNIPE & SAVE TO VAULT'}
+              </button>
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
 
       {/* --- REALISTIC ETSY LISTING MOCKUP --- */}

@@ -6,6 +6,11 @@ export interface DetailedAnalysis {
   competitionLevel: "Low" | "Medium" | "High";
   decision: "SELL" | "AVOID";
   summary: string;
+  verdict: string;
+  opportunityStatus: string;
+  revenueForecast: string;
+  riskEvaluation: string;
+  sniperStrategy: string;
   isHandmade: boolean;
   isCustomizable: boolean;
   scores: {
@@ -20,6 +25,7 @@ export interface DetailedAnalysis {
     confidence: number;
   };
   seoInsight: string;
+  buyerPsychology: string;
 }
 
 export class EtsyAIEngine {
@@ -28,26 +34,36 @@ export class EtsyAIEngine {
     const [primaryModel, ...fallbacks] = FREE_MODEL_CHAINS.analysis;
 
     const prompt = `
-      You are an elite e-commerce data scientist specializing in Etsy market analysis.
-      Analyze the following product with extreme precision. Do NOT use fake data.
-      
+      ROLE: You are the "Etsy Sniper" Strategic Business Advisor. You are the brain of a high-end SaaS platform. Your goal is NOT to describe data, but to dictate profit-making moves.
+
+      1. THE "VERDICT" PROTOCOL (MANDATORY)
+      Every single response MUST start with a high-impact, one-sentence VERDICT. This is the ultimate "Go/No-Go" decision.
+
+      2. CORE MODULES & LOGIC
+      I. MARKET ADVISORY (The "Truth" Engine): Classify into: WINNER, RISKY, SAFE HAVEN, or DEAD END.
+      II. SMART SALES ESTIMATION: Realistic monthly volume.
+      III. COMPETITOR KILL-ZONE: Vulnerability in Top 10.
+      IV. BUYER PSYCHOLOGY: Why do they hit "Add to Cart"?
+
+      PRODUCT DATA:
       TITLE: ${productData.title}
       PRICE: ${productData.price} ${productData.currency}
       FAVORITES: ${productData.favorites}
       VIEWS: ${productData.views}
-      TAGS: ${productData.tags.join(', ')}
+      TAGS: ${productData.tags?.join(', ') || 'N/A'}
 
-      YOUR TASK:
-      1. Calculate specific scores (0-100) for Demand, Margin potential, Competition (0=High competition, 100=No competition), and Trend velocity.
-      2. Simulate a consensus check (act as if you are validating with 5 different AI experts).
-      3. Determine if this is a "SELL" or "AVOID" opportunity.
-
-      STRICT JSON FORMAT ONLY:
+      OUTPUT STRUCTURE (STRICT JSON):
       {
+        "verdict": "One high-impact sentence",
+        "opportunityStatus": "WINNER | RISKY | SAFE HAVEN | DEAD END",
+        "revenueForecast": "Aggressive but realistic revenue/sales range",
+        "riskEvaluation": "Primary threat to profit",
+        "sniperStrategy": "Tactical move to win",
         "trendScore": 0-100,
-        "competitionLevel": "Low" | "Medium" | "High",
-        "decision": "SELL" | "AVOID",
-        "summary": "Deep strategic analysis in 2 sentences",
+        "competitionLevel": "Low | Medium | High",
+        "decision": "SELL | AVOID",
+        "summary": "Deep strategic logic combining the modules",
+        "buyerPsychology": "Emotional trigger analysis",
         "isHandmade": boolean,
         "isCustomizable": boolean,
         "scores": {
@@ -61,19 +77,19 @@ export class EtsyAIEngine {
           "totalProviders": 5,
           "confidence": 0-100
         },
-        "seoInsight": "One specific SEO tip for this niche"
+        "seoInsight": "Tactical SEO gap to exploit"
       }
     `;
 
     return withRetry(
       async (overrideModel?: string) => {
         const modelToUse = overrideModel || primaryModel;
-        console.log(`[EtsyAIEngine] Running Deep Consensus Analysis using: ${modelToUse}`);
+        console.log(`[EtsyAIEngine] Running V2.0 Strategic Analysis using: ${modelToUse}`);
 
         const response = await cline.chat.completions.create({
           model: modelToUse,
           messages: [{ role: "user", content: prompt }],
-          temperature: 0.1,
+          temperature: 0.2,
         });
 
         const content = response.choices[0]?.message?.content || '';
@@ -81,12 +97,12 @@ export class EtsyAIEngine {
 
         const parsed = JSON.parse(extractJSON(content));
         
-        // Ensure all required fields exist
         return {
           ...parsed,
+          summary: parsed.verdict + " " + parsed.summary, // Combine for UI compatibility
           scores: parsed.scores || { demand: 70, margin: 60, competition: 50, trend: 75 },
           consensus: parsed.consensus || { agreedCount: 4, totalProviders: 5, confidence: 80 },
-          seoInsight: parsed.seoInsight || "Optimize title with long-tail keywords."
+          seoInsight: parsed.seoInsight || "Optimize for long-tail high-intent keywords."
         };
       },
       { maxRetries: 4, baseDelayMs: 1500, fallbackModels: fallbacks }
