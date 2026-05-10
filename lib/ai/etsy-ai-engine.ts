@@ -26,6 +26,16 @@ export interface DetailedAnalysis {
   };
   seoInsight: string;
   buyerPsychology: string;
+  actionPriority?: Array<{
+    task: string;
+    priority: "Urgent" | "High" | "Medium";
+    impact: string;
+  }>;
+  serpSimulation?: {
+    top10Pattern: string;
+    thumbnailGap: string;
+    titleGap: string;
+  };
 }
 
 export class EtsyAIEngine {
@@ -56,6 +66,7 @@ You act like:
 
 ### 1. MARKET REALITY SIMULATION (SERP LOGIC)
 Analyze: Top 10 listing density, Visual similarity, Pricing clustering, Saturation type.
+You MUST provide a "serpSimulation" analyzing the current Top 10 pattern, the visual/thumbnail gap (how to stand out visually), and the title gap.
 
 ### 2. BUYER INTENT ENGINE & 3. EMOTIONAL COMMERCE ANALYSIS
 Detect psychological buying triggers: pain relief, identity transformation, hope, guilt relief, dopamine, etc.
@@ -66,7 +77,10 @@ Identify cultural source (TikTok, Pinterest, Reddit), uniqueness, and copycat ri
 ### 6. MONETIZATION ENGINE
 Evaluate real profit structure, price strength, upsell potential, and ads dependency.
 
-### 7. WIN / LOSE DECISION
+### 7. ACTION PRIORITY ENGINE
+Instead of just giving data, provide a strict 3-step action plan in "actionPriority". Tell the seller exactly what to do first, second, and third to beat the competition (e.g., "1. Change thumbnail to dark background to stand out from 10 white competitors").
+
+### 8. WIN / LOSE DECISION
 Final classification: WINNER, HYPER WINNER, AVOID, SPECULATIVE
 
 PRODUCT DATA TO ANALYZE:
@@ -103,7 +117,19 @@ You MUST output ONLY a valid JSON object matching the interface below. No markdo
     "totalProviders": 5,
     "confidence": 95
   },
-  "seoInsight": "Tactical SEO gap to exploit"
+  "seoInsight": "Tactical SEO gap to exploit",
+  "serpSimulation": {
+    "top10Pattern": "What the top 10 currently look like (e.g., 'All using white backgrounds and cursive fonts')",
+    "thumbnailGap": "How to visually stand out (e.g., 'Use dark wood background to contrast')",
+    "titleGap": "Keywords competitors are missing"
+  },
+  "actionPriority": [
+    {
+      "task": "Strict instruction on what to change first (e.g. 'Drop price to $14.99')",
+      "priority": "Urgent",
+      "impact": "Why this matters (e.g. 'Undercuts the primary cluster')"
+    }
+  ]
 }`;
 
     return withRetry(

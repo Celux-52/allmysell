@@ -7,7 +7,8 @@ import {
   Search, Sparkles, TrendingUp, BarChart3, ArrowRight, Zap, 
   ShieldCheck, Loader2, CheckCircle, Store, Tag, Heart, Eye, 
   ExternalLink, PenTool, Factory, Star, Globe, Cpu, Layers, 
-  Database, Layout, X, ShoppingBag, Brain, AlertTriangle, Truck
+  Database, Layout, X, ShoppingBag, Brain, AlertTriangle, Truck,
+  ListTodo, SearchCode, BookOpen, Image as ImageIcon
 } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { EtsyStorage } from "@/modules/etsy-automation/services/etsyStorage";
@@ -549,6 +550,69 @@ export default function EtsySaaSPanel() {
                   <div className="text-lg font-bold text-orange-400 mb-2">{result.analysis.sniperStrategy}</div>
                   <p className="text-slate-500 text-xs leading-relaxed font-medium italic">&quot;Execution window is currently optimal.&quot;</p>
                 </motion.div>
+              </div>
+
+              {/* ⚡ ACTION PRIORITY ENGINE & 🔎 SERP SIMULATION (Faz 1) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                {/* Action Priority Engine */}
+                {result.analysis.actionPriority && result.analysis.actionPriority.length > 0 && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="bg-[#0b0f19] border border-orange-500/20 rounded-[2rem] p-8 shadow-[0_0_40px_-15px_rgba(249,115,22,0.15)] relative"
+                  >
+                    <h4 className="text-orange-500 font-black mb-6 flex items-center gap-2 text-sm uppercase tracking-widest">
+                      <ListTodo className="w-5 h-5" /> ACTION PRIORITY
+                    </h4>
+                    <div className="space-y-4">
+                      {result.analysis.actionPriority.map((action: any, idx: number) => (
+                        <div key={idx} className="flex gap-4 items-start bg-white/[0.02] p-4 rounded-2xl border border-white/5">
+                          <div className={`w-6 h-6 rounded-full flex items-center justify-center font-black text-xs shrink-0 ${
+                            action.priority === 'Urgent' ? 'bg-red-500/20 text-red-500 border border-red-500/20' :
+                            action.priority === 'High' ? 'bg-orange-500/20 text-orange-500 border border-orange-500/20' :
+                            'bg-yellow-500/20 text-yellow-500 border border-yellow-500/20'
+                          }`}>
+                            {idx + 1}
+                          </div>
+                          <div>
+                            <div className="text-white font-bold text-sm leading-tight mb-1">{action.task}</div>
+                            <div className="text-slate-500 text-[10px] italic">{action.impact}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Real SERP Simulation */}
+                {result.analysis.serpSimulation && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="bg-[#0b0f19] border border-cyan-500/20 rounded-[2rem] p-8 shadow-[0_0_40px_-15px_rgba(6,182,212,0.1)] relative"
+                  >
+                    <h4 className="text-cyan-400 font-black mb-6 flex items-center gap-2 text-sm uppercase tracking-widest">
+                      <SearchCode className="w-5 h-5" /> REAL SERP SIMULATION
+                    </h4>
+                    <div className="space-y-5">
+                      <div>
+                        <div className="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1">Top 10 Pattern</div>
+                        <div className="text-white text-xs font-medium leading-relaxed bg-white/5 p-3 rounded-xl border border-white/5">{result.analysis.serpSimulation.top10Pattern}</div>
+                      </div>
+                      <div>
+                        <div className="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1 flex items-center gap-1"><ImageIcon className="w-3 h-3 text-pink-400"/> Thumbnail Gap</div>
+                        <div className="text-pink-300/90 text-xs font-bold leading-relaxed bg-pink-500/5 p-3 rounded-xl border border-pink-500/10">{result.analysis.serpSimulation.thumbnailGap}</div>
+                      </div>
+                      <div>
+                        <div className="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1 flex items-center gap-1"><BookOpen className="w-3 h-3 text-blue-400"/> Title Gap</div>
+                        <div className="text-blue-300/90 text-xs font-bold leading-relaxed bg-blue-500/5 p-3 rounded-xl border border-blue-500/10">{result.analysis.serpSimulation.titleGap}</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
               </div>
 
               {/* Execution Actions */}
