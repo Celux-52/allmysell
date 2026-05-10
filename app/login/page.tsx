@@ -168,12 +168,12 @@ function LoginForm() {
             transition={{ delay: 0.3 }}
           >
             <h2 className="text-5xl font-black text-white tracking-tighter uppercase italic leading-none">
-              ETSY <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">SNIPER</span>
+              ALL<span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">MYSELL</span>
             </h2>
             <div className="flex items-center justify-center gap-2 mt-3">
               <div className="h-px w-8 bg-white/10" />
               <p className="text-[10px] text-slate-500 font-black tracking-[0.4em] uppercase">
-                INTELLIGENCE OS
+                E-COMMERCE INTELLIGENCE
               </p>
               <div className="h-px w-8 bg-white/10" />
             </div>
