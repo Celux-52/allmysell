@@ -32,7 +32,11 @@ export async function POST(request: NextRequest) {
         select: { subscriptionStatus: true }
       })
 
-      const status = profile?.subscriptionStatus || 'FREE'
+      // --- ADMIN OVERRIDE ---
+      const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase())
+      const isUserAdmin = user.email && adminEmails.includes(user.email.toLowerCase())
+      
+      const status = isUserAdmin ? 'PRO_AGENCY' : (profile?.subscriptionStatus || 'FREE')
 
       // 2. Count searches this month
       const searchCount = await prisma.searchHistory.count({
