@@ -242,15 +242,13 @@ export default function EtsySaaSPanel() {
               />
             </div>
           </div>
-          {usage.status !== 'PRO_AGENCY' && (
-            <Link 
-              href="/pricing" 
-              className="flex items-center gap-2 px-6 py-3 bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[10px] font-black uppercase tracking-widest rounded-2xl hover:bg-orange-500/20 hover:scale-105 active:scale-95 transition-all shadow-lg shadow-orange-500/5"
-            >
-              <Zap className="w-3 h-3" />
-              Upgrade Access
-            </Link>
-          )}
+          <Link 
+            href="/pricing" 
+            className="flex items-center gap-2 px-6 py-3 bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[10px] font-black uppercase tracking-widest rounded-2xl hover:bg-orange-500/20 hover:scale-105 active:scale-95 transition-all shadow-lg shadow-orange-500/5"
+          >
+            <Zap className="w-3 h-3" />
+            {usage.status === 'PRO_AGENCY' ? 'Protocol Plans' : 'Upgrade Access'}
+          </Link>
         </motion.div>
       )}
 

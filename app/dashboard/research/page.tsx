@@ -121,14 +121,12 @@ export default function ResearchDashboard() {
               />
             </div>
           </div>
-          {usage.status !== 'PRO_AGENCY' && (
-            <Link 
-              href="/pricing" 
-              className="px-4 py-2 bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-orange-500/20 transition-all"
-            >
-              Upgrade
-            </Link>
-          )}
+          <Link 
+            href="/pricing" 
+            className="px-4 py-2 bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-orange-500/20 transition-all"
+          >
+            {usage.status === 'PRO_AGENCY' ? 'View Plans' : 'Upgrade'}
+          </Link>
         </motion.div>
       )}
 
