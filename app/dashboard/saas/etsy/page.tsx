@@ -566,6 +566,7 @@ export default function EtsySaaSPanel() {
                           tags: result.product.tags
                         }),
                       });
+                      const data = await res.json();
                       if (data.success) {
                         setListing(data.listing);
                       } else {
@@ -609,6 +610,7 @@ export default function EtsySaaSPanel() {
                           price: result.product.price
                         }),
                       });
+                      const data = await res.json();
                       if (data.success) {
                         setSupplier(data.supplier);
                       } else {
