@@ -386,6 +386,44 @@ export default function ResearchDashboard() {
                       </div>
                     </div>
                   )}
+
+                  {/* ⏱ Trend Lifespan & Scalability (Faz 3) */}
+                  {(product.trendLifespan || product.scalabilityScore !== undefined) && (
+                    <div className="bg-white/5 border border-white/5 rounded-xl p-4 mb-6">
+                      <h4 className="text-indigo-400 text-[10px] font-black uppercase tracking-widest flex items-center gap-1 mb-4">
+                        ⏱ TREND LIFESPAN & SCALABILITY
+                      </h4>
+                      <div className="flex items-center gap-3 mb-4">
+                        {product.trendLifespan && (
+                          <span className={`px-3 py-1.5 text-xs font-black uppercase rounded-full border ${
+                            product.trendLifespan === 'Evergreen' ? 'bg-green-500/10 border-green-500/20 text-green-400' :
+                            product.trendLifespan === 'Fad' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
+                            'bg-blue-500/10 border-blue-500/20 text-blue-400'
+                          }`}>
+                            {product.trendLifespan === 'Evergreen' ? '🌲' : product.trendLifespan === 'Fad' ? '💨' : '📅'} {product.trendLifespan}
+                          </span>
+                        )}
+                        {product.trendLifespanNote && (
+                          <p className="text-[10px] text-slate-500 italic flex-1">{product.trendLifespanNote}</p>
+                        )}
+                      </div>
+                      {product.scalabilityScore !== undefined && (
+                        <div>
+                          <div className="flex justify-between text-[10px] mb-1">
+                            <span className="text-slate-400 font-bold">Scalability (Brand Potential)</span>
+                            <span className={`font-black ${product.scalabilityScore > 70 ? 'text-green-400' : product.scalabilityScore > 40 ? 'text-yellow-400' : 'text-red-400'}`}>{product.scalabilityScore}/100</span>
+                          </div>
+                          <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div className={`h-full rounded-full ${product.scalabilityScore > 70 ? 'bg-gradient-to-r from-indigo-500 to-purple-400' : product.scalabilityScore > 40 ? 'bg-gradient-to-r from-yellow-500 to-amber-400' : 'bg-gradient-to-r from-red-500 to-red-400'}`} style={{ width: `${product.scalabilityScore}%` }}></div>
+                          </div>
+                          {product.scalabilityNote && (
+                            <p className="text-[10px] text-slate-500 italic mt-2">{product.scalabilityNote}</p>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   {/* Trends & Suppliers */}
                   <div className="space-y-4">
                      <div className="flex gap-3 bg-blue-500/5 border border-blue-500/10 rounded-xl p-4">

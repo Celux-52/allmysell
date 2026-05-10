@@ -124,6 +124,9 @@ For EVERY product, think like a pessimist: "Why would this FAIL?" Provide 2-3 sp
 🧬 COPYCAT & SATURATION RULE:
 Estimate market saturation: how many sellers already offer this exact product? Rate "saturationIndex" from 0 (blue ocean) to 100 (completely saturated). Rate "copycatRisk" from 0 (hard to clone) to 100 (trivially copied by Chinese factories within weeks). Be honest — most trending products are HIGH copycat risk.
 
+⏱ TREND LIFESPAN & SCALABILITY RULE:
+Classify each product's trend as "Evergreen" (will sell for years), "Seasonal" (holiday/season dependent), or "Fad" (viral hype that dies in weeks). Also rate "scalabilityScore" 0-100: can a seller build an entire store/brand around this product category? A niche candle store = high scalability. A single viral gadget = low scalability.
+
 Return ONLY valid JSON in this exact structure:
 {
   "products": [
@@ -152,6 +155,10 @@ Return ONLY valid JSON in this exact structure:
       "saturationIndex": 45,
       "copycatRisk": 70,
       "saturationNote": "Brief explanation of market saturation level and clone threat",
+      "trendLifespan": "Evergreen|Seasonal|Fad",
+      "trendLifespanNote": "Why this trend will last or die",
+      "scalabilityScore": 60,
+      "scalabilityNote": "Can you build a brand/store around this? Why or why not?",
       "description": "Detailed description",
       "platforms": ["eBay", "Etsy", "Amazon", "Shopify"],
       "whyItWorks": "Deep market analysis",
