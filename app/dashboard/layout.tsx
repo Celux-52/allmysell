@@ -16,19 +16,29 @@ export default async function DashboardLayout({
     redirect('/login')
   }
 
-  // Check subscription status
-  const profile = await prisma.profile.findUnique({
-    where: { id: user.id },
-    select: { subscriptionStatus: true }
-  })
-
-  // Admin Override
+  // Admin Override - check first (no DB needed)
   const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase())
   const isUserAdmin = user.email && adminEmails.includes(user.email.toLowerCase())
 
-  // If FREE and NOT admin → redirect to pricing
-  if (!isUserAdmin && (!profile || profile.subscriptionStatus === 'FREE')) {
-    redirect('/pricing')
+  // Admins always get through - no DB check needed
+  if (isUserAdmin) {
+    return <DashboardShell>{children}</DashboardShell>
+  }
+
+  // For non-admin users, check subscription status
+  try {
+    const profile = await prisma.profile.findUnique({
+      where: { id: user.id },
+      select: { subscriptionStatus: true }
+    })
+
+    // If no profile or FREE status → redirect to pricing
+    if (!profile || profile.subscriptionStatus === 'FREE') {
+      redirect('/pricing')
+    }
+  } catch (dbError) {
+    // If DB is unreachable, let user through rather than crashing
+    console.warn('[Dashboard Layout] Profile check failed:', dbError)
   }
 
   return <DashboardShell>{children}</DashboardShell>

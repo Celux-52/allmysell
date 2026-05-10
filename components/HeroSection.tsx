@@ -145,7 +145,7 @@ export default function HeroSection({ isPreview = false }: { isPreview?: boolean
           transition={{ delay: 0.1 }}
           className="text-6xl md:text-8xl font-black text-white tracking-tighter mb-6 italic leading-none"
         >
-          ETSY <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 drop-shadow-[0_0_30px_rgba(249,115,22,0.3)]">SNIPER</span>
+          ALLMY<span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 drop-shadow-[0_0_30px_rgba(249,115,22,0.3)]">SELL</span>
         </motion.h1>
 
         <motion.p 
@@ -154,9 +154,9 @@ export default function HeroSection({ isPreview = false }: { isPreview?: boolean
           transition={{ delay: 0.2 }}
           className="max-w-3xl text-xl text-slate-400 font-medium leading-relaxed mb-12"
         >
-          The world&apos;s most advanced e-commerce intelligence system. 
-          Deploy AI agents to hunt for high-margin market gaps and generate 
-          listings that dominate the Etsy algorithm.
+          The world&apos;s most advanced e-commerce intelligence platform. 
+          Deploy AI agents to analyze markets, find winning products, and generate 
+          listings that dominate every marketplace algorithm.
         </motion.p>
 
         {/* --- MAIN CALL TO ACTION --- */}

@@ -8,8 +8,8 @@ import TrustBadges from "@/components/TrustBadges";
 import Testimonials from "@/components/Testimonials";
 
 export const metadata: Metadata = {
-  title: "Etsy Sniper | Autonomous Market Intelligence OS",
-  description: "Deploy autonomous AI agents to scan market gaps, analyze competitor weaknesses, and generate high-conversion product listings in seconds.",
+  title: "AllMySell | AI-Powered E-Commerce Intelligence Platform",
+  description: "Deploy autonomous AI agents to analyze markets, find winning products, and scale your e-commerce business with data-driven intelligence.",
 };
 
 const saasFeatures = [
