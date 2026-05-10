@@ -118,6 +118,12 @@ For each data point, honestly assess your confidence. If you are guessing or ext
 💰 PROFIT REALITY CHECK RULE:
 Calculate "realProfitMargin" by deducting platform fees (~15% for Etsy, ~15% for Amazon, ~13% for eBay), estimated shipping (~$3-8), and estimated ads cost (~15-25% of revenue for new sellers). Show the REAL take-home profit, not the gross margin.
 
+💀 FAILURE MODE ANALYSIS RULE:
+For EVERY product, think like a pessimist: "Why would this FAIL?" Provide 2-3 specific failure scenarios in "failureModes". Include worst-case outcomes. This is reverse engineering — if a seller blindly follows your advice, what could go wrong?
+
+🧬 COPYCAT & SATURATION RULE:
+Estimate market saturation: how many sellers already offer this exact product? Rate "saturationIndex" from 0 (blue ocean) to 100 (completely saturated). Rate "copycatRisk" from 0 (hard to clone) to 100 (trivially copied by Chinese factories within weeks). Be honest — most trending products are HIGH copycat risk.
+
 Return ONLY valid JSON in this exact structure:
 {
   "products": [
@@ -140,6 +146,12 @@ Return ONLY valid JSON in this exact structure:
       "doNotBuildReason": "",
       "trafficSource": "TikTok Viral|Pinterest Organic|Etsy Search|Google Shopping|Instagram Ads",
       "failureRisks": ["Risk 1: specific reason", "Risk 2: specific reason"],
+      "failureModes": [
+        {"scenario": "What could go wrong", "likelihood": "High|Medium|Low", "impact": "Revenue loss, wasted inventory, etc."}
+      ],
+      "saturationIndex": 45,
+      "copycatRisk": 70,
+      "saturationNote": "Brief explanation of market saturation level and clone threat",
       "description": "Detailed description",
       "platforms": ["eBay", "Etsy", "Amazon", "Shopify"],
       "whyItWorks": "Deep market analysis",

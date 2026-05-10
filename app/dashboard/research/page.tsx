@@ -331,6 +331,61 @@ export default function ResearchDashboard() {
                     </div>
                   )}
 
+                  {/* 💀 Failure Mode Analysis (Faz 2) */}
+                  {product.failureModes && product.failureModes.length > 0 && (
+                    <div className="bg-slate-900/50 border border-white/5 rounded-xl p-4 mb-6">
+                      <h4 className="text-amber-400 text-[10px] font-black uppercase tracking-widest flex items-center gap-1 mb-3">
+                        💀 FAILURE MODE ANALYSIS
+                      </h4>
+                      <div className="space-y-2">
+                        {product.failureModes.map((mode: any, i: number) => (
+                          <div key={i} className="flex items-start gap-3 bg-black/20 rounded-lg p-2.5 border border-white/5">
+                            <span className={`px-1.5 py-0.5 text-[9px] font-black uppercase rounded ${
+                              mode.likelihood === 'High' ? 'bg-red-500/20 text-red-400' :
+                              mode.likelihood === 'Low' ? 'bg-green-500/20 text-green-400' :
+                              'bg-yellow-500/20 text-yellow-400'
+                            }`}>{mode.likelihood}</span>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-[11px] text-slate-300 leading-relaxed">{mode.scenario}</p>
+                              <p className="text-[10px] text-slate-500 mt-0.5 italic">Impact: {mode.impact}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 🧬 Saturation & Copycat Risk (Faz 2) */}
+                  {(product.saturationIndex !== undefined || product.copycatRisk !== undefined) && (
+                    <div className="bg-white/5 border border-white/5 rounded-xl p-4 mb-6">
+                      <h4 className="text-cyan-400 text-[10px] font-black uppercase tracking-widest flex items-center gap-1 mb-4">
+                        🧬 MARKET SATURATION & CLONE RISK
+                      </h4>
+                      <div className="space-y-3">
+                        <div>
+                          <div className="flex justify-between text-[10px] mb-1">
+                            <span className="text-slate-400 font-bold">Saturation Index</span>
+                            <span className={`font-black ${(product.saturationIndex || 0) > 70 ? 'text-red-400' : (product.saturationIndex || 0) > 40 ? 'text-yellow-400' : 'text-green-400'}`}>{product.saturationIndex || 0}/100</span>
+                          </div>
+                          <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div className={`h-full rounded-full ${(product.saturationIndex || 0) > 70 ? 'bg-gradient-to-r from-red-500 to-red-400' : (product.saturationIndex || 0) > 40 ? 'bg-gradient-to-r from-yellow-500 to-amber-400' : 'bg-gradient-to-r from-green-500 to-emerald-400'}`} style={{ width: `${product.saturationIndex || 0}%` }}></div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex justify-between text-[10px] mb-1">
+                            <span className="text-slate-400 font-bold">Copycat Risk</span>
+                            <span className={`font-black ${(product.copycatRisk || 0) > 70 ? 'text-red-400' : (product.copycatRisk || 0) > 40 ? 'text-yellow-400' : 'text-green-400'}`}>{product.copycatRisk || 0}/100</span>
+                          </div>
+                          <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div className={`h-full rounded-full ${(product.copycatRisk || 0) > 70 ? 'bg-gradient-to-r from-red-500 to-red-400' : (product.copycatRisk || 0) > 40 ? 'bg-gradient-to-r from-yellow-500 to-amber-400' : 'bg-gradient-to-r from-green-500 to-emerald-400'}`} style={{ width: `${product.copycatRisk || 0}%` }}></div>
+                          </div>
+                        </div>
+                        {product.saturationNote && (
+                          <p className="text-[10px] text-slate-500 italic mt-2 leading-relaxed">{product.saturationNote}</p>
+                        )}
+                      </div>
+                    </div>
+                  )}
                   {/* Trends & Suppliers */}
                   <div className="space-y-4">
                      <div className="flex gap-3 bg-blue-500/5 border border-blue-500/10 rounded-xl p-4">
