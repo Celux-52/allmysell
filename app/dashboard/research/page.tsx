@@ -13,7 +13,11 @@ export default function ResearchDashboard() {
   const [isLoading, setIsLoading] = useState(false);
   const [researchData, setResearchData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
-  const [usage, setUsage] = useState<{status: string, searchCount: number, limit: number, remaining: number} | null>(null);
+  const [usage, setUsage] = useState<{
+    status: string, 
+    general: { count: number, limit: number, remaining: number },
+    etsy: { count: number, limit: number, remaining: number }
+  } | null>(null);
 
   const fetchUsage = async () => {
     try {
