@@ -20,36 +20,55 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Search query must be at least 3 characters.' }, { status: 400 })
     }
 
-    // --- ANTI-BOT RATE LIMITING ---
-    // Get start of current month
+    // --- TIERED RATE LIMITING ---
     const startOfMonth = new Date()
     startOfMonth.setDate(1)
     startOfMonth.setHours(0, 0, 0, 0)
 
     try {
+      // 1. Get user profile for subscription status
+      const profile = await prisma.profile.findUnique({
+        where: { id: user.id },
+        select: { subscriptionStatus: true }
+      })
+
+      const status = profile?.subscriptionStatus || 'FREE'
+
+      // 2. Count searches this month
       const searchCount = await prisma.searchHistory.count({
         where: {
           userId: user.id,
-          createdAt: {
-            gte: startOfMonth
-          }
+          createdAt: { gte: startOfMonth }
         }
       })
 
-      const MONTHLY_LIMIT = 1000
-      if (searchCount >= MONTHLY_LIMIT) {
+      // 3. Define limits
+      const LIMITS: Record<string, number> = {
+        'FREE': 3,
+        'STARTER': 50,
+        'GROWTH': 200,
+        'PRO_AGENCY': 1000000 // Effectively unlimited
+      }
+
+      const limit = LIMITS[status] || 3
+
+      if (searchCount >= limit) {
         return NextResponse.json(
-          { error: `You have reached your monthly search limit (${MONTHLY_LIMIT}). Please contact the administrator.` },
+          { 
+            error: `You have reached your monthly search limit for the ${status} plan (${limit}).`,
+            code: 'LIMIT_REACHED',
+            currentPlan: status,
+            limit: limit
+          },
           { status: 429 }
         )
       }
     } catch (dbError) {
-      console.warn('[Research API] Could not check database rate limit:', dbError)
-      // If DB fails, we still let them search to not break the app entirely, but log it.
+      console.warn('[Research API] Rate limit check failed:', dbError)
     }
 
     // Use the multi-AI consensus engine
-    const results = await consensusResearch(query.trim())
+    const results = await consensusResearch(query.trim(), status)
 
     if (!results || results.products.length === 0) {
       return NextResponse.json(

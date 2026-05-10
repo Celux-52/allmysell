@@ -16,7 +16,7 @@
 
 import { getGoogleTrendsData, buildCompetitorLinks, type GoogleTrendsData } from './google-trends';
 import { sourceSuppliersBatch, type ScoredSupplierMatch, type SupplierSourceResult } from './supplier-sourcing';
-import { extractJSON } from './retry';
+import { extractJSON, withRetry } from './retry';
 
 interface SupplierLink {
   name: string;
@@ -26,18 +26,44 @@ interface SupplierLink {
 interface ConsensusProduct {
   name: string;
   category: string;
+  searchKeyword: string;
   wholesalePrice: string;
   retailPrice: string;
   profitMargin: string;
+  realProfitMargin: string;
+  platformFees: string;
   competition: string;
   trend: string;
   score: number;
+  confidenceLevel: string;
+  confidencePercent: number;
+  dataSource: string;
+  doNotBuild: boolean;
+  doNotBuildReason: string;
+  trafficSource: string;
+  failureRisks: string[];
+  failureModes: Array<{
+    scenario: string;
+    likelihood: string;
+    impact: string;
+  }>;
+  saturationIndex: number;
+  copycatRisk: number;
+  saturationNote: string;
+  trendLifespan: string;
+  trendLifespanNote: string;
+  scalabilityScore: number;
+  scalabilityNote: string;
   description: string;
   platforms: string[];
   whyItWorks: string;
   targetAudience: string;
+  painPoint: string;
+  sellingAngle: string;
+  viralPotential: string;
   marketingTips: string[];
   sources: string[];
+  agreedByCount: number;
   /** Static fallback supplier search URLs */
   suppliers: SupplierLink[];
   /** AI-matched supplier products with semantic scores */
@@ -99,7 +125,10 @@ export async function fetchInternetDataViaTool(query: string): Promise<string> {
   }
 }
 
-const RESEARCH_PROMPT = (query: string, internetContext: string = "") => `You are a world-class e-commerce product research analyst with a BRUTALLY HONEST approach.
+const RESEARCH_PROMPT = (query: string, internetContext: string = "", tier: string = 'FREE') => {
+  const isBasic = tier === 'FREE' || tier === 'STARTER';
+  
+  return `You are a world-class e-commerce product research analyst with a BRUTALLY HONEST approach.
 The user is researching: "${query}"${internetContext}
 
 CRITICAL INSTRUCTIONS:
@@ -109,23 +138,25 @@ CRITICAL INSTRUCTIONS:
 4. For each product, give a short keyword that best represents it for supplier searches (in the "searchKeyword" field).
 5. For "painPoint", "sellingAngle", and "viralPotential": write MAX 1 short sentence each. Be specific, no fluff.
 
+${!isBasic ? `
+6. 💀 FAILURE MODE ANALYSIS RULE:
+For EVERY product, think like a pessimist: "Why would this FAIL?" Provide 2-3 specific failure scenarios in "failureModes". Include worst-case outcomes.
+
+7. 🧬 COPYCAT & SATURATION RULE:
+Estimate market saturation (0-100) and copycat risk (0-100). Be honest.
+
+8. ⏱ TREND LIFESPAN & SCALABILITY RULE:
+Classify trend as "Evergreen", "Seasonal", or "Fad". Rate "scalabilityScore" (0-100).
+` : '6. Keep the analysis focused on core trends and pricing. Do not provide detailed failure mode or saturation data for this basic tier.'}
+
 ⛔ "DO NOT BUILD" RULE:
-If a product has HIGH competition + LOW margin + DECLINING trend, you MUST set "doNotBuild": true and explain why in "doNotBuildReason". Do NOT sugarcoat bad opportunities. A seller losing money is worse than no recommendation.
+If a product has HIGH competition + LOW margin + DECLINING trend, you MUST set "doNotBuild": true and explain why in "doNotBuildReason".
 
 📊 REALITY LAYER RULE:
-For each data point, honestly assess your confidence. If you are guessing or extrapolating, say so. Set "confidenceLevel" to "high" ONLY if you have strong evidence. Most products should be "medium". Use "low" when data is scarce.
+Honestly assess your confidence. Set "confidenceLevel" to "high" ONLY if you have strong evidence.
 
 💰 PROFIT REALITY CHECK RULE:
-Calculate "realProfitMargin" by deducting platform fees (~15% for Etsy, ~15% for Amazon, ~13% for eBay), estimated shipping (~$3-8), and estimated ads cost (~15-25% of revenue for new sellers). Show the REAL take-home profit, not the gross margin.
-
-💀 FAILURE MODE ANALYSIS RULE:
-For EVERY product, think like a pessimist: "Why would this FAIL?" Provide 2-3 specific failure scenarios in "failureModes". Include worst-case outcomes. This is reverse engineering — if a seller blindly follows your advice, what could go wrong?
-
-🧬 COPYCAT & SATURATION RULE:
-Estimate market saturation: how many sellers already offer this exact product? Rate "saturationIndex" from 0 (blue ocean) to 100 (completely saturated). Rate "copycatRisk" from 0 (hard to clone) to 100 (trivially copied by Chinese factories within weeks). Be honest — most trending products are HIGH copycat risk.
-
-⏱ TREND LIFESPAN & SCALABILITY RULE:
-Classify each product's trend as "Evergreen" (will sell for years), "Seasonal" (holiday/season dependent), or "Fad" (viral hype that dies in weeks). Also rate "scalabilityScore" 0-100: can a seller build an entire store/brand around this product category? A niche candle store = high scalability. A single viral gadget = low scalability.
+Calculate "realProfitMargin" by deducting platform fees, shipping, and ads cost. Show the REAL take-home profit.
 
 Return ONLY valid JSON in this exact structure:
 {
@@ -133,41 +164,39 @@ Return ONLY valid JSON in this exact structure:
     {
       "name": "Product Name",
       "category": "Category",
-      "searchKeyword": "exact product search term for suppliers",
+      "searchKeyword": "exact search term",
       "wholesalePrice": "$X-Y",
       "retailPrice": "$X-Y",
       "profitMargin": "XX-XX%",
       "realProfitMargin": "XX-XX%",
-      "platformFees": "~$X (Etsy 15% + shipping $X + ads $X)",
-      "competition": "Low|Medium|High",
-      "trend": "Rising|Stable|Declining",
+      "platformFees": "Breakdown",
+      "competition": "Low/Medium/High",
+      "trend": "Rising/Stable/Declining",
       "score": 85,
-      "confidenceLevel": "high|medium|low",
-      "confidencePercent": 75,
-      "dataSource": "AI Estimate|Market Data|Google Trends Verified",
+      "confidenceLevel": "high/medium/low",
+      "confidencePercent": 85,
+      "dataSource": "Sources",
       "doNotBuild": false,
       "doNotBuildReason": "",
-      "trafficSource": "TikTok Viral|Pinterest Organic|Etsy Search|Google Shopping|Instagram Ads",
-      "failureRisks": ["Risk 1: specific reason", "Risk 2: specific reason"],
-      "failureModes": [
-        {"scenario": "What could go wrong", "likelihood": "High|Medium|Low", "impact": "Revenue loss, wasted inventory, etc."}
-      ],
+      "trafficSource": "TikTok/FB/Search",
+      "failureRisks": ["Risk 1", "Risk 2"],
+      ${!isBasic ? `"failureModes": [{"scenario": "X", "likelihood": "Y", "impact": "Z"}],
       "saturationIndex": 45,
-      "copycatRisk": 70,
-      "saturationNote": "Brief explanation of market saturation level and clone threat",
-      "trendLifespan": "Evergreen|Seasonal|Fad",
-      "trendLifespanNote": "Why this trend will last or die",
-      "scalabilityScore": 60,
-      "scalabilityNote": "Can you build a brand/store around this? Why or why not?",
-      "description": "Detailed description",
-      "platforms": ["eBay", "Etsy", "Amazon", "Shopify"],
-      "whyItWorks": "Deep market analysis",
-      "targetAudience": "Specific target demographic (e.g. Women 18-30 interested in fitness)",
-      "painPoint": "What problem does the buyer have? (1 line max)",
-      "sellingAngle": "Best ad/content angle to sell this (1 line max)",
-      "viralPotential": "Why could this go viral on social media? (1 line max)",
-      "marketingTips": ["Actionable tip 1", "Tip 2", "Tip 3"],
-      "sources": ["Data source 1", "Source 2"]
+      "copycatRisk": 80,
+      "saturationNote": "Note",
+      "trendLifespan": "Evergreen/Seasonal/Fad",
+      "trendLifespanNote": "Note",
+      "scalabilityScore": 65,
+      "scalabilityNote": "Note",` : ''}
+      "description": "Short description",
+      "platforms": ["Amazon", "Etsy"],
+      "whyItWorks": "Reason",
+      "targetAudience": "Audience",
+      "painPoint": "Problem",
+      "sellingAngle": "Hook",
+      "viralPotential": "Viral hook",
+      "marketingTips": ["Tip 1", "Tip 2"],
+      "sources": ["Source 1", "Source 2"]
     }
   ],
   "summary": "Comprehensive market overview"
@@ -186,103 +215,111 @@ function safeParseJSON(text: string): any {
 }
 
 // --- Provider 1: Groq (Llama 3.3 70B) ---
-async function queryGroq(query: string, internetContext: string): Promise<{ products: any[]; summary: string } | null> {
-  try {
+async function queryGroq(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
+  return withRetry(async (overrideModel) => {
     const { getGroq } = await import('./groq');
     const groq = getGroq();
+    const isOpenRouter = !process.env.GROQ_API_KEY && !!process.env.OPENROUTER_API_KEY;
+    const model = overrideModel || (isOpenRouter ? 'meta-llama/llama-3.3-70b-instruct' : 'llama-3.3-70b-versatile');
+    
     const response = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
+      model: model,
       messages: [
-        { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
+        { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
         { role: 'user', content: query }
       ],
-      response_format: { type: 'json_object' },
+      response_format: model.includes('llama') ? { type: 'json_object' } : undefined,
       temperature: 0.7
     });
     const text = response.choices[0]?.message?.content || '{}';
-    return safeParseJSON(text);
-  } catch (err: any) {
-    console.warn('[Consensus] Groq failed:', err.message);
-    return null;
-  }
+    const parsed = safeParseJSON(text);
+    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from AI");
+    return parsed;
+  });
 }
 
 // --- Provider 2: Gemini 2.0 Flash ---
-async function queryGemini(query: string, internetContext: string): Promise<{ products: any[]; summary: string } | null> {
-  try {
-    const { getGemini } = await import('./gemini');
-    const gemini = getGemini();
-    const model = gemini.getGenerativeModel({ model: 'gemini-2.0-flash' });
-    const result = await model.generateContent(RESEARCH_PROMPT(query, internetContext));
-    const text = result.response.text();
-    return safeParseJSON(text);
-  } catch (err: any) {
-    console.warn('[Consensus] Gemini failed:', err.message);
-    return null;
-  }
+async function queryGemini(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
+  return withRetry(async (overrideModel) => {
+    const geminiKey = process.env.GEMINI_API_KEY;
+    
+    if (geminiKey && !overrideModel) {
+      const { getGemini } = await import('./gemini');
+      const gemini = getGemini();
+      const model = gemini.getGenerativeModel({ model: 'gemini-2.0-flash' });
+      const result = await model.generateContent(RESEARCH_PROMPT(query, internetContext, tier));
+      const text = result.response.text();
+      return safeParseJSON(text);
+    } else {
+      // Fallback to OpenRouter via Cline client
+      const { getCline } = await import('./cline');
+      const cline = getCline();
+      const response = await cline.chat.completions.create({
+        model: overrideModel || 'google/gemini-2.0-flash-lite-preview-02-05:free',
+        messages: [
+          { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
+          { role: 'user', content: query }
+        ],
+        temperature: 0.7
+      });
+      const text = response.choices[0]?.message?.content || '{}';
+      const parsed = safeParseJSON(text);
+      if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from AI");
+      return parsed;
+    }
+  });
 }
 
 // --- Provider 3: Cline - DeepSeek R1 (Best Reasoning) ---
-async function queryDeepSeek(query: string, internetContext: string): Promise<{ products: any[]; summary: string } | null> {
-  try {
+async function queryDeepSeek(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
+  return withRetry(async (overrideModel) => {
     const { getCline } = await import('./cline');
-    const cline = getCline();
-    const response = await cline.chat.completions.create({
-      model: 'google/gemini-2.0-flash',
+    const response = await getCline().chat.completions.create({
+      model: overrideModel || 'deepseek/deepseek-chat',
       messages: [
-        { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
+        { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
         { role: 'user', content: query }
       ],
       temperature: 0.7
     });
-    const text = response.choices[0]?.message?.content || '{}';
-    return safeParseJSON(text);
-  } catch (err: any) {
-    console.warn('[Consensus] DeepSeek R1 failed:', err.message);
-    return null;
-  }
+    const parsed = safeParseJSON(response.choices[0]?.message?.content || '{}');
+    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from AI");
+    return parsed;
+  });
 }
 
-// --- Provider 4: Cline - Qwen 3 72B ---
-async function queryQwen(query: string, internetContext: string): Promise<{ products: any[]; summary: string } | null> {
-  try {
+async function queryQwen(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
+  return withRetry(async (overrideModel) => {
     const { getCline } = await import('./cline');
-    const cline = getCline();
-    const response = await cline.chat.completions.create({
-      model: 'google/gemini-2.0-flash',
+    const response = await getCline().chat.completions.create({
+      model: overrideModel || 'qwen/qwen-2.5-coder-32b-instruct',
       messages: [
-        { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
+        { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
         { role: 'user', content: query }
       ],
       temperature: 0.7
     });
-    const text = response.choices[0]?.message?.content || '{}';
-    return safeParseJSON(text);
-  } catch (err: any) {
-    console.warn('[Consensus] Qwen 3 failed:', err.message);
-    return null;
-  }
+    const parsed = safeParseJSON(response.choices[0]?.message?.content || '{}');
+    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from AI");
+    return parsed;
+  });
 }
 
-// --- Provider 5: Cline - Llama 4 Scout ---
-async function queryLlamaScout(query: string, internetContext: string): Promise<{ products: any[]; summary: string } | null> {
-  try {
+async function queryLlamaScout(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
+  return withRetry(async (overrideModel) => {
     const { getCline } = await import('./cline');
-    const cline = getCline();
-    const response = await cline.chat.completions.create({
-      model: 'google/gemini-2.0-flash',
+    const response = await getCline().chat.completions.create({
+      model: overrideModel || 'anthropic/claude-3-haiku',
       messages: [
-        { role: 'system', content: RESEARCH_PROMPT(query, internetContext) },
+        { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
         { role: 'user', content: query }
       ],
       temperature: 0.7
     });
-    const text = response.choices[0]?.message?.content || '{}';
-    return safeParseJSON(text);
-  } catch (err: any) {
-    console.warn('[Consensus] Llama 4 Scout failed:', err.message);
-    return null;
-  }
+    const parsed = safeParseJSON(response.choices[0]?.message?.content || '{}');
+    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from AI");
+    return parsed;
+  });
 }
 
 /**
@@ -342,7 +379,7 @@ ${internetContext}
     const cline = getCline();
 
     const validationResponse = await cline.chat.completions.create({
-      model: 'google/gemini-2.0-flash',
+      model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
       messages: [{ role: 'user', content: validationPrompt }],
       temperature: 0.1
     });
@@ -422,13 +459,33 @@ async function mergeAndEnrich(
       wholesalePrice: base.wholesalePrice || 'N/A',
       retailPrice: base.retailPrice || 'N/A',
       profitMargin: base.profitMargin || 'N/A',
+      realProfitMargin: base.realProfitMargin || base.profitMargin || 'N/A',
+      platformFees: base.platformFees || '',
       competition: base.competition || 'Medium',
       trend: base.trend || 'Stable',
       score: Math.min(Math.max(avgScore + consensusBonus + qualityPenalty, 0), 100),
+      confidenceLevel: base.confidenceLevel || 'medium',
+      confidencePercent: base.confidencePercent || 70,
+      dataSource: base.dataSource || 'AI Estimate',
+      doNotBuild: base.doNotBuild || false,
+      doNotBuildReason: base.doNotBuildReason || '',
+      trafficSource: base.trafficSource || '',
+      failureRisks: base.failureRisks || [],
+      failureModes: base.failureModes || [],
+      saturationIndex: base.saturationIndex || 0,
+      copycatRisk: base.copycatRisk || 0,
+      saturationNote: base.saturationNote || '',
+      trendLifespan: base.trendLifespan || 'Stable',
+      trendLifespanNote: base.trendLifespanNote || '',
+      scalabilityScore: base.scalabilityScore || 0,
+      scalabilityNote: base.scalabilityNote || '',
       description: base.description || '',
       platforms: [...new Set(group.flatMap((p: any) => p.platforms || []))],
       whyItWorks: base.whyItWorks || '',
       targetAudience: base.targetAudience || '',
+      painPoint: base.painPoint || '',
+      sellingAngle: base.sellingAngle || '',
+      viralPotential: base.viralPotential || '',
       marketingTips: [...allTips].slice(0, 5),
       sources: [...allSources].slice(0, 5),
       agreedByCount: group.length,
@@ -504,18 +561,40 @@ async function mergeAndEnrich(
     return {
       name: product.name,
       category: product.category,
+      searchKeyword: product.searchKeyword,
       wholesalePrice: product.wholesalePrice,
       retailPrice: product.retailPrice,
       profitMargin: product.profitMargin,
+      realProfitMargin: product.realProfitMargin,
+      platformFees: product.platformFees,
       competition: product.competition,
       trend: product.trend,
       score: product.score,
+      confidenceLevel: product.confidenceLevel,
+      confidencePercent: product.confidencePercent,
+      dataSource: product.dataSource,
+      doNotBuild: product.doNotBuild,
+      doNotBuildReason: product.doNotBuildReason,
+      trafficSource: product.trafficSource,
+      failureRisks: product.failureRisks,
+      failureModes: product.failureModes,
+      saturationIndex: product.saturationIndex,
+      copycatRisk: product.copycatRisk,
+      saturationNote: product.saturationNote,
+      trendLifespan: product.trendLifespan,
+      trendLifespanNote: product.trendLifespanNote,
+      scalabilityScore: product.scalabilityScore,
+      scalabilityNote: product.scalabilityNote,
       description: product.description,
       platforms: product.platforms,
       whyItWorks: product.whyItWorks,
       targetAudience: product.targetAudience,
+      painPoint: product.painPoint,
+      sellingAngle: product.sellingAngle,
+      viralPotential: product.viralPotential,
       marketingTips: product.marketingTips,
       sources: product.sources,
+      agreedByCount: product.agreedByCount,
       suppliers: fallbackLinks,
       semanticSuppliers,
       sourcingStats,
@@ -543,7 +622,7 @@ async function mergeAndEnrich(
  * Main consensus research function.
  * Fires 5 AI providers in parallel, merges, enriches with Google Trends + real supplier links.
  */
-export async function consensusResearch(query: string): Promise<ConsensusResult> {
+export async function consensusResearch(query: string, tier: string = 'FREE'): Promise<ConsensusResult> {
   const providers = [
     'Groq (Llama 3.3 70B)',
     'Gemini 2.0 Flash',
@@ -555,16 +634,28 @@ export async function consensusResearch(query: string): Promise<ConsensusResult>
   // 1. Fetch live internet data via native tool calling to n8n webhook FIRST
   const internetContext = await fetchInternetDataViaTool(query);
 
-  // 2. Fire ALL 5 providers in parallel with the live internet context
+  // 2. Fetch real Google Trends for the main query to provide ground-truth trend data to AI
+  const mainQueryTrends = await getGoogleTrendsData(query);
+  const googleTrendsContext = mainQueryTrends 
+    ? `\n\n--- REAL-TIME GOOGLE TRENDS DATA ---\n${mainQueryTrends.summary}\n-----------------------------------\n\n`
+    : "";
+
+  const fullContext = internetContext + googleTrendsContext;
+
+  // 3. Fire ALL 5 providers in parallel with the live internet + Google context
   const settled = await Promise.allSettled([
-    queryGroq(query, internetContext),
-    queryGemini(query, internetContext),
-    queryDeepSeek(query, internetContext),
-    queryQwen(query, internetContext),
-    queryLlamaScout(query, internetContext),
+    queryGroq(query, fullContext, tier),
+    queryGemini(query, fullContext, tier),
+    queryDeepSeek(query, fullContext, tier),
+    queryQwen(query, fullContext, tier),
+    queryLlamaScout(query, fullContext, tier),
   ]);
 
-  const results = settled.map(r => r.status === 'fulfilled' ? r.value : null);
+  const results = settled.map((r, i) => {
+    if (r.status === 'fulfilled') return r.value;
+    console.error(`[Consensus] Provider ${providers[i]} failed:`, r.reason);
+    return null;
+  });
 
   return mergeAndEnrich(results, providers, query, internetContext);
 }

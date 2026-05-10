@@ -24,9 +24,9 @@ enum Role {
 
 enum SubscriptionStatus {
   FREE
-  TRIAL
-  PRO
-  ENTERPRISE
+  STARTER
+  GROWTH
+  PRO_AGENCY
 }
 
 enum BlogPostStatus {

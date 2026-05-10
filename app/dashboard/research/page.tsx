@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Sparkles, Brain, Truck, Globe2, Loader2, AlertCircle, TrendingUp, BarChart3, Zap, ArrowRight, ShieldCheck, Store, ExternalLink, AlertTriangle, Info, Radio } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MagicCard } from "@/components/ui/magic-card";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
@@ -12,6 +12,23 @@ export default function ResearchDashboard() {
   const [isLoading, setIsLoading] = useState(false);
   const [researchData, setResearchData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const [usage, setUsage] = useState<{status: string, searchCount: number, limit: number, remaining: number} | null>(null);
+
+  const fetchUsage = async () => {
+    try {
+      const res = await fetch("/api/user/usage");
+      if (res.ok) {
+        const data = await res.json();
+        setUsage(data);
+      }
+    } catch (err) {
+      console.error("Failed to fetch usage:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsage();
+  }, []);
 
   const handleResearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,8 +44,15 @@ export default function ResearchDashboard() {
         body: JSON.stringify({ query: searchQuery }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Research failed.");
+      if (!res.ok) {
+        if (data.code === 'LIMIT_REACHED') {
+          setError(`Limit reached: ${data.error}`);
+          return;
+        }
+        throw new Error(data.error || "Research failed.");
+      }
       setResearchData(data.results);
+      fetchUsage(); // Refresh usage after successful search
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -67,6 +91,41 @@ export default function ResearchDashboard() {
           and deliver a consensus with real supplier data.
         </p>
       </motion.div>
+
+      {/* Usage HUD */}
+      {usage && (
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full max-w-3xl mb-8 flex items-center justify-between bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm"
+        >
+          <div className="flex-1 mr-8">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
+                {usage.status} Search Quota
+              </span>
+              <span className="text-[10px] font-black text-slate-400">
+                {usage.searchCount} / {usage.limit}
+              </span>
+            </div>
+            <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+              <motion.div 
+                initial={{ width: 0 }}
+                animate={{ width: `${(usage.searchCount / usage.limit) * 100}%` }}
+                className={`h-full bg-gradient-to-r ${usage.searchCount >= usage.limit ? 'from-red-500 to-orange-500' : 'from-orange-500 to-amber-500'}`}
+              />
+            </div>
+          </div>
+          {usage.status !== 'PRO_AGENCY' && (
+            <Link 
+              href="/pricing" 
+              className="px-4 py-2 bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-orange-500/20 transition-all"
+            >
+              Upgrade
+            </Link>
+          )}
+        </motion.div>
+      )}
 
       {/* Search Section */}
       <motion.div 
