@@ -15,6 +15,7 @@ const navigation = [
   { name: "SaaS Panel", href: "/dashboard/saas", icon: Zap },
   { name: "Saved Items", href: "/dashboard/saved", icon: Star },
   { name: "History", href: "/dashboard/history", icon: History },
+  { name: "Pricing", href: "/pricing", icon: Zap },
 ];
 
 export default function DashboardShell({
