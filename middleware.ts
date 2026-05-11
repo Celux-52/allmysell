@@ -20,10 +20,14 @@ export async function middleware(req: NextRequest) {
           return req.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) =>
+          cookiesToSet.forEach(({ name, value, options }) =>
             req.cookies.set(name, value)
           );
-          res = NextResponse.next({ request: req });
+          res = NextResponse.next({
+            request: {
+              headers: req.headers,
+            },
+          });
           cookiesToSet.forEach(({ name, value, options }) => {
             res.cookies.set(name, value, options);
           });
@@ -35,12 +39,15 @@ export async function middleware(req: NextRequest) {
   // IMPORTANT: This call refreshes the session and may trigger setAll()
   const { data: { user } } = await supabase.auth.getUser();
 
+  // Check for admin status early
+  const isUserAdmin = user ? isAdmin(user.email) : false;
+
   const pathname = req.nextUrl.pathname;
 
   // Helper: create a redirect that preserves refreshed session cookies
   function redirectWithCookies(destination: string) {
-    const redirectRes = NextResponse.redirect(new URL(destination, req.url));
-    // Copy all refreshed session cookies to the redirect response
+    const url = new URL(destination, req.url);
+    const redirectRes = NextResponse.redirect(url);
     res.cookies.getAll().forEach((cookie) => {
       redirectRes.cookies.set(cookie.name, cookie.value);
     });
@@ -72,7 +79,7 @@ export async function middleware(req: NextRequest) {
 
   // 3. Admin-only routes
   if (pathname.startsWith("/admin") && user) {
-    if (!isAdmin(user.email)) {
+    if (!isUserAdmin) {
       return redirectWithCookies("/dashboard");
     }
   }

@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import DashboardShell from './dashboard-shell'
 import { prisma } from '@/lib/prisma'
+import { isAdmin } from '@/lib/isAdmin'
 
 export default async function DashboardLayout({
   children,
@@ -17,11 +18,7 @@ export default async function DashboardLayout({
   }
 
   // Admin Override - check first (no DB needed)
-  const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase())
-  const isUserAdmin = user.email && adminEmails.includes(user.email.toLowerCase())
-
-  // Admins always get through - no DB check needed
-  if (isUserAdmin) {
+  if (isAdmin(user.email)) {
     return <DashboardShell>{children}</DashboardShell>
   }
 
