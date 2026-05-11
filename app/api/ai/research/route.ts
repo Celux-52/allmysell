@@ -59,6 +59,26 @@ export async function POST(request: NextRequest) {
 
       const limit = LIMITS[status] || 3
 
+      // --- DEMO OVERRIDE: sellerxturkiye@gmail.com ---
+      if (user.email === 'sellerxturkiye@gmail.com') {
+        const trialEndDate = new Date('2026-05-12T18:51:00Z');
+        if (new Date() < trialEndDate) {
+          const DEMO_LIMIT = 5;
+          if (searchCount >= DEMO_LIMIT) {
+            return NextResponse.json(
+              { 
+                error: `Demo limit reached (5/5 searches). Please contact admin for full access.`,
+                code: 'LIMIT_REACHED',
+                currentPlan: 'DEMO',
+                limit: DEMO_LIMIT
+              },
+              { status: 429 }
+            )
+          }
+          status = 'STARTER'; // Grant starter tier power for demo
+        }
+      }
+
       if (searchCount >= limit) {
         return NextResponse.json(
           { 

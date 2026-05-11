@@ -22,6 +22,14 @@ export default async function DashboardLayout({
     return <DashboardShell>{children}</DashboardShell>
   }
 
+  // Demo User: sellerxturkiye@gmail.com (24h Trial)
+  if (user.email === 'sellerxturkiye@gmail.com') {
+    const trialEndDate = new Date('2026-05-12T18:51:00Z'); // 24h from now
+    if (new Date() < trialEndDate) {
+      return <DashboardShell>{children}</DashboardShell>
+    }
+  }
+
   // For non-admin users, check subscription status
   try {
     const profile = await prisma.profile.findUnique({
