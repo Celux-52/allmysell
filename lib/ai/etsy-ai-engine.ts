@@ -1,5 +1,6 @@
-import { getCline } from './cline';
-import { withRetry, extractJSON, FREE_MODEL_CHAINS } from './retry';
+import { createClient } from '@/lib/supabase/client';
+import { withRetry, extractJSON } from './retry';
+import { AI_MODELS } from './models';
 
 export interface DetailedAnalysis {
   trendScore: number;
@@ -53,10 +54,7 @@ export interface DetailedAnalysis {
 
 export class EtsyAIEngine {
   async analyzeProduct(productData: any): Promise<DetailedAnalysis> {
-    const cline = getCline();
-    const [primaryModel, ...fallbacks] = FREE_MODEL_CHAINS.analysis;
-
-    const prompt = `
+    const PROMPT = `
 # 🧠 ETSY SNIPER v2.0 — REAL MONEY DECISION ENGINE
 
 ## 🎯 ROLE
@@ -169,15 +167,19 @@ You MUST output ONLY a valid JSON object matching the interface below. No markdo
   ]
 }`;
 
-    return withRetry(
-      async (overrideModel?: string) => {
-        const modelToUse = overrideModel || primaryModel;
-        console.log(`[EtsyAIEngine] Running V2.0 Strategic Analysis using: ${modelToUse}`);
+    const query = `Analyze this product: ${productData.title}`;
 
-        const response = await cline.chat.completions.create({
-          model: modelToUse,
-          messages: [{ role: "user", content: prompt }],
-          temperature: 0.2,
+    return withRetry(
+      async () => {
+        // Use DeepSeek V3 for creative SEO and Llama 3.2 for niche analysis
+        const { getCline } = await import('./cline');
+        const response = await getCline().chat.completions.create({
+          model: AI_MODELS.CREATIVE.id, // Using V3 for creative SEO content
+          messages: [
+            { role: 'system', content: PROMPT },
+            { role: 'user', content: query }
+          ],
+          temperature: 0.8
         });
 
         const content = response.choices[0]?.message?.content || '';

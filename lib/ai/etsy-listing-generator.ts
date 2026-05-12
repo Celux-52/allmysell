@@ -1,5 +1,6 @@
 import { getCline } from './cline';
-import { withRetry, extractJSON, FREE_MODEL_CHAINS } from './retry';
+import { withRetry, extractJSON } from './retry';
+import { AI_MODELS } from './models';
 
 export class EtsyListingGenerator {
   async generateListing(productTitle: string, tags: string[] = []) {
@@ -28,9 +29,9 @@ export class EtsyListingGenerator {
     `;
 
     return withRetry(
-      async (overrideModel?: string) => {
-        const response = await cline.chat.completions.create({
-          model: overrideModel || primaryModel,
+      async () => {
+        const response = await getCline().chat.completions.create({
+          model: AI_MODELS.CREATIVE.id, // DeepSeek V3
           messages: [{ role: "user", content: prompt }],
           temperature: 0.8,
         });
@@ -39,8 +40,7 @@ export class EtsyListingGenerator {
         if (!content) throw new Error("No content received from AI");
 
         return JSON.parse(extractJSON(content));
-      },
-      { maxRetries: 2, baseDelayMs: 1000, fallbackModels: fallbacks }
+      }
     );
   }
 }

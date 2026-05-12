@@ -1,12 +1,12 @@
 /**
  * Multi-AI Consensus Engine + Real Google Trends + Semantic Supplier Matching
  * 
- * Uses 5 independent AI providers in parallel:
- *   1. Groq (Llama 3.3 70B)
- *   2. Gemini 2.0 Flash
- *   3. Cline - DeepSeek R1 (best reasoning)
- *   4. Cline - Qwen 3 72B
- *   5. Cline - Claude 3.5 Haiku
+ * Uses a dynamic swarm of free AI models via OpenRouter/Groq:
+ *   1. Groq (Llama 3.3 70B / Llama 3.2 3B)
+ *   2. Gemini 2.0 Flash (Speed & Scans)
+ *   3. DeepSeek R1 (Deep Reasoning & Strategy)
+ *   4. Qwen 2.5 (Efficiency & Verification)
+ *   5. Mistral Small (Balanced Knowledge)
  * 
  * Then enriches with:
  *   - REAL Google Trends data
@@ -18,6 +18,7 @@ import { getGoogleTrendsData, buildCompetitorLinks, type GoogleTrendsData } from
 import { sourceSuppliersBatch, type ScoredSupplierMatch, type SupplierSourceResult } from './supplier-sourcing';
 import { extractJSON, withRetry } from './retry';
 import { fetchInternetDataViaTool } from './internet-search';
+import { AI_MODELS } from './models';
 
 interface SupplierLink {
   name: string;
@@ -185,7 +186,8 @@ async function queryGroq(query: string, internetContext: string, tier: string = 
     const { getGroq } = await import('./groq');
     const groq = getGroq();
     const isOpenRouter = !process.env.GROQ_API_KEY && !!process.env.OPENROUTER_API_KEY;
-    const model = overrideModel || (isOpenRouter ? 'meta-llama/llama-3.3-70b-instruct' : 'llama-3.3-70b-versatile');
+    // Default to Llama 3.3 for Groq or Llama 3.2 Free for OpenRouter
+    const model = overrideModel || (isOpenRouter ? AI_MODELS.GENERAL.id : 'llama-3.3-70b-versatile');
     
     const response = await groq.chat.completions.create({
       model: model,
@@ -218,9 +220,8 @@ async function queryGemini(query: string, internetContext: string, tier: string 
     } else {
       // Fallback to OpenRouter via Cline client
       const { getCline } = await import('./cline');
-      const cline = getCline();
-      const response = await cline.chat.completions.create({
-        model: overrideModel || 'google/gemini-2.0-flash-lite-preview-02-05:free',
+      const response = await getCline().chat.completions.create({
+        model: overrideModel || AI_MODELS.SPEED.id,
         messages: [
           { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
           { role: 'user', content: query }
@@ -235,17 +236,17 @@ async function queryGemini(query: string, internetContext: string, tier: string 
   });
 }
 
-// --- Provider 3: Cline - DeepSeek R1 (Best Reasoning) ---
+// --- Provider 3: DeepSeek R1 (Reasoning) ---
 async function queryDeepSeek(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
   return withRetry(async (overrideModel) => {
     const { getCline } = await import('./cline');
     const response = await getCline().chat.completions.create({
-      model: overrideModel || 'deepseek/deepseek-chat',
+      model: overrideModel || AI_MODELS.REASONING.id,
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
         { role: 'user', content: query }
       ],
-      temperature: 0.7
+      temperature: 0.6
     });
     const parsed = safeParseJSON(response.choices[0]?.message?.content || '{}');
     if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from AI");
@@ -253,11 +254,12 @@ async function queryDeepSeek(query: string, internetContext: string, tier: strin
   });
 }
 
+// --- Provider 4: Qwen 2.5 (Efficiency) ---
 async function queryQwen(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
   return withRetry(async (overrideModel) => {
     const { getCline } = await import('./cline');
     const response = await getCline().chat.completions.create({
-      model: overrideModel || 'qwen/qwen-2.5-coder-32b-instruct',
+      model: overrideModel || AI_MODELS.EFFICIENT.id,
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
         { role: 'user', content: query }
@@ -270,11 +272,12 @@ async function queryQwen(query: string, internetContext: string, tier: string = 
   });
 }
 
-async function queryLlamaScout(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
+// --- Provider 5: Mistral Small (Balanced) ---
+async function queryMistral(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
   return withRetry(async (overrideModel) => {
     const { getCline } = await import('./cline');
     const response = await getCline().chat.completions.create({
-      model: overrideModel || 'anthropic/claude-3-haiku',
+      model: overrideModel || AI_MODELS.BALANCED.id,
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
         { role: 'user', content: query }
@@ -344,9 +347,9 @@ ${internetContext}
     const cline = getCline();
 
     const validationResponse = await cline.chat.completions.create({
-      model: 'google/gemini-2.0-flash-lite-preview-02-05:free',
+      model: AI_MODELS.REASONING.id, // Using R1 for the final validation/auditing
       messages: [{ role: 'user', content: validationPrompt }],
-      temperature: 0.1
+      temperature: 0.3
     });
 
     const validated = safeParseJSON(validationResponse.choices[0]?.message?.content || '{}');
@@ -589,11 +592,11 @@ async function mergeAndEnrich(
  */
 export async function consensusResearch(query: string, tier: string = 'FREE'): Promise<ConsensusResult> {
   const providers = [
-    'Groq (Llama 3.3 70B)',
-    'Gemini 2.0 Flash',
-    'DeepSeek R1 (Premium)',
-    'Qwen 2.5 72B (Premium)',
-    'Claude 3.5 Haiku (Premium)',
+    'Llama 3.3/3.2 (General)',
+    'Gemini 2.0 (Speed)',
+    'DeepSeek R1 (Reasoning)',
+    'Qwen 2.5 (Efficiency)',
+    'Mistral Small (Balanced)',
   ];
 
   // 1. Fetch live internet data via native tool calling to n8n webhook FIRST
@@ -613,7 +616,7 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
     queryGemini(query, fullContext, tier),
     queryDeepSeek(query, fullContext, tier),
     queryQwen(query, fullContext, tier),
-    queryLlamaScout(query, fullContext, tier),
+    queryMistral(query, fullContext, tier),
   ]);
 
   const results = settled.map((r, i) => {

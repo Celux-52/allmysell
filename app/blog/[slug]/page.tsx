@@ -80,17 +80,41 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
               <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">{trend.title}</h1>
             </header>
 
-            {/* Video Preview */}
-            <div className="aspect-video bg-black rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative group">
-              <iframe 
-                src={`https://www.tiktok.com/embed/v2/${trend.videoUrl.split('/').pop()}`}
-                className="w-full h-full"
-                allowFullScreen
-              />
+            {/* Video Preview - Optimized for Vertical (TikTok/Reels) with Artistic Blur Backdrop */}
+            <div className="flex justify-center relative">
+              {/* Blurred Glow Backdrop */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px] h-full bg-orange-500/20 blur-[100px] rounded-full pointer-events-none opacity-50" />
+              
+              <div className="w-full max-w-[400px] aspect-[9/16] bg-black rounded-[3rem] overflow-hidden border border-white/10 shadow-[0_0_80px_rgba(249,115,22,0.2)] relative z-10 group">
+                <div className="absolute inset-0 bg-gradient-to-b from-orange-500/10 to-transparent pointer-events-none z-20" />
+                {(() => {
+                  const videoIdMatch = trend.videoUrl.match(/video\/(\d+)/);
+                  const videoId = videoIdMatch ? videoIdMatch[1] : trend.videoUrl.split('/').filter(Boolean).pop()?.split('?')[0];
+                  
+                  return (
+                    <iframe 
+                      src={`https://www.tiktok.com/embed/v2/${videoId}`}
+                      className="w-full h-full relative z-10"
+                      allowFullScreen
+                    />
+                  );
+                })()}
+              </div>
             </div>
 
-            {/* AI Generated Article */}
-            <article className="prose prose-invert prose-orange max-w-none">
+            {/* AI Generated Article - Premium Styling */}
+            <article className="prose prose-invert prose-orange max-w-none 
+              prose-headings:font-black prose-headings:tracking-tighter prose-headings:uppercase prose-headings:italic
+              prose-h1:text-4xl md:prose-h1:text-6xl prose-h1:mb-12
+              prose-h2:text-2xl md:prose-h2:text-3xl prose-h2:border-l-4 prose-h2:border-orange-500 prose-h2:pl-6 prose-h2:mt-16
+              prose-p:text-slate-400 prose-p:leading-[1.8] prose-p:text-xl prose-p:font-medium
+              prose-strong:text-orange-400 prose-strong:font-black
+              prose-ul:list-none prose-ul:pl-0 prose-ul:grid prose-ul:grid-cols-1 md:prose-ul:grid-cols-2 prose-ul:gap-4
+              prose-li:bg-white/[0.03] prose-li:p-8 prose-li:rounded-[2rem] prose-li:border prose-li:border-white/5 prose-li:mb-0
+              prose-blockquote:border-none prose-blockquote:bg-orange-500/5 prose-blockquote:p-8 prose-blockquote:rounded-[2rem] prose-blockquote:italic
+              bg-[#0a0f1d] border border-white/5 p-10 md:p-20 rounded-[3.5rem] backdrop-blur-xl shadow-2xl relative"
+            >
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-orange-500/50 to-transparent" />
               <ReactMarkdown>{trend.content}</ReactMarkdown>
             </article>
           </div>
