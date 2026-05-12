@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, ChevronDown, Instagram, User, LogOut } from 'lucide-react';
+import { Menu, X, ChevronDown, Instagram, User, LogOut, Globe } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 
@@ -20,6 +20,16 @@ const webServices = [
   { name: '📞 Get a Quote', href: '/web-solutions#contact' },
 ];
 
+const languages = [
+  { code: 'tr', name: 'Türkçe', flag: '🇹🇷' },
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+  { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'ru', name: 'Русский', flag: '🇷🇺' },
+  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+];
+
 interface AuthUser {
   email: string;
   fullName: string | null;
@@ -34,6 +44,23 @@ export default function Navigation() {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
   const [scrolled, setScrolled] = useState(false);
+  const [currentLang, setCurrentLang] = useState(languages[1]); // Default to English
+  const [langMenuOpen, setLangMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const savedLang = localStorage.getItem('preferred_lang');
+    if (savedLang) {
+      const found = languages.find(l => l.code === savedLang);
+      if (found) setCurrentLang(found);
+    }
+  }, []);
+
+  const changeLanguage = (lang: typeof languages[0]) => {
+    setCurrentLang(lang);
+    localStorage.setItem('preferred_lang', lang.code);
+    setLangMenuOpen(false);
+    // Future: Trigger actual i18n translation here
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -103,6 +130,42 @@ export default function Navigation() {
 
           <div className="hidden md:flex items-center gap-3">
             <a href="https://www.instagram.com/allmysell/" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-orange-400 transition-colors p-2" aria-label="Instagram"><Instagram size={20} /></a>
+            
+            {/* Language Selector */}
+            <div className="relative">
+              <button 
+                onClick={() => setLangMenuOpen(!langMenuOpen)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all text-sm font-medium"
+              >
+                <span>{currentLang.flag}</span>
+                <span className="uppercase">{currentLang.code}</span>
+                <ChevronDown size={12} className={`transition-transform duration-300 ${langMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {langMenuOpen && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setLangMenuOpen(false)}></div>
+                  <div className="absolute right-0 mt-2 w-40 glass-card rounded-xl z-50 overflow-hidden shadow-2xl border border-white/10">
+                    <div className="py-1">
+                      {languages.map((lang) => (
+                        <button
+                          key={lang.code}
+                          onClick={() => changeLanguage(lang)}
+                          className={`flex items-center justify-between w-full px-4 py-2 text-sm transition-colors ${currentLang.code === lang.code ? 'bg-orange-500/10 text-orange-400' : 'text-slate-400 hover:text-white hover:bg-white/[0.06]'}`}
+                        >
+                          <span className="flex items-center gap-3">
+                            <span>{lang.flag}</span>
+                            {lang.name}
+                          </span>
+                          {currentLang.code === lang.code && <div className="w-1.5 h-1.5 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.8)]" />}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+
             <div className="w-px h-5 bg-white/10 mx-1"></div>
             {authLoading ? (<div className="w-20 h-8 bg-white/5 rounded-lg animate-pulse"></div>) : user ? (
               <div className="relative">
@@ -136,8 +199,34 @@ export default function Navigation() {
                 )}
               </Link>
             )}
+            {/* Mobile Language Selector */}
+            <button 
+              onClick={() => setLangMenuOpen(!langMenuOpen)}
+              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06]"
+            >
+              <span>{currentLang.flag}</span>
+            </button>
+
             <button onClick={() => setIsOpen(!isOpen)} className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06]">{isOpen ? <X size={22} /> : <Menu size={22} />}</button>
           </div>
+          
+          {/* Mobile Language Dropdown Overlay */}
+          {langMenuOpen && !isOpen && (
+            <div className="md:hidden absolute top-16 right-4 w-40 glass-card rounded-xl z-50 overflow-hidden shadow-2xl border border-white/10 animate-in fade-in slide-in-from-top-2 duration-200">
+              <div className="py-1">
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => changeLanguage(lang)}
+                    className={`flex items-center gap-3 w-full px-4 py-3 text-sm transition-colors ${currentLang.code === lang.code ? 'bg-orange-500/10 text-orange-400' : 'text-slate-400 hover:text-white hover:bg-white/[0.06]'}`}
+                  >
+                    <span>{lang.flag}</span>
+                    {lang.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
