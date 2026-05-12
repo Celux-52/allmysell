@@ -57,8 +57,14 @@ export default function Navigation() {
     getUser();
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
-        setUser({ email: session.user.email || '', fullName: session.user.user_metadata?.full_name || null, avatarUrl: session.user.user_metadata?.avatar_url || null });
-      } else { setUser(null); }
+        setUser({ 
+          email: session.user.email || '', 
+          fullName: session.user.user_metadata?.full_name || null, 
+          avatarUrl: session.user.user_metadata?.avatar_url || null 
+        });
+      } else { 
+        setUser(null); 
+      }
     });
     return () => subscription.unsubscribe();
   }, []);
@@ -101,7 +107,13 @@ export default function Navigation() {
             {authLoading ? (<div className="w-20 h-8 bg-white/5 rounded-lg animate-pulse"></div>) : user ? (
               <div className="relative">
                 <button onClick={() => setUserMenuOpen(!userMenuOpen)} className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/[0.06] transition-colors">
-                  {user.avatarUrl ? (<img src={user.avatarUrl} alt={user.fullName || 'User'} className="w-7 h-7 rounded-full object-cover border border-orange-500/30" />) : (<div className="w-7 h-7 bg-gradient-to-br from-orange-500 to-amber-500 rounded-full flex items-center justify-center text-white font-bold text-xs">{(user.fullName || user.email)[0].toUpperCase()}</div>)}
+                  {user.avatarUrl ? (
+                    <img src={user.avatarUrl} alt={user.fullName || 'User'} className="w-7 h-7 rounded-full object-cover border border-orange-500/30" />
+                  ) : (
+                    <div className="w-7 h-7 bg-gradient-to-br from-orange-500 to-amber-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
+                      {(user.fullName || user.email || 'U')[0].toUpperCase()}
+                    </div>
+                  )}
                   <span className="text-slate-300 text-sm font-medium max-w-[100px] truncate">{user.fullName || user.email.split('@')[0]}</span>
                   <ChevronDown size={14} className={`text-slate-500 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
                 </button>
@@ -113,7 +125,17 @@ export default function Navigation() {
           <div className="md:hidden flex items-center gap-3">
             <a href="https://www.instagram.com/allmysell/" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-orange-400 transition-colors p-1" aria-label="Instagram"><Instagram size={20} /></a>
             {!authLoading && !user && (<Link href="/register" className="px-3 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg text-sm font-medium">Sign Up</Link>)}
-            {!authLoading && user && (<Link href="/dashboard" className="p-1.5">{user.avatarUrl ? (<img src={user.avatarUrl} alt="" className="w-7 h-7 rounded-full object-cover border border-orange-500/30" />) : (<div className="w-7 h-7 bg-gradient-to-br from-orange-500 to-amber-500 rounded-full flex items-center justify-center text-white font-bold text-xs">{(user.fullName || user.email)[0].toUpperCase()}</div>)}</Link>)}
+            {!authLoading && user && (
+              <Link href="/dashboard" className="p-1.5">
+                {user.avatarUrl ? (
+                  <img src={user.avatarUrl} alt="" className="w-7 h-7 rounded-full object-cover border border-orange-500/30" />
+                ) : (
+                  <div className="w-7 h-7 bg-gradient-to-br from-orange-500 to-amber-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
+                    {(user.fullName || user.email || 'U')[0].toUpperCase()}
+                  </div>
+                )}
+              </Link>
+            )}
             <button onClick={() => setIsOpen(!isOpen)} className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06]">{isOpen ? <X size={22} /> : <Menu size={22} />}</button>
           </div>
         </div>

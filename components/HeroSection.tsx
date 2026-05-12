@@ -75,8 +75,8 @@ export default function HeroSection({ isPreview = false }: { isPreview?: boolean
       <div className="relative pt-24 flex flex-col items-center text-center">
         {/* Background Glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none -z-10">
-          <div className="absolute top-[-100px] left-[-200px] w-[600px] h-[600px] bg-orange-600/8 blur-[150px] rounded-full"></div>
-          <div className="absolute bottom-[20%] right-[-100px] w-[500px] h-[500px] bg-violet-600/5 blur-[150px] rounded-full"></div>
+          <div className="absolute top-[-100px] left-[-200px] w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-orange-600/8 blur-[80px] sm:blur-[150px] rounded-full"></div>
+          <div className="absolute bottom-[20%] right-[-100px] w-[250px] h-[250px] sm:w-[500px] sm:h-[500px] bg-violet-600/5 blur-[80px] sm:blur-[150px] rounded-full"></div>
         </div>
 
         {/* Status Badge */}

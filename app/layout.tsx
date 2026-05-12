@@ -59,6 +59,7 @@ export default function RootLayout({
     <html lang="en" className={cn("dark", "font-sans", geist.variable)} translate="no" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" />
         <meta name="google" content="notranslate" />
       </head>
       <body className={`${inter.className} bg-[#030712] text-slate-100 antialiased`} suppressHydrationWarning>
