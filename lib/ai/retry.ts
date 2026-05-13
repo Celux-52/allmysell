@@ -46,11 +46,11 @@ export async function withRetry<T>(
 
   // 2. ULTIMATE FAILOVER CHAIN
   const failoverChain = [
-    'meta-llama/llama-3.3-70b-instruct:free',
-    'nousresearch/hermes-3-llama-3.1-405b:free',
-    'meta-llama/llama-3.2-3b-instruct:free',
-    'qwen/qwen3-coder:free',
-    'openrouter/free'
+    'inclusionai/ring-2.6-1t:free',
+    'openai/gpt-oss-120b:free',
+    'nvidia/nemotron-3-super-120b-a12b:free',
+    'minimax/minimax-m2.5:free',
+    'meta-llama/llama-3.3-70b-instruct:free'
   ];
 
   for (const fallbackModel of failoverChain) {
@@ -67,9 +67,9 @@ export async function withRetry<T>(
 }
 
 export const FREE_MODEL_CHAINS = {
-  analysis: ['openrouter/free'],
-  creative: ['meta-llama/llama-3.3-70b-instruct:free'],
-  extraction: ['openrouter/free'],
+  analysis: ['inclusionai/ring-2.6-1t:free', 'openai/gpt-oss-120b:free'],
+  creative: ['meta-llama/llama-3.3-70b-instruct:free', 'google/gemma-4-31b-it:free'],
+  extraction: ['nvidia/nemotron-3-super-120b-a12b:free', 'minimax/minimax-m2.5:free'],
 };
 
 /**

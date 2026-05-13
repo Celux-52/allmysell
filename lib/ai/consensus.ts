@@ -1,12 +1,12 @@
 /**
  * Multi-AI Consensus Engine + Real Google Trends + Semantic Supplier Matching
  * 
- * Uses a dynamic swarm of free AI models via OpenRouter/Groq:
- *   1. Groq (Llama 3.3 70B / Llama 3.2 3B)
- *   2. Gemini 2.0 Flash (Speed & Scans)
- *   3. DeepSeek R1 (Deep Reasoning & Strategy)
- *   4. Qwen 2.5 (Efficiency & Verification)
- *   5. Mistral Small (Balanced Knowledge)
+ * Uses 5 specialized free AI models via OpenRouter:
+ *   1. Ring 2.6 1T (Agent Workflows & Analysis)
+ *   2. GPT-OSS 120B (Reasoning & Multi-step Research)
+ *   3. Nemotron 3 Super (Data Processing & SEO Analysis)
+ *   4. MiniMax M2.5 (Web Data Comprehension)
+ *   5. Qwen 3 Next 80B (Technical Analysis & Logistics)
  * 
  * Then enriches with:
  *   - REAL Google Trends data
@@ -18,7 +18,7 @@ import { getGoogleTrendsData, buildCompetitorLinks, type GoogleTrendsData } from
 import { sourceSuppliersBatch, type ScoredSupplierMatch, type SupplierSourceResult } from './supplier-sourcing';
 import { extractJSON, withRetry } from './retry';
 import { fetchInternetDataViaTool } from './internet-search';
-import { AI_MODELS } from './models';
+import { RESEARCH_MODELS, AI_MODELS } from './models';
 
 interface SupplierLink {
   name: string;
@@ -180,86 +180,50 @@ function safeParseJSON(text: string): any {
   }
 }
 
-// --- Provider 1: Groq (Llama 3.3 70B) ---
-async function queryGroq(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
+// --- Provider 1: Ring 2.6 1T (Agent Workflows) ---
+async function queryRing(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
   return withRetry(async (overrideModel) => {
-    const { getGroq } = await import('./groq');
-    const groq = getGroq();
-    const isOpenRouter = !process.env.GROQ_API_KEY && !!process.env.OPENROUTER_API_KEY;
-    // Default to Llama 3.3 for Groq or Llama 3.2 Free for OpenRouter
-    const model = overrideModel || (isOpenRouter ? AI_MODELS.GENERAL.id : 'llama-3.3-70b-versatile');
-    
-    const response = await groq.chat.completions.create({
-      model: model,
+    const { getCline } = await import('./cline');
+    const response = await getCline().chat.completions.create({
+      model: overrideModel || RESEARCH_MODELS.RING.id,
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
         { role: 'user', content: query }
       ],
-      response_format: model.includes('llama') ? { type: 'json_object' } : undefined,
       temperature: 0.7
     });
     const text = response.choices[0]?.message?.content || '{}';
     const parsed = safeParseJSON(text);
-    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from AI");
+    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from Ring");
     return parsed;
   });
 }
 
-// --- Provider 2: Gemini 2.0 Flash ---
-async function queryGemini(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
-  return withRetry(async (overrideModel) => {
-    const geminiKey = process.env.GEMINI_API_KEY;
-    
-    if (geminiKey && !overrideModel) {
-      const { getGemini } = await import('./gemini');
-      const gemini = getGemini();
-      const model = gemini.getGenerativeModel({ model: 'gemini-2.0-flash' });
-      const result = await model.generateContent(RESEARCH_PROMPT(query, internetContext, tier));
-      const text = result.response.text();
-      return safeParseJSON(text);
-    } else {
-      // Fallback to OpenRouter via Cline client
-      const { getCline } = await import('./cline');
-      const response = await getCline().chat.completions.create({
-        model: overrideModel || AI_MODELS.SPEED.id,
-        messages: [
-          { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
-          { role: 'user', content: query }
-        ],
-        temperature: 0.7
-      });
-      const text = response.choices[0]?.message?.content || '{}';
-      const parsed = safeParseJSON(text);
-      if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from AI");
-      return parsed;
-    }
-  });
-}
-
-// --- Provider 3: DeepSeek R1 (Reasoning) ---
-async function queryDeepSeek(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
+// --- Provider 2: GPT-OSS 120B (Reasoning) ---
+async function queryGptOss(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
   return withRetry(async (overrideModel) => {
     const { getCline } = await import('./cline');
     const response = await getCline().chat.completions.create({
-      model: overrideModel || AI_MODELS.REASONING.id,
+      model: overrideModel || RESEARCH_MODELS.GPT_OSS.id,
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
         { role: 'user', content: query }
       ],
       temperature: 0.6
     });
-    const parsed = safeParseJSON(response.choices[0]?.message?.content || '{}');
-    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from AI");
+    const text = response.choices[0]?.message?.content || '{}';
+    const parsed = safeParseJSON(text);
+    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from GPT-OSS");
     return parsed;
   });
 }
 
-// --- Provider 4: Qwen 2.5 (Efficiency) ---
-async function queryQwen(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
+// --- Provider 3: Nemotron 3 Super (Data Processing) ---
+async function queryNemotron(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
   return withRetry(async (overrideModel) => {
     const { getCline } = await import('./cline');
     const response = await getCline().chat.completions.create({
-      model: overrideModel || AI_MODELS.EFFICIENT.id,
+      model: overrideModel || RESEARCH_MODELS.NEMOTRON.id,
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
         { role: 'user', content: query }
@@ -267,17 +231,17 @@ async function queryQwen(query: string, internetContext: string, tier: string = 
       temperature: 0.7
     });
     const parsed = safeParseJSON(response.choices[0]?.message?.content || '{}');
-    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from AI");
+    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from Nemotron");
     return parsed;
   });
 }
 
-// --- Provider 5: Mistral Small (Balanced) ---
-async function queryMistral(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
+// --- Provider 4: MiniMax M2.5 (Web Comprehension) ---
+async function queryMinimax(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
   return withRetry(async (overrideModel) => {
     const { getCline } = await import('./cline');
     const response = await getCline().chat.completions.create({
-      model: overrideModel || AI_MODELS.BALANCED.id,
+      model: overrideModel || RESEARCH_MODELS.MINIMAX.id,
       messages: [
         { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
         { role: 'user', content: query }
@@ -285,7 +249,25 @@ async function queryMistral(query: string, internetContext: string, tier: string
       temperature: 0.7
     });
     const parsed = safeParseJSON(response.choices[0]?.message?.content || '{}');
-    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from AI");
+    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from MiniMax");
+    return parsed;
+  });
+}
+
+// --- Provider 5: Qwen 3 Next 80B (Technical Analysis) ---
+async function queryQwenNext(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
+  return withRetry(async (overrideModel) => {
+    const { getCline } = await import('./cline');
+    const response = await getCline().chat.completions.create({
+      model: overrideModel || RESEARCH_MODELS.QWEN_NEXT.id,
+      messages: [
+        { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
+        { role: 'user', content: query }
+      ],
+      temperature: 0.7
+    });
+    const parsed = safeParseJSON(response.choices[0]?.message?.content || '{}');
+    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from Qwen Next");
     return parsed;
   });
 }
@@ -617,11 +599,11 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
   try {
     const researchPromise = (async () => {
       const providers = [
-        'Llama 3.3/3.2 (General)',
-        'Gemini 2.0 (Speed)',
-        'DeepSeek R1 (Reasoning)',
-        'Qwen 2.5 (Efficiency)',
-        'Mistral Small (Balanced)',
+        'Ring 2.6 1T (Agent)',
+        'GPT-OSS 120B (Reasoning)',
+        'Nemotron 3 Super (Data)',
+        'MiniMax M2.5 (Comprehension)',
+        'Qwen 3 Next 80B (Technical)',
       ];
 
       // 1. Fetch live internet data via native tool calling to n8n webhook FIRST
@@ -639,16 +621,16 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
       const isBasic = tier === 'FREE' || tier === 'STARTER';
       const allProviders = isBasic 
         ? [
-            { name: providers[0], fn: () => queryGroq(query, fullContext, tier) },
-            { name: providers[1], fn: () => queryGemini(query, fullContext, tier) },
-            { name: providers[2], fn: () => queryDeepSeek(query, fullContext, tier) }
+            { name: providers[0], fn: () => queryRing(query, fullContext, tier) },
+            { name: providers[1], fn: () => queryGptOss(query, fullContext, tier) },
+            { name: providers[2], fn: () => queryNemotron(query, fullContext, tier) }
           ]
         : [
-            { name: providers[0], fn: () => queryGroq(query, fullContext, tier) },
-            { name: providers[1], fn: () => queryGemini(query, fullContext, tier) },
-            { name: providers[2], fn: () => queryDeepSeek(query, fullContext, tier) },
-            { name: providers[3], fn: () => queryQwen(query, fullContext, tier) },
-            { name: providers[4], fn: () => queryMistral(query, fullContext, tier) }
+            { name: providers[0], fn: () => queryRing(query, fullContext, tier) },
+            { name: providers[1], fn: () => queryGptOss(query, fullContext, tier) },
+            { name: providers[2], fn: () => queryNemotron(query, fullContext, tier) },
+            { name: providers[3], fn: () => queryMinimax(query, fullContext, tier) },
+            { name: providers[4], fn: () => queryQwenNext(query, fullContext, tier) }
           ];
 
       const isOpenRouterOnly = !process.env.GROQ_API_KEY && !process.env.GEMINI_API_KEY;
@@ -737,29 +719,10 @@ Rules:
 
   const providers = [
     {
-      name: 'Groq (Llama 3.3 70B)', fn: async () => {
-        const { getGroq } = await import('@/lib/ai/groq')
-        const r = await getGroq().chat.completions.create({
-          model: 'llama-3.3-70b-versatile',
-          messages: [{ role: 'user', content: AI_PROMPT }],
-          response_format: { type: 'json_object' },
-          temperature: 0.9
-        })
-        return r.choices[0]?.message?.content || '{}'
-      }
-    },
-    {
-      name: 'Gemini 2.0 Flash', fn: async () => {
-        const { getGemini } = await import('@/lib/ai/gemini')
-        const result = await getGemini().getGenerativeModel({ model: 'gemini-2.0-flash' }).generateContent(AI_PROMPT)
-        return result.response.text()
-      }
-    },
-    {
-      name: 'DeepSeek R1', fn: async () => {
+      name: 'Ring 2.6 1T', fn: async () => {
         const { getCline } = await import('@/lib/ai/cline')
         const r = await getCline().chat.completions.create({
-          model: 'openrouter/free',
+          model: RESEARCH_MODELS.RING.id,
           messages: [{ role: 'user', content: AI_PROMPT }],
           temperature: 0.9
         })
@@ -767,10 +730,10 @@ Rules:
       }
     },
     {
-      name: 'Qwen 2.5 72B', fn: async () => {
+      name: 'GPT-OSS 120B', fn: async () => {
         const { getCline } = await import('@/lib/ai/cline')
         const r = await getCline().chat.completions.create({
-          model: 'qwen/qwen3-coder:free',
+          model: RESEARCH_MODELS.GPT_OSS.id,
           messages: [{ role: 'user', content: AI_PROMPT }],
           temperature: 0.9
         })
@@ -778,10 +741,32 @@ Rules:
       }
     },
     {
-      name: 'Claude 3 Haiku', fn: async () => {
+      name: 'Nemotron 3 Super', fn: async () => {
         const { getCline } = await import('@/lib/ai/cline')
         const r = await getCline().chat.completions.create({
-          model: 'meta-llama/llama-3.2-3b-instruct:free',
+          model: RESEARCH_MODELS.NEMOTRON.id,
+          messages: [{ role: 'user', content: AI_PROMPT }],
+          temperature: 0.9
+        })
+        return r.choices[0]?.message?.content || '{}'
+      }
+    },
+    {
+      name: 'MiniMax M2.5', fn: async () => {
+        const { getCline } = await import('@/lib/ai/cline')
+        const r = await getCline().chat.completions.create({
+          model: RESEARCH_MODELS.MINIMAX.id,
+          messages: [{ role: 'user', content: AI_PROMPT }],
+          temperature: 0.9
+        })
+        return r.choices[0]?.message?.content || '{}'
+      }
+    },
+    {
+      name: 'Qwen 3 Next 80B', fn: async () => {
+        const { getCline } = await import('@/lib/ai/cline')
+        const r = await getCline().chat.completions.create({
+          model: RESEARCH_MODELS.QWEN_NEXT.id,
           messages: [{ role: 'user', content: AI_PROMPT }],
           temperature: 0.9
         })

@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/client';
 import { withRetry, extractJSON } from './retry';
-import { AI_MODELS } from './models';
+import { ETSY_MODELS } from './models';
 
 export interface DetailedAnalysis {
   trendScore: number;
@@ -174,7 +174,7 @@ You MUST output ONLY a valid JSON object matching the interface below. No markdo
         // Use DeepSeek V3 for creative SEO and Llama 3.2 for niche analysis
         const { getCline } = await import('./cline');
         const response = await getCline().chat.completions.create({
-          model: AI_MODELS.CREATIVE.id, // Using V3 for creative SEO content
+          model: ETSY_MODELS.LLAMA.id, // Llama 3.3 70B for Etsy SEO optimization
           messages: [
             { role: 'system', content: PROMPT },
             { role: 'user', content: query }
