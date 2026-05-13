@@ -7,8 +7,10 @@ import { useState, useEffect } from "react";
 import { MagicCard } from "@/components/ui/magic-card";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
+import { useI18n } from "@/lib/i18n/context";
 
 export default function ResearchDashboard() {
+  const { t } = useI18n();
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [researchData, setResearchData] = useState<any>(null);
@@ -83,17 +85,16 @@ export default function ResearchDashboard() {
         <div className="flex justify-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold uppercase tracking-wider">
             <Sparkles className="h-3 w-3" />
-            Multi-AI Consensus Engine
+            {t('res.badge')}
           </div>
         </div>
         
         <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight">
-          Smart Product <span className="text-orange-500">Research</span>
+          {t('res.title1')} <span className="text-orange-500">{t('res.title2')}</span>
         </h1>
         
         <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto">
-          All AI models analyze your query simultaneously, cross-reference Google Trends, 
-          and deliver a consensus with real supplier data.
+          {t('res.subtitle')}
         </p>
       </motion.div>
 
@@ -107,7 +108,7 @@ export default function ResearchDashboard() {
           <div className="flex-1 mr-8">
             <div className="flex justify-between items-center mb-2">
               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
-                {usage.status} - Market Intelligence Quota
+                {usage.status} - {t('res.quota')}
               </span>
               <span className="text-[10px] font-black text-slate-400">
                 {usage.general.count} / {usage.general.limit}
@@ -125,7 +126,7 @@ export default function ResearchDashboard() {
             href="/pricing" 
             className="px-4 py-2 bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-orange-500/20 transition-all"
           >
-            {usage.status === 'PRO_AGENCY' ? 'View Plans' : 'Upgrade'}
+            {usage.status === 'PRO_AGENCY' ? t('res.viewPlans') : t('res.upgrade')}
           </Link>
         </motion.div>
       )}
@@ -147,7 +148,7 @@ export default function ResearchDashboard() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="e.g. 'high margin tech accessories on Etsy under $50'"
+              placeholder={t('res.placeholder')}
               className="flex-1 bg-transparent border-none outline-none text-white text-lg py-3 placeholder:text-slate-600"
             />
             <button
@@ -160,7 +161,7 @@ export default function ResearchDashboard() {
               ) : (
                 <>
                   <Sparkles className="h-5 w-5" />
-                  Analyze
+                  {t('res.analyze')}
                 </>
               )}
             </button>
@@ -169,7 +170,7 @@ export default function ResearchDashboard() {
 
         {/* Suggestions */}
         <div className="mt-6 flex flex-wrap justify-center gap-2">
-          <span className="text-slate-500 text-sm py-1">Try asking:</span>
+          <span className="text-slate-500 text-sm py-1">{t('res.tryAsking')}</span>
           {suggestions.map((tag) => (
             <button
               key={tag}
@@ -194,9 +195,9 @@ export default function ResearchDashboard() {
             <div className="p-4 rounded-2xl bg-blue-500/10 text-blue-400">
               <Brain className="h-8 w-8" />
             </div>
-            <h3 className="text-xl font-bold text-white">Multi-AI Consensus</h3>
+            <h3 className="text-xl font-bold text-white">{t('feat.multiAI')}</h3>
             <p className="text-sm text-slate-400 leading-relaxed">
-              5 AI providers (Groq, Gemini, DeepSeek, Qwen, Claude) analyze in parallel and merge their insights into one consensus.
+              {t('feat.multiAIDesc')}
             </p>
           </MagicCard>
 
@@ -204,9 +205,9 @@ export default function ResearchDashboard() {
             <div className="p-4 rounded-2xl bg-orange-500/10 text-orange-400">
               <Truck className="h-8 w-8" />
             </div>
-            <h3 className="text-xl font-bold text-white">Semantic Supplier Match</h3>
+            <h3 className="text-xl font-bold text-white">{t('feat.supplier')}</h3>
             <p className="text-sm text-slate-400 leading-relaxed">
-              AI-powered supplier matching uses embeddings to find products with ≥75% semantic similarity — no more random results.
+              {t('feat.supplierDesc')}
             </p>
           </MagicCard>
 
@@ -214,9 +215,9 @@ export default function ResearchDashboard() {
             <div className="p-4 rounded-2xl bg-green-500/10 text-green-400">
               <Globe2 className="h-8 w-8" />
             </div>
-            <h3 className="text-xl font-bold text-white">Google Trends Data</h3>
+            <h3 className="text-xl font-bold text-white">{t('feat.trends')}</h3>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Each analysis includes Google Trends insights — search volume, seasonal peaks, and regional demand.
+              {t('feat.trendsDesc')}
             </p>
           </MagicCard>
         </motion.div>
@@ -228,8 +229,8 @@ export default function ResearchDashboard() {
           <div className="relative rounded-2xl border border-white/10 bg-[#0d1117] p-12 overflow-hidden shadow-2xl">
             <BorderBeam size={400} duration={4} colorFrom="#f97316" colorTo="#fbbf24" />
             <Loader2 className="h-12 w-12 animate-spin text-orange-500 mx-auto mb-6" />
-            <h3 className="text-2xl font-bold text-white mb-2">Engines Firing Up</h3>
-            <p className="text-slate-400">Querying 5 AI models and fetching real-time market data...</p>
+            <h3 className="text-2xl font-bold text-white mb-2">{t('res.firingUp')}</h3>
+            <p className="text-slate-400">{t('res.firingUpDesc')}</p>
             
             <div className="mt-8 space-y-3">
               <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
@@ -257,8 +258,8 @@ export default function ResearchDashboard() {
           className="w-full max-w-6xl space-y-8"
         >
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-white">Research Complete</h2>
-            <button onClick={() => setResearchData(null)} className="text-sm font-bold text-orange-500 hover:text-orange-400 bg-orange-500/10 hover:bg-orange-500/20 px-4 py-2 rounded-xl transition-all">Start New Search</button>
+            <h2 className="text-2xl font-bold text-white">{t('res.complete')}</h2>
+            <button onClick={() => setResearchData(null)} className="text-sm font-bold text-orange-500 hover:text-orange-400 bg-orange-500/10 hover:bg-orange-500/20 px-4 py-2 rounded-xl transition-all">{t('res.startNew')}</button>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {researchData.products?.map((product: any, idx: number) => {
@@ -275,8 +276,8 @@ export default function ResearchDashboard() {
                     <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-4 mb-6 flex gap-3 items-start relative z-10">
                       <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="text-red-400 font-black text-sm uppercase tracking-wider">⛔ DO NOT BUILD</p>
-                        <p className="text-red-300/70 text-xs mt-1 leading-relaxed">{product.doNotBuildReason || 'High competition, low margin, declining trend detected.'}</p>
+                        <p className="text-red-400 font-black text-sm uppercase tracking-wider">⛔ {t('res.doNotBuild')}</p>
+                        <p className="text-red-300/70 text-xs mt-1 leading-relaxed">{product.doNotBuildReason || t('res.doNotBuildReason')}</p>
                       </div>
                     </div>
                   )}
@@ -299,7 +300,7 @@ export default function ResearchDashboard() {
                       product.confidenceLevel === 'low' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
                       'bg-yellow-500/10 border-yellow-500/20 text-yellow-400'
                     }`}>
-                      <Info className="w-3 h-3" /> {product.confidencePercent || '?'}% Confidence
+                      <Info className="w-3 h-3" /> {product.confidencePercent || '?'}% {t('res.confidence')}
                     </span>
                     {product.dataSource && (
                       <span className="px-2.5 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-wider rounded-full">
@@ -316,27 +317,27 @@ export default function ResearchDashboard() {
                   {/* Badges */}
                   <div className="flex justify-between items-center mb-6">
                      <span className="px-3 py-1 bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-xs font-bold rounded-full">
-                       {product.competition} Competition
+                       {product.competition} {t('res.competition')}
                      </span>
                      <span className={`px-3 py-1 border text-xs font-bold rounded-full flex items-center gap-1 ${isRising ? 'bg-green-500/10 border-green-500/20 text-green-400' : 'bg-red-500/10 border-red-500/20 text-red-400'}`}>
-                       {isRising ? '↑ Rising' : '↓ Declining'}
+                       {isRising ? `↑ ${t('res.rising')}` : `↓ ${t('res.declining')}`}
                      </span>
                   </div>
 
                   {/* Progress Bars */}
                   <div className="grid grid-cols-3 gap-4 mb-8">
                      <div className="space-y-2">
-                       <div className="flex justify-between text-[10px] text-slate-400 uppercase font-bold"><span className="flex items-center gap-1"><Sparkles className="w-3 h-3 text-green-400"/> Profit</span></div>
+                       <div className="flex justify-between text-[10px] text-slate-400 uppercase font-bold"><span className="flex items-center gap-1"><Sparkles className="w-3 h-3 text-green-400"/> {t('res.profit')}</span></div>
                        <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-green-400 to-emerald-400" style={{ width: `${profitScore}%` }}></div></div>
                        <div className="text-[10px] text-slate-500">{profitScore}</div>
                      </div>
                      <div className="space-y-2">
-                       <div className="flex justify-between text-[10px] text-slate-400 uppercase font-bold"><span className="flex items-center gap-1"><Zap className="w-3 h-3 text-orange-400"/> Compete</span></div>
+                       <div className="flex justify-between text-[10px] text-slate-400 uppercase font-bold"><span className="flex items-center gap-1"><Zap className="w-3 h-3 text-orange-400"/> {t('res.compete')}</span></div>
                        <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-orange-400 to-amber-400" style={{ width: `${competeScore}%` }}></div></div>
                        <div className="text-[10px] text-slate-500">{competeScore}</div>
                      </div>
                      <div className="space-y-2">
-                       <div className="flex justify-between text-[10px] text-slate-400 uppercase font-bold"><span className="flex items-center gap-1"><ShieldCheck className="w-3 h-3 text-purple-400"/> Opportunity</span></div>
+                       <div className="flex justify-between text-[10px] text-slate-400 uppercase font-bold"><span className="flex items-center gap-1"><ShieldCheck className="w-3 h-3 text-purple-400"/> {t('res.opportunity')}</span></div>
                        <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-purple-400 to-indigo-400" style={{ width: `${product.score}%` }}></div></div>
                        <div className="text-[10px] text-slate-500">{product.score}</div>
                      </div>
@@ -345,9 +346,9 @@ export default function ResearchDashboard() {
                   {/* Why it will sell */}
                   <div className="bg-[#121826] rounded-2xl p-4 mb-6 border border-white/5">
                     <h4 className="text-orange-400 text-xs font-black uppercase tracking-widest flex items-center gap-2 mb-3">
-                       <Sparkles className="w-3 h-3"/> WHY THIS WILL SELL
+                       <Sparkles className="w-3 h-3"/> {t('res.whySell')}
                     </h4>
-                    <p className="text-sm text-slate-300 flex gap-2"><span className="text-pink-400">🎯</span> <span className="font-bold text-slate-400">Target:</span> {product.targetAudience}</p>
+                    <p className="text-sm text-slate-300 flex gap-2"><span className="text-pink-400">🎯</span> <span className="font-bold text-slate-400">{t('res.target')}:</span> {product.targetAudience}</p>
                   </div>
 
                   <p className="text-slate-400 text-sm mb-6 leading-relaxed line-clamp-2">{product.description}</p>
@@ -356,19 +357,19 @@ export default function ResearchDashboard() {
                   <div className="bg-white/5 rounded-2xl p-4 mb-4 border border-white/5">
                      <div className="grid grid-cols-4 gap-2 text-center">
                        <div>
-                         <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Wholesale</p>
+                         <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">{t('res.wholesale')}</p>
                          <p className="text-white font-bold">{product.wholesalePrice}</p>
                        </div>
                        <div>
-                         <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Retail</p>
+                         <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">{t('res.retail')}</p>
                          <p className="text-white font-bold">{product.retailPrice}</p>
                        </div>
                        <div>
-                         <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Gross</p>
+                         <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">{t('res.gross')}</p>
                          <p className="text-yellow-400 font-bold">{product.profitMargin}</p>
                        </div>
                        <div>
-                         <p className="text-[10px] text-green-400 uppercase tracking-widest mb-1 font-black">NET Profit</p>
+                         <p className="text-[10px] text-green-400 uppercase tracking-widest mb-1 font-black">{t('res.net')}</p>
                          <p className="text-green-400 font-black text-lg">{product.realProfitMargin || product.profitMargin}</p>
                        </div>
                      </div>
@@ -383,7 +384,7 @@ export default function ResearchDashboard() {
                   {product.failureRisks && product.failureRisks.length > 0 && (
                     <div className="bg-red-500/5 border border-red-500/10 rounded-xl p-3 mb-6">
                       <h4 className="text-red-400 text-[10px] font-black uppercase tracking-widest flex items-center gap-1 mb-2">
-                        <AlertTriangle className="w-3 h-3" /> FAILURE RISKS
+                        <AlertTriangle className="w-3 h-3" /> {t('res.failureRisks')}
                       </h4>
                       <ul className="space-y-1">
                         {product.failureRisks.map((risk: string, i: number) => (
@@ -397,7 +398,7 @@ export default function ResearchDashboard() {
                   {product.failureModes && product.failureModes.length > 0 && (
                     <div className="bg-slate-900/50 border border-white/5 rounded-xl p-4 mb-6">
                       <h4 className="text-amber-400 text-[10px] font-black uppercase tracking-widest flex items-center gap-1 mb-3">
-                        💀 FAILURE MODE ANALYSIS
+                        💀 {t('res.failureModes')}
                       </h4>
                       <div className="space-y-2">
                         {product.failureModes.map((mode: any, i: number) => (
@@ -421,12 +422,12 @@ export default function ResearchDashboard() {
                   {(product.saturationIndex !== undefined || product.copycatRisk !== undefined) && (
                     <div className="bg-white/5 border border-white/5 rounded-xl p-4 mb-6">
                       <h4 className="text-cyan-400 text-[10px] font-black uppercase tracking-widest flex items-center gap-1 mb-4">
-                        🧬 MARKET SATURATION & CLONE RISK
+                        🧬 {t('res.saturation')}
                       </h4>
                       <div className="space-y-3">
                         <div>
                           <div className="flex justify-between text-[10px] mb-1">
-                            <span className="text-slate-400 font-bold">Saturation Index</span>
+                            <span className="text-slate-400 font-bold">{t('res.saturationIndex')}</span>
                             <span className={`font-black ${(product.saturationIndex || 0) > 70 ? 'text-red-400' : (product.saturationIndex || 0) > 40 ? 'text-yellow-400' : 'text-green-400'}`}>{product.saturationIndex || 0}/100</span>
                           </div>
                           <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
@@ -435,7 +436,7 @@ export default function ResearchDashboard() {
                         </div>
                         <div>
                           <div className="flex justify-between text-[10px] mb-1">
-                            <span className="text-slate-400 font-bold">Copycat Risk</span>
+                            <span className="text-slate-400 font-bold">{t('res.copycat')}</span>
                             <span className={`font-black ${(product.copycatRisk || 0) > 70 ? 'text-red-400' : (product.copycatRisk || 0) > 40 ? 'text-yellow-400' : 'text-green-400'}`}>{product.copycatRisk || 0}/100</span>
                           </div>
                           <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
@@ -453,7 +454,7 @@ export default function ResearchDashboard() {
                   {(product.trendLifespan || product.scalabilityScore !== undefined) && (
                     <div className="bg-white/5 border border-white/5 rounded-xl p-4 mb-6">
                       <h4 className="text-indigo-400 text-[10px] font-black uppercase tracking-widest flex items-center gap-1 mb-4">
-                        ⏱ TREND LIFESPAN & SCALABILITY
+                        ⏱ {t('res.lifespan')}
                       </h4>
                       <div className="flex items-center gap-3 mb-4">
                         {product.trendLifespan && (
@@ -472,7 +473,7 @@ export default function ResearchDashboard() {
                       {product.scalabilityScore !== undefined && (
                         <div>
                           <div className="flex justify-between text-[10px] mb-1">
-                            <span className="text-slate-400 font-bold">Scalability (Brand Potential)</span>
+                            <span className="text-slate-400 font-bold">{t('res.scalability')}</span>
                             <span className={`font-black ${product.scalabilityScore > 70 ? 'text-green-400' : product.scalabilityScore > 40 ? 'text-yellow-400' : 'text-red-400'}`}>{product.scalabilityScore}/100</span>
                           </div>
                           <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
@@ -495,7 +496,7 @@ export default function ResearchDashboard() {
 
                      <div className="pt-4 border-t border-white/5">
                        <h4 className="text-orange-400 text-xs font-black uppercase tracking-widest flex items-center gap-2 mb-3">
-                         <Truck className="w-4 h-4"/> SUPPLIERS ({product.suppliers?.length || 0})
+                         <Truck className="w-4 h-4"/> {t('res.suppliers')} ({product.suppliers?.length || 0})
                        </h4>
                        <div className="space-y-2 mb-4">
                          {product.suppliers?.slice(0,3).map((sup: any, i: number) => (
@@ -506,7 +507,7 @@ export default function ResearchDashboard() {
                        </div>
 
                        <h4 className="text-pink-400 text-xs font-black uppercase tracking-widest flex items-center gap-2 mb-3 mt-6">
-                         <Store className="w-4 h-4"/> MARKETPLACE SPY
+                         <Store className="w-4 h-4"/> {t('res.spy')}
                        </h4>
                        <div className="flex flex-wrap gap-2">
                          {product.competitorLinks?.slice(0,4).map((comp: any, i: number) => (

@@ -14,8 +14,10 @@ import { Card } from "@/components/ui/card";
 import { EtsyStorage } from "@/modules/etsy-automation/services/etsyStorage";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
+import { useI18n } from "@/lib/i18n/context";
 
 export default function EtsySaaSPanel() {
+  const { t } = useI18n();
   const [keyword, setKeyword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [analysisStep, setAnalysisStep] = useState(0);
@@ -167,16 +169,16 @@ export default function EtsySaaSPanel() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
             </span>
             <span className="text-orange-500 text-[10px] font-black uppercase tracking-widest">
-              Live AI Intelligence OS v4.0 Active
+              {t('etsy.active')}
             </span>
           </motion.div>
-
+          
           <motion.h1 
             initial={{ opacity: 0, filter: "blur(10px)" }}
             animate={{ opacity: 1, filter: "blur(0px)" }}
             className="text-6xl md:text-7xl font-black text-white tracking-tighter"
           >
-            Etsy Sniper <span className="bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 bg-clip-text text-transparent italic">OS</span>
+            {t('etsy.title')} <span className="bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 bg-clip-text text-transparent italic">{t('etsy.os')}</span>
           </motion.h1>
 
           <motion.p 
@@ -185,17 +187,16 @@ export default function EtsySaaSPanel() {
             transition={{ delay: 0.2 }}
             className="text-slate-400 text-lg md:text-xl max-w-3xl font-medium"
           >
-            Your autonomous partner in e-commerce. We analyze trends, verify suppliers, 
-            and predict virality so you can focus on scaling.
+            {t('etsy.subtitle')}
           </motion.p>
 
           {/* AI Agents Mini-Hud */}
           <div className="flex flex-wrap justify-center gap-4 mt-4">
             {[
-              { label: 'Trend Scout', status: 'Scanning TikTok', color: 'orange' },
-              { label: 'SEO Oracle', status: 'Analyzing Keywords', color: 'blue' },
-              { label: 'Profit Guard', status: 'Calculating Margins', color: 'green' },
-              { label: 'Supplier Bot', status: 'Validating Sourcing', color: 'purple' },
+              { label: t('etsy.agent.scout'), status: t('etsy.agent.scoutStatus'), color: 'orange' },
+              { label: t('etsy.agent.oracle'), status: t('etsy.agent.oracleStatus'), color: 'blue' },
+              { label: t('etsy.agent.guard'), status: t('etsy.agent.guardStatus'), color: 'green' },
+              { label: t('etsy.agent.bot'), status: t('etsy.agent.botStatus'), color: 'purple' },
             ].map((agent, i) => (
               <motion.div 
                 key={agent.label}
@@ -227,11 +228,11 @@ export default function EtsySaaSPanel() {
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">
-                  {usage.status} - Etsy Sniper Protocol
+                  {usage.status} - {t('etsy.protocol')}
                 </span>
               </div>
               <span className="text-xs font-black text-white bg-white/5 px-3 py-1 rounded-lg border border-white/10">
-                {usage.etsy.count} / {usage.etsy.limit} <span className="text-slate-600 ml-1 uppercase text-[8px]">Queries</span>
+                {usage.etsy.count} / {usage.etsy.limit} <span className="text-slate-600 ml-1 uppercase text-[8px]">{t('etsy.queries')}</span>
               </span>
             </div>
             <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/5 p-0.5">
@@ -247,7 +248,7 @@ export default function EtsySaaSPanel() {
             className="flex items-center gap-2 px-6 py-3 bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[10px] font-black uppercase tracking-widest rounded-2xl hover:bg-orange-500/20 hover:scale-105 active:scale-95 transition-all shadow-lg shadow-orange-500/5"
           >
             <Zap className="w-3 h-3" />
-            {usage.status === 'PRO_AGENCY' ? 'Protocol Plans' : 'Upgrade Access'}
+            {usage.status === 'PRO_AGENCY' ? t('res.viewPlans') : t('res.upgrade')}
           </Link>
         </motion.div>
       )}
@@ -269,7 +270,7 @@ export default function EtsySaaSPanel() {
             type="text"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
-            placeholder="Initialize market analysis... (e.g. 'Handmade cat furniture')"
+            placeholder={t('etsy.initAnalysis')}
             className="w-full bg-transparent border-none py-5 px-4 text-xl text-white placeholder:text-slate-700 focus:outline-none font-bold"
           />
           <button
@@ -279,7 +280,7 @@ export default function EtsySaaSPanel() {
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
             {isLoading ? <Loader2 className="h-6 w-6 animate-spin" /> : <Sparkles className="h-6 w-6" />}
-            <span className="tracking-tight">ANALYZE MARKET</span>
+            <span className="tracking-tight">{t('etsy.analyzeMarket')}</span>
           </button>
         </div>
       </motion.form>
@@ -287,9 +288,9 @@ export default function EtsySaaSPanel() {
       {/* --- QUICK DISCOVERY --- */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
         {[
-          { label: 'Mashup Discovery', strategy: 'mashup', icon: <Sparkles className="w-5 h-5" />, color: 'orange', desc: 'Mix unexpected niches' },
-          { label: 'Arbitrage Scanner', strategy: 'arbitrage', icon: <TrendingUp className="w-5 h-5" />, color: 'blue', desc: 'TikTok -> Etsy gaps' },
-          { label: 'Pain-Point Finder', strategy: 'problem-solver', icon: <PenTool className="w-5 h-5" />, color: 'purple', desc: 'Solve user problems' },
+          { label: t('etsy.discovery'), strategy: 'mashup', icon: <Sparkles className="w-5 h-5" />, color: 'orange', desc: t('etsy.discoveryDesc') },
+          { label: t('etsy.arbitrage'), strategy: 'arbitrage', icon: <TrendingUp className="w-5 h-5" />, color: 'blue', desc: t('etsy.arbitrageDesc') },
+          { label: t('etsy.painpoint'), strategy: 'problem-solver', icon: <PenTool className="w-5 h-5" />, color: 'purple', desc: t('etsy.painpointDesc') },
         ].map((item, i) => (
           <motion.button
             key={item.strategy}
@@ -320,11 +321,11 @@ export default function EtsySaaSPanel() {
             <div className="flex items-center justify-between">
               <h3 className="text-white font-black tracking-tight flex items-center gap-3 text-xl">
                 <Zap className="w-5 h-5 text-orange-500 fill-orange-500/20" /> 
-                AUTONOMOUS DISCOVERY FEED
+                {t('etsy.autonomousFeed')}
               </h3>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Live Updates</span>
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{t('etsy.liveUpdates')}</span>
               </div>
             </div>
             
@@ -339,7 +340,7 @@ export default function EtsySaaSPanel() {
                     />
                     <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
                       <Loader2 className="w-6 h-6 animate-spin text-slate-700" />
-                      <span className="text-[8px] font-bold text-slate-600 uppercase tracking-widest">Scanning Web...</span>
+                      <span className="text-[8px] font-bold text-slate-600 uppercase tracking-widest">{t('etsy.scanningWeb')}</span>
                     </div>
                   </div>
                 ))
@@ -360,10 +361,10 @@ export default function EtsySaaSPanel() {
                       </div>
                       
                       <div className="flex justify-between items-start mb-3">
-                        <span className="text-[9px] font-black uppercase text-orange-500 bg-orange-500/10 px-2.5 py-1 rounded-full border border-orange-500/20">HOT Niche</span>
+                        <span className="text-[9px] font-black uppercase text-orange-500 bg-orange-500/10 px-2.5 py-1 rounded-full border border-orange-500/20">{t('etsy.hotNiche')}</span>
                         <div className="flex items-center gap-1">
                           <BarChart3 className="w-3 h-3 text-green-400" />
-                          <span className="text-[10px] font-bold text-green-400">{niche.competitionLevel} Comp</span>
+                          <span className="text-[10px] font-bold text-green-400">{niche.competitionLevel} {t('etsy.comp')}</span>
                         </div>
                       </div>
                       
@@ -373,7 +374,7 @@ export default function EtsySaaSPanel() {
                       <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
                          <span className="text-[10px] font-bold text-slate-400">Match 94%</span>
                          <span className="text-[10px] font-bold text-orange-500 flex items-center gap-1">
-                           Snipe Now <ArrowRight className="w-3 h-3" />
+                           {t('etsy.snipeNow')} <ArrowRight className="w-3 h-3" />
                          </span>
                       </div>
                     </Card>
@@ -406,20 +407,20 @@ export default function EtsySaaSPanel() {
                  <Loader2 className="h-20 w-20 animate-spin text-orange-500 relative z-10 stroke-[1px]" />
               </div>
               <div className="text-center">
-                 <h3 className="text-3xl font-black text-white tracking-tighter mb-2">ENGINES FIRING UP</h3>
-                 <p className="text-slate-500 font-medium tracking-widest text-xs uppercase">Initializing Multi-Agent Intelligence</p>
+                 <h3 className="text-3xl font-black text-white tracking-tighter mb-2">{t('etsy.enginesFiring')}</h3>
+                 <p className="text-slate-500 font-medium tracking-widest text-xs uppercase">{t('etsy.initializing')}</p>
               </div>
             </div>
 
             {/* Progress Checklist */}
             <div className="grid grid-cols-1 gap-3">
               {[
-                { label: 'Scanning Etsy saturation & pricing', step: 1 },
-                { label: 'Detecting TikTok trend overlap', step: 2 },
-                { label: 'Analyzing emotional-buy triggers', step: 2 },
-                { label: 'Verifying US/CN supplier density', step: 3 },
-                { label: 'Calculating SEO gap & opportunity', step: 3 },
-                { label: 'Measuring virality potential', step: 3 },
+                { label: t('etsy.step1'), step: 1 },
+                { label: t('etsy.step2'), step: 2 },
+                { label: t('etsy.step3'), step: 2 },
+                { label: t('etsy.step4'), step: 3 },
+                { label: t('etsy.step5'), step: 3 },
+                { label: t('etsy.step6'), step: 3 },
               ].map((step, i) => (
                 <motion.div 
                   key={i}
@@ -443,7 +444,7 @@ export default function EtsySaaSPanel() {
                       animate={{ opacity: 1 }}
                       className="ml-auto text-[10px] font-black text-orange-500 animate-pulse"
                     >
-                      PROCESSING...
+                      {t('etsy.processing')}
                     </motion.span>
                   )}
                 </motion.div>
@@ -473,7 +474,7 @@ export default function EtsySaaSPanel() {
               <div className="flex-1 space-y-2 relative z-10 text-center md:text-left">
                 <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
                   <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
-                  <span className="text-[10px] font-black text-orange-500 uppercase tracking-[0.3em]">Strategic Decision Engine</span>
+                  <span className="text-[10px] font-black text-orange-500 uppercase tracking-[0.3em]">{t('etsy.verdict')}</span>
                 </div>
                 <h2 className="text-3xl md:text-4xl font-black text-white leading-tight">
                   {result.analysis.verdict}
@@ -482,7 +483,7 @@ export default function EtsySaaSPanel() {
 
               <div className="flex-shrink-0 flex items-center gap-6 relative z-10">
                 <div className="text-center">
-                  <div className="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1">Status</div>
+                  <div className="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1">{t('etsy.status')}</div>
                   <div className={`px-4 py-2 rounded-xl border font-black text-xs ${
                     result.analysis.opportunityStatus === 'WINNER' ? 'bg-green-500/10 border-green-500/20 text-green-500' :
                     result.analysis.opportunityStatus === 'SAFE HAVEN' ? 'bg-blue-500/10 border-blue-500/20 text-blue-400' :
@@ -493,7 +494,7 @@ export default function EtsySaaSPanel() {
                 </div>
                 <div className="h-12 w-px bg-white/10 hidden md:block"></div>
                 <div className="text-center">
-                  <div className="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1">Alpha Score</div>
+                  <div className="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1">{t('etsy.alphaScore')}</div>
                   <div className="text-4xl font-black text-white">{result.analysis.trendScore}</div>
                 </div>
               </div>
@@ -513,7 +514,7 @@ export default function EtsySaaSPanel() {
                       <div className="relative group rounded-3xl overflow-hidden aspect-square shadow-2xl border border-white/5">
                         <img src={result.product.imageUrl} alt={result.product.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#050810]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                           <span className="text-[10px] font-bold text-white uppercase tracking-widest">View Source Listing</span>
+                           <span className="text-[10px] font-bold text-white uppercase tracking-widest">{t('etsy.viewSource')}</span>
                         </div>
                       </div>
                     </div>
@@ -534,10 +535,10 @@ export default function EtsySaaSPanel() {
 
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {[
-                          { label: 'Price Points', val: `${result.product.price} ${result.product.currency}`, icon: <Tag className="w-3 h-3" /> },
-                          { label: 'Market Demand', val: result.product.favorites, icon: <Heart className="w-3 h-3" />, sub: 'favorites' },
-                          { label: 'Visibility', val: result.product.views, icon: <Eye className="w-3 h-3" />, sub: 'views' },
-                          { label: 'Ranking', val: result.product.badge || 'Standard', icon: <Star className="w-3 h-3" /> },
+                          { label: t('etsy.pricePoints'), val: `${result.product.price} ${result.product.currency}`, icon: <Tag className="w-3 h-3" /> },
+                          { label: t('etsy.marketDemand'), val: result.product.favorites, icon: <Heart className="w-3 h-3" />, sub: 'favorites' },
+                          { label: t('etsy.visibility'), val: result.product.views, icon: <Eye className="w-3 h-3" />, sub: 'views' },
+                          { label: t('etsy.ranking'), val: result.product.badge || 'Standard', icon: <Star className="w-3 h-3" /> },
                         ].map((stat, i) => (
                           <div key={i} className="p-4 bg-white/[0.03] rounded-2xl border border-white/5 group hover:bg-white/[0.05] transition-colors">
                             <div className="flex items-center gap-2 text-slate-500 mb-2 group-hover:text-orange-500 transition-colors">
@@ -573,7 +574,7 @@ export default function EtsySaaSPanel() {
                     <BarChart3 className="w-24 h-24 text-white" />
                   </div>
                   <h4 className="text-white font-black mb-4 flex items-center gap-2 text-sm uppercase tracking-widest">
-                    <TrendingUp className="w-4 h-4 text-green-500" /> Revenue Forecast
+                    <TrendingUp className="w-4 h-4 text-green-500" /> {t('etsy.forecast')}
                   </h4>
                   <div className="text-3xl font-black text-white mb-2">{result.analysis.revenueForecast}</div>
                   <p className="text-slate-500 text-sm leading-relaxed font-medium">Predicted monthly yield based on current market velocity and competition gaps.</p>
@@ -590,7 +591,7 @@ export default function EtsySaaSPanel() {
                     <Zap className="w-24 h-24 text-white" />
                   </div>
                   <h4 className="text-white font-black mb-4 flex items-center gap-2 text-sm uppercase tracking-widest">
-                    <Zap className="w-4 h-4 text-orange-500" /> Tactical Move
+                    <Zap className="w-4 h-4 text-orange-500" /> {t('etsy.tacticalMove')}
                   </h4>
                   <div className="text-lg font-bold text-orange-400 mb-2">{result.analysis.sniperStrategy}</div>
                   <p className="text-slate-500 text-xs leading-relaxed font-medium italic">&quot;Execution window is currently optimal.&quot;</p>
@@ -609,7 +610,7 @@ export default function EtsySaaSPanel() {
                     className="bg-[#0b0f19] border border-orange-500/20 rounded-[2rem] p-8 shadow-[0_0_40px_-15px_rgba(249,115,22,0.15)] relative"
                   >
                     <h4 className="text-orange-500 font-black mb-6 flex items-center gap-2 text-sm uppercase tracking-widest">
-                      <ListTodo className="w-5 h-5" /> ACTION PRIORITY
+                      <ListTodo className="w-5 h-5" /> {t('etsy.actionPriority')}
                     </h4>
                     <div className="space-y-4">
                       {result.analysis.actionPriority.map((action: any, idx: number) => (
@@ -640,7 +641,7 @@ export default function EtsySaaSPanel() {
                     className="bg-[#0b0f19] border border-cyan-500/20 rounded-[2rem] p-8 shadow-[0_0_40px_-15px_rgba(6,182,212,0.1)] relative"
                   >
                     <h4 className="text-cyan-400 font-black mb-6 flex items-center gap-2 text-sm uppercase tracking-widest">
-                      <SearchCode className="w-5 h-5" /> REAL SERP SIMULATION
+                      <SearchCode className="w-5 h-5" /> {t('etsy.serpSimulation')}
                     </h4>
                     <div className="space-y-5">
                       <div>
@@ -668,7 +669,7 @@ export default function EtsySaaSPanel() {
                     className="bg-[#0b0f19] border border-red-500/20 rounded-[2rem] p-8 shadow-[0_0_40px_-15px_rgba(239,68,68,0.1)] relative"
                   >
                     <h4 className="text-red-400 font-black mb-6 flex items-center gap-2 text-sm uppercase tracking-widest">
-                      <Filter className="w-5 h-5" /> CONVERSION LEAK
+                      <Filter className="w-5 h-5" /> {t('etsy.conversionLeak')}
                     </h4>
                     <div className="space-y-4">
                       <div className="bg-red-500/5 border border-red-500/10 p-4 rounded-2xl relative overflow-hidden">
@@ -698,7 +699,7 @@ export default function EtsySaaSPanel() {
                     className="bg-[#0b0f19] border border-purple-500/20 rounded-[2rem] p-8 shadow-[0_0_40px_-15px_rgba(168,85,247,0.1)] relative"
                   >
                     <h4 className="text-purple-400 font-black mb-6 flex items-center gap-2 text-sm uppercase tracking-widest">
-                      <Users className="w-5 h-5" /> PERSONA TARGETING
+                      <Users className="w-5 h-5" /> {t('etsy.personaTargeting')}
                     </h4>
                     <div className="space-y-5">
                       <div>
@@ -732,7 +733,7 @@ export default function EtsySaaSPanel() {
                     className="bg-[#0b0f19] border border-emerald-500/20 rounded-[2rem] p-8 shadow-[0_0_40px_-15px_rgba(16,185,129,0.1)] relative md:col-span-2"
                   >
                     <h4 className="text-emerald-400 font-black mb-6 flex items-center gap-2 text-sm uppercase tracking-widest">
-                      <FlaskConical className="w-5 h-5" /> A/B TEST SIMULATIONS
+                      <FlaskConical className="w-5 h-5" /> {t('etsy.abTests')}
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       {result.analysis.abTestSimulation.map((test: any, idx: number) => (
@@ -790,8 +791,8 @@ export default function EtsySaaSPanel() {
                         {isGeneratingListing ? <Loader2 className="w-6 h-6 animate-spin" /> : <PenTool className="w-6 h-6" />}
                       </div>
                       <div>
-                        <div className="text-white font-black text-base uppercase tracking-wider">AI Listing Forge</div>
-                        <div className="text-slate-500 text-xs font-medium">Generate SEO-Killer Content</div>
+                        <div className="text-white font-black text-base uppercase tracking-wider">{t('etsy.listingForge')}</div>
+                        <div className="text-slate-500 text-xs font-medium">{t('etsy.listingForgeDesc')}</div>
                       </div>
                     </div>
                     <ArrowRight className="w-6 h-6 text-slate-700 group-hover:text-orange-500 group-hover:translate-x-1 transition-all" />

@@ -93,10 +93,10 @@ export default function Testimonials() {
 
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
-            { emoji: '🚀', title: 'SaaS Platform', sub: 'AI-Powered Tools' },
-            { emoji: '⭐', title: 'Premium Quality', sub: 'Enterprise Grade' },
-            { emoji: '📞', title: 'Dedicated Support', sub: "We're Here to Help" },
-            { emoji: '🌍', title: 'Global Service', sub: 'Worldwide Clients' },
+            { emoji: '🚀', title: t('review.saas'), sub: t('review.saasSub') },
+            { emoji: '⭐', title: t('review.quality'), sub: t('review.qualitySub') },
+            { emoji: '📞', title: t('review.support'), sub: t('review.supportSub') },
+            { emoji: '🌍', title: t('review.global'), sub: t('review.globalSub') },
           ].map((item, i) => (
             <div key={i} className="text-center">
               <div className="text-4xl mb-2">{item.emoji}</div>

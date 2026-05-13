@@ -243,7 +243,7 @@ export default function Navigation() {
                 className="block px-4 py-3 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all font-medium text-sm" 
                 onClick={() => setIsOpen(false)}
               >
-                {t(`nav.${item.name.toLowerCase().replace(' ', '') === 'homes' ? 'home' : item.name.toLowerCase().replace(' ', '')}`)}
+                {t(item.name === 'SaaS Panel' ? 'nav.saas' : `nav.${item.name.toLowerCase()}`)}
               </Link>
             ))}
             <div className="px-2">

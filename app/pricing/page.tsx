@@ -9,133 +9,133 @@ import { BorderBeam } from "@/components/ui/border-beam";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n/context";
 
-const smartTiers = [
-  {
-    name: "Starter",
-    price: { monthly: 19, annual: 15 },
-    description: "Perfect for small sellers starting their journey.",
-    icon: <Zap className="h-6 w-6 text-orange-400" />,
-    features: [
-      "50 Research Queries / mo",
-      "Basic Smart Research",
-      "Google Trends Integration",
-      "n8n Search Context",
-      "Magic Cards Analysis",
-      "Trend Lifespan Analysis",
-      "Community Support"
-    ],
-    cta: "Start Deployment",
-    color: "from-orange-500/20 to-orange-500/5",
-    borderColor: "border-orange-500/20",
-    glowColor: "#f97316"
-  },
-  {
-    name: "Growth",
-    price: { monthly: 59, annual: 47 },
-    description: "The complete tactical OS for scaling revenue.",
-    icon: <Rocket className="h-6 w-6 text-amber-400" />,
-    popular: true,
-    features: [
-      "200 Research Queries / mo",
-      "Everything in Starter",
-      "💀 Failure Mode Analysis",
-      "🧬 Saturation & Clone Risk",
-      "💰 Profit Reality Check",
-      "🔗 Semantic Supplier Match",
-      "Marketplace Spy (Etsy/eBay/Amazon)",
-      "Priority AI Queue"
-    ],
-    cta: "Scale Operations",
-    color: "from-amber-500/20 to-amber-500/5",
-    borderColor: "border-amber-500/30",
-    glowColor: "#f59e0b"
-  },
-  {
-    name: "Pro / Agency",
-    price: { monthly: 129, annual: 103 },
-    description: "Unlimited power for high-volume operatives.",
-    icon: <Building2 className="h-6 w-6 text-purple-400" />,
-    features: [
-      "Unlimited Research Queries",
-      "Everything in Growth",
-      "API Access (Early Beta)",
-      "Multi-User Team Access",
-      "Model Rotation Guarantee",
-      "Dedicated Strategist",
-      "Early Feature Access"
-    ],
-    cta: "Enter Enterprise",
-    color: "from-purple-500/20 to-purple-500/5",
-    borderColor: "border-purple-500/20",
-    glowColor: "#a855f7"
-  }
-];
-
-const etsyTiers = [
-  {
-    name: "Starter",
-    price: { monthly: 9, annual: 7 },
-    description: "Quick entry into Etsy market dominance.",
-    icon: <Zap className="h-6 w-6 text-orange-400" />,
-    features: [
-      "200 Sniper Queries / mo",
-      "Basic Analysis (Trend/Magic)",
-      "Trend Lifespan Insights",
-      "Quick Idea Discovery",
-      "Basic SEO Tips",
-      "Community Support"
-    ],
-    cta: "Deploy Sniper",
-    color: "from-orange-500/20 to-orange-500/5",
-    borderColor: "border-orange-500/20",
-    glowColor: "#f97316"
-  },
-  {
-    name: "Growth",
-    price: { monthly: 39, annual: 31 },
-    description: "Deep tactical intelligence for high-value niches.",
-    icon: <Rocket className="h-6 w-6 text-amber-400" />,
-    popular: true,
-    features: [
-      "40 Deep Queries / mo",
-      "Everything in Starter",
-      "💀 Failure Mode Analysis",
-      "🧬 Saturation Risk Engine",
-      "💰 Profit Reality Check",
-      "🔗 Supplier Matching",
-      "Competitor Links",
-      "Conversion Funnel Analysis"
-    ],
-    cta: "Master Market",
-    color: "from-amber-500/20 to-amber-500/5",
-    borderColor: "border-amber-500/30",
-    glowColor: "#f59e0b"
-  },
-  {
-    name: "Pro / Agency",
-    price: { monthly: 99, annual: 79 },
-    description: "The ultimate weapon for Etsy power sellers.",
-    icon: <Building2 className="h-6 w-6 text-purple-400" />,
-    features: [
-      "Unlimited Sniper Queries",
-      "Everything in Growth",
-      "API Integration",
-      "Multi-User Access",
-      "Priority Model Rotation",
-      "Strategic Model Guarantee",
-      "Early Access Beta"
-    ],
-    cta: "Go Unlimited",
-    color: "from-purple-500/20 to-purple-500/5",
-    borderColor: "border-purple-500/20",
-    glowColor: "#a855f7"
-  }
-];
-
 export default function PricingPage() {
   const { t } = useI18n();
   const [isAnnual, setIsAnnual] = useState(true);
   const [productType, setProductType] = useState<"smart" | "etsy">("smart");
+
+  const smartTiers = [
+    {
+      name: t('pricing.starter'),
+      price: { monthly: 19, annual: 15 },
+      description: t('pricing.starterDesc'),
+      icon: <Zap className="h-6 w-6 text-orange-400" />,
+      features: [
+        `50 ${t('pricing.queries')}`,
+        t('pricing.basicAnalysis'),
+        "Google Trends Integration",
+        "n8n Search Context",
+        "Magic Cards Analysis",
+        "Trend Lifespan Analysis",
+        t('pricing.communitySupport')
+      ],
+      cta: t('pricing.ctaStarter'),
+      color: "from-orange-500/20 to-orange-500/5",
+      borderColor: "border-orange-500/20",
+      glowColor: "#f97316"
+    },
+    {
+      name: t('pricing.growth'),
+      price: { monthly: 59, annual: 47 },
+      description: t('pricing.growthDesc'),
+      icon: <Rocket className="h-6 w-6 text-amber-400" />,
+      popular: true,
+      features: [
+        `200 ${t('pricing.queries')}`,
+        `${t('pricing.everythingIn')} ${t('pricing.starter')}`,
+        t('pricing.fma'),
+        t('pricing.saturation'),
+        t('pricing.profitCheck'),
+        t('pricing.supplierMatch'),
+        t('pricing.spy'),
+        t('pricing.priorityQueue')
+      ],
+      cta: t('pricing.ctaGrowth'),
+      color: "from-amber-500/20 to-amber-500/5",
+      borderColor: "border-amber-500/30",
+      glowColor: "#f59e0b"
+    },
+    {
+      name: t('pricing.proAgency'),
+      price: { monthly: 129, annual: 103 },
+      description: t('pricing.proAgencyDesc'),
+      icon: <Building2 className="h-6 w-6 text-purple-400" />,
+      features: [
+        t('pricing.ctaEtsyPro'),
+        `${t('pricing.everythingIn')} ${t('pricing.growth')}`,
+        t('pricing.apiAccess'),
+        t('pricing.multiUser'),
+        t('pricing.modelRotation'),
+        t('pricing.dedicatedStrategist'),
+        t('pricing.earlyAccess')
+      ],
+      cta: t('pricing.ctaPro'),
+      color: "from-purple-500/20 to-purple-500/5",
+      borderColor: "border-purple-500/20",
+      glowColor: "#a855f7"
+    }
+  ];
+
+  const etsyTiers = [
+    {
+      name: t('pricing.starter'),
+      price: { monthly: 9, annual: 7 },
+      description: t('pricing.etsyStarterDesc'),
+      icon: <Zap className="h-6 w-6 text-orange-400" />,
+      features: [
+        `200 ${t('pricing.sniperQueries')}`,
+        t('pricing.basicAnalysis'),
+        t('pricing.trendLifespan'),
+        t('pricing.ideaDiscovery'),
+        t('pricing.basicSeo'),
+        t('pricing.communitySupport')
+      ],
+      cta: t('pricing.ctaEtsyStarter'),
+      color: "from-orange-500/20 to-orange-500/5",
+      borderColor: "border-orange-500/20",
+      glowColor: "#f97316"
+    },
+    {
+      name: t('pricing.growth'),
+      price: { monthly: 39, annual: 31 },
+      description: t('pricing.etsyGrowthDesc'),
+      icon: <Rocket className="h-6 w-6 text-amber-400" />,
+      popular: true,
+      features: [
+        `40 ${t('pricing.deepQueries')}`,
+        `${t('pricing.everythingIn')} ${t('pricing.starter')}`,
+        t('pricing.fma'),
+        t('pricing.saturation'),
+        t('pricing.profitCheck'),
+        t('pricing.supplierMatch'),
+        t('pricing.competitorLinks'),
+        t('pricing.funnel')
+      ],
+      cta: t('pricing.ctaEtsyGrowth'),
+      color: "from-amber-500/20 to-amber-500/5",
+      borderColor: "border-amber-500/30",
+      glowColor: "#f59e0b"
+    },
+    {
+      name: t('pricing.proAgency'),
+      price: { monthly: 99, annual: 79 },
+      description: t('pricing.etsyProAgencyDesc'),
+      icon: <Building2 className="h-6 w-6 text-purple-400" />,
+      features: [
+        t('pricing.ctaEtsyPro'),
+        `${t('pricing.everythingIn')} ${t('pricing.growth')}`,
+        t('pricing.apiAccess'),
+        t('pricing.multiUser'),
+        t('pricing.modelRotation'),
+        t('pricing.dedicatedStrategist'),
+        t('pricing.earlyAccess')
+      ],
+      cta: t('pricing.ctaEtsyPro'),
+      color: "from-purple-500/20 to-purple-500/5",
+      borderColor: "border-purple-500/20",
+      glowColor: "#a855f7"
+    }
+  ];
 
   const tiers = productType === "smart" ? smartTiers : etsyTiers;
 
@@ -292,10 +292,10 @@ export default function PricingPage() {
         {/* HUD Stats Decoration */}
         <div className="mt-32 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto border-t border-white/5 pt-20">
           {[
-            { label: "AI Decision Speed", value: "< 2.5s", icon: Cpu },
-            { label: "Data Fidelity", value: "99.9%", icon: BarChart3 },
-            { label: "Market Scanning", value: "Global", icon: Globe },
-            { label: "Active Operatives", value: "4.2k+", icon: Users },
+            { label: t('hero.stat3'), value: "< 2.5s", icon: Cpu },
+            { label: t('hero.stat2'), value: "99.9%", icon: BarChart3 },
+            { label: t('hero.stat4'), value: "Global", icon: Globe },
+            { label: t('dash.activeOperatives'), value: "4.2k+", icon: Users },
           ].map((stat, i) => (
             <div key={i} className="text-center space-y-2">
               <stat.icon className="h-5 w-5 text-slate-700 mx-auto mb-4" />

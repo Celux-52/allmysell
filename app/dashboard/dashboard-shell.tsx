@@ -11,11 +11,13 @@ import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
 import { isAdmin } from "@/lib/isAdmin";
 
-const navigation = [
-  { name: "SaaS Panel", href: "/dashboard/saas", icon: Zap },
-  { name: "Saved Items", href: "/dashboard/saved", icon: Star },
-  { name: "History", href: "/dashboard/history", icon: History },
-  { name: "Pricing", href: "/pricing", icon: CreditCard },
+import { useI18n } from "@/lib/i18n/context";
+
+const navigationKeys = [
+  { nameKey: "dash.saasPanel", href: "/dashboard/saas", icon: Zap },
+  { nameKey: "dash.savedItems", href: "/dashboard/saved", icon: Star },
+  { nameKey: "dash.history", href: "/dashboard/history", icon: History },
+  { nameKey: "pricing.title2", href: "/pricing", icon: CreditCard },
 ];
 
 export default function DashboardShell({
@@ -23,6 +25,7 @@ export default function DashboardShell({
 }: {
   children: React.ReactNode;
 }) {
+  const { t } = useI18n();
   const pathname = usePathname();
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -85,11 +88,11 @@ export default function DashboardShell({
         </div>
 
         <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-1">
-          {navigation.map((item) => {
+          {navigationKeys.map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link
-                key={item.name}
+                key={item.nameKey}
                 href={item.href}
                 onClick={() => setSidebarOpen(false)}
                 className={cn(
@@ -107,7 +110,7 @@ export default function DashboardShell({
                   />
                 )}
                 <item.icon className="h-5 w-5 relative z-10" />
-                <span className="relative z-10">{item.name}</span>
+                <span className="relative z-10">{t(item.nameKey)}</span>
               </Link>
             );
           })}
@@ -119,14 +122,14 @@ export default function DashboardShell({
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
           >
             <Settings className="h-5 w-5" />
-            Settings
+            {t("dash.settings")}
           </Link>
           <button
             onClick={handleSignOut}
             className="w-full mt-2 flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors"
           >
             <LogOut className="h-5 w-5" />
-            Sign Out
+            {t("dash.signOut")}
           </button>
         </div>
       </motion.div>
@@ -145,11 +148,11 @@ export default function DashboardShell({
             {isAdminUser && (
               <Link href="/admin/saves" className="flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/10 hover:bg-orange-500/20 px-3 py-1 text-sm font-medium text-orange-400 transition-colors">
                 <SparklesIcon className="h-4 w-4" />
-                Admin
+                {t("dash.admin")}
               </Link>
             )}
             <div className="flex items-center gap-2 rounded-full border border-slate-700/50 bg-slate-800/50 px-3 py-1 text-sm font-medium text-slate-300">
-              Premium SaaS
+              {t("dash.premium")}
             </div>
             <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-orange-500 to-amber-500 ring-2 ring-white/10" />
           </div>

@@ -8,52 +8,54 @@ import {
   Search, TrendingUp, BarChart3, Cpu,
   Sparkles, Target, Rocket, Crown
 } from "lucide-react";
-
-const modules = [
-  {
-    name: "Etsy Automation",
-    subtitle: "AI-POWERED PRODUCT SNIPER",
-    description: "Find winning Etsy niches, get instant SELL/AVOID decisions, generate human-like SEO listings & discover suppliers — all autonomous.",
-    href: "/dashboard/saas/etsy",
-    icon: Crosshair,
-    gradient: "from-orange-600 to-amber-600",
-    glowColor: "orange",
-    stats: [
-      { label: "AI Models", value: "3", icon: Brain },
-      { label: "Etsy API", value: "Live", icon: Store },
-      { label: "SEO Engine", value: "Active", icon: ShoppingBag },
-    ],
-    badge: "NEW",
-    badgeColor: "bg-orange-500/20 text-orange-400 border-orange-500/20",
-    borderHover: "hover:border-orange-500/30",
-  },
-  {
-    name: "Smart Research Engine",
-    subtitle: "MULTI-AI CONSENSUS SYSTEM",
-    description: "Multi-AI consensus system (Groq, Gemini, Qwen, Claude) analyzes trends, finds high-margin products from US warehouses with real-time Google Trends data.",
-    href: "/dashboard/saas/research",
-    icon: Cpu,
-    gradient: "from-indigo-600 to-violet-600",
-    glowColor: "indigo",
-    stats: [
-      { label: "AI Consensus", value: "5 Models", icon: Brain },
-      { label: "Trends API", value: "Live", icon: TrendingUp },
-      { label: "Research", value: "Active", icon: Search },
-    ],
-    badge: "CORE",
-    badgeColor: "bg-indigo-500/20 text-indigo-400 border-indigo-500/20",
-    borderHover: "hover:border-indigo-500/30",
-  },
-];
-
-const platformFeatures = [
-  { icon: Brain, label: "Multi-AI Consensus", desc: "5+ AI models analyze every query" },
-  { icon: Globe, label: "Real-Time Data", desc: "Live Google Trends & market signals" },
-  { icon: Shield, label: "Risk Analysis", desc: "Saturation & failure mode detection" },
-  { icon: Target, label: "Supplier Matching", desc: "Verified AliExpress, Alibaba, CJ sources" },
-];
+import { useI18n } from "@/lib/i18n/context";
 
 export default function SaaSPanelPage() {
+  const { t } = useI18n();
+
+  const modules = [
+    {
+      name: t('modules.etsyAutomation'),
+      subtitle: t('dash.etsyAlphaSub'),
+      description: t('modules.etsyAutomationDesc'),
+      href: "/dashboard/saas/etsy",
+      icon: Crosshair,
+      gradient: "from-orange-600 to-amber-600",
+      glowColor: "orange",
+      stats: [
+        { label: t('hero.stat1'), value: "3", icon: Brain },
+        { label: "Etsy API", value: "Live", icon: Store },
+        { label: "SEO Engine", value: "Active", icon: ShoppingBag },
+      ],
+      badge: "NEW",
+      badgeColor: "bg-orange-500/20 text-orange-400 border-orange-500/20",
+      borderHover: "hover:border-orange-500/30",
+    },
+    {
+      name: t('modules.smartResearch'),
+      subtitle: t('dash.smartAlphaSub'),
+      description: t('modules.smartResearchDesc'),
+      href: "/dashboard/saas/research",
+      icon: Cpu,
+      gradient: "from-indigo-600 to-violet-600",
+      glowColor: "indigo",
+      stats: [
+        { label: t('feat.multiAI'), value: "5 Models", icon: Brain },
+        { label: "Trends API", value: "Live", icon: TrendingUp },
+        { label: t('res.research'), value: "Active", icon: Search },
+      ],
+      badge: "CORE",
+      badgeColor: "bg-indigo-500/20 text-indigo-400 border-indigo-500/20",
+      borderHover: "hover:border-indigo-500/30",
+    },
+  ];
+
+  const platformFeatures = [
+    { icon: Brain, label: t('feat.multiAI'), desc: t('feat.multiAIDesc') },
+    { icon: Globe, label: t('feat.trends'), desc: t('feat.trendsDesc') },
+    { icon: Shield, label: t('feat.risk'), desc: t('feat.riskDesc') },
+    { icon: Target, label: t('feat.supplier'), desc: t('feat.supplierDesc') },
+  ];
   return (
     <div className="space-y-16 pb-20 max-w-6xl mx-auto">
 
@@ -74,7 +76,7 @@ export default function SaaSPanelPage() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
             </span>
             <span className="text-green-400 text-[10px] font-black uppercase tracking-widest">
-              All Systems Operational
+              {t('dash.systemsOperational')}
             </span>
           </motion.div>
 
@@ -87,7 +89,7 @@ export default function SaaSPanelPage() {
           >
             AllMySell{" "}
             <span className="bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 bg-clip-text text-transparent italic">
-              Intelligence
+              {t('dash.intelligenceTitle')}
             </span>
           </motion.h1>
 
@@ -97,8 +99,7 @@ export default function SaaSPanelPage() {
             transition={{ delay: 0.2 }}
             className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed"
           >
-            AI-powered e-commerce intelligence platform. Deploy autonomous agents 
-            to discover winning products, analyze markets, and dominate the algorithm.
+            {t('dash.subtitle')}
           </motion.p>
 
           {/* Platform Stats Row */}
@@ -125,7 +126,7 @@ export default function SaaSPanelPage() {
       <div className="space-y-6">
         <div className="text-center">
           <h2 className="text-sm font-black text-slate-500 uppercase tracking-[0.3em]">
-            Select Your Intelligence Module
+            {t('dash.selectModule')}
           </h2>
         </div>
         
@@ -174,7 +175,7 @@ export default function SaaSPanelPage() {
 
                   {/* CTA */}
                   <div className={`flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r ${mod.gradient} text-white font-semibold text-sm group-hover:shadow-lg transition-all relative z-10`}>
-                    Launch Module
+                    {t('dash.launchModule')}
                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
@@ -194,9 +195,9 @@ export default function SaaSPanelPage() {
         <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/[0.03] border border-white/[0.06] rounded-2xl backdrop-blur-sm">
           <Crown className="w-5 h-5 text-amber-500" />
           <span className="text-sm text-slate-400">
-            Unlock all modules with{" "}
+            {t('dash.unlockAll')}{" "}
             <Link href="/pricing" className="text-orange-400 font-bold hover:text-orange-300 transition-colors border-b border-orange-500/20">
-              Pro Access →
+              {t('dash.proAccess')} →
             </Link>
           </span>
         </div>

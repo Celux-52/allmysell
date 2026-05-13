@@ -9,8 +9,10 @@ import { Storage, SavedProduct, SAVED_LIMIT } from "@/lib/storage";
 import { EtsyStorage, SavedEtsyProduct, ETSY_SAVED_LIMIT } from "@/modules/etsy-automation/services/etsyStorage";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
+import { useI18n } from "@/lib/i18n/context";
 
 export default function SavedItemsPage() {
+  const { t } = useI18n();
   const [savedProducts, setSavedProducts] = useState<SavedProduct[]>([]);
   const [etsySavedProducts, setEtsySavedProducts] = useState<SavedEtsyProduct[]>([]);
   const [activeTab, setActiveTab] = useState<'research' | 'etsy'>('research');
@@ -115,24 +117,24 @@ export default function SavedItemsPage() {
           <AnimatedGradientText className="mb-2 !mx-0 !justify-start">
             <span className="flex items-center gap-2">
               <Star className="h-4 w-4 text-orange-400" />
-              Favorites
+              {t('saved.favorites')}
             </span>
           </AnimatedGradientText>
-          <h1 className="text-3xl font-bold text-white">Saved Products</h1>
-          <p className="text-slate-400 mt-1">Your shortlisted high-potential products.</p>
+          <h1 className="text-3xl font-bold text-white">{t('saved.title')}</h1>
+          <p className="text-slate-400 mt-1">{t('saved.subtitle')}</p>
         </div>
         {/* Limit Indicator */}
         <div className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-[#080c16] border border-white/10">
           <div className="flex-1 min-w-[120px]">
             <div className="flex items-center justify-between mb-1">
-              <span className="text-xs text-slate-400">Saved Slots</span>
+              <span className="text-xs text-slate-400">{t('saved.slots')}</span>
               <span className={`text-xs font-bold ${usedSlots >= currentLimit ? 'text-red-400' : 'text-white'}`}>{usedSlots}/{currentLimit}</span>
             </div>
             <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
               <div className={`h-full rounded-full transition-all ${usedSlots >= currentLimit ? 'bg-red-500' : usedSlots >= currentLimit * 0.7 ? 'bg-amber-500' : 'bg-gradient-to-r from-orange-500 to-amber-500'}`} style={{width: `${limitPercent}%`}} />
             </div>
           </div>
-          {usedSlots >= currentLimit && <span className="text-[10px] text-red-400 font-medium whitespace-nowrap">Full!</span>}
+          {usedSlots >= currentLimit && <span className="text-[10px] text-red-400 font-medium whitespace-nowrap">{t('saved.full')}</span>}
         </div>
       </div>
 
@@ -146,7 +148,7 @@ export default function SavedItemsPage() {
               : 'text-slate-400 hover:text-white hover:bg-white/5'
           }`}
         >
-          Smart Research
+          {t('hist.smart')}
         </button>
         <button
           onClick={() => setActiveTab('etsy')}
@@ -156,7 +158,7 @@ export default function SavedItemsPage() {
               : 'text-slate-400 hover:text-white hover:bg-white/5'
           }`}
         >
-          Etsy Automation
+          {t('hist.etsy')}
         </button>
       </div>
 
@@ -170,10 +172,10 @@ export default function SavedItemsPage() {
           <div className="h-16 w-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4 border border-white/10">
             <Star className="h-8 w-8 text-slate-500" />
           </div>
-          <h2 className="text-xl font-bold text-white mb-2">No saved items yet</h2>
-          <p className="text-slate-400 mb-6 max-w-sm mx-auto">When you find an interesting product during your research, click the star icon to save it here.</p>
+          <h2 className="text-xl font-bold text-white mb-2">{t('saved.noProducts')}</h2>
+          <p className="text-slate-400 mb-6 max-w-sm mx-auto">{t('saved.noProductsDesc')}</p>
           <Link href="/dashboard/research" className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white font-medium transition-colors">
-            Start Research <ArrowRight className="h-4 w-4" />
+            {t('hist.runSearch')} <ArrowRight className="h-4 w-4" />
           </Link>
         </motion.div>
       ) : (
@@ -203,7 +205,7 @@ export default function SavedItemsPage() {
                     <button 
                       onClick={() => handleRemove(product.id)}
                       className="absolute top-5 right-5 p-1.5 rounded-md text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors opacity-0 group-hover:opacity-100"
-                      title="Remove from Saved"
+                      title={t('saved.remove')}
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -212,17 +214,17 @@ export default function SavedItemsPage() {
                   {/* 3-Score Bars */}
                   <div className="grid grid-cols-3 gap-2 mb-3">
                     <div>
-                      <p className="text-[10px] text-slate-500 mb-1">⭐ Profit</p>
+                      <p className="text-[10px] text-slate-500 mb-1">⭐ {t('res.profit')}</p>
                       <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full" style={{width:`${product.profitScore || 50}%`}} /></div>
                       <p className="text-[10px] text-green-400 mt-0.5 font-bold">{product.profitScore || '—'}</p>
                     </div>
                     <div>
-                      <p className="text-[10px] text-slate-500 mb-1">🔥 Compete</p>
+                      <p className="text-[10px] text-slate-500 mb-1">🔥 {t('res.compete')}</p>
                       <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-amber-500 to-orange-400 rounded-full" style={{width:`${product.competitionScore || 50}%`}} /></div>
                       <p className="text-[10px] text-amber-400 mt-0.5 font-bold">{product.competitionScore || '—'}</p>
                     </div>
                     <div>
-                      <p className="text-[10px] text-slate-500 mb-1">💎 Opportunity</p>
+                      <p className="text-[10px] text-slate-500 mb-1">💎 {t('res.opportunity')}</p>
                       <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-purple-500 to-violet-400 rounded-full" style={{width:`${product.opportunityScore || 50}%`}} /></div>
                       <p className="text-[10px] text-purple-400 mt-0.5 font-bold">{product.opportunityScore || '—'}</p>
                     </div>
@@ -242,7 +244,7 @@ export default function SavedItemsPage() {
 
                   <div className="grid grid-cols-2 gap-2 mb-3 p-2 rounded-lg bg-white/[0.02] border border-white/5">
                     <div className="text-center">
-                      <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-0.5">Wholesale</p>
+                      <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-0.5">{t('res.wholesale')}</p>
                       <p className="text-sm font-medium text-slate-300">{product.wholesalePrice}</p>
                     </div>
                     <div className="text-center border-l border-white/5">
@@ -259,7 +261,7 @@ export default function SavedItemsPage() {
                           type="text"
                           value={noteText}
                           onChange={(e) => setNoteText(e.target.value)}
-                          placeholder="Add a note..."
+                          placeholder={t('saved.addNote')}
                           maxLength={80}
                           autoFocus
                           className="flex-1 bg-white/5 border border-white/10 rounded-md px-2.5 py-1.5 text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-orange-500/50"
@@ -275,7 +277,7 @@ export default function SavedItemsPage() {
                         {product.note ? (
                           <span className="flex items-center gap-1.5"><Pencil className="h-3 w-3 flex-shrink-0" />{product.note}</span>
                         ) : (
-                          <span className="flex items-center gap-1.5"><Pencil className="h-3 w-3" />Add a note...</span>
+                          <span className="flex items-center gap-1.5"><Pencil className="h-3 w-3" />{t('saved.addNote')}</span>
                         )}
                       </button>
                     )}
@@ -289,7 +291,7 @@ export default function SavedItemsPage() {
                       href="/dashboard/research" 
                       className="text-xs text-orange-400 hover:text-orange-300 flex items-center gap-1"
                     >
-                      Research Similar <ExternalLink className="h-3 w-3" />
+                      {t('saved.researchSimilar')} <ExternalLink className="h-3 w-3" />
                     </Link>
                   </div>
                 </MagicCard>
@@ -309,10 +311,10 @@ export default function SavedItemsPage() {
             <div className="h-16 w-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4 border border-white/10">
               <Star className="h-8 w-8 text-slate-500" />
             </div>
-            <h2 className="text-xl font-bold text-white mb-2">No Etsy items saved yet</h2>
-            <p className="text-slate-400 mb-6 max-w-sm mx-auto">When you analyze a product in the Etsy Sniper, click the star icon to save it here.</p>
+            <h2 className="text-xl font-bold text-white mb-2">{t('saved.noProducts')}</h2>
+            <p className="text-slate-400 mb-6 max-w-sm mx-auto">{t('saved.noProductsDesc')}</p>
             <Link href="/dashboard/saas/etsy" className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white font-medium transition-colors">
-              Snipe a Product <ArrowRight className="h-4 w-4" />
+              {t('hist.snipeProduct')} <ArrowRight className="h-4 w-4" />
             </Link>
           </motion.div>
         ) : (
@@ -342,7 +344,7 @@ export default function SavedItemsPage() {
                       <button 
                         onClick={() => handleRemove(product.id)}
                         className="absolute top-5 right-5 p-1.5 rounded-md text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors opacity-0 group-hover:opacity-100"
-                        title="Remove from Saved"
+                        title={t('saved.remove')}
                       >
                         <Trash2 className="h-4 w-4" />
                       </button>
@@ -356,7 +358,7 @@ export default function SavedItemsPage() {
 
                     <div className="grid grid-cols-2 gap-2 mb-3">
                       <div>
-                        <p className="text-[10px] text-slate-500 mb-1">⭐ Trend Score</p>
+                        <p className="text-[10px] text-slate-500 mb-1">⭐ {t('etsy.alphaScore')}</p>
                         <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-orange-500 to-amber-400 rounded-full" style={{width:`${product.trendScore || 50}%`}} /></div>
                         <p className="text-[10px] text-amber-400 mt-0.5 font-bold">{product.trendScore || '—'}</p>
                       </div>
@@ -417,7 +419,7 @@ export default function SavedItemsPage() {
                         rel="noreferrer"
                         className="text-xs text-orange-400 hover:text-orange-300 flex items-center gap-1"
                       >
-                        View on Etsy <ExternalLink className="h-3 w-3" />
+                        {t('saved.viewOnEtsy')} <ExternalLink className="h-3 w-3" />
                       </a>
                     </div>
                   </MagicCard>

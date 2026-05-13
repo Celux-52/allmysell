@@ -298,7 +298,8 @@ async function smartValidateAndRefine(
   allResults: Array<{ products: any[]; summary: string } | null>,
   providers: string[],
   query: string,
-  internetContext: string
+  internetContext: string,
+  isBasic: boolean = false
 ): Promise<{ products: any[], summaries: string[], activeProviders: string[] }> {
   const activeProviders: string[] = [];
   const allProducts: any[] = [];
@@ -347,7 +348,6 @@ ${internetContext}
     const cline = getCline();
 
     const validationResponse = await cline.chat.completions.create({
-    const validationResponse = await groq.chat.completions.create({
       model: isBasic ? 'google/gemini-2.0-flash-lite-preview-02-05:free' : AI_MODELS.REASONING.id, 
       messages: [{ role: 'user', content: validationPrompt }],
       temperature: 0.3
@@ -394,7 +394,7 @@ async function mergeAndEnrich(
      summaries = firstGood?.summary ? [firstGood.summary] : [];
      activeProviders = providers.slice(0, 3);
   } else {
-    const validated = await smartValidateAndRefine(allResults, providers, query, internetContext);
+    const validated = await smartValidateAndRefine(allResults, providers, query, internetContext, isBasic);
     validatedProducts = validated.products;
     summaries = validated.summaries;
     activeProviders = validated.activeProviders;
