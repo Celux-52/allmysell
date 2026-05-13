@@ -639,9 +639,19 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
       const isBasic = tier === 'FREE' || tier === 'STARTER';
       
       // Basic tier uses fewer models to speed up response and avoid rate limits
-      const activeProviders = isBasic 
+      let activeProviders = isBasic 
         ? [queryGroq(query, fullContext, tier), queryGemini(query, fullContext, tier), queryDeepSeek(query, fullContext, tier)]
         : [queryGroq(query, fullContext, tier), queryGemini(query, fullContext, tier), queryDeepSeek(query, fullContext, tier), queryQwen(query, fullContext, tier), queryMistral(query, fullContext, tier)];
+
+      // If we are strictly relying on OpenRouter Free models without dedicated API keys, 
+      // firing 5 parallel requests will instantly trigger a 429 Rate Limit. 
+      // We limit to 2 models max to prevent 429 errors.
+      if (!process.env.GROQ_API_KEY && !process.env.GEMINI_API_KEY) {
+        activeProviders = [
+          queryGroq(query, fullContext, tier),
+          new Promise(resolve => setTimeout(() => resolve(null), 1000)).then(() => queryDeepSeek(query, fullContext, tier))
+        ];
+      }
 
       const settled = await Promise.allSettled(activeProviders);
 
@@ -773,8 +783,18 @@ Rules:
     },
   ];
 
-  // Fire all 5 in parallel
-  const settled = await Promise.allSettled(providers.map(p => p.fn()));
+  // If relying on OpenRouter Free tier, reduce parallel requests to avoid 429 Rate Limits
+  const isOpenRouterOnly = !process.env.GROQ_API_KEY && !process.env.GEMINI_API_KEY;
+  const activeProviders = isOpenRouterOnly ? providers.slice(0, 2) : providers;
+
+  const settled = [];
+  for (let i = 0; i < activeProviders.length; i++) {
+    // Add small delay between requests if strictly using OpenRouter
+    if (isOpenRouterOnly && i > 0) {
+      await new Promise(r => setTimeout(r, 1000));
+    }
+    settled.push(await Promise.allSettled([activeProviders[i].fn()])[0]);
+  }
 
   const allCategories: any[] = [];
   const allSources: any[] = [];
