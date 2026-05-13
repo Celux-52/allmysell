@@ -358,13 +358,26 @@ async function mergeAndEnrich(
   internetContext: string
 ): Promise<ConsensusResult> {
 
-  // ✅ RUN MULTI-AI CONSENSUS EVALUATION
-  const isBasic = !allResults[0] || (allResults[0] as any).tier === 'FREE' || (allResults[0] as any).tier === 'STARTER';
-  const validated = await smartValidateAndRefine(allResults, providers, query, internetContext, isBasic);
+  // ✅ SMART MERGE: Only run Multi-AI Moderator if we have 2+ results to compare.
+  // If only 1 AI responded, use it directly to save 15s and avoid timeouts.
+  const validResults = allResults.filter(r => r && r.products && r.products.length > 0);
   
-  const validatedProducts = validated.products;
-  const summaries = validated.summaries;
-  const activeProviders = validated.activeProviders;
+  let validatedProducts: any[] = [];
+  let summaries: string[] = [];
+  let activeProviders: string[] = [];
+
+  if (validResults.length >= 2) {
+    const isBasic = (validResults[0] as any).tier === 'FREE' || (validResults[0] as any).tier === 'STARTER';
+    const validated = await smartValidateAndRefine(allResults, providers, query, internetContext, isBasic);
+    validatedProducts = validated.products;
+    summaries = validated.summaries;
+    activeProviders = validated.activeProviders;
+  } else if (validResults.length === 1) {
+    console.log('ℹ️ [Consensus] Only 1 provider responded. Skipping moderator to save time.');
+    validatedProducts = validResults[0]!.products;
+    summaries = [validResults[0]!.summary];
+    activeProviders = [providers[allResults.indexOf(validResults[0])]];
+  }
 
   if (validatedProducts.length === 0) {
     return {
@@ -575,9 +588,9 @@ async function mergeAndEnrich(
  * Fires 5 AI providers in parallel, merges, enriches with Google Trends + real supplier links.
  */
 export async function consensusResearch(query: string, tier: string = 'FREE'): Promise<ConsensusResult> {
-  // Global timeout for the entire research process
+  // Global timeout for the entire research process - Increased to 55s to give max time on Vercel
   const timeoutPromise = new Promise<never>((_, reject) => 
-    setTimeout(() => reject(new Error('RESEARCH_TIMEOUT')), 50000)
+    setTimeout(() => reject(new Error('RESEARCH_TIMEOUT')), 55000)
   );
 
   try {
@@ -620,9 +633,9 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
       const isOpenRouterOnly = !process.env.GROQ_API_KEY && !process.env.GEMINI_API_KEY;
 
       const staggeredPromises = allProviders.map(async (provider, i) => {
-        // Stagger requests by 5 seconds each (0s, 5s, 10s...)
+        // Stagger requests by 2 seconds each (Reduced from 5s to save time)
         if (isOpenRouterOnly && i > 0) {
-          const delay = i * 5000;
+          const delay = i * 2000;
           console.log(`[Consensus] Staggering provider ${provider.name} by ${delay}ms...`);
           await new Promise(r => setTimeout(r, delay));
         }
