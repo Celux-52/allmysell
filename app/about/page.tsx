@@ -4,8 +4,10 @@ import { motion } from "framer-motion";
 import { Particles } from "@/components/ui/particles";
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import { Users, Target, Rocket, Sparkles } from "lucide-react";
+import { useI18n } from "@/lib/i18n/context";
 
 export default function AboutPage() {
+  const { t } = useI18n();
   return (
     <div className="bg-[#030712] min-h-screen text-white pt-24 selection:bg-orange-500/30">
       <div className="absolute inset-0 z-0 h-[50vh] overflow-hidden pointer-events-none">
@@ -22,14 +24,14 @@ export default function AboutPage() {
           <AnimatedGradientText className="mb-6">
             <span className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-orange-400" />
-              <span>Our Story</span>
+              <span>{t('about.badge')}</span>
             </span>
           </AnimatedGradientText>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
-            Building the <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500">Future of Retail</span>
+            {t('about.title1')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500">{t('about.title2')}</span>
           </h1>
           <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-            From humble beginnings to an AI-powered SaaS platform. We are building the tools we always wished we had.
+            {t('about.subtitle')}
           </p>
         </motion.div>
 
@@ -40,16 +42,16 @@ export default function AboutPage() {
             transition={{ delay: 0.2 }}
             className="space-y-6"
           >
-            <h2 className="text-3xl font-bold">The Journey Begins</h2>
+            <h2 className="text-3xl font-bold">{t('about.journeyTitle')}</h2>
             <div className="space-y-4 text-slate-300 leading-relaxed">
               <p>
                 The story of Melih and Şükür Yunus did not begin with big plans, ready capital, or long-term startup dreams. It started in a much more ordinary way: they met while working at the same workplace. Different lives, different paths, but very similar struggles.
               </p>
               <p>
-                At that time, Şükür Yunus was attending his own university while actively working in e-commerce. He didn't learn this business from theory alone; he learned it by being inside it. He tested products, made sales, lost money, adjusted, and tried again.
+                At that time, Şükür Yunus was attending his own university while actively working in e-commerce. He didn&apos;t learn this business from theory alone; he learned it by being inside it. He tested products, made sales, lost money, adjusted, and tried again.
               </p>
               <p>
-                Melih's situation followed a different rhythm. He was also attending university under heavy conditions. The thought that "this cannot be it" became impossible to ignore. Watching Şükür Yunus operate in e-commerce opened a door in Melih's mind.
+                Melih&apos;s situation followed a different rhythm. He was also attending university under heavy conditions. The thought that &quot;this cannot be it&quot; became impossible to ignore. Watching Şükür Yunus operate in e-commerce opened a door in Melih&apos;s mind.
               </p>
             </div>
           </motion.div>
@@ -63,7 +65,7 @@ export default function AboutPage() {
               <div className="absolute inset-0 bg-slate-950/80 rounded-xl m-2 flex items-center justify-center border border-white/5">
                 <div className="text-center p-8">
                   <Rocket className="w-16 h-16 text-orange-400 mx-auto mb-4 opacity-50" />
-                  <p className="text-xl font-medium text-slate-400 italic">"AllMySell is not a story that was told. It is a process that was lived."</p>
+                  <p className="text-xl font-medium text-slate-400 italic">&quot;AllMySell is not a story that was told. It is a process that was lived.&quot;</p>
                 </div>
               </div>
             </div>
@@ -72,9 +74,9 @@ export default function AboutPage() {
 
         <div className="grid sm:grid-cols-3 gap-6 mb-32">
           {[
-            { icon: Target, title: "Our Mission", desc: "To democratize e-commerce success through advanced AI automation." },
-            { icon: Users, title: "Who We Are", desc: "A team of former sellers building the ultimate command center." },
-            { icon: Sparkles, title: "Our Vision", desc: "An ecosystem where any motivated individual can build a global business." }
+            { icon: Target, titleKey: 'about.mission', descKey: 'about.missionDesc' },
+            { icon: Users, titleKey: 'about.whoWeAre', descKey: 'about.whoWeAreDesc' },
+            { icon: Sparkles, titleKey: 'about.vision', descKey: 'about.visionDesc' }
           ].map((item, i) => (
             <motion.div
               key={i}
@@ -84,8 +86,8 @@ export default function AboutPage() {
               className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-orange-500/30 hover:bg-white/10 transition-all group"
             >
               <item.icon className="h-10 w-10 text-orange-400 mb-6 group-hover:scale-110 transition-transform" />
-              <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-              <p className="text-slate-400">{item.desc}</p>
+              <h3 className="text-xl font-bold mb-3">{t(item.titleKey)}</h3>
+              <p className="text-slate-400">{t(item.descKey)}</p>
             </motion.div>
           ))}
         </div>

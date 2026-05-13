@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { useI18n } from '@/lib/i18n/context';
 
 const faqCategories = [
   {
@@ -57,15 +58,16 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
 }
 
 export default function FAQPage() {
+  const { t } = useI18n();
   return (
     <div className="min-h-screen bg-[#030712] pt-28 pb-16 px-4">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-16">
-          <span className="inline-block px-4 py-1.5 text-xs font-semibold tracking-widest uppercase text-orange-400 bg-orange-500/10 rounded-full border border-orange-500/20 mb-6">FAQ</span>
+          <span className="inline-block px-4 py-1.5 text-xs font-semibold tracking-widest uppercase text-orange-400 bg-orange-500/10 rounded-full border border-orange-500/20 mb-6">{t('faq.badge')}</span>
           <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4 tracking-tight">
-            Frequently Asked <span className="gradient-text">Questions</span>
+            {t('faq.title1')} <span className="gradient-text">{t('faq.title2')}</span>
           </h1>
-          <p className="text-slate-400 text-lg max-w-xl mx-auto">Find answers to common questions about AllMySell platform and services</p>
+          <p className="text-slate-400 text-lg max-w-xl mx-auto">{t('faq.subtitle')}</p>
         </div>
 
         <div className="space-y-6">
@@ -80,9 +82,9 @@ export default function FAQPage() {
         </div>
 
         <div className="mt-12 glass-card rounded-2xl p-8 text-center">
-          <h2 className="text-2xl font-bold text-white mb-4">Still have questions?</h2>
-          <p className="text-slate-400 mb-6">Can&apos;t find the answer you&apos;re looking for? Our team is here to help.</p>
-          <a href="/contact" className="btn-primary inline-block"><span>Contact Us</span></a>
+          <h2 className="text-2xl font-bold text-white mb-4">{t('faq.stillQ')}</h2>
+          <p className="text-slate-400 mb-6">{t('faq.cantFind')}</p>
+          <a href="/contact" className="btn-primary inline-block"><span>{t('faq.contactUs')}</span></a>
         </div>
       </div>
     </div>

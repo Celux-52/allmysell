@@ -1,11 +1,12 @@
+'use client';
 import Link from 'next/link';
+import { useI18n } from '@/lib/i18n/context';
 
 export default function Footer() {
+  const { t } = useI18n();
   return (
     <footer className="relative bg-[#030712] border-t border-white/[0.06]">
-      {/* Glow effect */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-px bg-gradient-to-r from-transparent via-orange-500/50 to-transparent"></div>
-      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid md:grid-cols-5 gap-10">
           <div className="md:col-span-2">
@@ -16,11 +17,8 @@ export default function Footer() {
               <span className="text-xl font-bold gradient-text">AllMySell</span>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed mb-6 max-w-sm">
-              AI-powered e-commerce automation platform. We build intelligent tools 
-              for trend research, automated listing, and scalable online business 
-              growth — plus professional web development services.
+              {t('footer.desc')}
             </p>
-            {/* Social Icons */}
             <div className="flex space-x-3">
               {[
                 { label: 'Facebook', href: 'https://www.facebook.com/allmysell', path: 'M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z' },
@@ -37,40 +35,45 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Platform</h4>
+            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">{t('footer.platform')}</h4>
             <ul className="space-y-3">
               {[
-                { name: 'SaaS Panel', href: '/dashboard' },
-                { name: 'AI Research', href: '/dashboard/research' },
-                { name: 'Web Solutions', href: '/web-solutions' },
-                { name: 'Pricing', href: '/web-solutions#contact' },
+                { key: 'nav.saas', href: '/dashboard' },
+                { key: 'footer.aiResearch', href: '/dashboard/research' },
+                { key: 'nav.webSolutions', href: '/web-solutions' },
+                { key: 'footer.pricing', href: '/web-solutions#contact' },
               ].map((item) => (
-                <li key={item.name}><Link href={item.href} className="text-sm text-slate-500 hover:text-orange-400 transition-colors">{item.name}</Link></li>
+                <li key={item.key}><Link href={item.href} className="text-sm text-slate-500 hover:text-orange-400 transition-colors">{t(item.key)}</Link></li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Company</h4>
+            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">{t('footer.company')}</h4>
             <ul className="space-y-3">
-              {[{ name: 'About Us', href: '/about' }, { name: 'Contact', href: '/contact' }, { name: 'Blog', href: '/blog' }, { name: 'FAQ', href: '/faq' }].map((item) => (
-                <li key={item.name}><Link href={item.href} className="text-sm text-slate-500 hover:text-orange-400 transition-colors">{item.name}</Link></li>
+              {[
+                { key: 'footer.aboutUs', href: '/about' },
+                { key: 'footer.contact', href: '/contact' },
+                { key: 'nav.blog', href: '/blog' },
+                { key: 'footer.faq', href: '/faq' },
+              ].map((item) => (
+                <li key={item.key}><Link href={item.href} className="text-sm text-slate-500 hover:text-orange-400 transition-colors">{t(item.key)}</Link></li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Legal</h4>
+            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">{t('footer.legal')}</h4>
             <ul className="space-y-3">
-              <li><Link href="/privacy-policy" className="text-sm text-slate-500 hover:text-orange-400 transition-colors">Privacy Policy</Link></li>
-              <li><Link href="/terms" className="text-sm text-slate-500 hover:text-orange-400 transition-colors">Terms of Service</Link></li>
+              <li><Link href="/privacy-policy" className="text-sm text-slate-500 hover:text-orange-400 transition-colors">{t('footer.privacy')}</Link></li>
+              <li><Link href="/terms" className="text-sm text-slate-500 hover:text-orange-400 transition-colors">{t('footer.terms')}</Link></li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-white/[0.06] mt-12 pt-8">
           <p className="text-slate-600 text-sm text-center">
-            &copy; {new Date().getFullYear()} AllMySell. All rights reserved.
+            &copy; {new Date().getFullYear()} AllMySell. {t('footer.rights')}
           </p>
         </div>
       </div>
