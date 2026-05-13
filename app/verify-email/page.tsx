@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import { Mail, ArrowRight, CheckCircle, AlertCircle, Loader2, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useI18n } from '@/lib/i18n/context';
 
 export default function VerifyEmailPage() {
+  const { t } = useI18n();
   const [email, setEmail] = useState('');
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState('');
@@ -74,8 +76,8 @@ export default function VerifyEmailPage() {
                 </div>
 
                 <div>
-                  <h2 className="text-3xl font-black text-white tracking-tighter mb-2 italic uppercase">VERIFY IDENTITY</h2>
-                  <p className="text-slate-500 text-sm font-medium tracking-wide">Secure Link Deployment In Progress</p>
+                  <h2 className="text-3xl font-black text-white tracking-tighter mb-2 italic uppercase">{t('verify.title')}</h2>
+                  <p className="text-slate-500 text-sm font-medium tracking-wide">{t('verify.subtitle')}</p>
                 </div>
 
                 {error && (
@@ -87,7 +89,7 @@ export default function VerifyEmailPage() {
 
                 <div className="bg-white/[0.03] border border-white/10 p-6 rounded-2xl">
                   <p className="text-xs font-bold text-slate-400 leading-relaxed uppercase tracking-wider">
-                    Transmission sent to <span className="text-white">{email || "your email"}</span>. Please verify to continue the uplink.
+                    {t('verify.sentTo').replace('{email}', email || "your email")}
                   </p>
                 </div>
 
@@ -96,13 +98,13 @@ export default function VerifyEmailPage() {
                     onClick={handleResendEmail}
                     className="w-full py-4 bg-white/10 hover:bg-white/20 border border-white/10 text-white font-black rounded-2xl transition-all uppercase tracking-widest text-[10px]"
                   >
-                    Resend Transmission
+                    {t('verify.resend')}
                   </button>
                   <Link
                     href="/register"
                     className="text-[10px] font-black text-slate-500 hover:text-white transition-colors uppercase tracking-[0.2em]"
                   >
-                    Change Identity Email
+                    {t('verify.changeEmail')}
                   </Link>
                 </div>
               </motion.div>
@@ -117,8 +119,8 @@ export default function VerifyEmailPage() {
                   <CheckCircle className="text-green-500 w-12 h-12" />
                 </div>
                 <div>
-                  <h3 className="text-3xl font-black text-white tracking-tighter mb-2 italic">IDENTITY VERIFIED</h3>
-                  <p className="text-slate-500 text-sm font-medium tracking-wide uppercase">Establishing Secure Onboarding Link...</p>
+                  <h3 className="text-3xl font-black text-white tracking-tighter mb-2 italic">{t('verify.successTitle')}</h3>
+                  <p className="text-slate-500 text-sm font-medium tracking-wide uppercase">{t('verify.successSubtitle')}</p>
                 </div>
                 <div className="flex justify-center">
                   <Loader2 className="w-8 h-8 text-green-500 animate-spin" />

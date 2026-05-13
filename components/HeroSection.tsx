@@ -142,7 +142,7 @@ export default function HeroSection({ isPreview = false }: { isPreview?: boolean
             href="/register"
             className="group relative px-10 py-5 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black uppercase tracking-widest text-xs hover:shadow-2xl hover:shadow-orange-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-3"
           >
-            Start Free Trial
+            {t('hero.cta1')}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
           <Link 
@@ -181,7 +181,7 @@ export default function HeroSection({ isPreview = false }: { isPreview?: boolean
           >
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold uppercase tracking-wider">
               <Layers className="h-3 w-3" />
-              Intelligence Modules
+              {t('modules.badge')}
             </div>
             <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter">
               {t('modules.title1')} <span className="text-orange-500 italic">{t('modules.title2')}</span>

@@ -55,11 +55,11 @@ export default function HomePageSections() {
                 <div className="flex flex-1">
                   <div className="hidden sm:flex w-56 flex-col gap-2 border-r border-white/5 p-6 bg-white/[0.02]">
                     {[
-                      { icon: LayoutDashboard, label: "Intelligence", active: true },
-                      { icon: BarChart3, label: "Analytics" },
-                      { icon: ShoppingCart, label: "Inventory" },
-                      { icon: Cpu, label: "Neural Forge" },
-                      { icon: Shield, label: "Security" },
+                      { icon: LayoutDashboard, label: t('dash.intelligence'), active: true },
+                      { icon: BarChart3, label: t('dash.analytics') },
+                      { icon: ShoppingCart, label: t('dash.inventory') },
+                      { icon: Cpu, label: t('dash.neuralForge') },
+                      { icon: Shield, label: t('dash.security') },
                     ].map((item, i) => (
                       <div key={i} className={`flex items-center gap-4 rounded-xl px-4 py-3 text-xs font-black uppercase tracking-widest transition-all ${item.active ? 'bg-orange-500/10 text-orange-500 border border-orange-500/20' : 'text-slate-600 hover:bg-white/5 hover:text-white'}`}>
                         <item.icon className="h-4 w-4" />

@@ -5,8 +5,10 @@ import { Mail, AlertCircle, CheckCircle, ArrowLeft, Sparkles, Loader2 } from 'lu
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useI18n } from '@/lib/i18n/context';
 
 export default function ForgotPasswordPage() {
+  const { t } = useI18n();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -68,8 +70,8 @@ export default function ForgotPasswordPage() {
             <Sparkles className="w-10 h-10 text-white relative z-10" />
           </motion.div>
           
-          <h2 className="text-4xl font-black text-white tracking-tighter mb-2 italic">RESET CIPHER</h2>
-          <p className="text-slate-500 text-sm font-medium tracking-wide uppercase">Request Access Restoration</p>
+          <h2 className="text-4xl font-black text-white tracking-tighter mb-2 italic uppercase">{t('forgot.title')}</h2>
+          <p className="text-slate-500 text-sm font-medium tracking-wide uppercase">{t('forgot.subtitle')}</p>
         </div>
 
         <div className="bg-white/5 backdrop-blur-2xl p-10 rounded-[3rem] border border-white/10 shadow-2xl relative overflow-hidden">
@@ -87,15 +89,15 @@ export default function ForgotPasswordPage() {
                 <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-500/20">
                   <CheckCircle className="text-green-500 w-10 h-10" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-3">Transmission Sent</h3>
+                <h3 className="text-2xl font-bold text-white mb-3 uppercase">{t('forgot.successTitle')}</h3>
                 <p className="text-slate-400 mb-8 text-sm leading-relaxed">
-                  We&apos;ve sent a reset link to <span className="text-orange-400 font-bold">{email}</span>. Check your encrypted inbox.
+                  {t('forgot.successMsg').replace('{email}', email)}
                 </p>
                 <Link
                   href="/login"
-                  className="inline-flex items-center gap-2 text-white bg-white/10 hover:bg-white/20 px-8 py-4 rounded-2xl font-bold transition-all border border-white/10"
+                  className="inline-flex items-center gap-2 text-white bg-white/10 hover:bg-white/20 px-8 py-4 rounded-2xl font-bold transition-all border border-white/10 uppercase text-xs tracking-widest"
                 >
-                  <ArrowLeft size={18} /> BACK TO TERMINAL
+                  <ArrowLeft size={18} /> {t('forgot.backToTerminal')}
                 </Link>
               </motion.div>
             ) : (
@@ -119,7 +121,7 @@ export default function ForgotPasswordPage() {
 
                 <div className="space-y-3">
                   <label htmlFor="email" className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">
-                    Registered Email
+                    {t('forgot.emailLabel')}
                   </label>
                   <div className="relative group">
                     <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
@@ -132,7 +134,7 @@ export default function ForgotPasswordPage() {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       className="block w-full pl-14 pr-6 py-5 bg-white/[0.03] border border-white/10 rounded-2xl text-white placeholder-slate-600 focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 transition-all text-sm font-medium"
-                      placeholder="Enter identity email"
+                      placeholder={t('forgot.emailPlaceholder')}
                     />
                   </div>
                 </div>
@@ -145,10 +147,10 @@ export default function ForgotPasswordPage() {
                   {loading ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
-                      RESTORING...
+                      {t('forgot.loading')}
                     </>
                   ) : (
-                    'SEND RESET SIGNAL'
+                    t('forgot.submit')
                   )}
                 </button>
 
@@ -157,7 +159,7 @@ export default function ForgotPasswordPage() {
                     href="/login"
                     className="inline-flex items-center gap-2 text-xs font-black text-slate-500 hover:text-white transition-colors uppercase tracking-[0.2em]"
                   >
-                    <ArrowLeft size={14} /> Back to Login
+                    <ArrowLeft size={14} /> {t('forgot.backToLogin')}
                   </Link>
                 </div>
               </motion.form>

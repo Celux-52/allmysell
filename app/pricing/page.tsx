@@ -157,7 +157,7 @@ export default function PricingPage() {
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-[10px] font-black uppercase tracking-[0.2em]"
           >
             <Shield className="w-3 h-3" />
-            Mission Critical Economics
+            {t('pricing.badge')}
           </motion.div>
           
           <motion.h1 
@@ -166,8 +166,8 @@ export default function PricingPage() {
             transition={{ delay: 0.1 }}
             className="text-5xl md:text-7xl font-black tracking-tighter"
           >
-            SELECT YOUR <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-amber-600">COMMAND LEVEL</span>
+            {t('pricing.title1')} <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-500 to-amber-600">{t('pricing.title2')}</span>
           </motion.h1>
           
           <motion.p 
@@ -176,8 +176,7 @@ export default function PricingPage() {
             transition={{ delay: 0.2 }}
             className="text-slate-400 text-lg font-medium"
           >
-            Scale your market dominance with tiered intelligence protocols. 
-            Save 20% on annual deployment.
+            {t('pricing.subtitle')}
           </motion.p>
 
           {/* Product Toggle */}
@@ -192,7 +191,7 @@ export default function PricingPage() {
                 onClick={() => setProductType("smart")}
                 className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${productType === "smart" ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20' : 'text-slate-500 hover:text-slate-300'}`}
               >
-                Market Intelligence
+                {t('modules.marketIntel')}
               </button>
               <button
                 onClick={() => setProductType("etsy")}
@@ -210,7 +209,7 @@ export default function PricingPage() {
             transition={{ delay: 0.3 }}
             className="flex items-center justify-center gap-4 pt-8"
           >
-            <span className={`text-sm font-bold uppercase tracking-widest ${!isAnnual ? 'text-white' : 'text-slate-500'}`}>Monthly</span>
+            <span className={`text-sm font-bold uppercase tracking-widest ${!isAnnual ? 'text-white' : 'text-slate-500'}`}>{t('pricing.monthly')}</span>
             <button 
               onClick={() => setIsAnnual(!isAnnual)}
               className="relative w-14 h-7 bg-white/5 border border-white/10 rounded-full p-1 transition-all hover:border-orange-500/30"
@@ -218,7 +217,7 @@ export default function PricingPage() {
               <div className={`w-5 h-5 bg-orange-500 rounded-full shadow-lg shadow-orange-500/20 transition-all ${isAnnual ? 'translate-x-7' : 'translate-x-0'}`} />
             </button>
             <span className={`text-sm font-bold uppercase tracking-widest ${isAnnual ? 'text-white' : 'text-slate-500'}`}>
-              Annual <span className="text-orange-500 text-[10px] ml-1">(-20%)</span>
+              {t('pricing.annual')} <span className="text-orange-500 text-[10px] ml-1">(-20%)</span>
             </span>
           </motion.div>
         </div>
@@ -237,7 +236,7 @@ export default function PricingPage() {
                 {tier.popular && (
                   <div className="absolute top-8 right-8">
                      <span className="bg-orange-500 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg shadow-orange-500/40">
-                       Most Active
+                       {t('pricing.mostActive')}
                      </span>
                   </div>
                 )}
@@ -255,10 +254,10 @@ export default function PricingPage() {
                 <div className="mb-10">
                   <div className="flex items-baseline gap-1">
                     <span className="text-5xl font-black tracking-tighter">${isAnnual ? tier.price.annual : tier.price.monthly}</span>
-                    <span className="text-slate-500 font-bold text-sm">/mo</span>
+                    <span className="text-slate-500 font-bold text-sm">{t('pricing.mo')}</span>
                   </div>
                   <p className="text-[10px] text-slate-600 font-bold uppercase tracking-widest mt-2">
-                    {isAnnual ? `Billed $${tier.price.annual * 12} yearly` : "Billed monthly"}
+                    {isAnnual ? t('pricing.billedYearly').replace('${total}', (tier.price.annual * 12).toString()) : t('pricing.billedMonthly')}
                   </p>
                 </div>
 

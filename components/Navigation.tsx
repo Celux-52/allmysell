@@ -190,7 +190,7 @@ export default function Navigation() {
 
           <div className="md:hidden flex items-center gap-3">
             <a href="https://www.instagram.com/allmysell/" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-orange-400 transition-colors p-1" aria-label="Instagram"><Instagram size={20} /></a>
-            {!authLoading && !user && (<Link href="/register" className="px-3 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg text-sm font-medium">Sign Up</Link>)}
+            {!authLoading && !user && (<Link href="/register" className="px-3 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg text-sm font-medium">{t('nav.signUp')}</Link>)}
             {!authLoading && user && (
               <Link href="/dashboard" className="p-1.5">
                 {user.avatarUrl ? (
@@ -236,9 +236,54 @@ export default function Navigation() {
       {isOpen && (
         <div className="md:hidden glass-nav border-t border-white/[0.06]">
           <div className="px-4 pt-2 pb-4 space-y-1">
-            {navigation.map((item) => (<Link key={item.name} href={item.href} className="block px-4 py-3 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all font-medium text-sm" onClick={() => setIsOpen(false)}>{item.name}</Link>))}
-            <div className="px-2"><Link href="/web-solutions" className="block px-2 py-3 rounded-lg text-orange-400 hover:bg-orange-500/10 transition-all font-semibold text-sm" onClick={() => setIsOpen(false)}>🌐 Web Solutions</Link></div>
-            {!authLoading && (<div className="px-2 pt-2 border-t border-white/[0.06]">{user ? (<><Link href="/dashboard" className="block px-2 py-3 rounded-lg text-slate-300 hover:text-white hover:bg-white/[0.06] transition-all font-medium text-sm" onClick={() => setIsOpen(false)}>📊 Dashboard</Link><button onClick={() => { handleLogout(); setIsOpen(false); }} className="w-full text-left px-2 py-3 rounded-lg text-red-400 hover:bg-red-500/10 transition-all font-medium text-sm">🚪 Log Out</button></>) : (<Link href="/login" className="block px-2 py-3 rounded-lg text-slate-300 hover:text-white hover:bg-white/[0.06] transition-all font-medium text-sm" onClick={() => setIsOpen(false)}>🔑 Log In</Link>)}</div>)}
+            {navigation.map((item) => (
+              <Link 
+                key={item.name} 
+                href={item.href} 
+                className="block px-4 py-3 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all font-medium text-sm" 
+                onClick={() => setIsOpen(false)}
+              >
+                {t(`nav.${item.name.toLowerCase().replace(' ', '') === 'homes' ? 'home' : item.name.toLowerCase().replace(' ', '')}`)}
+              </Link>
+            ))}
+            <div className="px-2">
+              <Link 
+                href="/web-solutions" 
+                className="block px-2 py-3 rounded-lg text-orange-400 hover:bg-orange-500/10 transition-all font-semibold text-sm" 
+                onClick={() => setIsOpen(false)}
+              >
+                🌐 {t('nav.webSolutions')}
+              </Link>
+            </div>
+            {!authLoading && (
+              <div className="px-2 pt-2 border-t border-white/[0.06]">
+                {user ? (
+                  <>
+                    <Link 
+                      href="/dashboard" 
+                      className="block px-2 py-3 rounded-lg text-slate-300 hover:text-white hover:bg-white/[0.06] transition-all font-medium text-sm" 
+                      onClick={() => setIsOpen(false)}
+                    >
+                      📊 {t('nav.dashboard')}
+                    </Link>
+                    <button 
+                      onClick={() => { handleLogout(); setIsOpen(false); }} 
+                      className="w-full text-left px-2 py-3 rounded-lg text-red-400 hover:bg-red-500/10 transition-all font-medium text-sm"
+                    >
+                      🚪 {t('nav.logout')}
+                    </button>
+                  </>
+                ) : (
+                  <Link 
+                    href="/login" 
+                    className="block px-2 py-3 rounded-lg text-slate-300 hover:text-white hover:bg-white/[0.06] transition-all font-medium text-sm" 
+                    onClick={() => setIsOpen(false)}
+                  >
+                    🔑 {t('nav.login')}
+                  </Link>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}
