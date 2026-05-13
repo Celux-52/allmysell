@@ -652,7 +652,35 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
         }
       });
 
-      const settledResults = await Promise.all(staggeredPromises) as Array<{ products: any[]; summary: string } | null>;
+      let settledResults = await Promise.all(staggeredPromises) as Array<{ products: any[]; summary: string } | null>;
+      
+      // --- LAST RESORT FALLBACK ---
+      // If all providers failed (rate limits, timeouts, etc.), try one single robust call using the openrouter/free router.
+      const allFailed = settledResults.every(r => !r || !r.products || r.products.length === 0);
+      
+      if (allFailed) {
+        console.warn('⚠️ [Consensus] ALL providers failed. Attempting Last Resort fallback...');
+        try {
+          const { getCline } = await import('./cline');
+          const response = await getCline().chat.completions.create({
+            model: 'openrouter/free',
+            messages: [
+              { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
+              { role: 'user', content: query }
+            ],
+            temperature: 0.7
+          });
+          const text = response.choices[0]?.message?.content || '{}';
+          const parsed = safeParseJSON(text);
+          if (parsed && parsed.products && parsed.products.length > 0) {
+             console.log('✅ [Consensus] Last Resort fallback succeeded!');
+             settledResults = [{ ...parsed, tier }];
+          }
+        } catch (fallbackError: any) {
+          console.error('❌ [Consensus] Last Resort fallback also failed:', fallbackError.message);
+        }
+      }
+
       return mergeAndEnrich(settledResults, providers.slice(0, allProviders.length), query, internetContext);
     })();
 
@@ -814,6 +842,31 @@ Rules:
       } catch (e) { }
     }
   });
+
+  // --- LAST RESORT FALLBACK FOR TRENDS ---
+  if (allCategories.length === 0) {
+    console.warn('⚠️ [Consensus Trends] ALL providers failed. Attempting Last Resort fallback...');
+    try {
+      const { getCline } = await import('@/lib/ai/cline')
+      const r = await getCline().chat.completions.create({
+        model: 'openrouter/free',
+        messages: [{ role: 'user', content: AI_PROMPT }],
+        temperature: 0.9
+      })
+      const fallbackResult = r.choices[0]?.message?.content || '{}';
+      const cleaned = extractJSON(fallbackResult);
+      const parsed = JSON.parse(cleaned);
+
+      if (parsed.categories && Array.isArray(parsed.categories)) {
+        allCategories.push(...parsed.categories);
+        successfulProviders.push('OpenRouter Free (Fallback)');
+        if (parsed.summary && !bestSummary) bestSummary = parsed.summary;
+        if (parsed.topOpportunity && !bestOpportunity) bestOpportunity = parsed.topOpportunity;
+      }
+    } catch (fallbackError: any) {
+      console.error('❌ [Consensus Trends] Last Resort fallback failed:', fallbackError.message);
+    }
+  }
 
   if (allCategories.length === 0) {
     return null;
