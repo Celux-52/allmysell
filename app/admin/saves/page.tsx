@@ -6,11 +6,6 @@ export const dynamic = 'force-dynamic';
 export default async function UserSavesPage() {
   const saves = await prisma.savedProduct.findMany({
     orderBy: { createdAt: 'desc' },
-    include: {
-      user: {
-        select: { email: true, fullName: true }
-      }
-    }
   });
 
   return (
@@ -64,12 +59,12 @@ export default async function UserSavesPage() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center text-purple-700 font-bold text-[10px]">
-                          {(save.user?.fullName || save.user?.email || 'U')[0].toUpperCase()}
+                        <div className="w-6 h-6 rounded-full bg-stone-100 flex items-center justify-center text-stone-500 font-bold text-[10px]">
+                          U
                         </div>
                         <div>
-                          <p className="text-xs font-bold text-stone-800">{save.user?.fullName || 'Unknown User'}</p>
-                          <p className="text-[10px] text-stone-500">{save.user?.email}</p>
+                          <p className="text-xs font-bold text-stone-800">User</p>
+                          <p className="text-[10px] text-stone-500 truncate max-w-[100px]">{save.userId}</p>
                         </div>
                       </div>
                     </td>

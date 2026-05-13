@@ -109,12 +109,11 @@ export async function POST(req: Request) {
       savedAnalysis = await prisma.etsyAnalysis.create({
         data: {
           productId: savedProduct.id,
-          trendScore: analysisResult.trendScore,
-          competitionLevel: analysisResult.competitionLevel,
-          decision: analysisResult.decision,
-          summary: analysisResult.summary,
-          isHandmade: analysisResult.isHandmade,
-          isCustomizable: analysisResult.isCustomizable
+          trendScore: analysisResult.trendScore || analysisResult.scores?.trend || 0,
+          saturationScore: analysisResult.scores?.competition || 0,
+          opportunityScore: analysisResult.scores?.demand || 0,
+          decision: analysisResult.decision || 'AVOID',
+          analysis: analysisResult as any
         }
       });
     } catch (dbError) {

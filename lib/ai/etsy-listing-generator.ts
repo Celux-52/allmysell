@@ -5,7 +5,6 @@ import { AI_MODELS } from './models';
 export class EtsyListingGenerator {
   async generateListing(productTitle: string, tags: string[] = []) {
     const cline = getCline();
-    const [primaryModel, ...fallbacks] = FREE_MODEL_CHAINS.creative;
 
     const prompt = `
       You are an Etsy SEO expert and professional copywriter. Your target audience is the end consumer.
