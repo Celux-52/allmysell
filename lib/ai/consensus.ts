@@ -322,6 +322,7 @@ ${allProductsJson}
 ${internetContext}
 `;
 
+  try {
     // Use GPT-OSS 120B (Reasoning Model) as the Master Moderator
     const { getCline } = await import('./cline');
     const response = await getCline().chat.completions.create({
