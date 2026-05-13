@@ -9,6 +9,7 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 import CookieBanner from '@/components/CookieBanner';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import { cn } from "@/lib/utils";
+import { I18nProvider } from '@/lib/i18n/context';
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -63,17 +64,19 @@ export default function RootLayout({
         <meta name="google" content="notranslate" />
       </head>
       <body className={`${inter.className} bg-[#030712] text-slate-100 antialiased`} suppressHydrationWarning>
-        <HideOnRoutes>
-          <Navigation />
-        </HideOnRoutes>
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <HideOnRoutes>
-          <Footer />
-          <WhatsAppButton />
-        </HideOnRoutes>
-        <CookieBanner />
+        <I18nProvider>
+          <HideOnRoutes>
+            <Navigation />
+          </HideOnRoutes>
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <HideOnRoutes>
+            <Footer />
+            <WhatsAppButton />
+          </HideOnRoutes>
+          <CookieBanner />
+        </I18nProvider>
         <GoogleAnalytics />
         <Analytics />
       </body>

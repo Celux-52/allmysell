@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { Menu, X, ChevronDown, Instagram, User, LogOut, Globe } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
+import { useI18n } from '@/lib/i18n/context';
+import type { SupportedLang } from '@/lib/i18n/translations';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -38,28 +40,19 @@ interface AuthUser {
 
 export default function Navigation() {
   const router = useRouter();
+  const { lang, setLang, t } = useI18n();
   const [isOpen, setIsOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState(false);
   const [user, setUser] = useState<AuthUser | null>(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
   const [scrolled, setScrolled] = useState(false);
-  const [currentLang, setCurrentLang] = useState(languages[1]); // Default to English
+  const currentLang = languages.find(l => l.code === lang) || languages[1];
   const [langMenuOpen, setLangMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const savedLang = localStorage.getItem('preferred_lang');
-    if (savedLang) {
-      const found = languages.find(l => l.code === savedLang);
-      if (found) setCurrentLang(found);
-    }
-  }, []);
-
-  const changeLanguage = (lang: typeof languages[0]) => {
-    setCurrentLang(lang);
-    localStorage.setItem('preferred_lang', lang.code);
+  const changeLanguage = (langObj: typeof languages[0]) => {
+    setLang(langObj.code as SupportedLang);
     setLangMenuOpen(false);
-    // Future: Trigger actual i18n translation here
   };
 
   useEffect(() => {
@@ -117,13 +110,23 @@ export default function Navigation() {
           </Link>
 
           <div className="hidden md:flex items-center space-x-1 flex-1 justify-center">
-            {navigation.map((item) => (
-              <Link key={item.name} href={item.href} className="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all font-medium text-sm">{item.name}</Link>
+            {[
+              { key: 'nav.home', href: '/' },
+              { key: 'nav.about', href: '/about' },
+              { key: 'nav.blog', href: '/blog' },
+              { key: 'nav.saas', href: '/dashboard' },
+            ].map((item) => (
+              <Link key={item.key} href={item.href} className="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all font-medium text-sm">{t(item.key)}</Link>
             ))}
             <div className="relative group">
-              <button className="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all font-medium flex items-center gap-1 text-sm">Web Solutions<ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" /></button>
+              <button className="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all font-medium flex items-center gap-1 text-sm">{t('nav.webSolutions')}<ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" /></button>
               <div className="absolute left-0 mt-1 w-52 glass-card rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 z-50 overflow-hidden">
-                {webServices.map((item) => (<Link key={item.name} href={item.href} className="block px-4 py-3 text-sm text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all">{item.name}</Link>))}
+                {[
+                  { key: 'nav.basicSetup', href: '/web-solutions#basic' },
+                  { key: 'nav.professional', href: '/web-solutions#professional' },
+                  { key: 'nav.fullEcosystem', href: '/web-solutions#ecosystem' },
+                  { key: 'nav.getQuote', href: '/web-solutions#contact' },
+                ].map((item) => (<Link key={item.key} href={item.href} className="block px-4 py-3 text-sm text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all">{t(item.key)}</Link>))}
               </div>
             </div>
           </div>
@@ -180,9 +183,9 @@ export default function Navigation() {
                   <span className="text-slate-300 text-sm font-medium max-w-[100px] truncate">{user.fullName || user.email.split('@')[0]}</span>
                   <ChevronDown size={14} className={`text-slate-500 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
                 </button>
-                {userMenuOpen && (<><div className="fixed inset-0 z-40" onClick={() => setUserMenuOpen(false)}></div><div className="absolute right-0 mt-2 w-56 glass-card rounded-xl z-50 overflow-hidden"><div className="px-4 py-3 border-b border-white/[0.06]"><p className="text-sm font-medium text-white truncate">{user.fullName || 'User'}</p><p className="text-xs text-slate-500 truncate">{user.email}</p></div><Link href="/dashboard" className="flex items-center gap-3 px-4 py-3 text-sm text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors" onClick={() => setUserMenuOpen(false)}><User size={16} />Dashboard</Link><button onClick={handleLogout} className="flex items-center gap-3 w-full px-4 py-3 text-sm text-red-400 hover:bg-red-500/10 transition-colors"><LogOut size={16} />Log Out</button></div></>)}
+                {userMenuOpen && (<><div className="fixed inset-0 z-40" onClick={() => setUserMenuOpen(false)}></div><div className="absolute right-0 mt-2 w-56 glass-card rounded-xl z-50 overflow-hidden"><div className="px-4 py-3 border-b border-white/[0.06]"><p className="text-sm font-medium text-white truncate">{user.fullName || 'User'}</p><p className="text-xs text-slate-500 truncate">{user.email}</p></div><Link href="/dashboard" className="flex items-center gap-3 px-4 py-3 text-sm text-slate-400 hover:text-white hover:bg-white/[0.06] transition-colors" onClick={() => setUserMenuOpen(false)}><User size={16} />{t('nav.dashboard')}</Link><button onClick={handleLogout} className="flex items-center gap-3 w-full px-4 py-3 text-sm text-red-400 hover:bg-red-500/10 transition-colors"><LogOut size={16} />{t('nav.logout')}</button></div></>)}
               </div>
-            ) : (<><Link href="/login" className="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all font-medium text-sm">Log In</Link><Link href="/register" className="px-5 py-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg hover:shadow-lg hover:shadow-orange-500/25 transition-all font-medium text-sm hover:scale-[1.02]">Get Started</Link></>)}
+            ) : (<><Link href="/login" className="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all font-medium text-sm">{t('nav.login')}</Link><Link href="/register" className="px-5 py-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg hover:shadow-lg hover:shadow-orange-500/25 transition-all font-medium text-sm hover:scale-[1.02]">{t('nav.getStarted')}</Link></>)}
           </div>
 
           <div className="md:hidden flex items-center gap-3">

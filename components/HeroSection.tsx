@@ -8,6 +8,7 @@ import {
   Store, Search, Layers
 } from 'lucide-react';
 import Link from 'next/link';
+import { useI18n } from '@/lib/i18n/context';
 
 const platformFeatures = [
   {
@@ -68,6 +69,28 @@ const stats = [
 ];
 
 export default function HeroSection({ isPreview = false }: { isPreview?: boolean }) {
+  const { t } = useI18n();
+
+  const localModules = [
+    { name: t('modules.smartResearch'), desc: t('modules.smartResearchDesc'), icon: Cpu, gradient: 'from-indigo-600 to-violet-600', badge: 'CORE' },
+    { name: t('modules.etsyAutomation'), desc: t('modules.etsyAutomationDesc'), icon: Store, gradient: 'from-orange-600 to-amber-600', badge: 'NEW' },
+    { name: t('modules.marketIntel'), desc: t('modules.marketIntelDesc'), icon: BarChart3, gradient: 'from-emerald-600 to-teal-600', badge: 'SOON' },
+  ];
+
+  const localFeatures = [
+    { icon: Brain, title: t('feat.multiAI'), desc: t('feat.multiAIDesc'), color: 'orange' },
+    { icon: TrendingUp, title: t('feat.trends'), desc: t('feat.trendsDesc'), color: 'green' },
+    { icon: Target, title: t('feat.supplier'), desc: t('feat.supplierDesc'), color: 'blue' },
+    { icon: Shield, title: t('feat.risk'), desc: t('feat.riskDesc'), color: 'purple' },
+  ];
+
+  const localStats = [
+    { value: '5+', label: t('hero.stat1') },
+    { value: '99.9%', label: t('hero.stat2') },
+    { value: '<2.5s', label: t('hero.stat3') },
+    { value: 'Global', label: t('hero.stat4') },
+  ];
+
   return (
     <div className="space-y-32 pb-32 max-w-7xl mx-auto px-4 sm:px-6 relative overflow-hidden">
       
@@ -86,7 +109,7 @@ export default function HeroSection({ isPreview = false }: { isPreview?: boolean
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl mb-8"
         >
           <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.6)]"></div>
-          <span className="text-[10px] font-black text-green-200 uppercase tracking-[0.3em]">Platform Active — All Systems Online</span>
+          <span className="text-[10px] font-black text-green-200 uppercase tracking-[0.3em]">{t('hero.status')}</span>
         </motion.div>
 
         {/* Title */}
@@ -105,8 +128,7 @@ export default function HeroSection({ isPreview = false }: { isPreview?: boolean
           transition={{ delay: 0.2 }}
           className="max-w-3xl text-xl text-slate-400 font-medium leading-relaxed mb-12"
         >
-          The AI-powered e-commerce intelligence platform. We deploy autonomous agents to 
-          analyze markets, find winning products, and help you scale across every marketplace.
+          {t('hero.subtitle')}
         </motion.p>
 
         {/* CTA Buttons */}
@@ -128,7 +150,7 @@ export default function HeroSection({ isPreview = false }: { isPreview?: boolean
             className="px-10 py-5 rounded-2xl bg-white/5 border border-white/10 text-white font-black uppercase tracking-widest text-xs hover:bg-white/10 transition-all flex items-center gap-3"
           >
             <Crown className="w-4 h-4 text-amber-500" />
-            View Plans
+            {t('hero.cta2')}
           </Link>
         </motion.div>
 
@@ -139,7 +161,7 @@ export default function HeroSection({ isPreview = false }: { isPreview?: boolean
           transition={{ delay: 0.4 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-3xl"
         >
-          {stats.map((stat, i) => (
+          {localStats.map((stat, i) => (
             <div key={i} className="text-center p-4 bg-white/[0.02] border border-white/[0.05] rounded-2xl">
               <div className="text-2xl font-black text-white mb-1">{stat.value}</div>
               <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{stat.label}</div>
@@ -162,16 +184,16 @@ export default function HeroSection({ isPreview = false }: { isPreview?: boolean
               Intelligence Modules
             </div>
             <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter">
-              Everything You Need to <span className="text-orange-500 italic">Dominate</span>
+              {t('modules.title1')} <span className="text-orange-500 italic">{t('modules.title2')}</span>
             </h2>
             <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-              Each module is an autonomous AI system designed to maximize your e-commerce profits.
+              {t('modules.subtitle')}
             </p>
           </motion.div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {modules.map((mod, i) => (
+          {localModules.map((mod, i) => (
             <motion.div
               key={mod.name}
               initial={{ opacity: 0, y: 30 }}
@@ -210,16 +232,16 @@ export default function HeroSection({ isPreview = false }: { isPreview?: boolean
             className="space-y-4"
           >
             <h2 className="text-4xl font-black text-white tracking-tighter">
-              Why <span className="text-orange-500 italic">AllMySell</span>?
+              {t('feat.whyTitle')} <span className="text-orange-500 italic">AllMySell</span>?
             </h2>
             <p className="text-slate-400 text-lg max-w-xl mx-auto">
-              Built for serious e-commerce sellers who want data-driven decisions.
+              {t('feat.whySubtitle')}
             </p>
           </motion.div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {platformFeatures.map((feat, i) => (
+          {localFeatures.map((feat, i) => (
             <motion.div
               key={feat.title}
               initial={{ opacity: 0, y: 20 }}
@@ -248,23 +270,23 @@ export default function HeroSection({ isPreview = false }: { isPreview?: boolean
         className="text-center space-y-6"
       >
         <h2 className="text-3xl md:text-4xl font-black text-white tracking-tighter">
-          Ready to Scale Your Business?
+          {t('cta.title1')}
         </h2>
         <p className="text-slate-400 max-w-lg mx-auto">
-          Join sellers who use AI-powered intelligence to find winning products and dominate marketplaces.
+          {t('cta.subtitle')}
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link 
             href="/register"
             className="px-10 py-5 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black uppercase tracking-widest text-xs hover:shadow-2xl hover:shadow-orange-500/30 transition-all flex items-center gap-3"
           >
-            Get Started Free <ArrowRight className="w-4 h-4" />
+            {t('cta.button1')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link 
             href="/pricing"
             className="px-10 py-5 rounded-2xl bg-white/5 border border-white/10 text-white font-black uppercase tracking-widest text-xs hover:bg-white/10 transition-all"
           >
-            Compare Plans
+            {t('cta.button2')}
           </Link>
         </div>
       </motion.div>
