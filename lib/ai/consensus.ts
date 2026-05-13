@@ -670,7 +670,7 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
         }
       });
 
-      const settledResults = await Promise.all(staggeredPromises);
+      const settledResults = await Promise.all(staggeredPromises) as Array<{ products: any[]; summary: string } | null>;
       return mergeAndEnrich(settledResults, providers.slice(0, allProviders.length), query, internetContext);
     })();
 
