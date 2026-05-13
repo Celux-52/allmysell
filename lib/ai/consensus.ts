@@ -635,36 +635,43 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
 
       const fullContext = internetContext + googleTrendsContext;
 
-      // 3. Fire providers in parallel with tier-based optimization
-      const isBasic = tier === 'FREE' || tier === 'STARTER';
-      
       // Basic tier uses fewer models to speed up response and avoid rate limits
-      let activeProviders = isBasic 
-        ? [queryGroq(query, fullContext, tier), queryGemini(query, fullContext, tier), queryDeepSeek(query, fullContext, tier)]
-        : [queryGroq(query, fullContext, tier), queryGemini(query, fullContext, tier), queryDeepSeek(query, fullContext, tier), queryQwen(query, fullContext, tier), queryMistral(query, fullContext, tier)];
+      const isBasic = tier === 'FREE' || tier === 'STARTER';
+      const allProviders = isBasic 
+        ? [
+            { name: providers[0], fn: () => queryGroq(query, fullContext, tier) },
+            { name: providers[1], fn: () => queryGemini(query, fullContext, tier) },
+            { name: providers[2], fn: () => queryDeepSeek(query, fullContext, tier) }
+          ]
+        : [
+            { name: providers[0], fn: () => queryGroq(query, fullContext, tier) },
+            { name: providers[1], fn: () => queryGemini(query, fullContext, tier) },
+            { name: providers[2], fn: () => queryDeepSeek(query, fullContext, tier) },
+            { name: providers[3], fn: () => queryQwen(query, fullContext, tier) },
+            { name: providers[4], fn: () => queryMistral(query, fullContext, tier) }
+          ];
 
-      // If we are strictly relying on OpenRouter Free models without dedicated API keys, 
-      // firing 5 parallel requests will instantly trigger a 429 Rate Limit. 
-      // We limit to 2 models max to prevent 429 errors.
-      if (!process.env.GROQ_API_KEY && !process.env.GEMINI_API_KEY) {
-        activeProviders = [
-          queryGroq(query, fullContext, tier),
-          new Promise(resolve => setTimeout(() => resolve(null), 1000)).then(() => queryDeepSeek(query, fullContext, tier))
-        ];
-      }
+      const isOpenRouterOnly = !process.env.GROQ_API_KEY && !process.env.GEMINI_API_KEY;
 
-      const settled = await Promise.allSettled(activeProviders);
-
-      const results = settled.map((r, i) => {
-        if (r.status === 'fulfilled') {
-           const val = r.value as any;
-           return { ...val, tier }; // Pass tier to results for mergeAndEnrich
+      const staggeredPromises = allProviders.map(async (provider, i) => {
+        // Stagger requests by 5 seconds each (0s, 5s, 10s...)
+        if (isOpenRouterOnly && i > 0) {
+          const delay = i * 5000;
+          console.log(`[Consensus] Staggering provider ${provider.name} by ${delay}ms...`);
+          await new Promise(r => setTimeout(r, delay));
         }
-        console.error(`[Consensus] Provider ${providers[i]} failed:`, r.reason);
-        return null;
+        
+        try {
+          const result = await provider.fn();
+          return { ...result, tier };
+        } catch (error: any) {
+          console.error(`[Consensus] Provider ${provider.name} failed:`, error.message);
+          return null;
+        }
       });
 
-      return mergeAndEnrich(results, providers, query, internetContext);
+      const settledResults = await Promise.all(staggeredPromises);
+      return mergeAndEnrich(settledResults, providers.slice(0, allProviders.length), query, internetContext);
     })();
 
     return await Promise.race([researchPromise, timeoutPromise]);
@@ -785,16 +792,18 @@ Rules:
 
   // If relying on OpenRouter Free tier, reduce parallel requests to avoid 429 Rate Limits
   const isOpenRouterOnly = !process.env.GROQ_API_KEY && !process.env.GEMINI_API_KEY;
-  const activeProviders = isOpenRouterOnly ? providers.slice(0, 2) : providers;
+  const activeProviders = isOpenRouterOnly ? providers.slice(0, 3) : providers;
 
-  const settled = [];
-  for (let i = 0; i < activeProviders.length; i++) {
-    // Add small delay between requests if strictly using OpenRouter
+  const staggeredPromises = activeProviders.map(async (provider, i) => {
     if (isOpenRouterOnly && i > 0) {
-      await new Promise(r => setTimeout(r, 1000));
+      const delay = i * 5000;
+      console.log(`[Consensus Trends] Staggering provider ${provider.name} by ${delay}ms...`);
+      await new Promise(r => setTimeout(r, delay));
     }
-    settled.push(await Promise.allSettled([activeProviders[i].fn()])[0]);
-  }
+    return provider.fn();
+  });
+
+  const settled = await Promise.allSettled(staggeredPromises);
 
   const allCategories: any[] = [];
   const allSources: any[] = [];
