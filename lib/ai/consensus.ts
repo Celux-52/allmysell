@@ -20,6 +20,18 @@ import { extractJSON, withRetry } from './retry';
 import { fetchInternetDataViaTool } from './internet-search';
 import { RESEARCH_MODELS, AI_MODELS } from './models';
 
+/**
+ * Robust JSON parsing utility that handles AI thinking tags and markdown blocks
+ */
+function safeParseJSON(content: string): any {
+  try {
+    return JSON.parse(extractJSON(content));
+  } catch (e) {
+    console.error("[Consensus] Failed to parse AI JSON:", e);
+    return null;
+  }
+}
+
 interface SupplierLink {
   name: string;
   url: string;
