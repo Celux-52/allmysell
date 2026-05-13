@@ -7,6 +7,7 @@ import Link from "next/link";
 import { MagicCard } from "@/components/ui/magic-card";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Button } from "@/components/ui/button";
+import { useI18n } from "@/lib/i18n/context";
 
 const smartTiers = [
   {
@@ -132,6 +133,7 @@ const etsyTiers = [
 ];
 
 export default function PricingPage() {
+  const { t } = useI18n();
   const [isAnnual, setIsAnnual] = useState(true);
   const [productType, setProductType] = useState<"smart" | "etsy">("smart");
 

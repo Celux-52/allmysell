@@ -11,7 +11,10 @@
       "name": "Every 4 Hours",
       "type": "n8n-nodes-base.cron",
       "typeVersion": 1,
-      "position": [250, 300]
+      "position": [
+        250,
+        300
+      ]
     },
     {
       "parameters": {
@@ -36,7 +39,10 @@
       "name": "Apify TikTok Scraper",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
-      "position": [450, 300]
+      "position": [
+        450,
+        300
+      ]
     },
     {
       "parameters": {
@@ -47,7 +53,10 @@
       "name": "Split In Batches",
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 1,
-      "position": [650, 300]
+      "position": [
+        650,
+        300
+      ]
     },
     {
       "parameters": {
@@ -88,7 +97,10 @@
       "name": "Send to AllMySell API",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4,
-      "position": [850, 300]
+      "position": [
+        850,
+        300
+      ]
     }
   ],
   "connections": {

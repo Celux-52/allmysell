@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useI18n } from '@/lib/i18n/context';
 
 export default function RegisterPage() {
   return (
@@ -21,6 +22,7 @@ export default function RegisterPage() {
 
 function RegisterForm() {
   const router = useRouter();
+  const { t } = useI18n();
   const [step, setStep] = useState(1);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -172,9 +174,9 @@ function RegisterForm() {
             </motion.div>
           </div>
           <h1 className="text-4xl font-black text-white tracking-tighter uppercase italic leading-none">
-            AMS <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">ENROLLMENT</span>
+            {t('register.title').split(' ')[0]} <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">{t('register.title').split(' ').slice(1).join(' ')}</span>
           </h1>
-          <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em] mt-2">Initialize New Intelligence Operative</p>
+          <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em] mt-2">{t('register.subtitle')}</p>
         </div>
 
         {/* Enrollment Matrix */}
@@ -356,9 +358,9 @@ function RegisterForm() {
 
                   <div className="mt-10 text-center">
                     <p className="text-[10px] font-black text-slate-600 uppercase tracking-[0.2em]">
-                      Operative enrolled?{' '}
+                      {t('login.noAccount')}{' '}
                       <Link href="/login" className="text-orange-500 hover:text-orange-400 transition-colors ml-1 border-b border-orange-500/20 pb-0.5">
-                        Initiate Login <ArrowRight className="inline w-3 h-3 mb-0.5" />
+                        {t('nav.login')} <ArrowRight className="inline w-3 h-3 mb-0.5" />
                       </Link>
                     </p>
                   </div>

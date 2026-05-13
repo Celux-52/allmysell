@@ -6,6 +6,7 @@ import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { MagicCard } from "@/components/ui/magic-card";
 import { CheckCircle, XCircle, Code, Rocket, Shield, Globe } from "lucide-react";
+import { useI18n } from "@/lib/i18n/context";
 
 const plans = [
   {
@@ -68,6 +69,7 @@ const plans = [
 ];
 
 export default function WebSolutionsPage() {
+  const { t } = useI18n();
   return (
     <div className="min-h-screen bg-[#030712] text-white flex flex-col items-center relative overflow-hidden selection:bg-orange-500/30 pt-24 pb-32">
       <Particles className="absolute inset-0 z-0" quantity={120} color="#F97316" ease={60} />
@@ -97,12 +99,12 @@ export default function WebSolutionsPage() {
           </h1>
 
           <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-8">
-            High-performance, beautifully animated, scalable web applications for your brand. Stop settling for basic templates.
+            {t('web.subtitle')}
           </p>
 
           <div className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/30 text-orange-400 px-5 py-3 rounded-full text-sm font-medium backdrop-blur-md shadow-[0_0_20px_rgba(249,115,22,0.2)]">
             <span>⚠️</span>
-            Domain & Hosting costs are covered by the buyer.
+            {t('web.domainNote')}
           </div>
         </motion.div>
 
@@ -132,7 +134,7 @@ export default function WebSolutionsPage() {
                   
                   <div className="pb-6 border-b border-white/10">
                     <div className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 mb-1">{plan.price}</div>
-                    <div className="text-slate-500 text-sm">One-time payment</div>
+                    <div className="text-slate-500 text-sm">{t('web.oneTime')}</div>
                     <div className="mt-4 flex flex-wrap gap-2">
                       <span className="bg-white/5 border border-white/10 text-slate-300 text-xs px-3 py-1.5 rounded-full flex items-center gap-1"><Rocket className="h-3 w-3"/> {plan.delivery}</span>
                     </div>
@@ -162,7 +164,7 @@ export default function WebSolutionsPage() {
                       : 'bg-white/5 text-white border border-white/10 hover:bg-white/10 hover:border-orange-500/30'
                   }`}
                 >
-                  Get a Quote
+                  {t('web.getQuote')}
                 </a>
               </MagicCard>
             </motion.div>
@@ -180,9 +182,9 @@ export default function WebSolutionsPage() {
           <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-slate-950/80 p-8 md:p-12 text-center backdrop-blur-xl">
             <BorderBeam size={400} duration={15} colorFrom="#3b82f6" colorTo="#8b5cf6" />
             <Shield className="w-16 h-16 text-blue-500 mx-auto mb-6 opacity-80" />
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Ready to Start?</h2>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">{t('web.readyToStart')}</h2>
             <p className="text-lg text-slate-400 mb-10 max-w-2xl mx-auto">
-              Reach out directly on WhatsApp. We provide a free architecture consultation before starting any project. 50% upfront payment secures your slot.
+              {t('web.readyDesc')}
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-6">
               <a

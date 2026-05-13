@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useI18n } from '@/lib/i18n/context';
 
 export default function LoginPage() {
   return (
@@ -22,6 +23,7 @@ export default function LoginPage() {
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { t } = useI18n();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -173,7 +175,7 @@ function LoginForm() {
             <div className="flex items-center justify-center gap-2 mt-3">
               <div className="h-px w-8 bg-white/10" />
               <p className="text-[10px] text-slate-500 font-black tracking-[0.4em] uppercase">
-                E-COMMERCE INTELLIGENCE
+                {t('login.label')}
               </p>
               <div className="h-px w-8 bg-white/10" />
             </div>
@@ -220,7 +222,7 @@ function LoginForm() {
 
             <form className="space-y-7" onSubmit={handleLogin}>
               <div className="space-y-3">
-                <label htmlFor="email" className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Identity Vector</label>
+                <label htmlFor="email" className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">{t('login.emailLabel')}</label>
                 <div className="relative group/input">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Mail className="h-5 w-5 text-slate-600 group-focus-within/input:text-orange-500 transition-colors" />
@@ -239,8 +241,8 @@ function LoginForm() {
 
               <div className="space-y-3">
                 <div className="flex items-center justify-between ml-1">
-                  <label htmlFor="password" title="Password" className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Access Protocol</label>
-                  <Link href="/forgot-password" title="Forgot Password" className="text-[10px] font-black text-orange-500 hover:text-orange-400 transition-colors uppercase tracking-widest">Lost Key?</Link>
+                  <label htmlFor="password" title="Password" className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">{t('login.passLabel')}</label>
+                  <Link href="/forgot-password" title="Forgot Password" className="text-[10px] font-black text-orange-500 hover:text-orange-400 transition-colors uppercase tracking-widest">{t('login.forgotPass')}</Link>
                 </div>
                 <div className="relative group/input">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -271,7 +273,7 @@ function LoginForm() {
                 ) : success ? (
                   <>SYSTEM DEPLOYED <CheckCircle2 className="w-5 h-5" /></>
                 ) : (
-                  <>INITIATE NEURAL LINK <LogIn className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" /></>
+                  <>{t('login.submit')} <LogIn className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" /></>
                 )}
               </motion.button>
             </form>
@@ -279,7 +281,7 @@ function LoginForm() {
             {/* Social Override */}
             <div className="relative my-10">
               <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/5"></div></div>
-              <div className="relative flex justify-center text-[10px]"><span className="px-6 bg-[#131926] text-slate-600 font-black uppercase tracking-[0.4em]">External Gateways</span></div>
+              <div className="relative flex justify-center text-[10px]"><span className="px-6 bg-[#131926] text-slate-600 font-black uppercase tracking-[0.4em]">{t('login.externalGw')}</span></div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -310,9 +312,9 @@ function LoginForm() {
 
             <div className="mt-10 text-center">
               <p className="text-[10px] font-black text-slate-600 uppercase tracking-[0.2em]">
-                Unregistered Operative?{' '}
+                {t('login.noAccount')}{' '}
                 <Link href="/register" className="text-orange-500 hover:text-orange-400 transition-colors ml-1 border-b border-orange-500/20 pb-0.5">
-                  Request Access <ArrowRight className="inline w-3 h-3 mb-0.5" />
+                  {t('login.requestAccess')} <ArrowRight className="inline w-3 h-3 mb-0.5" />
                 </Link>
               </p>
             </div>
