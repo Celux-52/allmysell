@@ -7,24 +7,24 @@
 export const AI_MODELS = {
   // Reasoning & Deep Analysis (Best for logic, math, and strategy)
   REASONING: {
-    id: 'deepseek/deepseek-r1:free',
-    name: 'DeepSeek R1 (Reasoning)',
+    id: 'meta-llama/llama-3.3-70b-instruct:free',
+    name: 'Llama 3.3 70B',
     provider: 'OpenRouter',
     strength: 'reasoning'
   },
 
   // Creative & High-Quality Prose (Best for SEO, blog posts, and listings)
   CREATIVE: {
-    id: 'deepseek/deepseek-chat:free',
-    name: 'DeepSeek V3',
+    id: 'nousresearch/hermes-3-llama-3.1-405b:free',
+    name: 'Hermes 3 405B',
     provider: 'OpenRouter',
     strength: 'creative'
   },
 
   // Ultra-Fast & Real-Time (Best for quick scans and summarization)
   SPEED: {
-    id: 'google/gemini-2.0-flash-lite-preview-02-05:free',
-    name: 'Gemini 2.0 Flash Lite',
+    id: 'openrouter/free',
+    name: 'OpenRouter Free Auto',
     provider: 'OpenRouter',
     strength: 'speed'
   },
@@ -39,24 +39,24 @@ export const AI_MODELS = {
 
   // Balanced Performance (Dense knowledge & technical tasks)
   BALANCED: {
-    id: 'mistralai/mistral-small-24b-instruct-2501:free',
-    name: 'Mistral Small 24B',
+    id: 'meta-llama/llama-3.3-70b-instruct:free',
+    name: 'Llama 3.3 70B',
     provider: 'OpenRouter',
     strength: 'balanced'
   },
 
   // Efficient & Robust (Great for data cleaning and verification)
   EFFICIENT: {
-    id: 'qwen/qwen-2.5-7b-instruct:free',
-    name: 'Qwen 2.5 7B',
+    id: 'qwen/qwen3-coder:free',
+    name: 'Qwen 3 Coder',
     provider: 'OpenRouter',
     strength: 'efficient'
   },
 
   // Lightweight & Edge (Best for simple lookups)
   LIGHTWEIGHT: {
-    id: 'microsoft/phi-3-mini-128k-instruct:free',
-    name: 'Phi-3 Mini',
+    id: 'openrouter/free',
+    name: 'OpenRouter Free Auto',
     provider: 'OpenRouter',
     strength: 'lightweight'
   }

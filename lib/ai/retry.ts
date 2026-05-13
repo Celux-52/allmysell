@@ -46,13 +46,11 @@ export async function withRetry<T>(
 
   // 2. ULTIMATE FAILOVER CHAIN
   const failoverChain = [
-    'google/gemini-2.0-flash-lite-preview-02-05:free',
-    'qwen/qwen-2.5-coder-32b-instruct:free',
-    'deepseek/deepseek-v3:free',
-    'mistralai/mistral-7b-instruct:free',
-    'google/gemini-2.0-flash-lite-preview-02-05:free',
-    'microsoft/phi-3-mini-128k-instruct:free',
-    'openrouter/auto:free'
+    'meta-llama/llama-3.3-70b-instruct:free',
+    'nousresearch/hermes-3-llama-3.1-405b:free',
+    'meta-llama/llama-3.2-3b-instruct:free',
+    'qwen/qwen3-coder:free',
+    'openrouter/free'
   ];
 
   for (const fallbackModel of failoverChain) {
@@ -69,9 +67,9 @@ export async function withRetry<T>(
 }
 
 export const FREE_MODEL_CHAINS = {
-  analysis: ['google/gemini-2.0-flash-lite-preview-02-05:free'],
-  creative: ['google/gemini-2.0-flash-lite-preview-02-05:free'],
-  extraction: ['google/gemini-2.0-flash-lite-preview-02-05:free'],
+  analysis: ['openrouter/free'],
+  creative: ['meta-llama/llama-3.3-70b-instruct:free'],
+  extraction: ['openrouter/free'],
 };
 
 /**

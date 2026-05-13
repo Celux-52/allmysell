@@ -21,6 +21,7 @@ export default function EtsySaaSPanel() {
   const [keyword, setKeyword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [analysisStep, setAnalysisStep] = useState(0);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isGeneratingListing, setIsGeneratingListing] = useState(false);
   const [isFindingSupplier, setIsFindingSupplier] = useState(false);
   const [result, setResult] = useState<any>(null);
@@ -77,6 +78,7 @@ export default function EtsySaaSPanel() {
     setListing(null);
     setSuppliers(null);
     setIsSaved(false);
+    setErrorMsg(null);
 
     try {
       // Step 1: Search (takes ~3s)
@@ -89,7 +91,10 @@ export default function EtsySaaSPanel() {
         body: JSON.stringify({ keyword: searchKeyword }),
       });
 
-      if (!res.ok) throw new Error("Analysis failed");
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || "Analysis failed");
+      }
 
       setAnalysisStep(3); // "Verifying with Google Trends..."
       await new Promise(r => setTimeout(r, 1000));
@@ -102,6 +107,7 @@ export default function EtsySaaSPanel() {
       }
     } catch (error: any) {
       console.error("[Analysis] Failed:", error);
+      setErrorMsg(error.message || "An unexpected error occurred during analysis.");
     } finally {
       setIsLoading(false);
       setAnalysisStep(0);
@@ -285,8 +291,26 @@ export default function EtsySaaSPanel() {
         </div>
       </motion.form>
 
+      {/* --- ERROR MESSAGE --- */}
+      <AnimatePresence>
+        {errorMsg && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            exit={{ opacity: 0 }} 
+            className="max-w-4xl mx-auto mt-4 p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center gap-3 backdrop-blur-md"
+          >
+            <AlertTriangle className="w-5 h-5 shrink-0" />
+            <span className="text-sm font-medium">{errorMsg}</span>
+            <button onClick={() => setErrorMsg(null)} className="ml-auto text-red-500 hover:text-red-400">
+              <X className="w-4 h-4" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* --- QUICK DISCOVERY --- */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-8">
         {[
           { label: t('etsy.discovery'), strategy: 'mashup', icon: <Sparkles className="w-5 h-5" />, color: 'orange', desc: t('etsy.discoveryDesc') },
           { label: t('etsy.arbitrage'), strategy: 'arbitrage', icon: <TrendingUp className="w-5 h-5" />, color: 'blue', desc: t('etsy.arbitrageDesc') },

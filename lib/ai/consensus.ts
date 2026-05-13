@@ -348,7 +348,7 @@ ${internetContext}
     const cline = getCline();
 
     const validationResponse = await cline.chat.completions.create({
-      model: isBasic ? 'google/gemini-2.0-flash-lite-preview-02-05:free' : AI_MODELS.REASONING.id, 
+      model: isBasic ? 'meta-llama/llama-3.2-3b-instruct:free' : AI_MODELS.REASONING.id, 
       messages: [{ role: 'user', content: validationPrompt }],
       temperature: 0.3
     });
@@ -742,7 +742,7 @@ Rules:
       name: 'DeepSeek R1', fn: async () => {
         const { getCline } = await import('@/lib/ai/cline')
         const r = await getCline().chat.completions.create({
-          model: 'google/gemini-2.0-flash',
+          model: 'openrouter/free',
           messages: [{ role: 'user', content: AI_PROMPT }],
           temperature: 0.9
         })
@@ -753,7 +753,7 @@ Rules:
       name: 'Qwen 2.5 72B', fn: async () => {
         const { getCline } = await import('@/lib/ai/cline')
         const r = await getCline().chat.completions.create({
-          model: 'google/gemini-2.0-flash',
+          model: 'qwen/qwen3-coder:free',
           messages: [{ role: 'user', content: AI_PROMPT }],
           temperature: 0.9
         })
@@ -764,7 +764,7 @@ Rules:
       name: 'Claude 3 Haiku', fn: async () => {
         const { getCline } = await import('@/lib/ai/cline')
         const r = await getCline().chat.completions.create({
-          model: 'google/gemini-2.0-flash',
+          model: 'meta-llama/llama-3.2-3b-instruct:free',
           messages: [{ role: 'user', content: AI_PROMPT }],
           temperature: 0.9
         })

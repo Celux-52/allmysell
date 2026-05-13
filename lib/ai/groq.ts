@@ -90,7 +90,7 @@ Rules:
   
   // Use a reliable free model list for OpenRouter
   const model = isOpenRouter 
-    ? 'google/gemini-2.0-flash-lite-preview-02-05:free' // Highly available and fast
+    ? 'meta-llama/llama-3.2-3b-instruct:free' // Highly available and fast
     : 'llama-3.3-70b-versatile'
 
   const response = await groq.chat.completions.create({
@@ -161,7 +161,7 @@ Rules:
 - ONLY return valid JSON without markdown wrapping.`
 
   const isOpenRouter = !process.env.GROQ_API_KEY && !!process.env.OPENROUTER_API_KEY
-  const model = isOpenRouter ? 'google/gemini-2.0-flash-lite-preview-02-05:free' : 'llama-3.3-70b-versatile'
+  const model = isOpenRouter ? 'meta-llama/llama-3.2-3b-instruct:free' : 'llama-3.3-70b-versatile'
 
   const response = await groq.chat.completions.create({
     model,
@@ -217,7 +217,7 @@ Find product solutions that solve this problem. Return JSON:
 Return 3-5 solutions. ONLY return valid JSON without markdown wrapping.`
 
   const isOpenRouter = !process.env.GROQ_API_KEY && !!process.env.OPENROUTER_API_KEY
-  const model = isOpenRouter ? 'google/gemini-2.0-flash-lite-preview-02-05:free' : 'llama-3.3-70b-versatile'
+  const model = isOpenRouter ? 'meta-llama/llama-3.2-3b-instruct:free' : 'llama-3.3-70b-versatile'
 
   const response = await groq.chat.completions.create({
     model,
@@ -264,7 +264,7 @@ Return JSON with:
 ONLY return valid JSON format.`
 
   const isOpenRouter = !process.env.GROQ_API_KEY && !!process.env.OPENROUTER_API_KEY
-  const model = isOpenRouter ? 'google/gemini-2.0-flash-lite-preview-02-05:free' : 'llama-3.3-70b-versatile'
+  const model = isOpenRouter ? 'meta-llama/llama-3.2-3b-instruct:free' : 'llama-3.3-70b-versatile'
 
   const response = await groq.chat.completions.create({
     model,

@@ -30,7 +30,7 @@ export class EtsyService {
 
       // 2. Extract/Generate products with retry and model rotation
       return await withRetry(async (overrideModel?: string) => {
-        const modelToUse = overrideModel || 'google/gemini-2.0-flash-lite-preview-02-05:free';
+        const modelToUse = overrideModel || 'meta-llama/llama-3.3-70b-instruct:free';
         const cline = getCline();
         
         const prompt = `

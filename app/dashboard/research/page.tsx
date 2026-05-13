@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Sparkles, Brain, Truck, Globe2, Loader2, AlertCircle, TrendingUp, BarChart3, Zap, ArrowRight, ShieldCheck, Store, ExternalLink, AlertTriangle, Info, Radio } from "lucide-react";
+import { Search, Sparkles, Brain, Truck, Globe2, Loader2, AlertCircle, TrendingUp, BarChart3, Zap, ArrowRight, ShieldCheck, Store, ExternalLink, AlertTriangle, Info, Radio, X } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { MagicCard } from "@/components/ui/magic-card";
@@ -181,6 +181,24 @@ export default function ResearchDashboard() {
             </button>
           ))}
         </div>
+
+        {/* Error Message */}
+        <AnimatePresence>
+          {error && (
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              exit={{ opacity: 0 }} 
+              className="max-w-3xl mx-auto mt-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center gap-3 backdrop-blur-md"
+            >
+              <AlertTriangle className="w-5 h-5 shrink-0" />
+              <span className="text-sm font-medium">{error}</span>
+              <button onClick={() => setError(null)} className="ml-auto text-red-500 hover:text-red-400">
+                <X className="w-4 h-4" />
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
 
       {/* Feature Grid */}
