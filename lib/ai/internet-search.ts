@@ -8,11 +8,17 @@ export async function fetchInternetDataViaTool(query: string): Promise<string> {
   console.log(`[InternetTool] Initiating search for: "${query}"`);
 
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
     const n8nResponse = await fetch(webhookUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ query: query })
+      body: JSON.stringify({ query: query }),
+      signal: controller.signal
     });
+
+    clearTimeout(timeoutId);
 
     if (!n8nResponse.ok) {
       const errorText = await n8nResponse.text();

@@ -177,17 +177,22 @@ async function scoreAndFilterCandidates(
     return { matches: [], rejectedBySemantic: 0, rejectedByQuality: 0 };
   }
 
+  // 2. Generate embeddings for all candidates in parallel
+  const candidateTexts = candidates.map(c => `${c.title}. ${c.description}`);
+  const candidateEmbeddings = await Promise.all(
+    candidateTexts.map(text => generateEmbedding(text))
+  );
+
   let rejectedBySemantic = 0;
   let rejectedByQuality = 0;
   const matches: ScoredSupplierMatch[] = [];
 
-  // 2. Score each candidate
-  for (const candidate of candidates) {
-    // Generate embedding for supplier product
-    const candidateText = `${candidate.title}. ${candidate.description}`;
-    const candidateEmbedding = await generateEmbedding(candidateText);
+  // 3. Score each candidate using pre-computed embeddings
+  for (let i = 0; i < candidates.length; i++) {
+    const candidate = candidates[i];
+    const candidateEmbedding = candidateEmbeddings[i];
 
-    if (candidateEmbedding.length === 0) continue;
+    if (!candidateEmbedding || candidateEmbedding.length === 0) continue;
 
     // Compute cosine similarity
     const similarity = cosineSimilarity(originalEmbedding, candidateEmbedding);

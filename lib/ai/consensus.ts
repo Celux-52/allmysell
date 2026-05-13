@@ -347,7 +347,8 @@ ${internetContext}
     const cline = getCline();
 
     const validationResponse = await cline.chat.completions.create({
-      model: AI_MODELS.REASONING.id, // Using R1 for the final validation/auditing
+    const validationResponse = await groq.chat.completions.create({
+      model: isBasic ? 'google/gemini-2.0-flash-lite-preview-02-05:free' : AI_MODELS.REASONING.id, 
       messages: [{ role: 'user', content: validationPrompt }],
       temperature: 0.3
     });
@@ -379,10 +380,25 @@ async function mergeAndEnrich(
   internetContext: string
 ): Promise<ConsensusResult> {
 
-  // ✅ RUN SMART VALIDATION FIRST
-  const { products: validatedProducts, summaries, activeProviders } = await smartValidateAndRefine(
-    allResults, providers, query, internetContext
-  );
+  // ✅ RUN SMART VALIDATION FIRST (Skip for basic tier to save 5-10s)
+  const isBasic = !allResults[0] || (allResults[0] as any).tier === 'FREE' || (allResults[0] as any).tier === 'STARTER';
+  
+  let validatedProducts: any[] = [];
+  let summaries: string[] = [];
+  let activeProviders: string[] = [];
+
+  if (isBasic) {
+     // Fast path for basic tier: just take the first good result set
+     const firstGood = allResults.find(r => r && r.products && r.products.length > 0);
+     validatedProducts = firstGood?.products || [];
+     summaries = firstGood?.summary ? [firstGood.summary] : [];
+     activeProviders = providers.slice(0, 3);
+  } else {
+    const validated = await smartValidateAndRefine(allResults, providers, query, internetContext);
+    validatedProducts = validated.products;
+    summaries = validated.summaries;
+    activeProviders = validated.activeProviders;
+  }
 
   if (validatedProducts.length === 0) {
     return {
@@ -464,41 +480,43 @@ async function mergeAndEnrich(
   mergedRaw.sort((a, b) => b.score - a.score);
   const topProducts = mergedRaw.slice(0, 8);
 
-  // ENRICH: Fetch real Google Trends data for top products (max 4 to avoid rate limiting, fetch in parallel)
-  const trendsMap = new Map<string, GoogleTrendsData | null>();
+  // ENRICH: Fetch trends and suppliers IN PARALLEL
+  console.log('\n🔗 [Consensus] Starting parallel enrichment (Trends + Suppliers)...');
+  
   const top4 = topProducts.slice(0, 4);
 
-  await Promise.allSettled(
-    top4.map(async (product, i) => {
-      const keyword = product.searchKeyword || product.name;
-      // Stagger slightly to avoid instant rate limiting
-      if (i > 0) await new Promise(r => setTimeout(r, i * 200));
-      try {
-        const trendsData = await getGoogleTrendsData(keyword);
-        trendsMap.set(product.name, trendsData);
-      } catch (err: any) {
-        console.warn(`[GoogleTrends] Failed for "${keyword}":`, err.message);
-        trendsMap.set(product.name, null);
-      }
-    })
-  );
+  const [trendsResults, supplierResults] = await Promise.all([
+    // Parallel Trends
+    Promise.allSettled(
+      top4.map(async (product, i) => {
+        const keyword = product.searchKeyword || product.name;
+        if (i > 0) await new Promise(r => setTimeout(r, i * 150));
+        try {
+          return { name: product.name, data: await getGoogleTrendsData(keyword) };
+        } catch (err: any) {
+          return { name: product.name, data: null };
+        }
+      })
+    ),
+    // Parallel Suppliers
+    sourceSuppliersBatch(
+      topProducts.map(p => ({
+        name: p.name,
+        searchKeyword: p.searchKeyword || p.name,
+        category: p.category,
+        description: p.description,
+        whyItWorks: p.whyItWorks,
+        targetAudience: p.targetAudience,
+      }))
+    )
+  ]);
 
-  // ═══════════════════════════════════════════════════════
-  // SEMANTIC SUPPLIER SOURCING (NEW)
-  // Replaces static URL generation with AI-powered matching
-  // ═══════════════════════════════════════════════════════
-  console.log('\n🔗 [Consensus] Starting semantic supplier sourcing...');
-  const supplierResults = await sourceSuppliersBatch(
-    topProducts.map(p => ({
-      name: p.name,
-      searchKeyword: p.searchKeyword || p.name,
-      category: p.category,
-      description: p.description,
-      whyItWorks: p.whyItWorks,
-      targetAudience: p.targetAudience,
-    }))
-  );
-  console.log(`🔗 [Consensus] Supplier sourcing complete for ${supplierResults.size} products\n`);
+  const trendsMap = new Map<string, GoogleTrendsData | null>();
+  trendsResults.forEach(r => {
+    if (r.status === 'fulfilled') trendsMap.set(r.value.name, r.value.data);
+  });
+  
+  console.log(`🔗 [Consensus] Parallel enrichment complete\n`);
 
   // Build final products with semantic suppliers + Google Trends
   const finalProducts: ConsensusProduct[] = topProducts.map((product) => {
@@ -591,41 +609,66 @@ async function mergeAndEnrich(
  * Fires 5 AI providers in parallel, merges, enriches with Google Trends + real supplier links.
  */
 export async function consensusResearch(query: string, tier: string = 'FREE'): Promise<ConsensusResult> {
-  const providers = [
-    'Llama 3.3/3.2 (General)',
-    'Gemini 2.0 (Speed)',
-    'DeepSeek R1 (Reasoning)',
-    'Qwen 2.5 (Efficiency)',
-    'Mistral Small (Balanced)',
-  ];
+  // Global timeout for the entire research process
+  const timeoutPromise = new Promise<never>((_, reject) => 
+    setTimeout(() => reject(new Error('RESEARCH_TIMEOUT')), 50000)
+  );
 
-  // 1. Fetch live internet data via native tool calling to n8n webhook FIRST
-  const internetContext = await fetchInternetDataViaTool(query);
+  try {
+    const researchPromise = (async () => {
+      const providers = [
+        'Llama 3.3/3.2 (General)',
+        'Gemini 2.0 (Speed)',
+        'DeepSeek R1 (Reasoning)',
+        'Qwen 2.5 (Efficiency)',
+        'Mistral Small (Balanced)',
+      ];
 
-  // 2. Fetch real Google Trends for the main query to provide ground-truth trend data to AI
-  const mainQueryTrends = await getGoogleTrendsData(query);
-  const googleTrendsContext = mainQueryTrends 
-    ? `\n\n--- REAL-TIME GOOGLE TRENDS DATA ---\n${mainQueryTrends.summary}\n-----------------------------------\n\n`
-    : "";
+      // 1. Fetch live internet data via native tool calling to n8n webhook FIRST
+      const internetContext = await fetchInternetDataViaTool(query);
 
-  const fullContext = internetContext + googleTrendsContext;
+      // 2. Fetch real Google Trends for the main query to provide ground-truth trend data to AI
+      const mainQueryTrends = await getGoogleTrendsData(query);
+      const googleTrendsContext = mainQueryTrends 
+        ? `\n\n--- REAL-TIME GOOGLE TRENDS DATA ---\n${mainQueryTrends.summary}\n-----------------------------------\n\n`
+        : "";
 
-  // 3. Fire ALL 5 providers in parallel with the live internet + Google context
-  const settled = await Promise.allSettled([
-    queryGroq(query, fullContext, tier),
-    queryGemini(query, fullContext, tier),
-    queryDeepSeek(query, fullContext, tier),
-    queryQwen(query, fullContext, tier),
-    queryMistral(query, fullContext, tier),
-  ]);
+      const fullContext = internetContext + googleTrendsContext;
 
-  const results = settled.map((r, i) => {
-    if (r.status === 'fulfilled') return r.value;
-    console.error(`[Consensus] Provider ${providers[i]} failed:`, r.reason);
-    return null;
-  });
+      // 3. Fire providers in parallel with tier-based optimization
+      const isBasic = tier === 'FREE' || tier === 'STARTER';
+      
+      // Basic tier uses fewer models to speed up response and avoid rate limits
+      const activeProviders = isBasic 
+        ? [queryGroq(query, fullContext, tier), queryGemini(query, fullContext, tier), queryDeepSeek(query, fullContext, tier)]
+        : [queryGroq(query, fullContext, tier), queryGemini(query, fullContext, tier), queryDeepSeek(query, fullContext, tier), queryQwen(query, fullContext, tier), queryMistral(query, fullContext, tier)];
 
-  return mergeAndEnrich(results, providers, query, internetContext);
+      const settled = await Promise.allSettled(activeProviders);
+
+      const results = settled.map((r, i) => {
+        if (r.status === 'fulfilled') {
+           const val = r.value as any;
+           return { ...val, tier }; // Pass tier to results for mergeAndEnrich
+        }
+        console.error(`[Consensus] Provider ${providers[i]} failed:`, r.reason);
+        return null;
+      });
+
+      return mergeAndEnrich(results, providers, query, internetContext);
+    })();
+
+    return await Promise.race([researchPromise, timeoutPromise]);
+  } catch (error: any) {
+    if (error.message === 'RESEARCH_TIMEOUT') {
+      return {
+        products: [],
+        summary: 'The research engine is currently overloaded and timed out. Please try a more specific query or try again in a few minutes.',
+        aiProviders: [],
+        consensusMethod: 'none',
+      };
+    }
+    throw error;
+  }
 }
 
 /**
