@@ -17,13 +17,15 @@ export function getCline(): OpenAI {
     return clineClient
 }
 
-// ✅ Free AI Models List (completely free, rate-limited)
+import { RESEARCH_MODELS, ETSY_MODELS } from './models';
+
+// ✅ Free AI Models List (Verified May 2026)
 export const FREE_AI_MODELS = [
-    { id: 'meta-llama/llama-3.3-70b-instruct:free', name: 'Llama 3.3 70B (Free)', provider: 'Meta', speed: 'Very Fast', quality: 'Excellent', free: true },
-    { id: 'nousresearch/hermes-3-llama-3.1-405b:free', name: 'Hermes 3 405B (Free)', provider: 'NousResearch', speed: 'Very Fast', quality: 'Excellent', free: true },
-    { id: 'meta-llama/llama-3.2-3b-instruct:free', name: 'Llama 3.2 3B (Free)', provider: 'Meta', speed: 'Very Fast', quality: 'Good', free: true },
-    { id: 'qwen/qwen3-coder:free', name: 'Qwen 3 Coder (Free)', provider: 'Alibaba', speed: 'Fast', quality: 'Best Code', free: true },
-    { id: 'openrouter/free', name: 'OpenRouter Auto (Free)', provider: 'OpenRouter', speed: 'Varies', quality: 'Varies', free: true },
+    { id: RESEARCH_MODELS.RING.id, name: 'Ring 2.6 1T (Agent)', provider: 'InclusionAI', speed: 'Fast', quality: 'Excellent', free: true },
+    { id: RESEARCH_MODELS.GPT_OSS.id, name: 'GPT-OSS 120B (Reasoning)', provider: 'OpenAI-OSS', speed: 'Moderate', quality: 'Superior', free: true },
+    { id: RESEARCH_MODELS.NEMOTRON.id, name: 'Nemotron 3 Super (Data)', provider: 'NVIDIA', speed: 'Fast', quality: 'Excellent', free: true },
+    { id: ETSY_MODELS.LLAMA.id, name: 'Llama 3.3 70B (SEO)', provider: 'Meta', speed: 'Very Fast', quality: 'High', free: true },
+    { id: 'openrouter/free', name: 'OpenRouter Auto (Fallback)', provider: 'OpenRouter', speed: 'Varies', quality: 'Varies', free: true },
 ]
 
 import { fetchInternetDataViaTool } from './internet-search';
@@ -65,7 +67,7 @@ export async function researchProductsWithCline(query: string) {
 
     try {
         const response = await cline.chat.completions.create({
-            model: 'meta-llama/llama-3.3-70b-instruct:free', // Using a real model instead of fake cline-free
+            model: RESEARCH_MODELS.RING.id, // Using the new Agentic model for research
             messages: [
                 { role: 'system', content: prompt },
                 { role: 'user', content: query }
@@ -93,7 +95,7 @@ export async function clineAssistant(message: string, context?: string) {
 
     try {
         const response = await cline.chat.completions.create({
-            model: 'meta-llama/llama-3.3-70b-instruct:free',
+            model: RESEARCH_MODELS.GPT_OSS.id, // Using the high-reasoning model for the assistant
             messages: [
                 { role: 'system', content: systemPrompt },
                 { role: 'user', content: message }
