@@ -19,9 +19,8 @@ export async function POST(req: Request) {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
     
-    let currentUser = user;
-    if (!currentUser) {
-      currentUser = { id: 'test-user-id', email: 'test@example.com' } as any;
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const startOfMonth = new Date()
@@ -30,19 +29,19 @@ export async function POST(req: Request) {
 
     try {
       const profile = await prisma.profile.findUnique({
-        where: { id: currentUser.id },
+        where: { id: user.id },
         select: { subscriptionStatus: true }
       })
 
       // --- ADMIN OVERRIDE ---
       const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase())
-      const isUserAdmin = currentUser.email && adminEmails.includes(currentUser.email.toLowerCase())
+      const isUserAdmin = user.email && adminEmails.includes(user.email.toLowerCase())
       
       const status = isUserAdmin ? 'PRO_AGENCY' : (profile?.subscriptionStatus || 'FREE')
 
       const etsyCount = await prisma.searchHistory.count({
         where: {
-          userId: currentUser.id,
+          userId: user.id,
           queryType: 'etsy',
           createdAt: { gte: startOfMonth }
         }
@@ -125,7 +124,7 @@ export async function POST(req: Request) {
     try {
       await prisma.searchHistory.create({
         data: {
-          userId: currentUser.id,
+          userId: user.id,
           query: keyword,
           queryType: 'etsy',
           resultCount: 1,
