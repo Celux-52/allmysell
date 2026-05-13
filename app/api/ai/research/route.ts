@@ -36,7 +36,8 @@ export async function POST(request: NextRequest) {
       })
 
       // --- ADMIN OVERRIDE ---
-      const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase())
+      const envAdmins = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase())
+      const adminEmails = [...envAdmins, 'melih20052005gs@gmail.com']
       const isUserAdmin = user.email && adminEmails.includes(user.email.toLowerCase())
       
       status = isUserAdmin ? 'PRO_AGENCY' : (profile?.subscriptionStatus || 'FREE')
