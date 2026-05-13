@@ -299,46 +299,41 @@ async function smartValidateAndRefine(
     return { products: [], summaries: [], activeProviders: [] };
   }
 
-  // 🧠 INTELLIGENCE CHECK: Use AIs to cross-correct each other
   const allProductsJson = JSON.stringify(allProducts, null, 2);
 
   const validationPrompt = `
-You are a DATA AUDITOR. Below is a product list returned by 5 different AI models for the same query.
+You are the CHIEF DATA MODERATOR for AllMySell. 
+I have task 5 different top-tier AI models with finding the best products for: "${query}"
 
-QUERY: ${query}
+Below are the results from all 5 models. 
 
 YOUR TASK:
-1. Compare identical products across providers
-2. Detect inconsistencies in price, margin, score data
-3. Identify missing fields
-4. Flag fabricated or unrealistic data
-5. Calculate the MOST ACCURATE average values for each product
-6. Do not allow any AI to make errors
-7. CRITICAL: You MUST KEEP all advanced fields (doNotBuild, failureModes, saturationIndex, copycatRisk, trendLifespan, scalabilityScore, realProfitMargin) in your final output. DO NOT strip them!
+1. REVIEW AND COMPARE: Analyze all products. If multiple AIs found the same product, merge them and average their scores.
+2. ELIMINATE JUNK: Remove any products that are unrealistic, low-profit, or likely to be AI hallucinations.
+3. DATA ENRICHMENT: Ensure every product has all required fields (score, trend, competition, whyItWorks, etc.).
+4. CONSENSUS SCORING: Increase the "score" of products that were recommended by 3 or more AIs (Consensus Bonus).
+5. FINAL SELECTION: Output the best 6-8 products that the AIs agreed upon or that you deem highest potential.
 
-✅ Return ONLY corrected and validated JSON. Do not add any explanations.
+CRITICAL: Return ONLY valid JSON in the specified format. No chat, no markdown.
 
-ALL PRODUCTS:
+INPUT DATA FROM 5 MODELS:
 ${allProductsJson}
 
 ${internetContext}
 `;
 
-  try {
-    // Validate using DeepSeek R1 which has the best reasoning capabilities
+    // Use GPT-OSS 120B (Reasoning Model) as the Master Moderator
     const { getCline } = await import('./cline');
-    const cline = getCline();
-
-    const validationResponse = await cline.chat.completions.create({
-      model: isBasic ? 'meta-llama/llama-3.2-3b-instruct:free' : AI_MODELS.REASONING.id, 
+    const response = await getCline().chat.completions.create({
+      model: RESEARCH_MODELS.GPT_OSS.id, 
       messages: [{ role: 'user', content: validationPrompt }],
-      temperature: 0.3
+      temperature: 0.2
     });
 
-    const validated = safeParseJSON(validationResponse.choices[0]?.message?.content || '{}');
+    const validated = safeParseJSON(response.choices[0]?.message?.content || '{}');
 
     if (validated && validated.products && Array.isArray(validated.products)) {
-      console.log(`✅ Smart validation completed: ${allProducts.length} products validated`);
+      console.log(`✅ Multi-AI Consensus Completed: ${validated.products.length} products verified by Master AI`);
       return {
         products: validated.products,
         summaries: validated.summary ? [validated.summary, ...summaries] : summaries,
@@ -362,25 +357,13 @@ async function mergeAndEnrich(
   internetContext: string
 ): Promise<ConsensusResult> {
 
-  // ✅ RUN SMART VALIDATION FIRST (Skip for basic tier to save 5-10s)
+  // ✅ RUN MULTI-AI CONSENSUS EVALUATION
   const isBasic = !allResults[0] || (allResults[0] as any).tier === 'FREE' || (allResults[0] as any).tier === 'STARTER';
+  const validated = await smartValidateAndRefine(allResults, providers, query, internetContext, isBasic);
   
-  let validatedProducts: any[] = [];
-  let summaries: string[] = [];
-  let activeProviders: string[] = [];
-
-  if (isBasic) {
-     // Fast path for basic tier: just take the first good result set
-     const firstGood = allResults.find(r => r && r.products && r.products.length > 0);
-     validatedProducts = firstGood?.products || [];
-     summaries = firstGood?.summary ? [firstGood.summary] : [];
-     activeProviders = providers.slice(0, 3);
-  } else {
-    const validated = await smartValidateAndRefine(allResults, providers, query, internetContext, isBasic);
-    validatedProducts = validated.products;
-    summaries = validated.summaries;
-    activeProviders = validated.activeProviders;
-  }
+  const validatedProducts = validated.products;
+  const summaries = validated.summaries;
+  const activeProviders = validated.activeProviders;
 
   if (validatedProducts.length === 0) {
     return {
