@@ -72,7 +72,7 @@ Return ONLY JSON.`;
           throw new Error(`AI Service Error: ${apiError.message}`);
         }
       },
-      { maxRetries: 4, baseDelayMs: 1500, fallbackModels: fallbacks }
+      { maxRetries: 4, baseDelayMs: 1500 }
     );
   }
 }
