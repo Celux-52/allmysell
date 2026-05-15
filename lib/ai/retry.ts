@@ -87,6 +87,7 @@ export async function withRetry<T>(
 export const FREE_MODEL_CHAINS = {
   analysis: [RESEARCH_MODELS.NEMOTRON.id],
   creative: [ETSY_MODELS.MIMO.id],
+  extraction: [RESEARCH_MODELS.NEMOTRON.id],
 };
 
 export function extractJSON(content: string): string {

@@ -50,7 +50,7 @@ export class EtsySupplierAgent {
 
         return JSON.parse(extractJSON(content));
       },
-      { maxRetries: 2, baseDelayMs: 1000, fallbackModels: fallbacks }
+      { maxRetries: 2, baseDelayMs: 1000 }
     );
   }
 }
