@@ -13,7 +13,6 @@ export async function POST(req: Request) {
     }
 
     const etsyService = new EtsyService();
-    const aiEngine = new EtsyAIEngine();
 
     // --- TIERED RATE LIMITING ---
     const supabase = await createClient();
@@ -102,7 +101,7 @@ export async function POST(req: Request) {
     }
 
     // 3. Analyze via AI
-    const analysisResult = await aiEngine.analyzeProduct(topProduct);
+    const analysisResult = await EtsyAIEngine.analyzeProduct(topProduct);
 
     // 4. Save analysis to DB (Optional)
     let savedAnalysis: any = { ...analysisResult };
