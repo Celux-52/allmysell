@@ -23,7 +23,7 @@ export default function SaaSPanelPage() {
       gradient: "from-orange-600 to-amber-600",
       glowColor: "orange",
       stats: [
-        { label: t('hero.stat1'), value: "3", icon: Brain },
+        { label: t('hero.stat1'), value: "1", icon: Brain },
         { label: "Etsy API", value: "Live", icon: Store },
         { label: "SEO Engine", value: "Active", icon: ShoppingBag },
       ],
@@ -40,7 +40,7 @@ export default function SaaSPanelPage() {
       gradient: "from-indigo-600 to-violet-600",
       glowColor: "indigo",
       stats: [
-        { label: t('feat.multiAI'), value: "5 Models", icon: Brain },
+        { label: t('feat.multiAI'), value: "1 Model", icon: Brain },
         { label: "Trends API", value: "Live", icon: TrendingUp },
         { label: t('res.research'), value: "Active", icon: Search },
       ],

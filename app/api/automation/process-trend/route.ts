@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)+/g, '') + '-' + Math.random().toString(36).substring(2, 7)
 
-    // 2. Perform Multi-AI Consensus Research
+    // 2. Perform AI Market Research (Powered by Nemotron 3 Super)
     // This analyzes the product's market potential, competition, and scoring
     const analysis = await consensusResearch(title)
     const topProduct = analysis.products[0] || {

@@ -41,7 +41,7 @@ export default function PricingPage() {
       icon: <Rocket className="h-6 w-6 text-amber-400" />,
       popular: true,
       features: [
-        `200 ${t('pricing.queries')}`,
+        `75 ${t('pricing.queries')}`,
         `${t('pricing.everythingIn')} ${t('pricing.starter')}`,
         t('pricing.fma'),
         t('pricing.saturation'),
@@ -61,7 +61,7 @@ export default function PricingPage() {
       description: t('pricing.proAgencyDesc'),
       icon: <Building2 className="h-6 w-6 text-purple-400" />,
       features: [
-        t('pricing.ctaEtsyPro'),
+        `125 ${t('pricing.queries')}`,
         `${t('pricing.everythingIn')} ${t('pricing.growth')}`,
         t('pricing.apiAccess'),
         t('pricing.multiUser'),
@@ -83,7 +83,7 @@ export default function PricingPage() {
       description: t('pricing.etsyStarterDesc'),
       icon: <Zap className="h-6 w-6 text-orange-400" />,
       features: [
-        `200 ${t('pricing.sniperQueries')}`,
+        `50 ${t('pricing.sniperQueries')}`,
         t('pricing.basicAnalysis'),
         t('pricing.trendLifespan'),
         t('pricing.ideaDiscovery'),
@@ -102,7 +102,7 @@ export default function PricingPage() {
       icon: <Rocket className="h-6 w-6 text-amber-400" />,
       popular: true,
       features: [
-        `40 ${t('pricing.deepQueries')}`,
+        `75 ${t('pricing.deepQueries')}`,
         `${t('pricing.everythingIn')} ${t('pricing.starter')}`,
         t('pricing.fma'),
         t('pricing.saturation'),
@@ -122,7 +122,7 @@ export default function PricingPage() {
       description: t('pricing.etsyProAgencyDesc'),
       icon: <Building2 className="h-6 w-6 text-purple-400" />,
       features: [
-        t('pricing.ctaEtsyPro'),
+        `125 ${t('pricing.sniperQueries')}`,
         `${t('pricing.everythingIn')} ${t('pricing.growth')}`,
         t('pricing.apiAccess'),
         t('pricing.multiUser'),

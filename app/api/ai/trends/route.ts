@@ -8,7 +8,7 @@ export const maxDuration = 60
 
 /**
  * Trends API — Combines REAL Google Trends data with AI analysis.
- * Now uses Multi-AI Consensus in parallel (Groq, Gemini, DeepSeek, Qwen, Claude).
+ * Now uses NVIDIA Nemotron 3 Super for deep market analysis.
  */
 export async function POST(request: NextRequest) {
   try {
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
       googleTrendsError = e.message
     }
 
-    // Step 2: Get Multi-AI Consensus analysis
+    // Step 2: Get AI analysis (Nemotron 3 Super)
     const consensusResult = await consensusTrends(niche)
 
     if (!consensusResult) {
@@ -51,8 +51,8 @@ export async function POST(request: NextRequest) {
       googleTrendsError,
       dataSources: {
         primary: 'Google Trends API (google-trends-api npm package)',
-        secondary: `${consensusResult.engine} AI Models`,
-        method: 'Real Google Trends data is fetched via the official Google Trends scraping API. AI models analyze e-commerce platform data (Etsy, Amazon, eBay search volumes) and cross-reference with Google Trends patterns in parallel.',
+        secondary: `NVIDIA Nemotron 3 Super AI`,
+        method: 'Real Google Trends data is fetched via the official Google Trends scraping API. AI models analyze e-commerce platform data (Etsy, Amazon, eBay search volumes) and cross-reference with Google Trends patterns.',
         transparency: 'Google Trends data is real and verifiable. AI insights are model-generated and should be validated independently.',
       },
       timestamp: new Date().toISOString(),

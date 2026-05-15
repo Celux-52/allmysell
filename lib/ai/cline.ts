@@ -19,13 +19,10 @@ export function getCline(): OpenAI {
 
 import { RESEARCH_MODELS, ETSY_MODELS } from './models';
 
-// ✅ Free AI Models List (Verified May 2026)
+// ✅ Optimized Free AI Models List (May 2026)
 export const FREE_AI_MODELS = [
-    { id: RESEARCH_MODELS.RING.id, name: 'Ring 2.6 1T (Agent)', provider: 'InclusionAI', speed: 'Fast', quality: 'Excellent', free: true },
-    { id: RESEARCH_MODELS.GPT_OSS.id, name: 'GPT-OSS 120B (Reasoning)', provider: 'OpenAI-OSS', speed: 'Moderate', quality: 'Superior', free: true },
     { id: RESEARCH_MODELS.NEMOTRON.id, name: 'Nemotron 3 Super (Data)', provider: 'NVIDIA', speed: 'Fast', quality: 'Excellent', free: true },
-    { id: ETSY_MODELS.LLAMA.id, name: 'Llama 3.3 70B (SEO)', provider: 'Meta', speed: 'Very Fast', quality: 'High', free: true },
-    { id: 'openrouter/free', name: 'OpenRouter Auto (Fallback)', provider: 'OpenRouter', speed: 'Varies', quality: 'Varies', free: true },
+    { id: ETSY_MODELS.MIMO.id, name: 'MiMo V2 Flash (Etsy)', provider: 'Xiaomi', speed: 'Very Fast', quality: 'High', free: true },
 ]
 
 import { fetchInternetDataViaTool } from './internet-search';
@@ -33,8 +30,6 @@ import { extractJSON } from './retry';
 
 export async function researchProductsWithCline(query: string) {
     const cline = getCline()
-    
-    // Fetch live data from the internet via n8n native tool calling
     const internetContext = await fetchInternetDataViaTool(query);
 
     const prompt = `You are an expert e-commerce product research AI for the AllMySell SaaS platform.
@@ -67,7 +62,7 @@ export async function researchProductsWithCline(query: string) {
 
     try {
         const response = await cline.chat.completions.create({
-            model: RESEARCH_MODELS.RING.id, // Using the new Agentic model for research
+            model: RESEARCH_MODELS.NEMOTRON.id,
             messages: [
                 { role: 'system', content: prompt },
                 { role: 'user', content: query }
@@ -84,18 +79,17 @@ export async function researchProductsWithCline(query: string) {
     }
 }
 
-// Automation assistant
 export async function clineAssistant(message: string, context?: string) {
     const cline = getCline()
 
-    const systemPrompt = `You are the integrated Cline AI assistant for the AllMySell SaaS panel.
+    const systemPrompt = `You are the integrated AI assistant for the AllMySell SaaS panel.
   Answer user questions, recommend products, analyze trends, and provide automation advice.
   Always respond in English with clear, actionable insights.
   ${context ? `Additional context: ${context}` : ''}`
 
     try {
         const response = await cline.chat.completions.create({
-            model: RESEARCH_MODELS.GPT_OSS.id, // Using the high-reasoning model for the assistant
+            model: RESEARCH_MODELS.NEMOTRON.id,
             messages: [
                 { role: 'system', content: systemPrompt },
                 { role: 'user', content: message }

@@ -13,8 +13,8 @@ import { useI18n } from '@/lib/i18n/context';
 const platformFeatures = [
   {
     icon: Brain,
-    title: "Multi-AI Consensus",
-    desc: "5+ AI models analyze every query simultaneously for maximum accuracy.",
+    title: "Dedicated AI Engine",
+    desc: "2 specialized AI models power every analysis for maximum accuracy.",
     color: "orange"
   },
   {
@@ -40,7 +40,7 @@ const platformFeatures = [
 const modules = [
   {
     name: "Smart Research Engine",
-    desc: "Multi-AI consensus system finds high-margin products with real-time data.",
+    desc: "AI-powered system finds high-margin products with real-time data.",
     icon: Cpu,
     gradient: "from-indigo-600 to-violet-600",
     badge: "CORE"
@@ -62,7 +62,7 @@ const modules = [
 ];
 
 const stats = [
-  { value: "5+", label: "AI Models" },
+  { value: "2", label: "AI Models" },
   { value: "99.9%", label: "Data Fidelity" },
   { value: "<2.5s", label: "Analysis Speed" },
   { value: "Global", label: "Market Coverage" },
@@ -85,7 +85,7 @@ export default function HeroSection({ isPreview = false }: { isPreview?: boolean
   ];
 
   const localStats = [
-    { value: '5+', label: t('hero.stat1') },
+    { value: '2', label: t('hero.stat1') },
     { value: '99.9%', label: t('hero.stat2') },
     { value: '<2.5s', label: t('hero.stat3') },
     { value: 'Global', label: t('hero.stat4') },

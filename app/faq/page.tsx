@@ -9,7 +9,7 @@ const faqCategories = [
     category: 'Platform & SaaS Panel',
     questions: [
       { question: 'What is AllMySell?', answer: 'AllMySell is an AI-powered e-commerce automation platform. Our SaaS panel helps online sellers discover trending products, automate listing creation, and manage cross-platform operations — all from one dashboard.' },
-      { question: 'How does the AI research tool work?', answer: 'Our Multi-AI Consensus Engine uses multiple AI models (including Groq, Gemini, DeepSeek, and more) to analyze market trends, validate product opportunities, and provide data-driven insights with a confidence score.' },
+      { question: 'How does the AI research tool work?', answer: 'Our AI Research Engine uses 2 dedicated AI models — NVIDIA Nemotron 3 Super for smart research and Xiaomi MiMo-V2-Flash for Etsy analysis — to analyze market trends, validate product opportunities, and provide data-driven insights with a confidence score.' },
       { question: 'Which platforms does AllMySell support?', answer: 'Our research tools cover major e-commerce platforms including eBay, Amazon, Etsy, Shopify, and TikTok Shop. We analyze trends and opportunities across all these marketplaces.' },
       { question: 'Is there a free trial?', answer: 'Yes! You can sign up and explore the platform for free. Our free tier includes limited AI research queries. Upgrade anytime for full access to all features.' },
     ]

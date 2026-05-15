@@ -83,7 +83,7 @@ export default function EtsySaaSPanel() {
     try {
       // Step 1: Search (takes ~3s)
       await new Promise(r => setTimeout(r, 1500));
-      setAnalysisStep(2); // "Running Multi-AI Consensus..."
+      setAnalysisStep(2); // "Running AI Sniper Analysis..."
 
       const res = await fetch("/api/etsy/analyze", {
         method: "POST",

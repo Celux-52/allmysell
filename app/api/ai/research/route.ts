@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
       const envAdmins = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase())
       const adminEmails = [...envAdmins, 'melih20052005gs@gmail.com']
       const isUserAdmin = user.email && adminEmails.includes(user.email.toLowerCase())
-      
+
       status = isUserAdmin ? 'PRO_AGENCY' : (profile?.subscriptionStatus || 'FREE')
 
       // 2. Count searches this month
@@ -54,8 +54,8 @@ export async function POST(request: NextRequest) {
       const LIMITS: Record<string, number> = {
         'FREE': 3,
         'STARTER': 50,
-        'GROWTH': 200,
-        'PRO_AGENCY': 1000000 // Effectively unlimited
+        'GROWTH': 75,
+        'PRO_AGENCY': 125
       }
 
       const limit = LIMITS[status] || 3
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
           const DEMO_LIMIT = 5;
           if (searchCount >= DEMO_LIMIT) {
             return NextResponse.json(
-              { 
+              {
                 error: `Demo limit reached (5/5 searches). Please contact admin for full access.`,
                 code: 'LIMIT_REACHED',
                 currentPlan: 'DEMO',
@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
 
       if (searchCount >= limit) {
         return NextResponse.json(
-          { 
+          {
             error: `You have reached your monthly search limit for the ${status} plan (${limit}).`,
             code: 'LIMIT_REACHED',
             currentPlan: status,
@@ -96,11 +96,23 @@ export async function POST(request: NextRequest) {
     }
 
     // Use the multi-AI consensus engine
-    const results = await consensusResearch(query.trim(), status)
+    let results: any = null
+    let researchError: string | null = null
+
+    try {
+      results = await consensusResearch(query.trim(), status)
+    } catch (researchErr: any) {
+      researchError = researchErr?.message || 'Unknown error'
+      console.error('[Research API] Research error:', researchErr)
+    }
 
     if (!results || results.products.length === 0) {
       return NextResponse.json(
-        { error: 'No results found. AI providers may be temporarily busy.' },
+        {
+          error: 'AI research service is temporarily unavailable.',
+          details: researchError || 'All AI providers failed to return results.',
+          suggestion: 'Please try again in a few minutes or use a more specific search query.'
+        },
         { status: 503 }
       )
     }

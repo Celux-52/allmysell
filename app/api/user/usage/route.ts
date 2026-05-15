@@ -46,15 +46,15 @@ export async function GET(request: NextRequest) {
     const GENERAL_LIMITS: Record<string, number> = {
       'FREE': 3,
       'STARTER': 50,
-      'GROWTH': 200,
-      'PRO_AGENCY': 1000000
+      'GROWTH': 75,
+      'PRO_AGENCY': 125
     }
 
     const ETSY_LIMITS: Record<string, number> = {
       'FREE': 1,
-      'STARTER': 200,
-      'GROWTH': 40,
-      'PRO_AGENCY': 1000000
+      'STARTER': 50,
+      'GROWTH': 75,
+      'PRO_AGENCY': 125
     }
 
     return NextResponse.json({

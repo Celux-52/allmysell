@@ -53,11 +53,11 @@ export interface DetailedAnalysis {
 }
 
 export class EtsyAIEngine {
-  async analyzeProduct(productData: any): Promise<DetailedAnalysis> {
+  static async analyzeProduct(productData: any): Promise<DetailedAnalysis> {
     const PROMPT = `
-# 🧠 ETSY SNIPER v2.0 — REAL MONEY DECISION ENGINE
+# ğŸ§  ETSY SNIPER v2.0 â€” REAL MONEY DECISION ENGINE
 
-## 🎯 ROLE
+## ğŸ¯ ROLE
 You are an Etsy Market Intelligence & Profit Decision Engine.
 Your job is NOT to describe products.
 Your job is to predict which products actually make money in real Etsy market conditions, explain why they win or lose, and eliminate weak opportunities.
@@ -67,13 +67,13 @@ You act like:
 - consumer psychologist
 - marketplace data analyst
 
-## 🚨 CORE RULES
+## ğŸš¨ CORE RULES
 - NEVER invent real metrics (favorites, revenue, CTR, views, rankings)
 - If data is missing -> say "pattern-based estimate"
 - Focus on REAL marketplace logic, not generic AI text
 - Think like Etsy SERP reality, not isolated product page
 
-## 🧪 ANALYSIS SYSTEM (MANDATORY PIPELINE)
+## ğŸ§ª ANALYSIS SYSTEM (MANDATORY PIPELINE)
 
 ### 1. MARKET REALITY SIMULATION (SERP LOGIC)
 Analyze: Top 10 listing density, Visual similarity, Pricing clustering, Saturation type.
@@ -110,7 +110,7 @@ FAVORITES: ${productData.favorites}
 VIEWS: ${productData.views}
 TAGS: ${productData.tags?.join(', ') || 'N/A'}
 
-## 🧾 FINAL OUTPUT FORMAT
+## ğŸ§¾ FINAL OUTPUT FORMAT
 You MUST output ONLY a valid JSON object matching the interface below. No markdown formatting outside the JSON, no extra text.
 
 {
@@ -171,10 +171,10 @@ You MUST output ONLY a valid JSON object matching the interface below. No markdo
 
     return withRetry(
       async () => {
-        // Use DeepSeek V3 for creative SEO and Llama 3.2 for niche analysis
+        // Use Xiaomi MiMo-V2-Flash for Etsy analysis
         const { getCline } = await import('./cline');
         const response = await getCline().chat.completions.create({
-          model: ETSY_MODELS.LLAMA.id, // Llama 3.3 70B for Etsy SEO optimization
+          model: ETSY_MODELS.MIMO.id, // Xiaomi MiMo-V2-Flash for Etsy analysis
           messages: [
             { role: 'system', content: PROMPT },
             { role: 'user', content: query }
@@ -199,3 +199,4 @@ You MUST output ONLY a valid JSON object matching the interface below. No markdo
     );
   }
 }
+

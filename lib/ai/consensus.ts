@@ -1,17 +1,12 @@
-/**
+﻿/**
  * Multi-AI Consensus Engine + Real Google Trends + Semantic Supplier Matching
  * 
- * Uses 5 specialized free AI models via OpenRouter:
- *   1. Ring 2.6 1T (Agent Workflows & Analysis)
- *   2. GPT-OSS 120B (Reasoning & Multi-step Research)
- *   3. Nemotron 3 Super (Data Processing & SEO Analysis)
- *   4. MiniMax M2.5 (Web Data Comprehension)
- *   5. Qwen 3 Next 80B (Technical Analysis & Logistics)
+ * Uses NVIDIA Nemotron 3 Super via OpenRouter as the dedicated research AI model
  * 
  * Then enriches with:
  *   - REAL Google Trends data
  *   - AI-powered semantic supplier matching (embeddings + cosine similarity)
- *   - Quality-filtered supplier products (rating ≥ 4.0, orders ≥ 50)
+ *   - Quality-filtered supplier products (rating â‰¥ 4.0, orders â‰¥ 50)
  */
 
 import { getGoogleTrendsData, buildCompetitorLinks, type GoogleTrendsData } from './google-trends';
@@ -105,23 +100,23 @@ CRITICAL INSTRUCTIONS:
 5. For "painPoint", "sellingAngle", and "viralPotential": write MAX 1 short sentence each. Be specific, no fluff.
 
 ${!isBasic ? `
-6. 💀 FAILURE MODE ANALYSIS RULE:
+6. ğŸ’€ FAILURE MODE ANALYSIS RULE:
 For EVERY product, think like a pessimist: "Why would this FAIL?" Provide 2-3 specific failure scenarios in "failureModes". Include worst-case outcomes.
 
-7. 🧬 COPYCAT & SATURATION RULE:
+7. ğŸ§¬ COPYCAT & SATURATION RULE:
 Estimate market saturation (0-100) and copycat risk (0-100). Be honest.
 
-8. ⏱ TREND LIFESPAN & SCALABILITY RULE:
+8. â± TREND LIFESPAN & SCALABILITY RULE:
 Classify trend as "Evergreen", "Seasonal", or "Fad". Rate "scalabilityScore" (0-100).
 ` : '6. Keep the analysis focused on core trends and pricing. Do not provide detailed failure mode or saturation data for this basic tier.'}
 
-⛔ "DO NOT BUILD" RULE:
+â›” "DO NOT BUILD" RULE:
 If a product has HIGH competition + LOW margin + DECLINING trend, you MUST set "doNotBuild": true and explain why in "doNotBuildReason".
 
-📊 REALITY LAYER RULE:
+ğŸ“Š REALITY LAYER RULE:
 Honestly assess your confidence. Set "confidenceLevel" to "high" ONLY if you have strong evidence.
 
-💰 PROFIT REALITY CHECK RULE:
+ğŸ’° PROFIT REALITY CHECK RULE:
 Calculate "realProfitMargin" by deducting platform fees, shipping, and ads cost. Show the REAL take-home profit.
 
 Return ONLY valid JSON in this exact structure:
@@ -180,45 +175,7 @@ function safeParseJSON(text: string): any {
   }
 }
 
-// --- Provider 1: Ring 2.6 1T (Agent Workflows) ---
-async function queryRing(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
-  return withRetry(async (overrideModel) => {
-    const { getCline } = await import('./cline');
-    const response = await getCline().chat.completions.create({
-      model: overrideModel || RESEARCH_MODELS.RING.id,
-      messages: [
-        { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
-        { role: 'user', content: query }
-      ],
-      temperature: 0.7
-    });
-    const text = response.choices[0]?.message?.content || '{}';
-    const parsed = safeParseJSON(text);
-    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from Ring");
-    return parsed;
-  });
-}
-
-// --- Provider 2: GPT-OSS 120B (Reasoning) ---
-async function queryGptOss(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
-  return withRetry(async (overrideModel) => {
-    const { getCline } = await import('./cline');
-    const response = await getCline().chat.completions.create({
-      model: overrideModel || RESEARCH_MODELS.GPT_OSS.id,
-      messages: [
-        { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
-        { role: 'user', content: query }
-      ],
-      temperature: 0.6
-    });
-    const text = response.choices[0]?.message?.content || '{}';
-    const parsed = safeParseJSON(text);
-    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from GPT-OSS");
-    return parsed;
-  });
-}
-
-// --- Provider 3: Nemotron 3 Super (Data Processing) ---
+// --- Primary AI Provider: Nemotron 3 Super (NVIDIA) ---
 async function queryNemotron(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
   return withRetry(async (overrideModel) => {
     const { getCline } = await import('./cline');
@@ -236,44 +193,8 @@ async function queryNemotron(query: string, internetContext: string, tier: strin
   });
 }
 
-// --- Provider 4: MiniMax M2.5 (Web Comprehension) ---
-async function queryMinimax(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
-  return withRetry(async (overrideModel) => {
-    const { getCline } = await import('./cline');
-    const response = await getCline().chat.completions.create({
-      model: overrideModel || RESEARCH_MODELS.MINIMAX.id,
-      messages: [
-        { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
-        { role: 'user', content: query }
-      ],
-      temperature: 0.7
-    });
-    const parsed = safeParseJSON(response.choices[0]?.message?.content || '{}');
-    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from MiniMax");
-    return parsed;
-  });
-}
-
-// --- Provider 5: Qwen 3 Next 80B (Technical Analysis) ---
-async function queryQwenNext(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
-  return withRetry(async (overrideModel) => {
-    const { getCline } = await import('./cline');
-    const response = await getCline().chat.completions.create({
-      model: overrideModel || RESEARCH_MODELS.QWEN_NEXT.id,
-      messages: [
-        { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
-        { role: 'user', content: query }
-      ],
-      temperature: 0.7
-    });
-    const parsed = safeParseJSON(response.choices[0]?.message?.content || '{}');
-    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from Qwen Next");
-    return parsed;
-  });
-}
-
 /**
- * ✅ SMART AI VALIDATION LAYER
+ * âœ… SMART AI VALIDATION LAYER
  * Cross-validate all AI responses, detect inconsistencies and errors
  */
 async function smartValidateAndRefine(
@@ -303,9 +224,9 @@ async function smartValidateAndRefine(
 
   const validationPrompt = `
 You are the CHIEF DATA MODERATOR for AllMySell. 
-I have task 5 different top-tier AI models with finding the best products for: "${query}"
+I have tasked the NVIDIA Nemotron 3 Super AI model with finding the best products for: "${query}"
 
-Below are the results from all 5 models. 
+Below are the results from the AI analysis. 
 
 YOUR TASK:
 1. REVIEW AND COMPARE: Analyze all products. If multiple AIs found the same product, merge them and average their scores.
@@ -316,7 +237,7 @@ YOUR TASK:
 
 CRITICAL: Return ONLY valid JSON in the specified format. No chat, no markdown.
 
-INPUT DATA FROM 5 MODELS:
+INPUT DATA FROM AI ANALYSIS:
 ${allProductsJson}
 
 ${internetContext}
@@ -326,7 +247,7 @@ ${internetContext}
     // Use GPT-OSS 120B (Reasoning Model) as the Master Moderator
     const { getCline } = await import('./cline');
     const response = await getCline().chat.completions.create({
-      model: RESEARCH_MODELS.GPT_OSS.id, 
+      model: RESEARCH_MODELS.NEMOTRON.id, 
       messages: [{ role: 'user', content: validationPrompt }],
       temperature: 0.2
     });
@@ -334,7 +255,7 @@ ${internetContext}
     const validated = safeParseJSON(response.choices[0]?.message?.content || '{}');
 
     if (validated && validated.products && Array.isArray(validated.products)) {
-      console.log(`✅ Multi-AI Consensus Completed: ${validated.products.length} products verified by Master AI`);
+      console.log(`âœ… Multi-AI Consensus Completed: ${validated.products.length} products verified by Master AI`);
       return {
         products: validated.products,
         summaries: validated.summary ? [validated.summary, ...summaries] : summaries,
@@ -342,7 +263,7 @@ ${internetContext}
       };
     }
   } catch (e) {
-    console.warn('⚠️ Smart validation failed, falling back to normal merge');
+    console.warn('âš ï¸ Smart validation failed, falling back to normal merge');
   }
 
   return { products: allProducts, summaries, activeProviders };
@@ -358,7 +279,7 @@ async function mergeAndEnrich(
   internetContext: string
 ): Promise<ConsensusResult> {
 
-  // ✅ SMART MERGE: Only run Multi-AI Moderator if we have 2+ results to compare.
+  // âœ… SMART MERGE: Only run Multi-AI Moderator if we have 2+ results to compare.
   // If only 1 AI responded, use it directly to save 15s and avoid timeouts.
   const validResults = allResults.filter(r => r && r.products && r.products.length > 0);
   
@@ -373,7 +294,7 @@ async function mergeAndEnrich(
     summaries = validated.summaries;
     activeProviders = validated.activeProviders;
   } else if (validResults.length === 1) {
-    console.log('ℹ️ [Consensus] Only 1 provider responded. Skipping moderator to save time.');
+    console.log('â„¹ï¸ [Consensus] Only 1 provider responded. Skipping moderator to save time.');
     validatedProducts = validResults[0]!.products;
     summaries = [validResults[0]!.summary];
     activeProviders = [providers[allResults.indexOf(validResults[0])]];
@@ -412,7 +333,7 @@ async function mergeAndEnrich(
     // Products recommended by more AI providers get higher consensus bonus
     const consensusBonus = Math.min((group.length - 1) * 5, 15);
 
-    // ✅ DATA QUALITY CHECK
+    // âœ… DATA QUALITY CHECK
     const qualityPenalty = group.length < 2 ? -10 : 0;
 
     mergedRaw.push({
@@ -460,7 +381,7 @@ async function mergeAndEnrich(
   const topProducts = mergedRaw.slice(0, 8);
 
   // ENRICH: Fetch trends and suppliers IN PARALLEL
-  console.log('\n🔗 [Consensus] Starting parallel enrichment (Trends + Suppliers)...');
+  console.log('\nğŸ”— [Consensus] Starting parallel enrichment (Trends + Suppliers)...');
   
   const top4 = topProducts.slice(0, 4);
 
@@ -495,7 +416,7 @@ async function mergeAndEnrich(
     if (r.status === 'fulfilled') trendsMap.set(r.value.name, r.value.data);
   });
   
-  console.log(`🔗 [Consensus] Parallel enrichment complete\n`);
+  console.log(`ğŸ”— [Consensus] Parallel enrichment complete\n`);
 
   // Build final products with semantic suppliers + Google Trends
   const finalProducts: ConsensusProduct[] = topProducts.map((product) => {
@@ -572,7 +493,7 @@ async function mergeAndEnrich(
   // Build consensus summary
   const providerList = activeProviders.join(', ');
   const combinedSummary = activeProviders.length > 1
-    ? `🧠 Cross-AI Consensus from ${activeProviders.length} providers (${providerList}): ${summaries[0] || 'Analysis complete.'}`
+    ? `ğŸ§  Cross-AI Consensus from ${activeProviders.length} providers (${providerList}): ${summaries[0] || 'Analysis complete.'}`
     : summaries[0] || 'Analysis complete.';
 
   return {
@@ -585,7 +506,7 @@ async function mergeAndEnrich(
 
 /**
  * Main consensus research function.
- * Fires 5 AI providers in parallel, merges, enriches with Google Trends + real supplier links.
+ * Uses NVIDIA Nemotron 3 Super, enriches with Google Trends + real supplier links.
  */
 export async function consensusResearch(query: string, tier: string = 'FREE'): Promise<ConsensusResult> {
   // Global timeout for the entire research process - Increased to 55s to give max time on Vercel
@@ -596,11 +517,7 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
   try {
     const researchPromise = (async () => {
       const providers = [
-        'Ring 2.6 1T (Agent)',
-        'GPT-OSS 120B (Reasoning)',
-        'Nemotron 3 Super (Data)',
-        'MiniMax M2.5 (Comprehension)',
-        'Qwen 3 Next 80B (Technical)',
+        'Nemotron 3 Super (NVIDIA)',
       ];
 
       // 1. Fetch live internet data via native tool calling to n8n webhook FIRST
@@ -614,20 +531,9 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
 
       const fullContext = internetContext + googleTrendsContext;
 
-      // Basic tier uses fewer models to speed up response and avoid rate limits
-      const isBasic = tier === 'FREE' || tier === 'STARTER';
-      const allProviders = isBasic 
-        ? [
-            { name: providers[0], fn: () => queryRing(query, fullContext, tier) },
-            { name: providers[1], fn: () => queryGptOss(query, fullContext, tier) },
-            { name: providers[2], fn: () => queryNemotron(query, fullContext, tier) }
-          ]
-        : [
-            { name: providers[0], fn: () => queryRing(query, fullContext, tier) },
-            { name: providers[1], fn: () => queryGptOss(query, fullContext, tier) },
-            { name: providers[2], fn: () => queryNemotron(query, fullContext, tier) },
-            { name: providers[3], fn: () => queryMinimax(query, fullContext, tier) },
-            { name: providers[4], fn: () => queryQwenNext(query, fullContext, tier) }
+      // Single dedicated AI provider: NVIDIA Nemotron 3 Super
+      const allProviders = [
+            { name: providers[0], fn: () => queryNemotron(query, fullContext, tier) }
           ];
 
       const isOpenRouterOnly = !process.env.GROQ_API_KEY && !process.env.GEMINI_API_KEY;
@@ -656,7 +562,7 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
       const allFailed = settledResults.every(r => !r || !r.products || r.products.length === 0);
       
       if (allFailed) {
-        console.warn('⚠️ [Consensus] ALL providers failed. Attempting Last Resort fallback...');
+        console.warn('âš ï¸ [Consensus] ALL providers failed. Attempting Last Resort fallback...');
         try {
           const { getCline } = await import('./cline');
           const response = await getCline().chat.completions.create({
@@ -670,11 +576,11 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
           const text = response.choices[0]?.message?.content || '{}';
           const parsed = safeParseJSON(text);
           if (parsed && parsed.products && parsed.products.length > 0) {
-             console.log('✅ [Consensus] Last Resort fallback succeeded!');
+             console.log('âœ… [Consensus] Last Resort fallback succeeded!');
              settledResults = [{ ...parsed, tier }];
           }
         } catch (fallbackError: any) {
-          console.error('❌ [Consensus] Last Resort fallback also failed:', fallbackError.message);
+          console.error('âŒ [Consensus] Last Resort fallback also failed:', fallbackError.message);
         }
       }
 
@@ -697,7 +603,7 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
 
 /**
  * TRENDS CONSENSUS ENGINE
- * Fires 5 AI providers in parallel to find the best trends, then merges categories.
+ * Uses NVIDIA Nemotron 3 Super to find the best trends, then merges categories.
  */
 export async function consensusTrends(niche: string) {
   const searchTerm = niche || 'trending products 2026';
@@ -714,7 +620,7 @@ Return a JSON response with exactly this structure:
   "categories": [
     {
       "name": "Category Name",
-      "emoji": "🔥",
+      "emoji": "ğŸ”¥",
       "trends": [
         {
           "keyword": "Product keyword",
@@ -744,21 +650,10 @@ Rules:
 
   const providers = [
     {
-      name: 'Ring 2.6 1T', fn: async () => {
+      name: 'Nemotron 3 Super', fn: async () => {
         const { getCline } = await import('@/lib/ai/cline')
         const r = await getCline().chat.completions.create({
-          model: RESEARCH_MODELS.RING.id,
-          messages: [{ role: 'user', content: AI_PROMPT }],
-          temperature: 0.9
-        })
-        return r.choices[0]?.message?.content || '{}'
-      }
-    },
-    {
-      name: 'GPT-OSS 120B', fn: async () => {
-        const { getCline } = await import('@/lib/ai/cline')
-        const r = await getCline().chat.completions.create({
-          model: RESEARCH_MODELS.GPT_OSS.id,
+          model: RESEARCH_MODELS.NEMOTRON.id,
           messages: [{ role: 'user', content: AI_PROMPT }],
           temperature: 0.9
         })
@@ -777,10 +672,10 @@ Rules:
       }
     },
     {
-      name: 'MiniMax M2.5', fn: async () => {
+      name: 'Nemotron 3 Super', fn: async () => {
         const { getCline } = await import('@/lib/ai/cline')
         const r = await getCline().chat.completions.create({
-          model: RESEARCH_MODELS.MINIMAX.id,
+          model: RESEARCH_MODELS.NEMOTRON.id,
           messages: [{ role: 'user', content: AI_PROMPT }],
           temperature: 0.9
         })
@@ -788,10 +683,21 @@ Rules:
       }
     },
     {
-      name: 'Qwen 3 Next 80B', fn: async () => {
+      name: 'Nemotron 3 Super', fn: async () => {
         const { getCline } = await import('@/lib/ai/cline')
         const r = await getCline().chat.completions.create({
-          model: RESEARCH_MODELS.QWEN_NEXT.id,
+          model: RESEARCH_MODELS.NEMOTRON.id,
+          messages: [{ role: 'user', content: AI_PROMPT }],
+          temperature: 0.9
+        })
+        return r.choices[0]?.message?.content || '{}'
+      }
+    },
+    {
+      name: 'Nemotron 3 Super', fn: async () => {
+        const { getCline } = await import('@/lib/ai/cline')
+        const r = await getCline().chat.completions.create({
+          model: RESEARCH_MODELS.NEMOTRON.id,
           messages: [{ role: 'user', content: AI_PROMPT }],
           temperature: 0.9
         })
@@ -842,7 +748,7 @@ Rules:
 
   // --- LAST RESORT FALLBACK FOR TRENDS ---
   if (allCategories.length === 0) {
-    console.warn('⚠️ [Consensus Trends] ALL providers failed. Attempting Last Resort fallback...');
+    console.warn('âš ï¸ [Consensus Trends] ALL providers failed. Attempting Last Resort fallback...');
     try {
       const { getCline } = await import('@/lib/ai/cline')
       const r = await getCline().chat.completions.create({
@@ -861,7 +767,7 @@ Rules:
         if (parsed.topOpportunity && !bestOpportunity) bestOpportunity = parsed.topOpportunity;
       }
     } catch (fallbackError: any) {
-      console.error('❌ [Consensus Trends] Last Resort fallback failed:', fallbackError.message);
+      console.error('âŒ [Consensus Trends] Last Resort fallback failed:', fallbackError.message);
     }
   }
 
@@ -883,9 +789,9 @@ Rules:
     niche: niche || 'general',
     trends: {
       categories: allCategories.slice(0, 6), // Keep top 6 categories from all AIs
-      summary: `🧠 Multi-AI Consensus (${successfulProviders.length} providers): ${bestSummary}`,
+      summary: `ğŸ§  Multi-AI Consensus (${successfulProviders.length} providers): ${bestSummary}`,
       topOpportunity: bestOpportunity,
-      methodology: "Parallel consensus gathered from Groq, Gemini, DeepSeek, Qwen, and Claude.",
+      methodology: "AI analysis powered by NVIDIA Nemotron 3 Super.",
       sources: Array.from(uniqueSourcesMap.values()),
       limitations: "AI-generated volumes and growth are estimations. Google Trends API provides actual verification."
     }

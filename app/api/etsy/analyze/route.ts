@@ -50,9 +50,9 @@ export async function POST(req: Request) {
 
       const ETSY_LIMITS: Record<string, number> = {
         'FREE': 1,
-        'STARTER': 200,
-        'GROWTH': 40,
-        'PRO_AGENCY': 1000000
+        'STARTER': 50,
+        'GROWTH': 75,
+        'PRO_AGENCY': 125
       }
 
       const limit = ETSY_LIMITS[status] || 1
