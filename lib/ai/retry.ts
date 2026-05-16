@@ -12,7 +12,7 @@ export async function withRetry<T>(
 ): Promise<T> {
   let lastError: any;
   const maxRetries = typeof options === 'number' ? options : (options?.maxRetries || 0);
-  const perCallTimeout = typeof options === 'object' ? options.timeoutMs || 15000 : 15000;
+  const perCallTimeout = typeof options === 'object' ? options.timeoutMs || 6000 : 6000;
   
   // ✅ Absolute Stability Model List (Optimized for May 2026)
   const models = [

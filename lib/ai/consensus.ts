@@ -9,23 +9,23 @@ import { RESEARCH_MODELS } from './models';
 export async function consensusResearch(query: string, tier: string = 'FREE') {
   const isBasic = tier === 'FREE' || tier === 'STARTER';
 
-  // Timeout for stability (58 seconds to stay under Vercel's 60s limit)
+  // Hobby Plan Limit: 9 seconds (to stay under 10s Vercel hard limit)
   const timeoutPromise = new Promise<never>((_, reject) =>
-    setTimeout(() => reject(new Error('TIMEOUT_RESEARCH_LIMIT_EXCEEDED')), 58000)
+    setTimeout(() => reject(new Error('TIMEOUT_HOBBY_LIMIT')), 9000)
   );
 
   const taskPromise = (async () => {
     console.log(`[Consensus] Starting research for: ${query}`);
     
-    // 1. Parallel Data Fetch (Strict 1.5s timeout for internet/trends to ensure no delays)
+    // 1. Parallel Data Fetch (Strict 1s timeout for Hobby plan)
     const [internetData, trendsData] = await Promise.all([
       Promise.race([
         fetchInternetDataViaTool(query).catch(() => ""), 
-        new Promise<string>(r => setTimeout(() => r(""), 1500))
+        new Promise<string>(r => setTimeout(() => r(""), 1000))
       ]),
       Promise.race([
         getGoogleTrendsData(query).catch(() => null),
-        new Promise<null>(r => setTimeout(() => r(null), 2500))
+        new Promise<null>(r => setTimeout(() => r(null), 1000))
       ])
     ]);
 
