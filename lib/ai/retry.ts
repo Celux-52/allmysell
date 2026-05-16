@@ -14,13 +14,13 @@ export async function withRetry<T>(
 ): Promise<T> {
   let lastError: any;
   const maxRetries = typeof options === 'number' ? options : (options?.maxRetries || 1);
-  
+
   // 1. Try with Primary (Gemini)
   for (let i = 0; i <= maxRetries; i++) {
     try {
       return await fn(RESEARCH_MODELS.PRIMARY.id);
     } catch (err) {
-      console.warn(`[Retry] Primary attempt ${i+1} failed, retrying...`);
+      console.warn(`[Retry] Primary attempt ${i + 1} failed, retrying...`);
       lastError = err;
       if (i < maxRetries) await new Promise(r => setTimeout(r, 1000));
     }

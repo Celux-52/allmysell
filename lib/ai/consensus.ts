@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Absolute Stability Consensus Engine (v4.0)
  */
 import { getGoogleTrendsData, buildCompetitorLinks } from './google-trends';
@@ -8,9 +8,9 @@ import { RESEARCH_MODELS } from './models';
 
 export async function consensusResearch(query: string, tier: string = 'FREE') {
   const isBasic = tier === 'FREE' || tier === 'STARTER';
-  
+
   // Timeout for stability
-  const timeoutPromise = new Promise<never>((_, reject) => 
+  const timeoutPromise = new Promise<never>((_, reject) =>
     setTimeout(() => reject(new Error('TIMEOUT')), 55000)
   );
 
@@ -29,8 +29,8 @@ export async function consensusResearch(query: string, tier: string = 'FREE') {
       const response = await getCline().chat.completions.create({
         model: modelId!,
         messages: [
-          { 
-            role: 'system', 
+          {
+            role: 'system',
             content: `You are a product researcher. Analyze: "${query}". Context: ${context}. Return valid JSON: {"products": [{"name": "...", "score": 85, ...}], "summary": "..."}`
           }
         ],
