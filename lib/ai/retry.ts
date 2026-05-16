@@ -33,8 +33,8 @@ interface RetryOptions {
 }
 
 const DEFAULT_OPTIONS: Required<RetryOptions> = {
-  maxRetries: 2,
-  baseDelayMs: 2000,
+  maxRetries: 1, // Only 1 retry before switching model
+  baseDelayMs: 1000, // Wait only 1s before retry
 };
 
 function addJitter(delayMs: number): number {
