@@ -483,29 +483,84 @@ async function mergeAndEnrich(
     summary: combinedSummary,
     aiProviders: activeProviders,
     consensusMethod: activeProviders.length > 1 ? 'multi-ai-consensus' : 'single-provider',
-          const response = await getCline().chat.completions.create({
-            model: 'openrouter/free',
-            messages: [
-              { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
-              { role: 'user', content: query }
-            ],
-            temperature: 0.7
-          });
-          const text = response.choices[0]?.message?.content || '{}';
-          const parsed = safeParseJSON(text);
-          if (parsed && parsed.products && parsed.products.length > 0) {
-             console.log('âœ… [Consensus] Last Resort fallback succeeded!');
-             settledResults = [{ ...parsed, tier }];
-          }
-        } catch (fallbackError: any) {
-          console.error('âŒ [Consensus] Last Resort fallback also failed:', fallbackError.message);
-        }
-      }
+  };
+}
 
-      return mergeAndEnrich(settledResults, providers.slice(0, allProviders.length), query, internetContext);
+export async function consensusResearch(query: string, tier: string = 'FREE'): Promise<ConsensusResult> {
+  // Global timeout for the entire research process
+  const timeoutPromise = new Promise<never>((_, reject) => 
+    setTimeout(() => reject(new Error('RESEARCH_TIMEOUT')), 58000)
+  );
+
+  try {
+    const researchPromise = (async (): Promise<ConsensusResult> => {
+      // 1. Fetch live internet data and Google Trends FIRST
+      console.log(`[Consensus] Gathering external data for: ${query}`);
+      const [internetContext, mainQueryTrends] = await Promise.all([
+        fetchInternetDataViaTool(query),
+        getGoogleTrendsData(query).catch(() => null)
+      ]);
+
+      const googleTrendsContext = mainQueryTrends 
+        ? `\n\n--- REAL-TIME GOOGLE TRENDS DATA ---\n${mainQueryTrends.summary}\n-----------------------------------\n\n`
+        : "";
+
+      const fullContext = internetContext + googleTrendsContext;
+
+      // 2. Perform AI Research with Smart Retry & Failover
+      const analysis = await withRetry(async (overrideModel?: string) => {
+        const { getCline } = await import('./cline');
+        const modelToUse = overrideModel || RESEARCH_MODELS.NEMOTRON.id;
+        
+        console.log(`[Consensus] Executing research with: ${modelToUse}`);
+        
+        const response = await getCline().chat.completions.create({
+          model: modelToUse,
+          messages: [
+            { role: 'system', content: RESEARCH_PROMPT(query, fullContext, tier) },
+            { role: 'user', content: query }
+          ],
+          temperature: 0.7,
+          response_format: { type: 'json_object' }
+        });
+
+        const content = response.choices[0]?.message?.content;
+        if (!content) throw new Error("Empty AI response");
+
+        const parsed = JSON.parse(extractJSON(content));
+        if (!parsed || !parsed.products || parsed.products.length === 0) {
+          throw new Error("Invalid or empty results from AI");
+        }
+        
+        return parsed;
+      }, { maxRetries: 2, baseDelayMs: 3000 });
+
+      // 3. Post-processing (Trends enrichment, Supplier matching, etc.)
+      console.log(`[Consensus] AI analysis complete. Enriching ${analysis.products.length} products...`);
+      const enrichedProducts = await Promise.all(analysis.products.map(async (product: any) => {
+        // Build competitor links
+        const competitorLinks = buildCompetitorLinks(product.name, product.category);
+        
+        // Final object structure
+        return {
+          ...product,
+          competitorLinks,
+          googleTrendsData: mainQueryTrends,
+          googleTrendsInsight: mainQueryTrends?.summary || "No specific trend data available."
+        };
+      }));
+
+      return {
+        products: enrichedProducts,
+        summary: analysis.summary || "Market analysis completed successfully.",
+        aiProviders: [RESEARCH_MODELS.NEMOTRON.id],
+        consensusMethod: "Dedicated High-Performance Engine"
+      };
     })();
 
     return await Promise.race([researchPromise, timeoutPromise]);
+  } catch (error: any) {
+    if (error.message === 'RESEARCH_TIMEOUT') {outPromise]);
   } catch (error: any) {
     if (error.message === 'RESEARCH_TIMEOUT') {
       return {
