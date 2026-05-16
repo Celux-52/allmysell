@@ -117,8 +117,8 @@ CRITICAL: Return ONLY valid JSON.
  * 🔍 Main Research Function
  */
 export async function consensusResearch(query: string, tier: string = 'FREE'): Promise<ConsensusResult> {
-  const timeoutPromise = new Promise<never>((_, reject) => 
-    setTimeout(() => reject(new Error('RESEARCH_TIMEOUT')), 25000)
+  const timeoutPromise = new Promise<never>((_, reject) =>
+    setTimeout(() => reject(new Error('RESEARCH_TIMEOUT')), 50000)
   );
 
   try {
@@ -133,7 +133,7 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
       const analysis = await withRetry(async (overrideModel?: string) => {
         const { getCline } = await import('./cline');
         const modelToUse = overrideModel || RESEARCH_MODELS.NEMOTRON.id;
-        
+
         const response = await getCline().chat.completions.create({
           model: modelToUse,
           messages: [
@@ -148,7 +148,7 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
         if (!content) throw new Error("Empty AI response");
 
         return JSON.parse(extractJSON(content));
-      }, { maxRetries: 2, baseDelayMs: 3000 });
+      }, { maxRetries: 1, baseDelayMs: 1000 });
 
       const enrichedProducts = await Promise.all(analysis.products.map(async (product: any) => {
         const keyword = product.searchKeyword || product.name;
@@ -205,7 +205,7 @@ export async function consensusTrends(niche: string) {
     const analysis = await withRetry(async (overrideModel?: string) => {
       const { getCline } = await import('./cline');
       const modelToUse = overrideModel || RESEARCH_MODELS.NEMOTRON.id;
-      
+
       const response = await getCline().chat.completions.create({
         model: modelToUse,
         messages: [{ role: 'user', content: AI_PROMPT }],
