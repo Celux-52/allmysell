@@ -15,7 +15,7 @@ export async function withRetry<T>(
   const models = [
     RESEARCH_MODELS.PRIMARY.id,
     "google/gemini-2.0-flash-001",
-    ETSY_MODELS.MIMO.id,
+    "anthropic/claude-3-haiku",
     "openai/gpt-4o-mini"
   ];
 
@@ -77,6 +77,6 @@ export function extractJSON(content: string): string {
 
 export const FREE_MODEL_CHAINS = {
   analysis: [RESEARCH_MODELS.PRIMARY.id],
-  creative: [ETSY_MODELS.MIMO.id],
+  creative: ["anthropic/claude-3-haiku"],
   extraction: [RESEARCH_MODELS.PRIMARY.id],
 };
