@@ -26,7 +26,7 @@ export const FREE_AI_MODELS = [
 ]
 
 import { fetchInternetDataViaTool } from './internet-search';
-import { extractJSON } from './retry';
+import { extractJSON, withRetry } from './retry';
 
 export async function researchProductsWithCline(query: string) {
     const cline = getCline()
