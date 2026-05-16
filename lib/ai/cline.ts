@@ -12,7 +12,6 @@ export function getCline(): OpenAI {
             apiKey,
             baseURL: "https://openrouter.ai/api/v1",
             defaultHeaders: {
-                "HTTP-Referer": "https://allmysell.com", 
                 "X-Title": "AllMySell",
             }
         })
@@ -24,8 +23,8 @@ import { RESEARCH_MODELS, ETSY_MODELS } from './models';
 
 // ✅ Optimized Free AI Models List (May 2026)
 export const FREE_AI_MODELS = [
-    { id: RESEARCH_MODELS.NEMOTRON.id, name: 'Nemotron 3 Super (Data)', provider: 'NVIDIA', speed: 'Fast', quality: 'Excellent', free: true },
-    { id: ETSY_MODELS.MIMO.id, name: 'MiMo V2 Flash (Etsy)', provider: 'Xiaomi', speed: 'Very Fast', quality: 'High', free: true },
+    { id: RESEARCH_MODELS.PRIMARY.id, name: 'Gemini 2.0 Flash (Primary)', provider: 'Google', speed: 'Ultra Fast', quality: 'Excellent', free: true },
+    { id: ETSY_MODELS.FLASH.id, name: 'Gemini Flash 1.5 8B (Etsy)', provider: 'Google', speed: 'Very Fast', quality: 'High', free: true },
 ]
 
 import { fetchInternetDataViaTool } from './internet-search';

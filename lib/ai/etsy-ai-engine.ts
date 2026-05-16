@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/client';
 import { withRetry, extractJSON } from './retry';
-import { ETSY_MODELS } from './models';
+import { ETSY_MODELS, RESEARCH_MODELS } from './models';
 
 export interface DetailedAnalysis {
   trendScore: number;
@@ -250,7 +250,7 @@ You MUST output ONLY a valid JSON object. No other text.
       async (modelId) => {
         const { getCline } = await import('./cline');
         const response = await getCline().chat.completions.create({
-          model: modelId || "google/gemini-2.0-flash-lite-preview-02-05:free",
+          model: modelId || RESEARCH_MODELS.PRIMARY.id,
           messages: [{ role: 'system', content: PROMPT }],
           temperature: 0.8
         });

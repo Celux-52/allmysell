@@ -3,34 +3,29 @@
  */
 
 export const RESEARCH_MODELS = {
-  // Google Gemini 2.0 Flash — En hızlı ve en stabil model (Birincil)
+  // NVIDIA Nemotron 3 Super — En stabil ve zeki ücretsiz model
   PRIMARY: {
-    id: 'google/gemini-2.0-flash-exp:free',
-    name: 'Gemini 2.0 Flash',
-    provider: 'Google',
-    strength: 'speed-stability'
-  },
-  // NVIDIA Nemotron 3 Super — Derin analiz için (Yedek)
-  NEMOTRON: {
     id: 'nvidia/nemotron-3-super-120b-a12b:free',
     name: 'Nemotron 3 Super',
     provider: 'NVIDIA',
-    strength: 'deep-analysis'
+    strength: 'intelligence-data'
+  },
+  // OpenAI GPT-OSS 120B — Yüksek kapasiteli yedek
+  GPT_OSS: {
+    id: 'openai/gpt-oss-120b:free',
+    name: 'GPT-OSS 120B',
+    provider: 'OpenAI',
+    strength: 'reasoning'
   },
 };
 
 export const ETSY_MODELS = {
-  MIMO: {
-    id: 'xiaomi/mimo-v2-flash:free',
-    name: 'MiMo-V2-Flash',
-    provider: 'Xiaomi',
-    strength: 'seo-optimization'
-  },
+  FLASH: RESEARCH_MODELS.PRIMARY,
 };
 
 export const AI_MODELS = {
-  REASONING: RESEARCH_MODELS.PRIMARY,
-  CREATIVE: ETSY_MODELS.MIMO,
+  REASONING: RESEARCH_MODELS.GPT_OSS,
+  CREATIVE: RESEARCH_MODELS.PRIMARY,
   SPEED: RESEARCH_MODELS.PRIMARY,
   GENERAL: RESEARCH_MODELS.PRIMARY,
 };

@@ -17,12 +17,10 @@ export async function withRetry<T>(
   // ✅ Absolute Stability Model List (Optimized for May 2026)
   const models = [
     RESEARCH_MODELS.PRIMARY.id,
-    "google/gemini-2.0-flash-lite-preview-02-05:free",
-    "google/gemini-flash-1.5-8b:free",
-    "deepseek/deepseek-chat:free",
-    "google/gemini-2.0-pro-exp-02-05:free",
-    RESEARCH_MODELS.NEMOTRON.id,
-    "mistralai/mistral-7b-instruct:free"
+    RESEARCH_MODELS.GPT_OSS.id,
+    "poolside/laguna-m.1:free",
+    "meta-llama/llama-3.2-3b-instruct:free",
+    "google/gemini-flash-1.5-8b:free"
   ];
 
   for (const modelId of models) {

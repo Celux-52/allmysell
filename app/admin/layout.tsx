@@ -14,7 +14,6 @@ const sidebarItems = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { name: 'Users', href: '/admin/users', icon: Users },
   { name: 'User Saves', href: '/admin/saves', icon: Star },
-  { name: 'Blog Posts', href: '/admin/blog', icon: FileText },
   { name: 'Products', href: '/admin/products', icon: Package },
   { name: 'Bot Automation', href: '/admin/bots', icon: Bot },
   { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },

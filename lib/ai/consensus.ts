@@ -34,7 +34,7 @@ export async function consensusResearch(query: string, tier: string = 'FREE') {
     // 2. AI Analysis with Instant Failover
     let usedModel = "Gemini 2.0 Flash";
     const analysis = await withRetry(async (modelId) => {
-      usedModel = modelId || "google/gemini-2.0-flash-exp:free";
+      usedModel = modelId || RESEARCH_MODELS.PRIMARY.id;
       const { getCline } = await import('./cline');
       const response = await getCline().chat.completions.create({
         model: usedModel,
