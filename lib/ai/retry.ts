@@ -71,9 +71,9 @@ export async function withRetry<T>(
 
   // 2. Failover Chain - If primary model keeps failing, switch to the other one
   const failoverChain = [
-    RESEARCH_MODELS.NEMOTRON.id,
     ETSY_MODELS.MIMO.id,
-    "google/gemini-2.0-flash-lite-preview-02-05:free" // Ultimate safety fallback
+    "google/gemini-2.0-flash-lite-preview-02-05:free",
+    "google/gemini-2.0-flash-exp:free"
   ];
 
   console.log(`[AI Failover] 🛡️ Primary failed. Starting failover chain...`);

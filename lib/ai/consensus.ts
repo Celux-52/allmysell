@@ -124,7 +124,10 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
   try {
     const researchPromise = (async (): Promise<ConsensusResult> => {
       const [internetContext, mainQueryTrends] = await Promise.all([
-        fetchInternetDataViaTool(query),
+        Promise.race([
+          fetchInternetDataViaTool(query),
+          new Promise<string>((r) => setTimeout(() => r(""), 10000))
+        ]),
         getGoogleTrendsData(query).catch(() => null)
       ]);
 
@@ -140,8 +143,7 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
             { role: 'system', content: RESEARCH_PROMPT(query, fullContext, tier) },
             { role: 'user', content: query }
           ],
-          temperature: 0.7,
-          response_format: { type: 'json_object' }
+          temperature: 0.7
         });
 
         const content = response.choices[0]?.message?.content;
