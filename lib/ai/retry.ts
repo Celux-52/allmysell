@@ -48,40 +48,48 @@ export async function withRetry<T>(
   const opts = { ...DEFAULT_OPTIONS, ...options };
   let lastError: Error | null = null;
 
-  // 1. Primary Attempt
+  // 1. Primary Attempt Loop
   for (let attempt = 0; attempt <= opts.maxRetries; attempt++) {
     try {
+      console.log(`[AI Retry] Attempt ${attempt + 1} starting...`);
       return await fn();
     } catch (error: any) {
       lastError = error;
-      const isRateLimit = error.message?.includes('429') || error.status === 429;
+      const isRecoverable = error.status === 429 || error.status === 503 || error.status === 502;
       
-      if (isRateLimit) break; // Go to failover
-      
-      if (attempt < opts.maxRetries) {
+      console.warn(`[AI Retry] Attempt ${attempt + 1} failed: ${error.message}`);
+
+      if (attempt < opts.maxRetries && isRecoverable) {
         const delay = addJitter(opts.baseDelayMs * Math.pow(2, attempt));
+        console.log(`[AI Retry] Waiting ${delay}ms before retry...`);
         await new Promise(resolve => setTimeout(resolve, delay));
+      } else if (!isRecoverable) {
+        break; // Don't retry non-recoverable errors (like 401/404)
       }
     }
   }
 
-  // 2. Simple Failover Chain (Using our 2 primary models as backups for each other if needed)
+  // 2. Failover Chain - If primary model keeps failing, switch to the other one
   const failoverChain = [
     RESEARCH_MODELS.NEMOTRON.id,
-    ETSY_MODELS.MIMO.id
+    ETSY_MODELS.MIMO.id,
+    "google/gemini-2.0-flash-lite-preview-02-05:free" // Ultimate safety fallback
   ];
 
+  console.log(`[AI Failover] 🛡️ Primary failed. Starting failover chain...`);
   for (const fallbackModel of failoverChain) {
     try {
-      console.log(`[AI Failover] 🔄 Trying fallback: ${fallbackModel}`);
-      return await fn(fallbackModel);
+      console.log(`[AI Failover] 🔄 Trying: ${fallbackModel}`);
+      const result = await fn(fallbackModel);
+      console.log(`[AI Failover] ✅ Success with ${fallbackModel}`);
+      return result;
     } catch (error: any) {
+      console.error(`[AI Failover] ❌ ${fallbackModel} also failed: ${error.message}`);
       lastError = error;
-      await new Promise(r => setTimeout(r, 1000));
     }
   }
 
-  throw lastError || new Error("All AI attempts failed");
+  throw lastError || new Error("All AI models and fallbacks are currently unavailable (503).");
 }
 
 export const FREE_MODEL_CHAINS = {

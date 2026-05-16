@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Multi-AI Consensus Engine + Real Google Trends + Semantic Supplier Matching
  * 
  * Uses NVIDIA Nemotron 3 Super via OpenRouter as the dedicated research AI model
@@ -176,20 +176,6 @@ function safeParseJSON(text: string): any {
 }
 
 // --- Primary AI Provider: Nemotron 3 Super (NVIDIA) ---
-async function queryNemotron(query: string, internetContext: string, tier: string = 'FREE'): Promise<{ products: any[]; summary: string } | null> {
-  return withRetry(async (overrideModel) => {
-    const { getCline } = await import('./cline');
-    const response = await getCline().chat.completions.create({
-      model: overrideModel || RESEARCH_MODELS.NEMOTRON.id,
-      messages: [
-        { role: 'system', content: RESEARCH_PROMPT(query, internetContext, tier) },
-        { role: 'user', content: query }
-      ],
-      temperature: 0.7
-    });
-    const parsed = safeParseJSON(response.choices[0]?.message?.content || '{}');
-    if (!parsed || !parsed.products) throw new Error("Invalid or empty JSON from Nemotron");
-    return parsed;
   });
 }
 
@@ -501,70 +487,6 @@ async function mergeAndEnrich(
     summary: combinedSummary,
     aiProviders: activeProviders,
     consensusMethod: activeProviders.length > 1 ? 'multi-ai-consensus' : 'single-provider',
-  };
-}
-
-/**
- * Main consensus research function.
- * Uses NVIDIA Nemotron 3 Super, enriches with Google Trends + real supplier links.
- */
-export async function consensusResearch(query: string, tier: string = 'FREE'): Promise<ConsensusResult> {
-  // Global timeout for the entire research process - Increased to 55s to give max time on Vercel
-  const timeoutPromise = new Promise<never>((_, reject) => 
-    setTimeout(() => reject(new Error('RESEARCH_TIMEOUT')), 55000)
-  );
-
-  try {
-    const researchPromise = (async () => {
-      const providers = [
-        'Nemotron 3 Super (NVIDIA)',
-      ];
-
-      // 1. Fetch live internet data via native tool calling to n8n webhook FIRST
-      const internetContext = await fetchInternetDataViaTool(query);
-
-      // 2. Fetch real Google Trends for the main query to provide ground-truth trend data to AI
-      const mainQueryTrends = await getGoogleTrendsData(query);
-      const googleTrendsContext = mainQueryTrends 
-        ? `\n\n--- REAL-TIME GOOGLE TRENDS DATA ---\n${mainQueryTrends.summary}\n-----------------------------------\n\n`
-        : "";
-
-      const fullContext = internetContext + googleTrendsContext;
-
-      // Single dedicated AI provider: NVIDIA Nemotron 3 Super
-      const allProviders = [
-            { name: providers[0], fn: () => queryNemotron(query, fullContext, tier) }
-          ];
-
-      const isOpenRouterOnly = !process.env.GROQ_API_KEY && !process.env.GEMINI_API_KEY;
-
-      const staggeredPromises = allProviders.map(async (provider, i) => {
-        // Stagger requests by 2 seconds each (Reduced from 5s to save time)
-        if (isOpenRouterOnly && i > 0) {
-          const delay = i * 2000;
-          console.log(`[Consensus] Staggering provider ${provider.name} by ${delay}ms...`);
-          await new Promise(r => setTimeout(r, delay));
-        }
-        
-        try {
-          const result = await provider.fn();
-          return { ...result, tier };
-        } catch (error: any) {
-          console.error(`[Consensus] Provider ${provider.name} failed:`, error.message);
-          return null;
-        }
-      });
-
-      let settledResults = await Promise.all(staggeredPromises) as Array<{ products: any[]; summary: string } | null>;
-      
-      // --- LAST RESORT FALLBACK ---
-      // If all providers failed (rate limits, timeouts, etc.), try one single robust call using the openrouter/free router.
-      const allFailed = settledResults.every(r => !r || !r.products || r.products.length === 0);
-      
-      if (allFailed) {
-        console.warn('âš ï¸ [Consensus] ALL providers failed. Attempting Last Resort fallback...');
-        try {
-          const { getCline } = await import('./cline');
           const response = await getCline().chat.completions.create({
             model: 'openrouter/free',
             messages: [
