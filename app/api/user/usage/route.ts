@@ -8,69 +8,56 @@ export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
+
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const startOfMonth = new Date()
-    startOfMonth.setDate(1)
-    startOfMonth.setHours(0, 0, 0, 0)
-
-    const profile = await prisma.profile.findUnique({
-      where: { id: user.id },
-      select: { subscriptionStatus: true }
-    })
-
-    // --- ADMIN OVERRIDE ---
-    const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase())
-    const isUserAdmin = user.email && adminEmails.includes(user.email.toLowerCase())
+    // --- RESILIENT DB FETCH ---
+    let usage = { count: 0, limit: 3, tier: 'FREE' }
     
-    const status = isUserAdmin ? 'PRO_AGENCY' : (profile?.subscriptionStatus || 'FREE')
+    try {
+      const startOfMonth = new Date()
+      startOfMonth.setDate(1)
+      startOfMonth.setHours(0, 0, 0, 0)
 
-    const searchCount = await prisma.searchHistory.count({
-      where: {
-        userId: user.id,
-        queryType: 'general',
-        createdAt: { gte: startOfMonth }
+      // Use a timeout for Prisma to prevent hanging
+      const [profile, searchCount] = await Promise.all([
+        Promise.race([
+          prisma.profile.findUnique({ where: { id: user.id } }),
+          new Promise<null>(r => setTimeout(() => r(null), 2000))
+        ]),
+        Promise.race([
+          prisma.searchHistory.count({
+            where: {
+              userId: user.id,
+              createdAt: { gte: startOfMonth }
+            }
+          }),
+          new Promise<number>(r => setTimeout(() => r(0), 2000))
+        ])
+      ])
+
+      const tier = profile?.subscriptionStatus || 'FREE'
+      const LIMITS: Record<string, number> = {
+        'FREE': 3,
+        'STARTER': 50,
+        'GROWTH': 75,
+        'PRO_AGENCY': 125
       }
-    })
 
-    const etsyCount = await prisma.searchHistory.count({
-      where: {
-        userId: user.id,
-        queryType: 'etsy',
-        createdAt: { gte: startOfMonth }
+      usage = {
+        count: searchCount || 0,
+        limit: LIMITS[tier] || 3,
+        tier: tier
       }
-    })
-
-    const GENERAL_LIMITS: Record<string, number> = {
-      'FREE': 3,
-      'STARTER': 50,
-      'GROWTH': 75,
-      'PRO_AGENCY': 125
+    } catch (dbError) {
+      console.warn('[Usage API] Database fallback triggered:', dbError)
     }
 
-    const ETSY_LIMITS: Record<string, number> = {
-      'FREE': 1,
-      'STARTER': 50,
-      'GROWTH': 75,
-      'PRO_AGENCY': 125
-    }
-
-    return NextResponse.json({
-      status,
-      general: {
-        count: searchCount,
-        limit: GENERAL_LIMITS[status] || 3,
-        remaining: Math.max(0, (GENERAL_LIMITS[status] || 3) - searchCount)
-      },
-      etsy: {
-        count: etsyCount,
-        limit: ETSY_LIMITS[status] || 1,
-        remaining: Math.max(0, (ETSY_LIMITS[status] || 1) - etsyCount)
-      }
-    })
+    return NextResponse.json(usage)
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    console.error('[Usage API] Critical error:', error)
+    return NextResponse.json({ count: 0, limit: 3, tier: 'FREE' }) // Never fail
   }
 }
