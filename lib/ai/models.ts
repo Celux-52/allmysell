@@ -1,62 +1,36 @@
 /**
- * AllMySell AI Model Registry
- * Centralized configuration for AI model orchestration.
- * 
- * TWO DEDICATED AI MODELS:
- * 1. RESEARCH_MODELS → Akıllı Araştırma Motoru (Smart Research Engine)
- *    - NVIDIA Nemotron 3 Super 120B
- * 2. ETSY_MODELS → Etsy SEO & İçerik Üretimi (Etsy Sniper Engine)
- *    - Xiaomi MiMo-V2-Flash
- * 
- * Using free tier models via OpenRouter to maximize performance while minimizing cost.
+ * AllMySell AI Model Registry (v4.0 - Absolute Stability Edition)
  */
 
-// ═══════════════════════════════════════════════════════════════
-// 🧠 SMART RESEARCH ENGINE MODEL (Pazar Araştırma + Tedarikçi Bulma)
-// ═══════════════════════════════════════════════════════════════
 export const RESEARCH_MODELS = {
-  // NVIDIA Nemotron 3 Super — 120B MoE, veri işleme ve analiz
-  NEMOTRON: {
+  // Google Gemini 2.0 Flash — En hızlı ve en stabil model (Birincil)
+  PRIMARY: {
+    id: 'google/gemini-2.0-flash-lite-preview-02-05:free',
+    name: 'Gemini 2.0 Flash',
+    provider: 'Google',
+    strength: 'speed-stability'
+  },
+  // NVIDIA Nemotron 3 Super — Derin analiz için (Yedek)
+  ANALYSIS: {
     id: 'nvidia/nemotron-3-super-120b-a12b:free',
     name: 'Nemotron 3 Super',
     provider: 'NVIDIA',
-    strength: 'data-processing',
-    description: 'Pazar araştırması, SEO analizi, tedarikçi bulma ve satış analizi'
+    strength: 'deep-analysis'
   },
 };
 
-// ═══════════════════════════════════════════════════════════════
-// 🎯 ETSY SNIPER ENGINE MODEL (SEO + İçerik Üretimi)
-// ═══════════════════════════════════════════════════════════════
 export const ETSY_MODELS = {
-  // Xiaomi MiMo-V2-Flash — Hızlı ve güçlü analiz modeli
   MIMO: {
     id: 'xiaomi/mimo-v2-flash:free',
     name: 'MiMo-V2-Flash',
     provider: 'Xiaomi',
-    strength: 'seo-optimization',
-    description: 'Etsy ürün analizi, SEO optimizasyonu ve pazar istihbaratı'
+    strength: 'seo-optimization'
   },
 };
 
-// ═══════════════════════════════════════════════════════════════
-// 🔄 LEGACY COMPATIBILITY (Eski kodlarla uyumluluk)
-// ═══════════════════════════════════════════════════════════════
 export const AI_MODELS = {
-  REASONING: RESEARCH_MODELS.NEMOTRON,
+  REASONING: RESEARCH_MODELS.PRIMARY,
   CREATIVE: ETSY_MODELS.MIMO,
-  SPEED: RESEARCH_MODELS.NEMOTRON,
-  GENERAL: RESEARCH_MODELS.NEMOTRON,
-  BALANCED: RESEARCH_MODELS.NEMOTRON,
-  EFFICIENT: RESEARCH_MODELS.NEMOTRON,
-  LIGHTWEIGHT: ETSY_MODELS.MIMO,
-};
-
-export type ModelType = keyof typeof AI_MODELS;
-export type ResearchModelType = keyof typeof RESEARCH_MODELS;
-export type EtsyModelType = keyof typeof ETSY_MODELS;
-
-export const getModelById = (id: string) => {
-  const allModels = { ...RESEARCH_MODELS, ...ETSY_MODELS };
-  return Object.values(allModels).find(m => m.id === id);
+  SPEED: RESEARCH_MODELS.PRIMARY,
+  GENERAL: RESEARCH_MODELS.PRIMARY,
 };
