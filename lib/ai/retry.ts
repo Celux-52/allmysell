@@ -33,6 +33,12 @@ export async function withRetry<T>(
   }
 }
 
+export const FREE_MODEL_CHAINS = {
+  analysis: [RESEARCH_MODELS.PRIMARY.id],
+  creative: [ETSY_MODELS.MIMO.id],
+  extraction: [RESEARCH_MODELS.PRIMARY.id],
+};
+
 export function extractJSON(content: string): string {
   if (!content) return '{}';
   const startIndex = content.indexOf('{');

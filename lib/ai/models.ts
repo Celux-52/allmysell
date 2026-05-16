@@ -11,7 +11,7 @@ export const RESEARCH_MODELS = {
     strength: 'speed-stability'
   },
   // NVIDIA Nemotron 3 Super — Derin analiz için (Yedek)
-  ANALYSIS: {
+  NEMOTRON: {
     id: 'nvidia/nemotron-3-super-120b-a12b:free',
     name: 'Nemotron 3 Super',
     provider: 'NVIDIA',
