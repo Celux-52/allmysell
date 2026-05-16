@@ -78,7 +78,10 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error('[Research API] Error:', error)
     return NextResponse.json(
-      { error: 'Service Unavailable', details: error.message },
+      { 
+        error: error.message || 'Service Unavailable', 
+        details: error.message 
+      },
       { status: 503 }
     )
   }
