@@ -9,9 +9,9 @@ import { RESEARCH_MODELS } from './models';
 export async function consensusResearch(query: string, tier: string = 'FREE') {
   const isBasic = tier === 'FREE' || tier === 'STARTER';
 
-  // Hobby Plan Limit: 9 seconds (to stay under 10s Vercel hard limit)
+  // Limit: 55 seconds (to stay under 60s maxDuration limit)
   const timeoutPromise = new Promise<never>((_, reject) =>
-    setTimeout(() => reject(new Error('TIMEOUT_HOBBY_LIMIT')), 9000)
+    setTimeout(() => reject(new Error('TIMEOUT_LIMIT')), 55000)
   );
 
   const taskPromise = (async () => {

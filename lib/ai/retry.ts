@@ -12,14 +12,15 @@ export async function withRetry<T>(
 ): Promise<T> {
   let lastError: any;
   const maxRetries = typeof options === 'number' ? options : (options?.maxRetries || 0);
-  const perCallTimeout = typeof options === 'object' ? options.timeoutMs || 6000 : 6000;
+  const perCallTimeout = typeof options === 'object' ? options.timeoutMs || 20000 : 20000;
   
-  // ✅ Absolute Stability Model List (Optimized for May 2026)
+  // ✅ Absolute Stability Model List (Production Paid Tier)
   const models = [
     RESEARCH_MODELS.PRIMARY.id,
-    RESEARCH_MODELS.GPT_OSS.id,
-    "poolside/laguna-m.1:free",
-    "meta-llama/llama-3.2-3b-instruct:free",
+    "openai/gpt-4o-mini",
+    "google/gemini-2.0-flash-001",
+    "deepseek/deepseek-chat",
+    RESEARCH_MODELS.LLAMA.id,
     "google/gemini-flash-1.5-8b:free"
   ];
 
