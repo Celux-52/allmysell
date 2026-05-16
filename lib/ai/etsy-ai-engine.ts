@@ -198,5 +198,71 @@ You MUST output ONLY a valid JSON object matching the interface below. No markdo
       { maxRetries: 1, baseDelayMs: 500 }
     );
   }
+
+  static async runFullAnalysis(keyword: string): Promise<{ product: any, analysis: DetailedAnalysis }> {
+    const PROMPT = `
+# ETSY SNIPER v2.0 — SINGLE-PASS ENGINE
+
+You are an Etsy Market Intelligence Engine.
+The user wants an analysis for the niche/keyword: "${keyword}".
+
+TASK 1: Generate ONE highly realistic, top-selling product that exists in this niche.
+TASK 2: Perform a brutal, professional analysis of this product's market potential.
+
+You MUST output ONLY a valid JSON object. No other text.
+
+{
+  "product": {
+    "title": "Realistic Etsy Product Title",
+    "price": 24.99,
+    "currency": "USD",
+    "favorites": 1250,
+    "views": 4500,
+    "tags": ["tag1", "tag2"],
+    "shopName": "ExampleShop",
+    "imageUrl": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=500"
+  },
+  "analysis": {
+    "verdict": "1-LINE VERDICT",
+    "opportunityStatus": "WINNER | HYPER WINNER | AVOID",
+    "revenueForecast": "Stability & Scaling",
+    "riskEvaluation": "Risks",
+    "sniperStrategy": "Strategy steps",
+    "trendScore": 85,
+    "competitionLevel": "Low | Medium | High",
+    "decision": "SELL | AVOID",
+    "summary": "Market Reality",
+    "buyerPsychology": "Psychology",
+    "isHandmade": true,
+    "isCustomizable": false,
+    "scores": { "demand": 80, "margin": 70, "competition": 40, "trend": 90 },
+    "consensus": { "agreedCount": 4, "totalProviders": 5, "confidence": 95 },
+    "seoInsight": "SEO gaps",
+    "serpSimulation": { "top10Pattern": "...", "thumbnailGap": "...", "titleGap": "..." },
+    "actionPriority": [ { "task": "...", "priority": "Urgent", "impact": "..." } ],
+    "conversionFunnel": { "trafficLeak": "...", "conversionFix": "..." },
+    "personaTargeting": { "primaryPersona": "...", "psychographicKeywords": ["k1"] },
+    "abTestSimulation": [ { "variable": "...", "action": "...", "predictedLift": "..." } ]
+  }
+}`;
+
+    return withRetry(
+      async (modelId) => {
+        const { getCline } = await import('./cline');
+        const response = await getCline().chat.completions.create({
+          model: modelId || "google/gemini-2.0-flash-lite-preview-02-05:free",
+          messages: [{ role: 'system', content: PROMPT }],
+          temperature: 0.8
+        });
+
+        const content = response.choices[0]?.message?.content || '';
+        const parsed = JSON.parse(extractJSON(content));
+        
+        parsed.analysis.summary = parsed.analysis.verdict + " " + parsed.analysis.summary;
+        return parsed;
+      },
+      { maxRetries: 1, baseDelayMs: 500 }
+    );
+  }
 }
 

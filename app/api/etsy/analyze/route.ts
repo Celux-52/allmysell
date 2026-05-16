@@ -72,37 +72,32 @@ export async function POST(req: Request) {
       console.warn('[Etsy API] Rate limit check failed:', dbError)
     }
 
-    // 1. Fetch top product for this keyword
-    const products = await etsyService.searchProducts(keyword, 1);
-    
-    if (!products || products.length === 0) {
-      return NextResponse.json({ error: "No products found for this keyword on Etsy" }, { status: 404 });
+    // 1. Fetch Product & Analysis in ONE single AI call (Bypasses Vercel Timeouts)
+    const { product: topProduct, analysis: analysisResult } = await EtsyAIEngine.runFullAnalysis(keyword);
+
+    if (!topProduct || !analysisResult) {
+      return NextResponse.json({ error: "AI could not generate results. Please try again." }, { status: 404 });
     }
 
-    const topProduct = products[0];
-
-    // 2. Save product to DB (Non-blocking to save time)
-    let savedProduct: any = { id: 'temp-' + Date.now(), ...topProduct };
+    // 2. Save product to DB (Non-blocking)
+    let savedProduct: any = { id: 'temp-' + Date.now(), ...topProduct, keyword };
     prisma.etsyProduct.create({
       data: {
         keyword,
-        listingId: topProduct.listingId,
+        listingId: topProduct.listingId || 'LST-' + Date.now(),
         title: topProduct.title,
-        price: topProduct.price,
-        currency: topProduct.currency,
-        favorites: topProduct.favorites,
-        views: topProduct.views,
-        tags: topProduct.tags,
-        url: topProduct.url,
-        imageUrl: topProduct.imageUrl,
-        shopName: topProduct.shopName
+        price: typeof topProduct.price === 'string' ? parseFloat(topProduct.price) || 0 : topProduct.price,
+        currency: topProduct.currency || 'USD',
+        favorites: topProduct.favorites || 0,
+        views: topProduct.views || 0,
+        tags: topProduct.tags || [],
+        url: topProduct.url || '#',
+        imageUrl: topProduct.imageUrl || 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=500',
+        shopName: topProduct.shopName || 'AI Shop'
       }
     }).then(p => savedProduct.id = p.id).catch(e => console.warn("DB Save failed:", e.message));
 
-    // 3. Analyze via AI
-    const analysisResult = await EtsyAIEngine.analyzeProduct(topProduct);
-
-    // 4. Save analysis to DB (Non-blocking)
+    // 3. Save analysis to DB (Non-blocking)
     let savedAnalysis: any = { ...analysisResult };
     prisma.etsyAnalysis.create({
       data: {
