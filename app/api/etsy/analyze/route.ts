@@ -4,6 +4,9 @@ import { EtsyAIEngine } from '@/lib/ai/etsy-ai-engine';
 import { prisma } from '@/lib/prisma';
 import { createClient } from '@/lib/supabase/server';
 
+export const dynamic = 'force-dynamic';
+export const maxDuration = 60; // Allow 60 seconds for heavy AI tasks
+
 export async function POST(req: Request) {
   try {
     const { keyword } = await req.json();
