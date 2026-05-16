@@ -15,16 +15,16 @@ export async function consensusResearch(query: string, tier: string = 'FREE') {
   );
 
   const taskPromise = (async () => {
-    // 1. Parallel Data Fetch (Reduced timeout to 1s to test if n8n is the bottleneck)
+    // 1. Parallel Data Fetch (Strict 1s timeout for n8n to ensure no 503s)
     const [internetData, trendsData] = await Promise.all([
       Promise.race([
-        fetchInternetDataViaTool(query), 
+        fetchInternetDataViaTool(query).catch(() => ""), 
         new Promise<string>(r => setTimeout(() => r(""), 1000))
       ]),
       getGoogleTrendsData(query).catch(() => null)
     ]);
 
-    const context = internetData ? `${internetData}\n${trendsData?.summary || ""}` : "Direct AI analysis.";
+    const context = internetData ? `\n\n--- INTERNET DATA ---\n${internetData}\n\n` : "";
 
     // 2. AI Analysis with Instant Failover
     const analysis = await withRetry(async (modelId) => {
