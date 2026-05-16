@@ -106,12 +106,18 @@ export async function POST(request: NextRequest) {
       console.error('[Research API] Research error:', researchErr)
     }
 
-    if (!results || results.products.length === 0) {
+    if (!results || !results.products || results.products.length === 0) {
+      console.error('[Research API] Failed to get products. Error:', researchError);
       return NextResponse.json(
         {
-          error: 'AI research service is temporarily unavailable.',
-          details: researchError || 'All AI providers failed to return results.',
-          suggestion: 'Please try again in a few minutes or use a more specific search query.'
+          error: 'AI research engine could not generate results.',
+          details: researchError || 'All AI models returned empty product lists.',
+          debug: {
+            hasResults: !!results,
+            productCount: results?.products?.length || 0,
+            status: status
+          },
+          suggestion: 'Try a different or more specific search term.'
         },
         { status: 503 }
       )
