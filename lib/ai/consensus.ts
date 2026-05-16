@@ -175,10 +175,6 @@ function safeParseJSON(text: string): any {
   }
 }
 
-// --- Primary AI Provider: Nemotron 3 Super (NVIDIA) ---
-  });
-}
-
 /**
  * âœ… SMART AI VALIDATION LAYER
  * Cross-validate all AI responses, detect inconsistencies and errors
