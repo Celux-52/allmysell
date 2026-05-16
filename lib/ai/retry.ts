@@ -1,6 +1,3 @@
-/**
- * Absolute Stability Retry Utility (v4.1 - Compatible)
- */
 import { RESEARCH_MODELS, ETSY_MODELS } from './models';
 
 interface RetryOptions {
@@ -14,33 +11,48 @@ export async function withRetry<T>(
 ): Promise<T> {
   let lastError: any;
   const maxRetries = typeof options === 'number' ? options : (options?.maxRetries || 1);
+  
+  // Zincir: Önce Gemini Flash, sonra MiMo, en son Gemini Experimental
+  const models = [
+    RESEARCH_MODELS.PRIMARY.id,
+    ETSY_MODELS.MIMO.id,
+    "google/gemini-2.0-flash-exp:free"
+  ];
 
-  // 1. Try with Primary (Gemini)
-  for (let i = 0; i <= maxRetries; i++) {
-    try {
-      return await fn(RESEARCH_MODELS.PRIMARY.id);
-    } catch (err) {
-      console.warn(`[Retry] Primary attempt ${i + 1} failed, retrying...`);
-      lastError = err;
-      if (i < maxRetries) await new Promise(r => setTimeout(r, 1000));
+  for (const modelId of models) {
+    for (let i = 0; i <= maxRetries; i++) {
+      try {
+        console.log(`[AI] Trying ${modelId} (Attempt ${i+1})...`);
+        return await fn(modelId);
+      } catch (err: any) {
+        lastError = err;
+        console.warn(`[AI] ${modelId} failed: ${err.message}`);
+        // If it's a 401 (Auth error), don't retry, just move to next model or throw
+        if (err.status === 401) break; 
+        if (i < maxRetries) await new Promise(r => setTimeout(r, 800));
+      }
     }
   }
 
-  // 2. Try with Secondary (MiMo)
-  try {
-    console.log("[Retry] Switching to Secondary...");
-    return await fn(ETSY_MODELS.MIMO.id);
-  } catch (err) {
-    console.warn("[Retry] Secondary failed, trying ultimate fallback...");
-    lastError = err;
-  }
+  throw lastError || new Error("All AI models are currently unavailable.");
+}
 
-  // 3. Ultimate Fallback (Gemini Exp)
-  try {
-    return await fn("google/gemini-2.0-flash-exp:free");
-  } catch (err) {
-    throw lastError || err;
+export function extractJSON(content: string): string {
+  if (!content) return '{}';
+  // Remove markdown, think tags, and anything before/after the JSON object
+  let cleaned = content
+    .replace(/```json/g, '')
+    .replace(/```/g, '')
+    .replace(/<think>[\s\S]*?<\/think>/gi, '')
+    .trim();
+    
+  const startIndex = cleaned.indexOf('{');
+  const lastIndex = cleaned.lastIndexOf('}');
+  
+  if (startIndex !== -1 && lastIndex !== -1) {
+    return cleaned.substring(startIndex, lastIndex + 1);
   }
+  return cleaned;
 }
 
 export const FREE_MODEL_CHAINS = {
@@ -48,13 +60,3 @@ export const FREE_MODEL_CHAINS = {
   creative: [ETSY_MODELS.MIMO.id],
   extraction: [RESEARCH_MODELS.PRIMARY.id],
 };
-
-export function extractJSON(content: string): string {
-  if (!content) return '{}';
-  const startIndex = content.indexOf('{');
-  const lastIndex = content.lastIndexOf('}');
-  if (startIndex !== -1 && lastIndex !== -1) {
-    return content.substring(startIndex, lastIndex + 1);
-  }
-  return content;
-}
