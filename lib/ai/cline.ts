@@ -61,21 +61,23 @@ export async function researchProductsWithCline(query: string) {
   Return only valid JSON, nothing else.`
 
     try {
-        const response = await cline.chat.completions.create({
-            model: RESEARCH_MODELS.NEMOTRON.id,
-            messages: [
-                { role: 'system', content: prompt },
-                { role: 'user', content: query }
-            ],
-            temperature: 0.7
-        })
+        return await withRetry(async (modelId) => {
+            const response = await cline.chat.completions.create({
+                model: modelId || RESEARCH_MODELS.PRIMARY.id,
+                messages: [
+                    { role: 'system', content: prompt },
+                    { role: 'user', content: query }
+                ],
+                temperature: 0.7
+            })
 
-        const text = response.choices[0]?.message?.content || '{}'
-        const cleaned = extractJSON(text)
-        return JSON.parse(cleaned)
+            const text = response.choices[0]?.message?.content || '{}'
+            const cleaned = extractJSON(text)
+            return JSON.parse(cleaned)
+        })
     } catch (error) {
         console.error('[Cline] Research error:', error)
-        return { products: [], summary: 'AI service is temporarily unavailable. Please try again later.' }
+        return { products: [], summary: 'AI service is temporarily unavailable.' }
     }
 }
 
@@ -84,22 +86,23 @@ export async function clineAssistant(message: string, context?: string) {
 
     const systemPrompt = `You are the integrated AI assistant for the AllMySell SaaS panel.
   Answer user questions, recommend products, analyze trends, and provide automation advice.
-  Always respond in English with clear, actionable insights.
   ${context ? `Additional context: ${context}` : ''}`
 
     try {
-        const response = await cline.chat.completions.create({
-            model: RESEARCH_MODELS.NEMOTRON.id,
-            messages: [
-                { role: 'system', content: systemPrompt },
-                { role: 'user', content: message }
-            ],
-            temperature: 0.8
-        })
+        return await withRetry(async (modelId) => {
+            const response = await cline.chat.completions.create({
+                model: modelId || RESEARCH_MODELS.PRIMARY.id,
+                messages: [
+                    { role: 'system', content: systemPrompt },
+                    { role: 'user', content: message }
+                ],
+                temperature: 0.8
+            })
 
-        return response.choices[0]?.message?.content || 'Sorry, I could not generate a response right now.'
+            return response.choices[0]?.message?.content || 'No response.'
+        })
     } catch (error) {
         console.error('[Cline] Assistant error:', error)
-        return 'The AI assistant is temporarily unavailable. Please try again shortly.'
+        return 'The AI assistant is temporarily unavailable.'
     }
 }
