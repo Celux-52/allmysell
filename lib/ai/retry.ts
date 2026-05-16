@@ -44,10 +44,32 @@ export function extractJSON(content: string): string {
     .replace(/<think>[\s\S]*?<\/think>/gi, '')
     .trim();
     
-  const startIndex = cleaned.indexOf('{');
-  const lastIndex = cleaned.lastIndexOf('}');
+  const firstBrace = cleaned.indexOf('{');
+  const firstBracket = cleaned.indexOf('[');
+  const lastBrace = cleaned.lastIndexOf('}');
+  const lastBracket = cleaned.lastIndexOf(']');
+
+  // Determine the outermost JSON structure (either Object or Array)
+  let startIndex = -1;
+  let lastIndex = -1;
+
+  if (firstBrace !== -1 && firstBracket !== -1) {
+    startIndex = Math.min(firstBrace, firstBracket);
+  } else if (firstBrace !== -1) {
+    startIndex = firstBrace;
+  } else {
+    startIndex = firstBracket;
+  }
+
+  if (lastBrace !== -1 && lastBracket !== -1) {
+    lastIndex = Math.max(lastBrace, lastBracket);
+  } else if (lastBrace !== -1) {
+    lastIndex = lastBrace;
+  } else {
+    lastIndex = lastBracket;
+  }
   
-  if (startIndex !== -1 && lastIndex !== -1) {
+  if (startIndex !== -1 && lastIndex !== -1 && lastIndex >= startIndex) {
     return cleaned.substring(startIndex, lastIndex + 1);
   }
   return cleaned;
