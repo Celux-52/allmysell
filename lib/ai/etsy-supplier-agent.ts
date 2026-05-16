@@ -1,37 +1,40 @@
 import { getCline } from './cline';
-import { withRetry, extractJSON, FREE_MODEL_CHAINS } from './retry';
+import { withRetry, extractJSON } from './retry';
+import { RESEARCH_MODELS } from './models';
 
 export class EtsySupplierAgent {
   async findSupplier(productTitle: string, tags: string[] = [], price: number = 0) {
     const cline = getCline();
-    const [primaryModel, ...fallbacks] = FREE_MODEL_CHAINS.extraction;
+    const primaryModel = RESEARCH_MODELS.PRIMARY.id;
 
     const prompt = `
-      You are a global sourcing expert specializing in e-commerce supply chain strategy.
-      Analyze this Etsy product and recommend the best sourcing/production approach:
-
+      You are a global sourcing expert and supply chain architect for top-tier e-commerce brands.
+      Analyze this Etsy product and build a professional sourcing strategy.
+      
       PRODUCT: ${productTitle}
       TAGS: ${tags.join(', ')}
-      RETAIL PRICE: $${price}
+      ESTIMATED RETAIL: $${price}
 
-      Consider:
-      1. Is this best sourced from China (Alibaba/1688), made locally, or print-on-demand?
-      2. What is the estimated production/sourcing cost?
-      3. What is the risk level for a new seller?
-      4. Which specific supplier type or platform is best?
+      TASK:
+      Provide exactly 3 distinct, high-quality sourcing options. 
+      One MUST be a global wholesale option (Alibaba), one a dropshipping/POD option, and one a tactical alternative (1688 or local).
 
-      Return ONLY the following JSON format containing exactly 3 distinct supplier options (e.g. Alibaba, Print-on-Demand, AliExpress, Local):
+      For each option, you MUST generate a PRECISE search URL that will actually work.
+      Example Alibaba URL: https://www.alibaba.com/trade/search?SearchText=...
+      Example AliExpress URL: https://www.aliexpress.com/wholesale?SearchText=...
+
+      Return ONLY a JSON object in this format:
       {
         "suppliers": [
           {
-            "sourceType": "Alibaba" | "1688" | "Print-on-Demand" | "Local Handmade" | "Wholesale",
-            "name": "Specific platform or supplier recommendation",
-            "estimatedCost": number (in USD),
+            "sourceType": "Alibaba" | "AliExpress" | "Print-on-Demand" | "1688" | "Global Wholesale",
+            "name": "Professional name for this sourcing channel",
+            "estimatedCost": number (wholesale price range),
             "riskLevel": "Low" | "Medium" | "High",
-            "notes": "Detailed sourcing strategy and recommendations in English",
-            "leadTime": "e.g. 7-14 Days",
-            "reliabilityScore": 95,
-            "url": "Valid search URL (e.g. https://www.alibaba.com/trade/search?SearchText=...)"
+            "notes": "Brutal strategic advice on how to source this specific item safely.",
+            "leadTime": "e.g. 5-12 Days",
+            "reliabilityScore": 90-99,
+            "url": "THE WORKING SEARCH URL"
           }
         ]
       }

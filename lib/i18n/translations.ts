@@ -413,6 +413,10 @@ export const translations: Record<SupportedLang, Record<string, string>> = {
     "etsy.listingForgeDesc": "Generate SEO-Killer Content",
     "etsy.supplierSync": "Supplier Deep-Sync",
     "etsy.supplierSyncDesc": "Match with Global Inventory",
+    "etsy.recentSnipes": "Recent Snipes",
+    "res.recentResearch": "Recent Researches",
+    "res.recentResearchDesc": "Explore your past market discovery reports.",
+    "res.trendsInsight": "Trends Insight",
   },
   tr: {
     "nav.home": "Ana Sayfa",
@@ -806,6 +810,10 @@ export const translations: Record<SupportedLang, Record<string, string>> = {
     "etsy.listingForgeDesc": "SEO Odaklı İçerik Üretin",
     "etsy.supplierSync": "Tedarikçi Senkronizasyonu",
     "etsy.supplierSyncDesc": "Küresel Stokla Eşleştirin",
+    "etsy.recentSnipes": "Son Ürün Yakalamaları",
+    "res.recentResearch": "Son Araştırmalar",
+    "res.recentResearchDesc": "Geçmiş pazar keşif raporlarınızı inceleyin.",
+    "res.trendsInsight": "Trend Analizi",
   },
   de: {
     "nav.home": "Startseite",

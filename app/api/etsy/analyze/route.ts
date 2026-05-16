@@ -1,8 +1,5 @@
-import { NextResponse } from 'next/server';
-import { EtsyService } from '@/lib/etsy/etsy-service';
-import { EtsyAIEngine } from '@/lib/ai/etsy-ai-engine';
-import { prisma } from '@/lib/prisma';
 import { createClient } from '@/lib/supabase/server';
+import { getGoogleTrendsData } from '@/lib/ai/google-trends';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60; // Allow 60 seconds for heavy AI tasks
@@ -72,8 +69,13 @@ export async function POST(req: Request) {
       console.warn('[Etsy API] Rate limit check failed:', dbError)
     }
 
-    // 1. Fetch Product & Analysis in ONE single AI call (Bypasses Vercel Timeouts)
-    const { product: topProduct, analysis: analysisResult } = await EtsyAIEngine.runFullAnalysis(keyword);
+    // 1. Fetch Product, Analysis & Trends in Parallel
+    const [aiResult, trendsData] = await Promise.all([
+      EtsyAIEngine.runFullAnalysis(keyword),
+      getGoogleTrendsData(keyword).catch(() => null)
+    ]);
+
+    const { product: topProduct, analysis: analysisResult } = aiResult;
 
     if (!topProduct || !analysisResult) {
       return NextResponse.json({ error: "AI could not generate results. Please try again." }, { status: 404 });
@@ -126,7 +128,10 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       product: savedProduct,
-      analysis: savedAnalysis
+      analysis: {
+        ...savedAnalysis,
+        googleTrendsData: trendsData
+      }
     });
 
   } catch (error: any) {

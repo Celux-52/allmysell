@@ -20,6 +20,7 @@ export default function EtsySaaSPanel() {
   const { t } = useI18n();
   const [keyword, setKeyword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingNiche, setLoadingNiche] = useState<string | null>(null);
   const [analysisStep, setAnalysisStep] = useState(0);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isGeneratingListing, setIsGeneratingListing] = useState(false);
@@ -29,11 +30,28 @@ export default function EtsySaaSPanel() {
   const [suppliers, setSuppliers] = useState<any[] | null>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [isSaved, setIsSaved] = useState(false);
+  const [history, setHistory] = useState<any[]>([]);
+  const [isHistoryLoading, setIsHistoryLoading] = useState(false);
   const [hasAutoRun, setHasAutoRun] = useState(false);
   const [isDiscovering, setIsDiscovering] = useState(false);
   const [discoveredNiches, setDiscoveredNiches] = useState<any[]>([]);
   const [isAutonomousMode, setIsAutonomousMode] = useState(true);
   const [usage, setUsage] = useState<any>(null);
+
+  const fetchHistory = async () => {
+    setIsHistoryLoading(true);
+    try {
+      const res = await fetch("/api/etsy/history");
+      if (res.ok) {
+        const data = await res.json();
+        setHistory(data);
+      }
+    } catch (err) {
+      console.error("Failed to fetch history:", err);
+    } finally {
+      setIsHistoryLoading(false);
+    }
+  };
 
   useEffect(() => {
     const init = async () => {
@@ -48,6 +66,7 @@ export default function EtsySaaSPanel() {
       }
     };
     init();
+    fetchHistory();
   }, []);
 
   useEffect(() => {
@@ -110,7 +129,9 @@ export default function EtsySaaSPanel() {
       setErrorMsg(error.message || "An unexpected error occurred during analysis.");
     } finally {
       setIsLoading(false);
+      setLoadingNiche(null);
       setAnalysisStep(0);
+      fetchHistory(); // Refresh history
     }
   };
 
@@ -377,9 +398,17 @@ export default function EtsySaaSPanel() {
                     transition={{ delay: i * 0.05 }}
                   >
                     <Card
-                      className="p-5 bg-[#0d111c] border-white/10 hover:border-orange-500/40 transition-all cursor-pointer group relative overflow-hidden h-full flex flex-col"
-                      onClick={() => { setKeyword(niche.name); runAnalysis(niche.name); }}
+                      onClick={() => { 
+                        setLoadingNiche(niche.name);
+                        setKeyword(niche.name); 
+                        runAnalysis(niche.name); 
+                      }}
                     >
+                      {loadingNiche === niche.name && (
+                        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] z-20 flex items-center justify-center">
+                          <Loader2 className="w-8 h-8 animate-spin text-orange-500" />
+                        </div>
+                      )}
                       <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
                         <Sparkles className="w-12 h-12 text-white" />
                       </div>
@@ -535,12 +564,20 @@ export default function EtsySaaSPanel() {
                 <div className="p-8">
                   <div className="flex flex-col md:flex-row gap-8">
                     <div className="w-full md:w-56 shrink-0">
-                      <div className="relative group rounded-3xl overflow-hidden aspect-square shadow-2xl border border-white/5">
+                      <a 
+                        href={result.product.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="relative group rounded-3xl overflow-hidden aspect-square shadow-2xl border border-white/5 block"
+                      >
                         <img src={result.product.imageUrl} alt={result.product.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#050810]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                           <span className="text-[10px] font-bold text-white uppercase tracking-widest">{t('etsy.viewSource')}</span>
+                           <span className="text-[10px] font-bold text-white uppercase tracking-widest bg-orange-600/80 px-3 py-1.5 rounded-lg backdrop-blur-sm">{t('etsy.viewSource')}</span>
                         </div>
-                      </div>
+                        <div className="absolute top-2 right-2 p-2 bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                          <ExternalLink className="w-4 h-4 text-white" />
+                        </div>
+                      </a>
                     </div>
 
                     <div className="flex-1 space-y-6">
@@ -550,7 +587,14 @@ export default function EtsySaaSPanel() {
                             <Store className="w-3 h-3 text-orange-500" />
                             <span className="text-orange-500 font-black text-[10px] uppercase tracking-widest">{result.product.shopName}</span>
                           </div>
-                          <h3 className="text-2xl font-bold text-white leading-tight tracking-tight">{result.product.title}</h3>
+                          <a 
+                            href={result.product.url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="hover:text-orange-500 transition-colors"
+                          >
+                            <h3 className="text-2xl font-bold text-white leading-tight tracking-tight">{result.product.title}</h3>
+                          </a>
                         </div>
                         <a href={result.product.url} target="_blank" className="p-3 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 transition-all group">
                           <ExternalLink className="w-5 h-5 text-slate-400 group-hover:text-white" />
@@ -762,15 +806,18 @@ export default function EtsySaaSPanel() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       {result.analysis.abTestSimulation.map((test: any, idx: number) => (
                         <div key={idx} className="bg-emerald-500/5 border border-emerald-500/10 p-5 rounded-2xl">
-                          <div className="flex justify-between items-start mb-3">
-                            <span className="bg-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider">
+                          <div className="flex justify-between items-center mb-3">
+                            <span className="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-xl text-[11px] font-black uppercase tracking-wider border border-emerald-500/20">
                               {test.variable}
                             </span>
-                            <span className="text-emerald-300 font-black text-sm flex items-center gap-1">
-                              <TrendingUp className="w-4 h-4" /> {test.predictedLift}
-                            </span>
+                            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-emerald-500/20 rounded-lg">
+                              <TrendingUp className="w-4 h-4 text-emerald-400" /> 
+                              <span className="text-emerald-300 font-black text-sm">{test.predictedLift} Lift</span>
+                            </div>
                           </div>
-                          <p className="text-slate-300 text-sm font-medium leading-relaxed">{test.action}</p>
+                          <div className="bg-black/30 p-4 rounded-xl border border-white/5">
+                            <p className="text-emerald-100/80 text-sm font-bold leading-relaxed">{test.action}</p>
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -1114,6 +1161,61 @@ export default function EtsySaaSPanel() {
           </div>
         )}
       </AnimatePresence>
+
+      {/* --- HISTORY SECTION --- */}
+      <div className="mt-24 space-y-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-3xl font-black text-white tracking-tight">Recent Snipes</h2>
+            <p className="text-slate-500 text-sm font-medium mt-1">Revisit your top-performing product discoveries.</p>
+          </div>
+          <button 
+            onClick={fetchHistory}
+            disabled={isHistoryLoading}
+            className="p-3 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-slate-400 hover:text-white"
+          >
+            {isHistoryLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <TrendingUp className="w-5 h-5" />}
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pb-20">
+          {history.length > 0 ? history.map((item, idx) => (
+            <motion.div 
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.05 }}
+              onClick={() => { setKeyword(item.query); runAnalysis(item.query); }}
+              className="p-6 bg-[#0d111c] border border-white/5 rounded-[2rem] hover:border-orange-500/30 transition-all cursor-pointer group relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                <Search className="w-12 h-12 text-white" />
+              </div>
+              <div className="relative z-10 space-y-4">
+                <div className="flex justify-between items-start">
+                  <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${item.decision === 'SELL' ? 'bg-green-500/10 text-green-500 border border-green-500/20' : 'bg-red-500/10 text-red-500 border border-red-500/20'}`}>
+                    {item.decision || 'ANALYZED'}
+                  </span>
+                  <span className="text-[10px] font-bold text-slate-600 uppercase">{new Date(item.timestamp).toLocaleDateString()}</span>
+                </div>
+                <div>
+                  <h4 className="text-white font-black text-lg leading-tight line-clamp-1">{item.query}</h4>
+                  <div className="flex items-center gap-2 mt-2">
+                    <div className="h-1 w-16 bg-white/5 rounded-full overflow-hidden">
+                       <div className="h-full bg-orange-500" style={{ width: `${item.trendScore}%` }} />
+                    </div>
+                    <span className="text-[10px] font-bold text-orange-500">{item.trendScore}% TREND</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )) : (
+            <div className="col-span-full py-12 text-center bg-white/5 border border-dashed border-white/10 rounded-[2rem]">
+               <p className="text-slate-500 font-medium italic">No snipes found yet. Start your first analysis above!</p>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

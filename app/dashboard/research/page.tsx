@@ -20,6 +20,8 @@ export default function ResearchDashboard() {
     general: { count: number, limit: number, remaining: number },
     etsy: { count: number, limit: number, remaining: number }
   } | null>(null);
+  const [history, setHistory] = useState<any[]>([]);
+  const [isHistoryLoading, setIsHistoryLoading] = useState(false);
 
   const fetchUsage = async () => {
     try {
@@ -35,7 +37,23 @@ export default function ResearchDashboard() {
     }
   };
 
+  const fetchHistory = async () => {
+    setIsHistoryLoading(true);
+    try {
+      const res = await fetch("/api/research/history");
+      if (res.ok) {
+        const data = await res.json();
+        setHistory(data);
+      }
+    } catch (err) {
+      console.error("Failed to fetch history:", err);
+    } finally {
+      setIsHistoryLoading(false);
+    }
+  };
+
   useEffect(() => {
+    fetchHistory();
     fetchUsage();
   }, []);
 
@@ -62,6 +80,7 @@ export default function ResearchDashboard() {
       }
       setResearchData(data.results);
       fetchUsage(); // Refresh usage after successful search
+      fetchHistory(); // Refresh history
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -509,9 +528,39 @@ export default function ResearchDashboard() {
 
                   {/* Trends & Suppliers */}
                   <div className="space-y-4">
-                     <div className="flex gap-3 bg-blue-500/5 border border-blue-500/10 rounded-xl p-4">
-                       <Globe2 className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
-                       <p className="text-xs text-blue-200 leading-relaxed">{product.googleTrendsInsight}</p>
+                     <div className="bg-blue-500/5 border border-blue-500/10 rounded-2xl p-6 space-y-4 relative overflow-hidden">
+                       <div className="flex items-center justify-between relative z-10">
+                         <div className="flex items-center gap-2">
+                           <Globe2 className="w-5 h-5 text-blue-400" />
+                           <span className="text-blue-300 font-black text-[10px] uppercase tracking-widest">{t('res.trendsInsight')}</span>
+                         </div>
+                         {product.googleTrendsData?.trendDirection && (
+                           <span className={`px-2 py-1 rounded-lg text-[9px] font-black uppercase ${
+                             product.googleTrendsData.trendDirection === 'rising' ? 'bg-green-500/20 text-green-400' : 
+                             product.googleTrendsData.trendDirection === 'declining' ? 'bg-red-500/20 text-red-400' : 'bg-blue-500/20 text-blue-400'
+                           }`}>
+                             {product.googleTrendsData.trendDirection}
+                           </span>
+                         )}
+                       </div>
+                       
+                       <p className="text-xs text-blue-200/80 leading-relaxed font-medium relative z-10">
+                         {product.googleTrendsInsight}
+                       </p>
+
+                       {/* Trend Visualization Sparkline */}
+                       {product.googleTrendsData?.interestOverTime && (
+                         <div className="h-12 w-full flex items-end gap-0.5 mt-4 opacity-50 hover:opacity-100 transition-opacity">
+                            {product.googleTrendsData.interestOverTime.slice(-24).map((d: any, i: number) => (
+                              <div 
+                                key={i} 
+                                className="flex-1 bg-blue-500/40 rounded-t-sm hover:bg-blue-400 transition-colors" 
+                                style={{ height: `${Math.max(5, d.value)}%` }}
+                                title={`${d.date}: ${d.value}`}
+                              />
+                            ))}
+                         </div>
+                       )}
                      </div>
 
                      <div className="pt-4 border-t border-white/5">
@@ -544,6 +593,64 @@ export default function ResearchDashboard() {
             })}
           </div>
         </motion.div>
+      )}
+
+      {/* --- HISTORY SECTION --- */}
+      {!isLoading && (
+        <div className="w-full max-w-6xl mt-24 space-y-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-3xl font-black text-white tracking-tight">{t('res.recentResearch')}</h2>
+              <p className="text-slate-500 text-sm font-medium mt-1">{t('res.recentResearchDesc')}</p>
+            </div>
+            <button 
+              onClick={fetchHistory}
+              disabled={isHistoryLoading}
+              className="p-3 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-slate-400 hover:text-white"
+            >
+              {isHistoryLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <TrendingUp className="w-5 h-5" />}
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {history.length > 0 ? history.map((item, idx) => (
+              <motion.div 
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.05 }}
+                onClick={() => { setSearchQuery(item.query); handleResearch({ preventDefault: () => {} } as any); }}
+                className="p-6 bg-[#0d111c] border border-white/5 rounded-[2rem] hover:border-orange-500/30 transition-all cursor-pointer group relative overflow-hidden"
+              >
+                <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                  <Search className="w-12 h-12 text-white" />
+                </div>
+                <div className="relative z-10 space-y-4">
+                  <div className="flex justify-between items-start">
+                    <span className="px-2.5 py-1 bg-white/5 rounded-lg text-[9px] font-black text-slate-500 uppercase tracking-widest">
+                      {item.queryType || 'RESEARCH'}
+                    </span>
+                    <span className="text-[10px] font-bold text-slate-600 uppercase">
+                      {new Date(item.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <div>
+                    <h4 className="text-white font-black text-lg leading-tight line-clamp-2">{item.query}</h4>
+                    <div className="flex items-center gap-2 mt-3">
+                      <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div className="h-full bg-orange-500" style={{ width: '60%' }} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )) : (
+              <div className="col-span-full py-16 text-center bg-white/5 border border-dashed border-white/10 rounded-[3rem]">
+                <p className="text-slate-500 font-medium italic">No researches found. Explore your first niche above!</p>
+              </div>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );
