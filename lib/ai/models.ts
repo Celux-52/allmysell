@@ -5,7 +5,7 @@
 export const RESEARCH_MODELS = {
   // Google Gemini 2.0 Flash — En hızlı ve en stabil model (Birincil)
   PRIMARY: {
-    id: 'google/gemini-2.0-flash-lite-preview-02-05:free',
+    id: 'google/gemini-2.0-flash-exp:free',
     name: 'Gemini 2.0 Flash',
     provider: 'Google',
     strength: 'speed-stability'

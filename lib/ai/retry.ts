@@ -3,6 +3,7 @@ import { RESEARCH_MODELS, ETSY_MODELS } from './models';
 interface RetryOptions {
   maxRetries?: number;
   baseDelayMs?: number;
+  timeoutMs?: number;
 }
 
 export async function withRetry<T>(
@@ -10,24 +11,52 @@ export async function withRetry<T>(
   options?: number | RetryOptions
 ): Promise<T> {
   let lastError: any;
-  const maxRetries = typeof options === 'number' ? options : (options?.maxRetries || 1);
+  const maxRetries = typeof options === 'number' ? options : (options?.maxRetries || 0);
+  const perCallTimeout = typeof options === 'object' ? options.timeoutMs || 15000 : 15000;
   
+  // ✅ Absolute Stability Model List (Optimized for May 2026)
   const models = [
+    RESEARCH_MODELS.PRIMARY.id,
     "google/gemini-2.0-flash-lite-preview-02-05:free",
+    "google/gemini-flash-1.5-8b:free",
+    "deepseek/deepseek-chat:free",
     "google/gemini-2.0-pro-exp-02-05:free",
-    "nousresearch/hermes-3-llama-3.1-405b:free"
+    RESEARCH_MODELS.NEMOTRON.id,
+    "mistralai/mistral-7b-instruct:free"
   ];
 
   for (const modelId of models) {
     for (let i = 0; i <= maxRetries; i++) {
+      let timeoutId: NodeJS.Timeout | null = null;
       try {
         console.log(`[AI] Attempting ${modelId} (Try ${i+1})...`);
-        return await fn(modelId);
+        
+        const timeoutPromise = new Promise<never>((_, reject) => {
+          timeoutId = setTimeout(() => reject(new Error(`Timeout on ${modelId}`)), perCallTimeout);
+        });
+
+        const result = await Promise.race([
+          fn(modelId),
+          timeoutPromise
+        ]);
+        
+        if (timeoutId) clearTimeout(timeoutId);
+        return result;
       } catch (err: any) {
+        if (timeoutId) clearTimeout(timeoutId);
+        
         lastError = err;
         console.warn(`[AI] ${modelId} failed: ${err.message}`);
+        
         if (err.status === 401) throw new Error("API Key Invalid");
-        if (i < maxRetries) await new Promise(r => setTimeout(r, 1000));
+        
+        // If it's a timeout, don't bother retrying the same model, move to next model immediately
+        if (err.message?.includes('Timeout')) break;
+        
+        if (i < maxRetries) {
+          const delay = typeof options === 'object' ? options.baseDelayMs || 1000 : 1000;
+          await new Promise(r => setTimeout(r, delay));
+        }
       }
     }
   }

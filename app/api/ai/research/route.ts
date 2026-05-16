@@ -76,13 +76,25 @@ export async function POST(request: NextRequest) {
     })
 
   } catch (error: any) {
-    console.error('[Research API] Error:', error)
+    const errorMessage = error.message || 'Service Unavailable';
+    console.error('[Research API] Critical Failure:', {
+      message: errorMessage,
+      stack: error.stack,
+      query: (request as any)._query || 'unknown'
+    });
+
+    // 503 is for general failures, but let's be more specific if it's a timeout
+    const status = errorMessage.includes('TIMEOUT') ? 504 : 503;
+    
     return NextResponse.json(
       { 
-        error: error.message || 'Service Unavailable', 
-        details: error.message 
+        error: errorMessage.includes('TIMEOUT') 
+          ? 'Research took too long. Please try a more specific search term or try again in a moment.' 
+          : 'AI Research Service is temporarily overloaded. We are switching to backup engines.',
+        details: errorMessage,
+        code: status
       },
-      { status: 503 }
+      { status }
     )
   }
 }
