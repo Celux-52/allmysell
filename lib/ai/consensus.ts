@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Absolute Stability Consensus Engine (v4.0)
  */
 import { getGoogleTrendsData, buildCompetitorLinks } from './google-trends';
@@ -15,13 +15,16 @@ export async function consensusResearch(query: string, tier: string = 'FREE') {
   );
 
   const taskPromise = (async () => {
-    // 1. Parallel Data Fetch
+    // 1. Parallel Data Fetch (Reduced timeout to 1s to test if n8n is the bottleneck)
     const [internetData, trendsData] = await Promise.all([
-      Promise.race([fetchInternetDataViaTool(query), new Promise<string>(r => setTimeout(() => r(""), 8000))]),
+      Promise.race([
+        fetchInternetDataViaTool(query), 
+        new Promise<string>(r => setTimeout(() => r(""), 1000))
+      ]),
       getGoogleTrendsData(query).catch(() => null)
     ]);
 
-    const context = `${internetData}\n${trendsData?.summary || ""}`;
+    const context = internetData ? `${internetData}\n${trendsData?.summary || ""}` : "Direct AI analysis.";
 
     // 2. AI Analysis with Instant Failover
     const analysis = await withRetry(async (modelId) => {
