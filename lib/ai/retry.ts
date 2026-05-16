@@ -55,7 +55,8 @@ export async function withRetry<T>(
       return await fn();
     } catch (error: any) {
       lastError = error;
-      const isRecoverable = error.status === 429 || error.status === 503 || error.status === 502;
+      // Recoverable if it's a common AI error OR if status is missing (network error/timeout)
+      const isRecoverable = !error.status || error.status === 429 || error.status === 503 || error.status === 502 || error.status === 408;
       
       console.warn(`[AI Retry] Attempt ${attempt + 1} failed: ${error.message}`);
 
@@ -63,17 +64,17 @@ export async function withRetry<T>(
         const delay = addJitter(opts.baseDelayMs * Math.pow(2, attempt));
         console.log(`[AI Retry] Waiting ${delay}ms before retry...`);
         await new Promise(resolve => setTimeout(resolve, delay));
-      } else if (!isRecoverable) {
-        break; // Don't retry non-recoverable errors (like 401/404)
+      } else {
+        break; // Stop retries if exhausted or non-recoverable
       }
     }
   }
 
   // 2. Failover Chain - If primary model keeps failing, switch to the other one
   const failoverChain = [
-    ETSY_MODELS.MIMO.id,
     "google/gemini-2.0-flash-lite-preview-02-05:free",
-    "google/gemini-2.0-flash-exp:free"
+    "google/gemini-2.0-flash-exp:free",
+    ETSY_MODELS.MIMO.id
   ];
 
   console.log(`[AI Failover] 🛡️ Primary failed. Starting failover chain...`);

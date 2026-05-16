@@ -118,7 +118,7 @@ CRITICAL: Return ONLY valid JSON.
  */
 export async function consensusResearch(query: string, tier: string = 'FREE'): Promise<ConsensusResult> {
   const timeoutPromise = new Promise<never>((_, reject) =>
-    setTimeout(() => reject(new Error('RESEARCH_TIMEOUT')), 50000)
+    setTimeout(() => reject(new Error('RESEARCH_TIMEOUT')), 55000)
   );
 
   try {
