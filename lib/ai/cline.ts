@@ -4,7 +4,10 @@ let clineClient: OpenAI | null = null
 
 export function getCline(): OpenAI {
     if (!clineClient) {
-        const apiKey = process.env.OPENROUTER_API_KEY || process.env.CLINE_API_KEY || 'demo'
+        const apiKey = process.env.OPENROUTER_API_KEY;
+        if (!apiKey || apiKey === 'demo') {
+            throw new Error("CRITICAL: OPENROUTER_API_KEY is missing or invalid in Vercel environment variables.");
+        }
         clineClient = new OpenAI({
             apiKey,
             baseURL: "https://openrouter.ai/api/v1",

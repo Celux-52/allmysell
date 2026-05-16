@@ -34,7 +34,11 @@ export async function consensusResearch(query: string, tier: string = 'FREE') {
         messages: [
           {
             role: 'system',
-            content: `You are a product researcher. Analyze: "${query}". Context: ${context}. Return valid JSON: {"products": [{"name": "...", "score": 85, ...}], "summary": "..."}`
+            content: `You are a product researcher. Analyze: "${query}". Context: ${context}.`
+          },
+          {
+            role: 'user',
+            content: `Provide a detailed product analysis in valid JSON format: {"products": [{"name": "...", "score": 85, ...}], "summary": "..."}`
           }
         ],
         temperature: 0.7
