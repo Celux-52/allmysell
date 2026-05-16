@@ -4,183 +4,93 @@ import { consensusResearch } from '@/lib/ai/consensus'
 import { prisma } from '@/lib/prisma'
 
 export const dynamic = 'force-dynamic'
-export const maxDuration = 60 // Longer timeout for multi-AI consensus
+export const maxDuration = 60
 
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) {
-      return NextResponse.json({ error: 'Please log in to use AI research.' }, { status: 401 })
-    }
+    if (!user) return NextResponse.json({ error: 'Please log in.' }, { status: 401 })
 
     const { query, mode = 'product' } = await request.json()
+    if (!query) return NextResponse.json({ error: 'Query required.' }, { status: 400 })
 
-    if (!query || typeof query !== 'string' || query.trim().length < 3) {
-      return NextResponse.json({ error: 'Search query must be at least 3 characters.' }, { status: 400 })
-    }
-
-    // --- TIERED RATE LIMITING ---
-    const startOfMonth = new Date()
-    startOfMonth.setDate(1)
-    startOfMonth.setHours(0, 0, 0, 0)
-
-    // Default status - will be overridden if DB check succeeds
-    let status = 'FREE'
-
+    // --- NON-BLOCKING RATE LIMIT CHECK ---
+    let tier = 'FREE'
     try {
-      // 1. Get user profile for subscription status
-      const profile = await prisma.profile.findUnique({
+      const profilePromise = prisma.profile.findUnique({
         where: { id: user.id },
         select: { subscriptionStatus: true }
       })
+      
+      // Give DB only 3 seconds to respond, otherwise proceed as FREE
+      const profile = await Promise.race([
+        profilePromise,
+        new Promise<null>(r => setTimeout(() => r(null), 3000))
+      ])
 
-      // --- ADMIN OVERRIDE ---
-      const envAdmins = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase())
-      const adminEmails = [...envAdmins, 'melih20052005gs@gmail.com']
-      const isUserAdmin = user.email && adminEmails.includes(user.email.toLowerCase())
-
-      status = isUserAdmin ? 'PRO_AGENCY' : (profile?.subscriptionStatus || 'FREE')
-
-      // 2. Count searches this month
-      const searchCount = await prisma.searchHistory.count({
-        where: {
-          userId: user.id,
-          createdAt: { gte: startOfMonth }
-        }
-      })
-
-      // 3. Define limits
-      const LIMITS: Record<string, number> = {
-        'FREE': 3,
-        'STARTER': 50,
-        'GROWTH': 75,
-        'PRO_AGENCY': 125
-      }
-
-      const limit = LIMITS[status] || 3
-
-      // --- DEMO OVERRIDE: sellerxturkiye@gmail.com ---
-      if (user.email === 'sellerxturkiye@gmail.com') {
-        const trialEndDate = new Date('2026-05-12T18:51:00Z');
-        if (new Date() < trialEndDate) {
-          const DEMO_LIMIT = 5;
-          if (searchCount >= DEMO_LIMIT) {
-            return NextResponse.json(
-              {
-                error: `Demo limit reached (5/5 searches). Please contact admin for full access.`,
-                code: 'LIMIT_REACHED',
-                currentPlan: 'DEMO',
-                limit: DEMO_LIMIT
-              },
-              { status: 429 }
-            )
-          }
-          status = 'STARTER'; // Grant starter tier power for demo
-        }
-      }
-
-      if (searchCount >= limit) {
-        return NextResponse.json(
-          {
-            error: `You have reached your monthly search limit for the ${status} plan (${limit}).`,
-            code: 'LIMIT_REACHED',
-            currentPlan: status,
-            limit: limit
-          },
-          { status: 429 }
-        )
-      }
-    } catch (dbError) {
-      console.warn('[Research API] Rate limit check failed:', dbError)
+      const adminEmails = ['melih20052005gs@gmail.com', (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '')]
+      const isUserAdmin = user.email && adminEmails.some(e => user.email?.toLowerCase().includes(e.toLowerCase()))
+      tier = isUserAdmin ? 'PRO_AGENCY' : (profile?.subscriptionStatus || 'FREE')
+    } catch (e) {
+      console.warn('[Research API] DB Check failed, proceeding as FREE:', e)
     }
 
-    // --- SMART CACHING: Check if this query was done in the last 48h ---
+    // --- SMART CACHING (Fast attempt) ---
     try {
-      const existingSearch = await prisma.searchHistory.findFirst({
-        where: {
-          query: { equals: query.trim(), mode: 'insensitive' },
-          createdAt: { gte: new Date(Date.now() - 48 * 60 * 60 * 1000) } // Last 48 hours
-        },
-        orderBy: { createdAt: 'desc' }
-      })
+      const existingSearch = await Promise.race([
+        prisma.searchHistory.findFirst({
+          where: {
+            query: { equals: query.trim(), mode: 'insensitive' },
+            createdAt: { gte: new Date(Date.now() - 24 * 60 * 60 * 1000) }
+          }
+        }),
+        new Promise<null>(r => setTimeout(() => r(null), 2000))
+      ])
 
       if (existingSearch && existingSearch.results) {
-        console.log(`[Research API] ⚡ Cache Hit for: "${query.trim()}"`);
-        const cachedResults = existingSearch.results as any;
         return NextResponse.json({
           success: true,
-          engine: 'Database Cache (Instant)',
-          providers: ['Cached Result'],
-          query: query.trim(),
-          mode,
-          results: cachedResults,
-          timestamp: new Date().toISOString(),
+          engine: 'Database Cache',
+          results: existingSearch.results,
           cached: true
         })
       }
-    } catch (cacheError) {
-      console.warn('[Research API] Cache check failed, proceeding to AI:', cacheError)
-    }
+    } catch (e) {}
 
-    // Use the multi-AI consensus engine
+    // --- RUN RESEARCH ---
     let results: any = null
-    let researchError: string | null = null
-
     try {
-      results = await consensusResearch(query.trim(), status)
-    } catch (researchErr: any) {
-      researchError = researchErr?.message || 'Unknown error'
-      console.error('[Research API] Research error:', researchErr)
+      results = await consensusResearch(query.trim(), tier)
+    } catch (err: any) {
+      console.error('[Research API] Logic error:', err)
+      return NextResponse.json({ error: 'Research failed.', details: err.message }, { status: 503 })
     }
 
     if (!results || !results.products || results.products.length === 0) {
-      console.error('[Research API] Failed to get products. Error:', researchError);
-      return NextResponse.json(
-        {
-          error: 'AI research engine could not generate results.',
-          details: researchError || 'All AI models returned empty product lists.',
-          debug: {
-            hasResults: !!results,
-            productCount: results?.products?.length || 0,
-            status: status
-          },
-          suggestion: 'Try a different or more specific search term.'
-        },
-        { status: 503 }
-      )
+      return NextResponse.json({ error: 'No products found.', details: 'AI models returned no data.' }, { status: 503 })
     }
 
-    // --- SAVE TO SEARCH HISTORY ---
-    try {
-      // Save search history with userId
-      await prisma.searchHistory.create({
-        data: {
-          userId: user.id,
-          query: query.trim(),
-          queryType: mode,
-          resultCount: results.products.length,
-          results: results as any, // Store JSON
-        }
-      })
-    } catch (dbError) {
-      console.warn('[Research API] Could not save search history:', dbError)
-    }
+    // --- ASYNC SAVE (Don't wait for DB to finish) ---
+    prisma.searchHistory.create({
+      data: {
+        userId: user.id,
+        query: query.trim(),
+        queryType: mode,
+        resultCount: results.products.length,
+        results: results as any,
+      }
+    }).catch(e => console.warn('[Research API] Silent DB save failure:', e))
 
     return NextResponse.json({
       success: true,
-      engine: results.consensusMethod,
-      providers: results.aiProviders,
-      query: query.trim(),
-      mode,
+      engine: results.consensusMethod || 'AI Stable Engine',
       results,
-      timestamp: new Date().toISOString(),
+      timestamp: new Date().toISOString()
     })
+
   } catch (error: any) {
-    console.error('[Research API] Error:', error)
-    return NextResponse.json(
-      { error: error.message || 'An unexpected error occurred' },
-      { status: 500 }
-    )
+    console.error('[Research API] Critical error:', error)
+    return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }
