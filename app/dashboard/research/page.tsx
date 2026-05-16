@@ -26,7 +26,9 @@ export default function ResearchDashboard() {
       const res = await fetch("/api/user/usage");
       if (res.ok) {
         const data = await res.json();
-        setUsage(data);
+        if (data && data.general) {
+          setUsage(data);
+        }
       }
     } catch (err) {
       console.error("Failed to fetch usage:", err);

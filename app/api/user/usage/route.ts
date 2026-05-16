@@ -47,12 +47,26 @@ export async function GET(request: NextRequest) {
       }
 
       usage = {
-        count: searchCount || 0,
-        limit: LIMITS[tier] || 3,
-        tier: tier
+        status: tier,
+        general: {
+          count: searchCount || 0,
+          limit: LIMITS[tier] || 3,
+          remaining: Math.max(0, (LIMITS[tier] || 3) - (searchCount || 0))
+        },
+        etsy: {
+          count: 0,
+          limit: 10,
+          remaining: 10
+        }
       }
     } catch (dbError) {
       console.warn('[Usage API] Database fallback triggered:', dbError)
+      // High-quality fallback
+      usage = {
+        status: 'FREE',
+        general: { count: 0, limit: 3, remaining: 3 },
+        etsy: { count: 0, limit: 10, remaining: 10 }
+      }
     }
 
     return NextResponse.json(usage)
