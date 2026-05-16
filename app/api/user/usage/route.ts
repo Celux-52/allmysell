@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     }
 
     // --- RESILIENT DB FETCH ---
-    let usage = { count: 0, limit: 3, tier: 'FREE' }
+    let usage: any = { status: 'FREE', general: { count: 0, limit: 3, remaining: 3 }, etsy: { count: 0, limit: 10, remaining: 10 } }
     
     try {
       const startOfMonth = new Date()
