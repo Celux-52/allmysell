@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { getGoogleTrendsData } from '@/lib/ai/google-trends';
 import { prisma } from '@/lib/prisma';
-import { EtsyService } from '@/modules/etsy-automation/services/etsyService';
+import { EtsyService } from '@/lib/etsy/etsy-service';
 import { EtsyAIEngine } from '@/lib/ai/etsy-ai-engine';
 
 export const dynamic = 'force-dynamic';
