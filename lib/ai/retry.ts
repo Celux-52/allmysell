@@ -13,10 +13,9 @@ export async function withRetry<T>(
   const maxRetries = typeof options === 'number' ? options : (options?.maxRetries || 1);
   
   const models = [
-    "google/gemini-2.0-flash-001",
-    RESEARCH_MODELS.PRIMARY.id,
-    "nousresearch/hermes-3-llama-3.1-405b:free",
-    "anthropic/claude-3-haiku"
+    "google/gemini-2.0-flash-lite-preview-02-05:free",
+    "google/gemini-2.0-pro-exp-02-05:free",
+    "nousresearch/hermes-3-llama-3.1-405b:free"
   ];
 
   for (const modelId of models) {
