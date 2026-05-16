@@ -560,8 +560,6 @@ export async function consensusResearch(query: string, tier: string = 'FREE'): P
 
     return await Promise.race([researchPromise, timeoutPromise]);
   } catch (error: any) {
-    if (error.message === 'RESEARCH_TIMEOUT') {outPromise]);
-  } catch (error: any) {
     if (error.message === 'RESEARCH_TIMEOUT') {
       return {
         products: [],
