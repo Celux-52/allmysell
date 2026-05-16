@@ -11,7 +11,7 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const history = await prisma.searchHistory.findMany({
+    const historyItems = await prisma.searchHistory.findMany({
       where: {
         userId: user.id,
         queryType: 'etsy'
@@ -19,17 +19,28 @@ export async function GET() {
       orderBy: {
         createdAt: 'desc'
       },
-      take: 50
+      take: 20
     });
 
-    // Map to the format expected by the frontend
-    const formattedHistory = history.map(item => ({
-      id: item.id,
-      query: item.query,
-      timestamp: item.createdAt.toISOString(),
-      decision: (item.results as any)?.analysis?.decision || null,
-      trendScore: (item.results as any)?.analysis?.trendScore || null
-    }));
+    // Etsy dashboard expects a specific structure: { id, query, decision, trendScore, timestamp }
+    const formattedHistory = historyItems.map(item => {
+      // Safely parse JSON results
+      let analysisResult: any = {};
+      if (item.results && typeof item.results === 'object') {
+        const results = item.results as any;
+        if (results.analysis) {
+          analysisResult = results.analysis;
+        }
+      }
+
+      return {
+        id: item.id,
+        query: item.query,
+        decision: analysisResult.decision || 'ANALYZED',
+        trendScore: analysisResult.trendScore || analysisResult.scores?.trend || 50,
+        timestamp: item.createdAt
+      };
+    });
 
     return NextResponse.json(formattedHistory);
   } catch (error) {
