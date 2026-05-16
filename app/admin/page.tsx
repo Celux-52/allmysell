@@ -7,7 +7,6 @@ import Link from 'next/link';
 interface DashboardStats {
   totalUsers: number;
   newUsersThisMonth: number;
-  totalBlogPosts: number;
   totalPageViews: number;
   recentUsers: Array<{
     id: string;
@@ -21,7 +20,6 @@ export default function AdminDashboardPage() {
   const [stats, setStats] = useState<DashboardStats>({
     totalUsers: 0,
     newUsersThisMonth: 0,
-    totalBlogPosts: 0,
     totalPageViews: 0,
     recentUsers: [],
   });
@@ -47,7 +45,6 @@ export default function AdminDashboardPage() {
   const statCards = [
     { label: 'Total Users', value: stats.totalUsers, icon: Users, color: 'from-purple-600 to-purple-400', href: '/admin/users' },
     { label: 'New This Month', value: stats.newUsersThisMonth, icon: UserPlus, color: 'from-blue-600 to-blue-400', href: '/admin/users' },
-    { label: 'Blog Posts', value: stats.totalBlogPosts, icon: FileText, color: 'from-emerald-600 to-emerald-400', href: '/admin/blog' },
     { label: 'Page Views', value: stats.totalPageViews, icon: Eye, color: 'from-amber-600 to-amber-400', href: '/admin/analytics' },
   ];
 
@@ -141,18 +138,6 @@ export default function AdminDashboardPage() {
             </h2>
           </div>
           <div className="p-5 space-y-3">
-            <Link
-              href="/admin/blog/new"
-              className="flex items-center gap-3 p-4 rounded-lg bg-[#FAFAF9] border border-white/5 hover:border-purple-500/30 transition-all group"
-            >
-              <div className="w-10 h-10 bg-emerald-600/20 rounded-lg flex items-center justify-center group-hover:bg-emerald-600/30 transition-colors">
-                <FileText className="text-emerald-400" size={20} />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-stone-900">Write New Blog Post</p>
-                <p className="text-xs text-stone-400">Create and publish content</p>
-              </div>
-            </Link>
 
             <Link
               href="/admin/users"

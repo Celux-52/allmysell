@@ -5,7 +5,6 @@ export const translations: Record<SupportedLang, Record<string, string>> = {
     // Nav
     "nav.home": "Home",
     "nav.about": "About",
-    "nav.blog": "Blog",
     "nav.saas": "SaaS Panel",
     "nav.webSolutions": "Web Solutions",
     "nav.login": "Log In",
@@ -418,7 +417,6 @@ export const translations: Record<SupportedLang, Record<string, string>> = {
   tr: {
     "nav.home": "Ana Sayfa",
     "nav.about": "Hakkımızda",
-    "nav.blog": "Blog",
     "nav.saas": "SaaS Panel",
     "nav.webSolutions": "Web Çözümleri",
     "nav.login": "Giriş Yap",
@@ -812,7 +810,6 @@ export const translations: Record<SupportedLang, Record<string, string>> = {
   de: {
     "nav.home": "Startseite",
     "nav.about": "Über uns",
-    "nav.blog": "Blog",
     "nav.saas": "SaaS-Panel",
     "nav.webSolutions": "Web-Lösungen",
     "nav.login": "Anmelden",
@@ -1023,7 +1020,6 @@ export const translations: Record<SupportedLang, Record<string, string>> = {
   fr: {
     "nav.home": "Accueil",
     "nav.about": "À propos",
-    "nav.blog": "Blog",
     "nav.saas": "Panel SaaS",
     "nav.webSolutions": "Solutions Web",
     "nav.login": "Connexion",
@@ -1230,7 +1226,6 @@ export const translations: Record<SupportedLang, Record<string, string>> = {
   es: {
     "nav.home": "Inicio",
     "nav.about": "Acerca de",
-    "nav.blog": "Blog",
     "nav.saas": "Panel SaaS",
     "nav.webSolutions": "Soluciones Web",
     "nav.login": "Iniciar Sesión",
@@ -1437,7 +1432,6 @@ export const translations: Record<SupportedLang, Record<string, string>> = {
   ru: {
     "nav.home": "Главная",
     "nav.about": "О нас",
-    "nav.blog": "Блог",
     "nav.saas": "SaaS Панель",
     "nav.webSolutions": "Веб-Решения",
     "nav.login": "Войти",
@@ -1644,7 +1638,6 @@ export const translations: Record<SupportedLang, Record<string, string>> = {
   ar: {
     "nav.home": "الرئيسية",
     "nav.about": "حول",
-    "nav.blog": "المدونة",
     "nav.saas": "لوحة SaaS",
     "nav.webSolutions": "حلول الويب",
     "nav.login": "تسجيل الدخول",

@@ -11,7 +11,6 @@ import type { SupportedLang } from '@/lib/i18n/translations';
 const navigation = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
-  { name: 'Blog', href: '/blog' },
   { name: 'SaaS Panel', href: '/dashboard' },
 ];
 
@@ -113,7 +112,6 @@ export default function Navigation() {
             {[
               { key: 'nav.home', href: '/' },
               { key: 'nav.about', href: '/about' },
-              { key: 'nav.blog', href: '/blog' },
               { key: 'nav.saas', href: '/dashboard' },
             ].map((item) => (
               <Link key={item.key} href={item.href} className="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all font-medium text-sm">{t(item.key)}</Link>

@@ -10,28 +10,6 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-/// Automated trending products from TikTok/FB Ads
-model AutoTrend {
-  id             String   @id(map: "AutoTrend_pkey") @default(cuid())
-  title          String
-  slug           String   @unique(map: "AutoTrend_slug_key")
-  content        String
-  videoUrl       String   @map("video_url")
-  thumbnailUrl   String?  @map("thumbnail_url")
-  platform       String
-  platformId     String   @map("platform_id")
-  consensusScore Int      @default(0) @map("consensus_score")
-  insights       Json?
-  status         String   @default("draft")
-  createdAt      DateTime @default(now()) @map("created_at")
-  updated_at     DateTime @default(now())
-  views          Int      @default(0)
-
-  @@unique([platform, platformId])
-  @@unique([platform, platformId], map: "AutoTrend_platform_platform_id_key")
-  @@map("auto_trends")
-}
-
 model SavedProduct {
   id           String   @id @default(cuid())
   userId       String   @map("user_id")
@@ -46,24 +24,6 @@ model SavedProduct {
   createdAt    DateTime @default(now()) @map("created_at")
 
   @@map("saved_products")
-}
-
-model BlogPost {
-  id          String    @id @default(cuid())
-  title       String
-  slug        String    @unique
-  content     String    @db.Text
-  excerpt     String?   @db.Text
-  coverImage  String?   @map("cover_image")
-  status      String    @default("DRAFT")
-  publishedAt DateTime? @map("published_at")
-  authorId    String?   @map("author_id")
-  viewCount   Int       @default(0) @map("view_count")
-  tags        String[]  @default([])
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
-
-  @@map("blog_posts")
 }
 
 model User {

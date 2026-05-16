@@ -54,7 +54,6 @@ export default function Footer() {
               {[
                 { key: 'footer.aboutUs', href: '/about' },
                 { key: 'footer.contact', href: '/contact' },
-                { key: 'nav.blog', href: '/blog' },
                 { key: 'footer.faq', href: '/faq' },
               ].map((item) => (
                 <li key={item.key}><Link href={item.href} className="text-sm text-slate-500 hover:text-orange-400 transition-colors">{t(item.key)}</Link></li>

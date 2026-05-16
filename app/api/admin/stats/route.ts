@@ -26,13 +26,11 @@ export async function GET() {
     const stats: {
       totalUsers: number;
       newUsersThisMonth: number;
-      totalBlogPosts: number;
       totalPageViews: number;
       recentUsers: Array<{ id: string; email: string; fullName: string | null; createdAt: string }>;
     } = {
       totalUsers: 0,
       newUsersThisMonth: 0,
-      totalBlogPosts: 0,
       totalPageViews: 0,
       recentUsers: [],
     }

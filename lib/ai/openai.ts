@@ -91,24 +91,3 @@ Rules:
   return JSON.parse(content) as ProductResearchResult
 }
 
-export async function generateBlogContent(topic: string): Promise<{ title: string; content: string; excerpt: string; tags: string[] }> {
-  const openai = getOpenAI()
-
-  const response = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
-    messages: [
-      {
-        role: 'system',
-        content: `You are a professional e-commerce blog writer. Write engaging, SEO-optimized blog posts about e-commerce, dropshipping, and product trends. Return JSON with: { "title": "...", "content": "... (markdown format, 800+ words)", "excerpt": "... (2 sentences)", "tags": ["tag1", "tag2", ...] }. ONLY return valid JSON.`,
-      },
-      { role: 'user', content: `Write a blog post about: "${topic}"` },
-    ],
-    temperature: 0.8,
-    max_tokens: 4000,
-    response_format: { type: 'json_object' },
-  })
-
-  const content = response.choices[0]?.message?.content
-  if (!content) throw new Error('No response from AI')
-  return JSON.parse(content)
-}

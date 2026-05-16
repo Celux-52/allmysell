@@ -187,25 +187,3 @@ Return 3-5 solutions. ONLY return valid JSON.`
   return safeParseJSON<ProblemSolutionResult>(text, { problem, solutions: [], marketSize: 'Unknown', recommendation: 'Failed to parse AI response.' })
 }
 
-export async function generateBlogContent(topic: string): Promise<{ title: string; content: string; excerpt: string; tags: string[] }> {
-  const gemini = getGemini()
-  const model = gemini.getGenerativeModel({ model: 'gemini-2.0-flash' })
-
-  const prompt = `You are a professional e-commerce blog writer. Write engaging, SEO-optimized blog posts about e-commerce, dropshipping, and product trends. 
-
-Topic: "${topic}"
-
-Return JSON with: 
-{ 
-  "title": "Inspiring Title", 
-  "content": "# Blog Content\\n\\n(markdown format, 800+ words)", 
-  "excerpt": "A short 2 sentence SEO description.", 
-  "tags": ["ecommerce", "trends"] 
-}
-
-ONLY return valid JSON format no markdown tags around it.`
-
-  const result = await model.generateContent(prompt)
-  const text = result.response.text()
-  return safeParseJSON(text, { title: '', content: '', excerpt: '', tags: [] })
-}
