@@ -170,11 +170,11 @@ You MUST output ONLY a valid JSON object matching the interface below. No markdo
     const query = `Analyze this product: ${productData.title}`;
 
     return withRetry(
-      async () => {
-        // Use Xiaomi MiMo-V2-Flash for Etsy analysis
+      async (modelId) => {
+        // Use the dynamically provided modelId from the retry chain
         const { getCline } = await import('./cline');
         const response = await getCline().chat.completions.create({
-          model: ETSY_MODELS.MIMO.id, // Xiaomi MiMo-V2-Flash for Etsy analysis
+          model: modelId || "nousresearch/hermes-3-llama-3.1-405b:free",
           messages: [
             { role: 'system', content: PROMPT },
             { role: 'user', content: query }
