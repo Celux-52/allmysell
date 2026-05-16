@@ -95,6 +95,34 @@ export async function POST(request: NextRequest) {
       console.warn('[Research API] Rate limit check failed:', dbError)
     }
 
+    // --- SMART CACHING: Check if this query was done in the last 48h ---
+    try {
+      const existingSearch = await prisma.searchHistory.findFirst({
+        where: {
+          query: { equals: query.trim(), mode: 'insensitive' },
+          createdAt: { gte: new Date(Date.now() - 48 * 60 * 60 * 1000) } // Last 48 hours
+        },
+        orderBy: { createdAt: 'desc' }
+      })
+
+      if (existingSearch && existingSearch.results) {
+        console.log(`[Research API] ⚡ Cache Hit for: "${query.trim()}"`);
+        const cachedResults = existingSearch.results as any;
+        return NextResponse.json({
+          success: true,
+          engine: 'Database Cache (Instant)',
+          providers: ['Cached Result'],
+          query: query.trim(),
+          mode,
+          results: cachedResults,
+          timestamp: new Date().toISOString(),
+          cached: true
+        })
+      }
+    } catch (cacheError) {
+      console.warn('[Research API] Cache check failed, proceeding to AI:', cacheError)
+    }
+
     // Use the multi-AI consensus engine
     let results: any = null
     let researchError: string | null = null
