@@ -81,65 +81,53 @@ export async function POST(req: Request) {
 
     const topProduct = products[0];
 
-    // 2. Save product to DB (Optional, don't crash if DB is down)
+    // 2. Save product to DB (Non-blocking to save time)
     let savedProduct: any = { id: 'temp-' + Date.now(), ...topProduct };
-    try {
-      savedProduct = await prisma.etsyProduct.create({
-        data: {
-          keyword,
-          listingId: topProduct.listingId,
-          title: topProduct.title,
-          price: topProduct.price,
-          currency: topProduct.currency,
-          favorites: topProduct.favorites,
-          views: topProduct.views,
-          tags: topProduct.tags,
-          url: topProduct.url,
-          imageUrl: topProduct.imageUrl,
-          shopName: topProduct.shopName
-        }
-      });
-    } catch (dbError) {
-      console.warn("DB Save failed for Etsy Product, continuing with AI analysis...", dbError);
-    }
+    prisma.etsyProduct.create({
+      data: {
+        keyword,
+        listingId: topProduct.listingId,
+        title: topProduct.title,
+        price: topProduct.price,
+        currency: topProduct.currency,
+        favorites: topProduct.favorites,
+        views: topProduct.views,
+        tags: topProduct.tags,
+        url: topProduct.url,
+        imageUrl: topProduct.imageUrl,
+        shopName: topProduct.shopName
+      }
+    }).then(p => savedProduct.id = p.id).catch(e => console.warn("DB Save failed:", e.message));
 
     // 3. Analyze via AI
     const analysisResult = await EtsyAIEngine.analyzeProduct(topProduct);
 
-    // 4. Save analysis to DB (Optional)
+    // 4. Save analysis to DB (Non-blocking)
     let savedAnalysis: any = { ...analysisResult };
-    try {
-      savedAnalysis = await prisma.etsyAnalysis.create({
-        data: {
-          productId: savedProduct.id,
-          trendScore: analysisResult.trendScore || analysisResult.scores?.trend || 0,
-          saturationScore: analysisResult.scores?.competition || 0,
-          opportunityScore: analysisResult.scores?.demand || 0,
-          decision: analysisResult.decision || 'AVOID',
-          analysis: analysisResult as any
-        }
-      });
-    } catch (dbError) {
-      console.warn("DB Save failed for Etsy Analysis, returning raw AI data...", dbError);
-    }
+    prisma.etsyAnalysis.create({
+      data: {
+        productId: savedProduct.id,
+        trendScore: analysisResult.trendScore || analysisResult.scores?.trend || 0,
+        saturationScore: analysisResult.scores?.competition || 0,
+        opportunityScore: analysisResult.scores?.demand || 0,
+        decision: analysisResult.decision || 'AVOID',
+        analysis: analysisResult as any
+      }
+    }).catch(e => console.warn("DB Analysis Save failed:", e.message));
 
-    // 5. Save to global SearchHistory for persistent UI history
-    try {
-      await prisma.searchHistory.create({
-        data: {
-          userId: user.id,
-          query: keyword,
-          queryType: 'etsy',
-          resultCount: 1,
-          results: {
-            product: savedProduct,
-            analysis: savedAnalysis
-          }
+    // 5. Save to global SearchHistory (Non-blocking)
+    prisma.searchHistory.create({
+      data: {
+        userId: user.id,
+        query: keyword,
+        queryType: 'etsy',
+        resultCount: 1,
+        results: {
+          product: savedProduct,
+          analysis: savedAnalysis
         }
-      });
-    } catch (historyError) {
-      console.warn("Persistent History Save failed:", historyError);
-    }
+      }
+    }).catch(e => console.warn("DB History Save failed:", e.message));
 
     return NextResponse.json({
       product: savedProduct,

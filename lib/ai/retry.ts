@@ -13,12 +13,10 @@ export async function withRetry<T>(
   const maxRetries = typeof options === 'number' ? options : (options?.maxRetries || 1);
   
   const models = [
-    "nousresearch/hermes-3-llama-3.1-405b:free",
-    "deepseek/deepseek-v4-flash:free",
-    RESEARCH_MODELS.PRIMARY.id,
     "google/gemini-2.0-flash-001",
-    "anthropic/claude-3-haiku",
-    "openai/gpt-4o-mini"
+    RESEARCH_MODELS.PRIMARY.id,
+    "nousresearch/hermes-3-llama-3.1-405b:free",
+    "anthropic/claude-3-haiku"
   ];
 
   for (const modelId of models) {

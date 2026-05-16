@@ -195,7 +195,7 @@ You MUST output ONLY a valid JSON object matching the interface below. No markdo
           seoInsight: parsed.seoInsight || "Optimize for long-tail high-intent keywords."
         };
       },
-      { maxRetries: 4, baseDelayMs: 1500 }
+      { maxRetries: 1, baseDelayMs: 500 }
     );
   }
 }
