@@ -9,7 +9,7 @@ export async function fetchInternetDataViaTool(query: string): Promise<string> {
 
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+    const timeoutId = setTimeout(() => controller.abort(), 1000); // Strict 1s timeout to prevent Vercel 504s
 
     const n8nResponse = await fetch(webhookUrl, {
       method: "POST",
