@@ -12,34 +12,38 @@ export async function withRetry<T>(
   let lastError: any;
   const maxRetries = typeof options === 'number' ? options : (options?.maxRetries || 1);
   
-  // Zincir: Önce Gemini Flash, sonra MiMo, en son Gemini Experimental
+  // PROFESYONEL ZİNCİR: Önce ücretsizler, olmazsa ultra-stabil ücretli modeller
   const models = [
-    RESEARCH_MODELS.PRIMARY.id,
-    ETSY_MODELS.MIMO.id,
-    "google/gemini-2.0-flash-exp:free"
+    RESEARCH_MODELS.PRIMARY.id, // Gemini 2.0 Flash Free
+    "google/gemini-2.0-flash-001", // Gemini 2.0 Flash (Ücretli - Ultra Stabil/Hızlı)
+    ETSY_MODELS.MIMO.id, // MiMo Flash
+    "openai/gpt-4o-mini" // GPT-4o Mini (En Garanti Fallback)
   ];
 
   for (const modelId of models) {
     for (let i = 0; i <= maxRetries; i++) {
       try {
-        console.log(`[AI] Trying ${modelId} (Attempt ${i+1})...`);
+        console.log(`[AI] Attempting ${modelId} (Try ${i+1})...`);
         return await fn(modelId);
       } catch (err: any) {
         lastError = err;
         console.warn(`[AI] ${modelId} failed: ${err.message}`);
-        // If it's a 401 (Auth error), don't retry, just move to next model or throw
-        if (err.status === 401) break; 
-        if (i < maxRetries) await new Promise(r => setTimeout(r, 800));
+        
+        // Anahtar hatası varsa (401), direkt dur ve hata fırlat
+        if (err.status === 401) {
+          throw new Error("API Key is invalid or not found in Vercel.");
+        }
+        
+        if (i < maxRetries) await new Promise(r => setTimeout(r, 1000));
       }
     }
   }
 
-  throw lastError || new Error("All AI models are currently unavailable.");
+  throw lastError || new Error("All AI providers failed. Check OpenRouter status.");
 }
 
 export function extractJSON(content: string): string {
   if (!content) return '{}';
-  // Remove markdown, think tags, and anything before/after the JSON object
   let cleaned = content
     .replace(/```json/g, '')
     .replace(/```/g, '')
@@ -54,9 +58,3 @@ export function extractJSON(content: string): string {
   }
   return cleaned;
 }
-
-export const FREE_MODEL_CHAINS = {
-  analysis: [RESEARCH_MODELS.PRIMARY.id],
-  creative: [ETSY_MODELS.MIMO.id],
-  extraction: [RESEARCH_MODELS.PRIMARY.id],
-};
