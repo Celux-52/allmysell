@@ -30,6 +30,129 @@ export default function EbaySaaSPanel() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [result, setResult] = useState<any>(null);
   const [usage, setUsage] = useState<any>(null);
+  const [autopilotAlert, setAutopilotAlert] = useState<string | null>(null);
+  const [linkInput, setLinkInput] = useState("");
+
+  const parseProductLink = (url: string) => {
+    try {
+      const urlObj = new URL(url.trim());
+      const host = urlObj.hostname.toLowerCase();
+      const path = urlObj.pathname;
+
+      let title = "";
+      let supplierName = "";
+
+      if (host.includes('ebay.com')) {
+        supplierName = "eBay Source";
+        const match = path.match(/\/itm\/([^\/]+)\/(\d+)/i) || path.match(/\/itm\/(\d+)/i);
+        if (match) {
+          if (match[1] && isNaN(Number(match[1]))) {
+            title = match[1].replace(/-/g, ' ');
+          } else {
+            title = "eBay Product #" + (match[2] || match[1]);
+          }
+        } else {
+          title = "eBay Product Analyzed";
+        }
+      } 
+      else if (host.includes('aliexpress.com')) {
+        supplierName = "AliExpress";
+        const match = path.match(/\/item\/(?:[^\/]+\/)?(\d+)\.html/i) || path.match(/\/item\/([^\/]+)\.html/i);
+        if (match) {
+          if (match[1]) {
+            title = match[1].replace(/-/g, ' ');
+          }
+        }
+        if (!title) title = "AliExpress Winning Product";
+      }
+      else if (host.includes('cjdropshipping.com')) {
+        supplierName = "CJ Dropshipping";
+        const match = path.match(/\/product\/([^\/]+)-p-/i);
+        if (match && match[1]) {
+          title = match[1].replace(/-/g, ' ');
+        }
+        if (!title) title = "CJ Dropshipping Item";
+      }
+      else if (host.includes('dhgate.com')) {
+        supplierName = "DHgate";
+        const match = path.match(/\/product\/([^\/]+)\/(\d+)\.html/i);
+        if (match && match[1]) {
+          title = match[1].replace(/-/g, ' ');
+        }
+        if (!title) title = "DHgate Item";
+      }
+      else if (host.includes('amazon.com')) {
+        supplierName = "Amazon Sourcing";
+        const match = path.match(/\/([^\/]+)\/dp\/([A-Z0-9]+)/i);
+        if (match && match[1]) {
+          title = match[1].replace(/-/g, ' ');
+        }
+        if (!title) title = "Amazon Item";
+      }
+      else {
+        supplierName = host.replace('www.', '').split('.')[0].toUpperCase();
+        const segments = path.split('/').filter(Boolean);
+        if (segments.length > 0) {
+          title = segments[segments.length - 1].replace(/[-_]/g, ' ');
+        } else {
+          title = "Product from " + supplierName;
+        }
+      }
+
+      title = decodeURIComponent(title)
+        .replace(/\d+html$/i, '')
+        .replace(/\.html$/i, '')
+        .replace(/[+]/g, ' ')
+        .trim();
+
+      title = title.split(' ')
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' ');
+
+      return { title, supplierName };
+    } catch (e) {
+      return null;
+    }
+  };
+
+  const handleAutopilotChange = (val: string) => {
+    setLinkInput(val);
+    if (!val) {
+      setAutopilotAlert(null);
+      return;
+    }
+
+    if (val.startsWith('http://') || val.startsWith('https://')) {
+      const parsed = parseProductLink(val);
+      if (parsed) {
+        setFormData(prev => ({
+          ...prev,
+          title: parsed.title,
+          supplierName: parsed.supplierName,
+          price: prev.price || "29.99",
+          supplierCost: prev.supplierCost || "12.50"
+        }));
+        setAutopilotAlert(`🔗 Product URL Detected! Auto-populated title: "${parsed.title}" and supplier: "${parsed.supplierName}"`);
+      }
+    } else {
+      const text = val.trim().toLowerCase();
+      const knownSuppliers = ['aliexpress', 'dhgate', 'cj', 'walmart', 'amazon', 'costco', 'target', 'printful', 'salehoo', 'wholesale2b'];
+      const matchedSupplier = knownSuppliers.find(s => text.includes(s));
+      if (matchedSupplier) {
+        setFormData(prev => ({
+          ...prev,
+          supplierName: matchedSupplier.toUpperCase()
+        }));
+        setAutopilotAlert(`🏢 Supplier detected: "${matchedSupplier.toUpperCase()}". Auto-populated Supplier Name.`);
+      } else {
+        setFormData(prev => ({
+          ...prev,
+          title: val
+        }));
+        setAutopilotAlert(`✏️ Search query detected: Auto-populated Product Title.`);
+      }
+    }
+  };
 
   useEffect(() => {
     const init = async () => {
@@ -140,6 +263,37 @@ export default function EbaySaaSPanel() {
       >
         <div className="bg-[#080c16]/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] p-8 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            {/* 🚀 SMART LINK & SUPPLIER AUTOPILOT */}
+            <div className="col-span-1 md:col-span-2 lg:col-span-3 pb-4 border-b border-white/5">
+               <label className="block text-xs font-black text-blue-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                 <Sparkles className="w-4 h-4 animate-pulse" /> Smart Link & Supplier Autopilot (Paste URL or Supplier Query)
+               </label>
+               <input
+                 type="text"
+                 value={linkInput}
+                 onChange={(e) => handleAutopilotChange(e.target.value)}
+                 placeholder="Paste product URL (eBay, AliExpress, Amazon, CJ Dropshipping, DHgate) or Supplier name..."
+                 className="w-full bg-blue-500/5 border border-blue-500/20 rounded-xl py-4 px-4 text-white placeholder:text-slate-600 focus:outline-none focus:border-blue-500/50 transition-all font-bold shadow-[0_0_15px_rgba(59,130,246,0.05)]"
+               />
+               <AnimatePresence>
+                 {autopilotAlert && (
+                   <motion.div 
+                     initial={{ opacity: 0, y: -5 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     exit={{ opacity: 0, y: -5 }}
+                     className="mt-3 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold flex items-center gap-2"
+                   >
+                     <span className="relative flex h-2 w-2">
+                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                       <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                     </span>
+                     {autopilotAlert}
+                   </motion.div>
+                 )}
+               </AnimatePresence>
+            </div>
+
             <div className="col-span-1 md:col-span-2 lg:col-span-3">
                <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Product Title (Required)</label>
                <input

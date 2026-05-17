@@ -37,6 +37,65 @@ export default function EtsySaaSPanel() {
   const [discoveredNiches, setDiscoveredNiches] = useState<any[]>([]);
   const [isAutonomousMode, setIsAutonomousMode] = useState(true);
   const [usage, setUsage] = useState<any>(null);
+  const [autopilotAlert, setAutopilotAlert] = useState<string | null>(null);
+
+  const parseEtsyLink = (url: string) => {
+    try {
+      const urlObj = new URL(url.trim());
+      if (urlObj.hostname.includes('etsy.com')) {
+        const path = urlObj.pathname;
+        const match = path.match(/\/listing\/(\d+)\/([^\/]+)/i) || path.match(/\/listing\/([^\/]+)/i);
+        if (match) {
+          if (match[2]) {
+            return match[2].replace(/-/g, ' ');
+          } else if (match[1] && isNaN(Number(match[1]))) {
+            return match[1].replace(/-/g, ' ');
+          }
+        }
+      }
+    } catch(e) {}
+    return null;
+  };
+
+  const handleKeywordChange = (val: string) => {
+    setKeyword(val);
+    if (!val) {
+      setAutopilotAlert(null);
+      return;
+    }
+
+    if (val.startsWith('http://') || val.startsWith('https://')) {
+      const parsedEtsy = parseEtsyLink(val);
+      if (parsedEtsy) {
+        const formattedTitle = parsedEtsy.split(' ')
+          .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(' ');
+        
+        setKeyword(formattedTitle);
+        setAutopilotAlert(`🔗 Etsy Link Detected! Auto-extracted Niche: "${formattedTitle}"`);
+      } else {
+        try {
+          const urlObj = new URL(val);
+          const segments = urlObj.pathname.split('/').filter(Boolean);
+          let extracted = "";
+          if (segments.length > 0) {
+            extracted = segments[segments.length - 1].replace(/[-_]/g, ' ');
+          } else {
+            extracted = urlObj.hostname.replace('www.', '').split('.')[0];
+          }
+          
+          const formattedTitle = extracted.split(' ')
+            .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+            .join(' ');
+
+          setKeyword(formattedTitle);
+          setAutopilotAlert(`🔗 Supplier Link Detected! Auto-extracted Niche: "${formattedTitle}"`);
+        } catch(e) {}
+      }
+    } else {
+      setAutopilotAlert(null);
+    }
+  };
 
   const fetchHistory = async () => {
     setIsHistoryLoading(true);
@@ -281,36 +340,55 @@ export default function EtsySaaSPanel() {
       )}
 
       {/* --- COMMAND CENTER SEARCH --- */}
-      <motion.form
-        onSubmit={handleAnalyze}
-        className="relative group z-20 max-w-4xl mx-auto"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-      >
-        <div className="absolute -inset-2 bg-gradient-to-r from-orange-600/20 via-purple-600/20 to-orange-600/20 rounded-[2.5rem] blur-xl opacity-50 group-hover:opacity-100 transition duration-1000 group-focus-within:opacity-100"></div>
-        <div className="relative flex items-center bg-[#080c16]/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] p-2 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
-          <div className="flex-shrink-0 pl-6 pr-2">
-            <Search className="h-7 w-7 text-slate-500 group-focus-within:text-orange-500 transition-all" />
+      <div className="relative z-20 max-w-4xl mx-auto space-y-4">
+        <motion.form
+          onSubmit={handleAnalyze}
+          className="relative group w-full"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+        >
+          <div className="absolute -inset-2 bg-gradient-to-r from-orange-600/20 via-purple-600/20 to-orange-600/20 rounded-[2.5rem] blur-xl opacity-50 group-hover:opacity-100 transition duration-1000 group-focus-within:opacity-100"></div>
+          <div className="relative flex items-center bg-[#080c16]/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] p-2 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+            <div className="flex-shrink-0 pl-6 pr-2">
+              <Search className="h-7 w-7 text-slate-500 group-focus-within:text-orange-500 transition-all" />
+            </div>
+            <input
+              type="text"
+              value={keyword}
+              onChange={(e) => handleKeywordChange(e.target.value)}
+              placeholder="Enter product keyword, Etsy link, or Supplier product URL..."
+              className="w-full bg-transparent border-none py-5 px-4 text-xl text-white placeholder:text-slate-700 focus:outline-none font-bold"
+            />
+            <button
+              type="submit"
+              disabled={isLoading || !keyword}
+              className="relative flex-shrink-0 px-10 py-5 bg-orange-500 hover:bg-orange-400 text-white rounded-2xl font-black transition-all flex items-center gap-3 overflow-hidden shadow-[0_0_20px_rgba(249,115,22,0.3)] group active:scale-95 disabled:opacity-50"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              {isLoading ? <Loader2 className="h-6 w-6 animate-spin" /> : <Sparkles className="h-6 w-6" />}
+              <span className="tracking-tight">{t('etsy.analyzeMarket')}</span>
+            </button>
           </div>
-          <input
-            type="text"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-            placeholder={t('etsy.initAnalysis')}
-            className="w-full bg-transparent border-none py-5 px-4 text-xl text-white placeholder:text-slate-700 focus:outline-none font-bold"
-          />
-          <button
-            type="submit"
-            disabled={isLoading || !keyword}
-            className="relative flex-shrink-0 px-10 py-5 bg-orange-500 hover:bg-orange-400 text-white rounded-2xl font-black transition-all flex items-center gap-3 overflow-hidden shadow-[0_0_20px_rgba(249,115,22,0.3)] group active:scale-95 disabled:opacity-50"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-            {isLoading ? <Loader2 className="h-6 w-6 animate-spin" /> : <Sparkles className="h-6 w-6" />}
-            <span className="tracking-tight">{t('etsy.analyzeMarket')}</span>
-          </button>
-        </div>
-      </motion.form>
+        </motion.form>
+
+        <AnimatePresence>
+          {autopilotAlert && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="p-4 rounded-2xl bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-black uppercase tracking-widest flex items-center gap-2 shadow-lg shadow-orange-500/5 backdrop-blur-md"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+              </span>
+              {autopilotAlert}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
       {/* --- ERROR MESSAGE --- */}
       <AnimatePresence>
