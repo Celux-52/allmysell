@@ -12,7 +12,7 @@ import { useI18n } from "@/lib/i18n/context";
 export default function PricingPage() {
   const { t } = useI18n();
   const [isAnnual, setIsAnnual] = useState(true);
-  const [productType, setProductType] = useState<"smart" | "etsy">("smart");
+  const [productType, setProductType] = useState<"smart" | "etsy" | "ebay">("smart");
 
   const smartTiers = [
     {
@@ -97,7 +97,7 @@ export default function PricingPage() {
     },
     {
       name: t('pricing.growth'),
-      price: { monthly: 39, annual: 31 },
+      price: { monthly: 19, annual: 15 },
       description: t('pricing.etsyGrowthDesc'),
       icon: <Rocket className="h-6 w-6 text-amber-400" />,
       popular: true,
@@ -118,7 +118,7 @@ export default function PricingPage() {
     },
     {
       name: t('pricing.proAgency'),
-      price: { monthly: 99, annual: 79 },
+      price: { monthly: 39, annual: 31 },
       description: t('pricing.etsyProAgencyDesc'),
       icon: <Building2 className="h-6 w-6 text-purple-400" />,
       features: [
@@ -137,7 +137,68 @@ export default function PricingPage() {
     }
   ];
 
-  const tiers = productType === "smart" ? smartTiers : etsyTiers;
+  const ebayTiers = [
+    {
+      name: t('pricing.starter'),
+      price: { monthly: 9, annual: 7 },
+      description: "Quick entry into eBay market dominance and product analysis.",
+      icon: <Zap className="h-6 w-6 text-blue-400" />,
+      features: [
+        `50 eBay Sniper Queries / mo`,
+        "Basic Product Analysis",
+        "VeRO Restricted Brands Check",
+        "Supplier Trust Check",
+        "Basic SEO Titles",
+        "Community Support"
+      ],
+      cta: "Deploy eBay Sniper",
+      color: "from-blue-500/20 to-blue-500/5",
+      borderColor: "border-blue-500/20",
+      glowColor: "#3b82f6"
+    },
+    {
+      name: t('pricing.growth'),
+      price: { monthly: 19, annual: 15 },
+      description: "Deep tactical intelligence and pricing models for professional eBay sellers.",
+      icon: <Rocket className="h-6 w-6 text-indigo-400" />,
+      popular: true,
+      features: [
+        `75 Deep Queries / mo`,
+        "Everything in Starter",
+        "💀 Failure Mode Analysis",
+        "🧬 Saturation & Price War Risk",
+        "💰 eBay Fee & Profit Engine",
+        "🔗 Semantic Supplier Match",
+        "Listing Optimizations & Keywords",
+        "Priority Queue"
+      ],
+      cta: "Master eBay Market",
+      color: "from-indigo-500/20 to-indigo-500/5",
+      borderColor: "border-indigo-500/30",
+      glowColor: "#6366f1"
+    },
+    {
+      name: t('pricing.proAgency'),
+      price: { monthly: 39, annual: 31 },
+      description: "The ultimate command center for high-volume eBay dropshipping operations.",
+      icon: <Building2 className="h-6 w-6 text-purple-400" />,
+      features: [
+        `125 Sniper Queries / mo`,
+        "Everything in Growth",
+        "API Access (Early Beta)",
+        "Multi-User Team Access",
+        "AI Model Rotation Guarantee",
+        "Dedicated E-com Strategist",
+        "Early Feature Access"
+      ],
+      cta: "Go eBay Unlimited",
+      color: "from-purple-500/20 to-purple-500/5",
+      borderColor: "border-purple-500/20",
+      glowColor: "#a855f7"
+    }
+  ];
+
+  const tiers = productType === "smart" ? smartTiers : productType === "etsy" ? etsyTiers : ebayTiers;
 
   return (
     <div className="bg-[#050810] min-h-screen text-white selection:bg-orange-500/30 relative overflow-hidden pb-24">
@@ -186,7 +247,7 @@ export default function PricingPage() {
             transition={{ delay: 0.25 }}
             className="flex justify-center mb-10"
           >
-            <div className="bg-white/5 border border-white/10 p-1 rounded-2xl flex gap-1 backdrop-blur-md">
+            <div className="bg-white/5 border border-white/10 p-1 rounded-2xl flex gap-1 backdrop-blur-md flex-wrap justify-center">
               <button
                 onClick={() => setProductType("smart")}
                 className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${productType === "smart" ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20' : 'text-slate-500 hover:text-slate-300'}`}
@@ -198,6 +259,12 @@ export default function PricingPage() {
                 className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${productType === "etsy" ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20' : 'text-slate-500 hover:text-slate-300'}`}
               >
                 Etsy Sniper
+              </button>
+              <button
+                onClick={() => setProductType("ebay")}
+                className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${productType === "ebay" ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20' : 'text-slate-500 hover:text-slate-300'}`}
+              >
+                eBay Sniper
               </button>
             </div>
           </motion.div>
