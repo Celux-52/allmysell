@@ -7,6 +7,7 @@ export const isAdmin = (email?: string | null) => {
   const hardcodedAdmins = [
     'melih20052005gs@gmail.com',
     'melih@allmysell.com',
+    'melihbicak@gmail.com',
     'yunus@allmysell.com',
     'yunussukur7@gmail.com'
   ];

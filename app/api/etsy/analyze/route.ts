@@ -4,6 +4,7 @@ import { getGoogleTrendsData } from '@/lib/ai/google-trends';
 import { prisma } from '@/lib/prisma';
 import { EtsyService } from '@/lib/etsy/etsy-service';
 import { EtsyAIEngine } from '@/lib/ai/etsy-ai-engine';
+import { isAdmin } from '@/lib/isAdmin';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60; // Allow 60 seconds for heavy AI tasks
@@ -37,37 +38,37 @@ export async function POST(req: Request) {
       })
 
       // --- ADMIN OVERRIDE ---
-      const envAdmins = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase())
-      const adminEmails = [...envAdmins, 'melih20052005gs@gmail.com']
-      const isUserAdmin = user.email && adminEmails.includes(user.email.toLowerCase())
-      
+      const isUserAdmin = user.email ? isAdmin(user.email) : false;
       const status = isUserAdmin ? 'PRO_AGENCY' : (profile?.subscriptionStatus || 'FREE')
 
-      const etsyCount = await prisma.searchHistory.count({
-        where: {
-          userId: user.id,
-          queryType: 'etsy',
-          createdAt: { gte: startOfMonth }
+      // Administrators have absolute unlimited access, completely bypassing limits!
+      if (!isUserAdmin) {
+        const etsyCount = await prisma.searchHistory.count({
+          where: {
+            userId: user.id,
+            queryType: 'etsy',
+            createdAt: { gte: startOfMonth }
+          }
+        })
+
+        const ETSY_LIMITS: Record<string, number> = {
+          'FREE': 1,
+          'STARTER': 50,
+          'GROWTH': 75,
+          'PRO_AGENCY': 125
         }
-      })
 
-      const ETSY_LIMITS: Record<string, number> = {
-        'FREE': 1,
-        'STARTER': 50,
-        'GROWTH': 75,
-        'PRO_AGENCY': 125
-      }
+        const limit = ETSY_LIMITS[status] || 1
 
-      const limit = ETSY_LIMITS[status] || 1
-
-      if (etsyCount >= limit) {
-        return NextResponse.json(
-          { 
-            error: `You have reached your monthly Etsy Sniper limit for the ${status} plan (${limit}).`,
-            code: 'LIMIT_REACHED'
-          },
-          { status: 429 }
-        )
+        if (etsyCount >= limit) {
+          return NextResponse.json(
+            { 
+              error: `You have reached your monthly Etsy Sniper limit for the ${status} plan (${limit}).`,
+              code: 'LIMIT_REACHED'
+            },
+            { status: 429 }
+          )
+        }
       }
     } catch (dbError) {
       console.warn('[Etsy API] Rate limit check failed:', dbError)

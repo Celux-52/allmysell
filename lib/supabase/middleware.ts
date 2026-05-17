@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { isAdmin as checkAdmin } from '@/lib/isAdmin'
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -60,11 +61,7 @@ export async function updateSession(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith('/admin') && user) {
     // Check if user has admin role by querying profiles
     // For now, we check user metadata
-    const isAdmin = user.user_metadata?.role === 'admin' || 
-                    user.email === 'melih@allmysell.com' ||
-                    user.email === 'yunus@allmysell.com' ||
-                    user.email === 'yunussukur7@gmail.com' ||
-                    user.email === 'melih20052005gs@gmail.com'
+    const isAdmin = user.user_metadata?.role === 'admin' || (user.email ? checkAdmin(user.email) : false)
     
     if (!isAdmin) {
       const url = request.nextUrl.clone()

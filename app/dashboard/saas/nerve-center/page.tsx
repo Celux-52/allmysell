@@ -24,9 +24,16 @@ export default function NerveCenterPage() {
     const checkAdmin = async () => {
       const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
-      const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || "").split(",").map(e => e.trim().toLowerCase());
+      const adminEmails = [
+        'melih@allmysell.com',
+        'melih20052005gs@gmail.com',
+        'melihbicak@gmail.com',
+        'yunus@allmysell.com',
+        'yunussukur7@gmail.com',
+        ...(process.env.NEXT_PUBLIC_ADMIN_EMAILS || "").split(",").map(e => e.trim().toLowerCase())
+      ].filter(Boolean);
       
-      if (user && adminEmails.includes(user.email?.toLowerCase() || "")) {
+      if (user && user.email && adminEmails.includes(user.email.toLowerCase())) {
         setIsAdmin(true);
         // Fetch stats only if admin
         fetch("/api/saas/stats")

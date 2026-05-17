@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { prisma } from '@/lib/prisma'
+import { isAdmin } from '@/lib/isAdmin'
 
 export const dynamic = 'force-dynamic'
 
@@ -38,34 +39,61 @@ export async function GET(request: NextRequest) {
         ])
       ])
 
-      const tier = profile?.subscriptionStatus || 'FREE'
-      const LIMITS: Record<string, number> = {
-        'FREE': 3,
-        'STARTER': 50,
-        'GROWTH': 75,
-        'PRO_AGENCY': 125
-      }
+      const isUserAdmin = user.email ? isAdmin(user.email) : false;
+      const tier = isUserAdmin ? 'PRO_AGENCY' : (profile?.subscriptionStatus || 'FREE')
 
-      usage = {
-        status: tier,
-        general: {
-          count: searchCount || 0,
-          limit: LIMITS[tier] || 3,
-          remaining: Math.max(0, (LIMITS[tier] || 3) - (searchCount || 0))
-        },
-        etsy: {
-          count: 0,
-          limit: 10,
-          remaining: 10
+      if (isUserAdmin) {
+        usage = {
+          status: 'PRO_AGENCY',
+          general: {
+            count: searchCount || 0,
+            limit: 999999,
+            remaining: 999999
+          },
+          etsy: {
+            count: 0,
+            limit: 999999,
+            remaining: 999999
+          }
+        }
+      } else {
+        const LIMITS: Record<string, number> = {
+          'FREE': 3,
+          'STARTER': 50,
+          'GROWTH': 75,
+          'PRO_AGENCY': 125
+        }
+
+        usage = {
+          status: tier,
+          general: {
+            count: searchCount || 0,
+            limit: LIMITS[tier] || 3,
+            remaining: Math.max(0, (LIMITS[tier] || 3) - (searchCount || 0))
+          },
+          etsy: {
+            count: 0,
+            limit: 10,
+            remaining: 10
+          }
         }
       }
     } catch (dbError) {
       console.warn('[Usage API] Database fallback triggered:', dbError)
       // High-quality fallback
-      usage = {
-        status: 'FREE',
-        general: { count: 0, limit: 3, remaining: 3 },
-        etsy: { count: 0, limit: 10, remaining: 10 }
+      const isUserAdmin = user.email ? isAdmin(user.email) : false;
+      if (isUserAdmin) {
+        usage = {
+          status: 'PRO_AGENCY',
+          general: { count: 0, limit: 999999, remaining: 999999 },
+          etsy: { count: 0, limit: 999999, remaining: 999999 }
+        }
+      } else {
+        usage = {
+          status: 'FREE',
+          general: { count: 0, limit: 3, remaining: 3 },
+          etsy: { count: 0, limit: 10, remaining: 10 }
+        }
       }
     }
 

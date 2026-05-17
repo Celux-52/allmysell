@@ -37,9 +37,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         return;
       }
 
+      const adminEmails = [
+        'melih@allmysell.com',
+        'melih20052005gs@gmail.com',
+        'melihbicak@gmail.com',
+        'yunus@allmysell.com',
+        'yunussukur7@gmail.com'
+      ];
+
       const isAdmin = authUser.user_metadata?.role === 'admin' ||
-                       authUser.email === 'melih@allmysell.com' ||
-                       authUser.email === 'yunus@allmysell.com';
+                       (authUser.email && adminEmails.includes(authUser.email.toLowerCase()));
 
       if (!isAdmin) {
         router.push('/dashboard');

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { isAdmin as checkAdmin } from '@/lib/isAdmin'
 
 export const dynamic = 'force-dynamic'
 
@@ -13,9 +14,7 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const isAdmin = user.user_metadata?.role === 'admin' ||
-                     user.email === 'melih@allmysell.com' ||
-                     user.email === 'yunus@allmysell.com'
+    const isAdmin = user.email ? checkAdmin(user.email) : false
     
     if (!isAdmin) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })

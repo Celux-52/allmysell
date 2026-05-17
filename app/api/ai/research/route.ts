@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { consensusResearch } from '@/lib/ai/consensus'
 import { prisma } from '@/lib/prisma'
+import { isAdmin } from '@/lib/isAdmin'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60 // Vercel'in izin verdiği maksimum süre
@@ -29,8 +30,7 @@ export async function POST(request: NextRequest) {
       }
     })
 
-    const adminEmails = ['melih20052005gs@gmail.com', (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '')]
-    const isUserAdmin = user.email && adminEmails.some(e => user.email?.toLowerCase().includes(e.toLowerCase()))
+    const isUserAdmin = user.email ? isAdmin(user.email) : false
     const status = isUserAdmin ? 'PRO_AGENCY' : (profile?.subscriptionStatus || 'FREE')
 
     // 3. Akıllı Önbellek (Önce DB'ye bak)
