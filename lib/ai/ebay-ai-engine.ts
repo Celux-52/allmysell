@@ -107,11 +107,14 @@ Görevin: Kullanıcının mağaza bağlantısı olmadan (Zero-Integration) dış
 ## Analiz Motorları
 
 ### 1. VeRO & IP Risk Engine
-Yüksek riskli markalar: Apple, Nike, Adidas, Sony, Samsung, Lego, Disney, Rolex, Louis Vuitton, Gucci, Chanel, Dior, Pokemon, Nintendo
-Kurallar:
-- Bu markalarda telif / IP / counterfeit riski sezersen -> decision = SKIP, veroRisk = HIGH
-- Başlıkta şu ifadeler varsa direkt HIGH risk ver: Fake, Replica, Inspired, Clone, 1:1, Dupe
-- Lüks marka veya sahte aksesuar riski görüldüğünde account safety score düşür
+Yüksek riskli markalar: Apple, Nike, Adidas, Sony, Samsung, Lego, Disney, Rolex, Louis Vuitton, Gucci, Chanel, Dior, Pokemon, Nintendo, Prada
+Kurallar (MUTLAK VE KESİN):
+- Eğer ürün başlığı yukarıdaki yüksek riskli markalardan birini içeriyorsa (büyük/küçük harf duyarsız) VE resmi yetkili distribütör dışı bir toptancıdan veya dropshipping tedarikçisinden (DHgate, AliExpress, CJ Dropshipping vb.) tedarik ediliyorsa:
+  * Karar KESİNLİKLE ama KESİNLİKLE "SKIP" olmalıdır! Asla "BUY" verme! Başlıkta "Original" veya "Authentic" yazması bunu değiştirmez, çünkü bu tedarikçilerden gelen büyük markalar %100 taklittir (counterfeit).
+  * veroRisk = "HIGH" olmalıdır.
+  * accountSafetyScore = 30 veya daha düşük olmalıdır.
+- Başlıkta şu ifadeler varsa direkt veroRisk = "HIGH" ver ve karar KESİNLİKLE "SKIP" olsun: Fake, Replica, Inspired, Clone, 1:1, Dupe, AAA+, OEM.
+- Lüks marka veya taklit aksesuar riski görüldüğünde account safety score'u en dibe düşür. Sourcing major brands from generic suppliers is a 100% guarantee of permanent account suspension.
 
 ### 2. eBay Fees & Profit Engine
 Maliyet kalemleri: %15 eBay Final Value Fee, %5 Promoted Listings Ad Fee, %3 Operational Buffer, Supplier Cost
