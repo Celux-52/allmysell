@@ -196,8 +196,84 @@ SUPPLIER COST: ${productData.supplierCost || 'Unknown'}
         const content = response.choices[0]?.message?.content || '';
         if (!content) throw new Error("No content received from AI");
 
-        const parsed = JSON.parse(extractJSON(content));
-        return parsed as EbayDetailedAnalysis;
+        const parsed = JSON.parse(extractJSON(content)) as EbayDetailedAnalysis;
+
+        // --- HARDCODED PROGRAMMATIC SAFETY ENGINE (100% FAIL-SAFE GUARDRAILS) ---
+        try {
+          const titleLower = (productData.title || '').toLowerCase();
+          const supplierLower = (productData.supplierName || '').toLowerCase();
+
+          // 1. VeRO Restricted Brands Check
+          const HIGH_RISK_BRANDS = [
+            'apple', 'nike', 'adidas', 'sony', 'samsung', 'lego', 'disney', 'rolex',
+            'louis vuitton', 'gucci', 'chanel', 'dior', 'pokemon', 'nintendo', 'prada', 'hermes'
+          ];
+          const matchedBrand = HIGH_RISK_BRANDS.find(brand => titleLower.includes(brand));
+          
+          if (matchedBrand) {
+            parsed.decision = "SKIP";
+            parsed.score = Math.min(parsed.score || 80, 20);
+            
+            if (!parsed.riskAnalysis) {
+              parsed.riskAnalysis = { veroRisk: "HIGH", competitionRisk: "LOW", returnRisk: "LOW", policyRisk: "LOW", reason: "" };
+            }
+            parsed.riskAnalysis.veroRisk = "HIGH";
+            parsed.riskAnalysis.reason = `CRITICAL WARNING: Programmatic VeRO engine detected a high-risk restricted brand (${matchedBrand.toUpperCase()}) in the title. Selling major brands on eBay without direct brand authorization is highly restricted and leads to instant permanent account suspension.`;
+            
+            if (!parsed.policyRisk) {
+              parsed.policyRisk = { dropShippingRisk: "HIGH", trackingRisk: "HIGH", invoiceRisk: "HIGH", accountSafetyScore: 15 };
+            }
+            parsed.policyRisk.accountSafetyScore = 15;
+            
+            if (!parsed.aiReasoning) parsed.aiReasoning = [];
+            parsed.aiReasoning.unshift(`CRITICAL SAFETY OVERRIDE: Restricted brand "${matchedBrand.toUpperCase()}" detected. Direct account suspension threat. DO NOT LIST.`);
+          }
+
+          // 2. Counterfeit / Replica Keywords Check
+          const replicaKeywords = ['fake', 'replica', 'inspired', 'clone', '1:1', 'dupe', 'aaa+', 'oem'];
+          const matchedReplica = replicaKeywords.find(kw => titleLower.includes(kw));
+          
+          if (matchedReplica) {
+            parsed.decision = "SKIP";
+            parsed.score = Math.min(parsed.score || 80, 10);
+            
+            if (!parsed.riskAnalysis) {
+              parsed.riskAnalysis = { veroRisk: "HIGH", competitionRisk: "LOW", returnRisk: "LOW", policyRisk: "LOW", reason: "" };
+            }
+            parsed.riskAnalysis.veroRisk = "HIGH";
+            parsed.riskAnalysis.reason = `CRITICAL WARNING: Counterfeit/Replica keyword "${matchedReplica.toUpperCase()}" detected in the title. Selling replica products is strictly illegal and causes permanent account suspension.`;
+            
+            if (!parsed.policyRisk) {
+              parsed.policyRisk = { dropShippingRisk: "HIGH", trackingRisk: "HIGH", invoiceRisk: "HIGH", accountSafetyScore: 5 };
+            }
+            parsed.policyRisk.accountSafetyScore = 5;
+            
+            if (!parsed.aiReasoning) parsed.aiReasoning = [];
+            parsed.aiReasoning.unshift(`CRITICAL SAFETY OVERRIDE: Counterfeit/replica terms detected in title. Highly illegal.`);
+          }
+
+          // 3. Prohibited Retailer-to-Retailer Dropshipping Check (Costco, Walmart, Target, Amazon)
+          const prohibitedSuppliers = ['walmart', 'costco', 'target', 'amazon'];
+          const matchedProhibited = prohibitedSuppliers.find(s => supplierLower.includes(s));
+          
+          if (matchedProhibited) {
+            parsed.decision = "SKIP";
+            parsed.score = Math.min(parsed.score || 80, 35);
+            
+            if (!parsed.policyRisk) {
+              parsed.policyRisk = { dropShippingRisk: "HIGH", trackingRisk: "HIGH", invoiceRisk: "HIGH", accountSafetyScore: 30 };
+            }
+            parsed.policyRisk.dropShippingRisk = "HIGH";
+            parsed.policyRisk.accountSafetyScore = Math.min(parsed.policyRisk.accountSafetyScore || 80, 30);
+            
+            if (!parsed.aiReasoning) parsed.aiReasoning = [];
+            parsed.aiReasoning.unshift(`CRITICAL POLICY OVERRIDE: Retail-to-retail dropshipping from ${matchedProhibited.toUpperCase()} is strictly prohibited by eBay's dropshipping policy and leads to account flagging.`);
+          }
+        } catch (overrideError) {
+          console.warn('[Ebay AI Override] Failed to apply safety overrides:', overrideError);
+        }
+
+        return parsed;
       },
       { maxRetries: 1, baseDelayMs: 500 }
     );
