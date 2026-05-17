@@ -46,7 +46,7 @@ export async function updateSession(request: NextRequest) {
 
   // Protected routes - redirect to login if not authenticated
   const protectedPaths = ['/dashboard', '/admin']
-  const isProtectedPath = protectedPaths.some(path => 
+  const isProtectedPath = protectedPaths.some(path =>
     request.nextUrl.pathname.startsWith(path)
   )
 
@@ -62,7 +62,7 @@ export async function updateSession(request: NextRequest) {
     // Check if user has admin role by querying profiles
     // For now, we check user metadata
     const isAdmin = user.user_metadata?.role === 'admin' || (user.email ? checkAdmin(user.email) : false)
-    
+
     if (!isAdmin) {
       const url = request.nextUrl.clone()
       url.pathname = '/dashboard'
@@ -72,7 +72,7 @@ export async function updateSession(request: NextRequest) {
 
   // Redirect authenticated users away from login/register
   const authPaths = ['/login', '/register']
-  const isAuthPath = authPaths.some(path => 
+  const isAuthPath = authPaths.some(path =>
     request.nextUrl.pathname.startsWith(path)
   )
 

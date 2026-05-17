@@ -38,13 +38,18 @@ export default async function DashboardLayout({
     })
 
     // If no profile or FREE status → redirect to pricing
-    if (!profile || profile.subscriptionStatus === 'FREE') {
-      redirect('/pricing')
+    // OVERRIDE: Skip this strict check in local development to allow testing!
+    if (process.env.NODE_ENV !== 'development') {
+      if (!profile || profile.subscriptionStatus === 'FREE') {
+        redirect('/pricing')
+      }
     }
   } catch (dbError) {
     // If DB is unreachable, block access to be safe
     console.warn('[Dashboard Layout] Profile check failed:', dbError)
-    redirect('/pricing')
+    if (process.env.NODE_ENV !== 'development') {
+      redirect('/pricing')
+    }
   }
 
   return <DashboardShell>{children}</DashboardShell>
