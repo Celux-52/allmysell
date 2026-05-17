@@ -269,6 +269,75 @@ SUPPLIER COST: ${productData.supplierCost || 'Unknown'}
             if (!parsed.aiReasoning) parsed.aiReasoning = [];
             parsed.aiReasoning.unshift(`CRITICAL POLICY OVERRIDE: Retail-to-retail dropshipping from ${matchedProhibited.toUpperCase()} is strictly prohibited by eBay's dropshipping policy and leads to account flagging.`);
           }
+
+          // 4. Mathematical Precision Pricing Engine (TypeScript Recalculator)
+          const sellPrice = parseFloat(productData.price) || 0;
+          const supplierCost = parseFloat(productData.supplierCost) || 0;
+
+          if (sellPrice > 0) {
+            // Calculate fees mathematically
+            const estimatedEbayFee = Math.round((sellPrice * 0.15) * 100) / 100; // 15% eBay final value fee
+            const estimatedAdFee = Math.round((sellPrice * 0.05) * 100) / 100; // 5% Promoted listing ad fee
+            const estimatedOperationalBuffer = Math.round((sellPrice * 0.03) * 100) / 100; // 3% operational safety buffer
+            
+            const totalDeductions = estimatedEbayFee + estimatedAdFee + estimatedOperationalBuffer + supplierCost;
+            const netProfit = Math.round((sellPrice - totalDeductions) * 100) / 100;
+            const profitMargin = sellPrice > 0 ? Math.round(((netProfit / sellPrice) * 100) * 100) / 100 : 0;
+            const roi = supplierCost > 0 ? Math.round(((netProfit / supplierCost) * 100) * 100) / 100 : 0;
+
+            // Apply to the parsed financials
+            parsed.financials = {
+              estimatedEbayFee,
+              estimatedAdFee,
+              estimatedOperationalBuffer,
+              netProfit,
+              profitMargin,
+              roi
+            };
+
+            // Force SKIP if negative profit
+            if (netProfit <= 0) {
+              parsed.decision = "SKIP";
+              parsed.score = Math.min(parsed.score || 80, 25);
+              if (!parsed.aiReasoning) parsed.aiReasoning = [];
+              parsed.aiReasoning.unshift("CRITICAL FINANCIAL OVERRIDE: Sourcing cost and eBay fees exceed selling price. Sells at a loss.");
+              if (parsed.riskAnalysis) {
+                parsed.riskAnalysis.veroRisk = parsed.riskAnalysis.veroRisk || "LOW";
+                parsed.riskAnalysis.competitionRisk = parsed.riskAnalysis.competitionRisk || "LOW";
+                parsed.riskAnalysis.returnRisk = parsed.riskAnalysis.returnRisk || "LOW";
+                parsed.riskAnalysis.policyRisk = parsed.riskAnalysis.policyRisk || "LOW";
+                parsed.riskAnalysis.reason = "CRITICAL WARNING: Selling this product will result in negative profit. Sourcing cost and eBay fees exceed the retail price.";
+              }
+            }
+
+            // Force SKIP if net profit margin is below 12%
+            if (profitMargin < 12 && parsed.decision === "BUY") {
+              parsed.decision = "SKIP";
+              parsed.score = Math.min(parsed.score || 80, 45);
+              if (!parsed.aiReasoning) parsed.aiReasoning = [];
+              parsed.aiReasoning.unshift("CRITICAL FINANCIAL OVERRIDE: Net profit margin is below the minimum safe limit (12%) for a stable operation.");
+            }
+
+            // Calculate highly realistic pricing scenarios for pricingSimulation
+            const basePrice = sellPrice;
+            parsed.pricingSimulation = [
+              {
+                price: Math.round((basePrice * 0.9) * 100) / 100, // 10% lower price
+                profit: Math.round(((basePrice * 0.9) - ((basePrice * 0.9 * 0.23) + supplierCost)) * 100) / 100,
+                roi: supplierCost > 0 ? Math.round((((basePrice * 0.9) - ((basePrice * 0.9 * 0.23) + supplierCost)) / supplierCost * 100) * 100) / 100 : 0
+              },
+              {
+                price: basePrice,
+                profit: netProfit,
+                roi: roi
+              },
+              {
+                price: Math.round((basePrice * 1.1) * 100) / 100, // 10% higher price
+                profit: Math.round(((basePrice * 1.1) - ((basePrice * 1.1 * 0.23) + supplierCost)) * 100) / 100,
+                roi: supplierCost > 0 ? Math.round((((basePrice * 1.1) - ((basePrice * 1.1 * 0.23) + supplierCost)) / supplierCost * 100) * 100) / 100 : 0
+              }
+            ];
+          }
         } catch (overrideError) {
           console.warn('[Ebay AI Override] Failed to apply safety overrides:', overrideError);
         }
