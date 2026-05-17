@@ -14,7 +14,9 @@ import { isAdmin } from "@/lib/isAdmin";
 import { useI18n } from "@/lib/i18n/context";
 
 const navigationKeys = [
-  { nameKey: "dash.saasPanel", href: "/dashboard/saas", icon: Zap },
+  { nameKey: "modules.smartResearch", name: "Akıllı Arama", href: "/dashboard/research", icon: Zap },
+  { nameKey: "modules.etsyAutomation", name: "Etsy Sniper", href: "/dashboard/saas/etsy", icon: Star },
+  { nameKey: "modules.ebaySniper", name: "eBay Sniper", href: "/dashboard/saas/ebay", icon: Zap },
   { nameKey: "dash.savedItems", href: "/dashboard/saved", icon: Star },
   { nameKey: "dash.history", href: "/dashboard/history", icon: History },
   { nameKey: "pricing.title2", href: "/pricing", icon: CreditCard },
@@ -110,7 +112,7 @@ export default function DashboardShell({
                   />
                 )}
                 <item.icon className="h-5 w-5 relative z-10" />
-                <span className="relative z-10">{t(item.nameKey)}</span>
+                <span className="relative z-10">{(item as any).name || t(item.nameKey)}</span>
               </Link>
             );
           })}

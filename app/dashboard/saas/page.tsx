@@ -15,6 +15,23 @@ export default function SaaSPanelPage() {
 
   const modules = [
     {
+      name: t('modules.smartResearch'),
+      subtitle: t('dash.smartAlphaSub'),
+      description: t('modules.smartResearchDesc'),
+      href: "/dashboard/saas/research",
+      icon: Cpu,
+      gradient: "from-indigo-600 to-violet-600",
+      glowColor: "indigo",
+      stats: [
+        { label: t('feat.multiAI'), value: "1 Model", icon: Brain },
+        { label: "Trends API", value: "Live", icon: TrendingUp },
+        { label: t('res.research'), value: "Active", icon: Search },
+      ],
+      badge: "CORE",
+      badgeColor: "bg-indigo-500/20 text-indigo-400 border-indigo-500/20",
+      borderHover: "hover:border-indigo-500/30",
+    },
+    {
       name: t('modules.etsyAutomation'),
       subtitle: t('dash.etsyAlphaSub'),
       description: t('modules.etsyAutomationDesc'),
@@ -32,21 +49,21 @@ export default function SaaSPanelPage() {
       borderHover: "hover:border-orange-500/30",
     },
     {
-      name: t('modules.smartResearch'),
-      subtitle: t('dash.smartAlphaSub'),
-      description: t('modules.smartResearchDesc'),
-      href: "/dashboard/saas/research",
-      icon: Cpu,
-      gradient: "from-indigo-600 to-violet-600",
-      glowColor: "indigo",
+      name: "eBay Sniper",
+      subtitle: "ZERO-INTEGRATION RISK ANALYZER",
+      description: "Analyze eBay products without store integration. Validates VeRO risk, dropshipping policies, market saturation, and ROI instantly.",
+      href: "/dashboard/saas/ebay",
+      icon: Target,
+      gradient: "from-blue-600 to-cyan-600",
+      glowColor: "blue",
       stats: [
-        { label: t('feat.multiAI'), value: "1 Model", icon: Brain },
-        { label: "Trends API", value: "Live", icon: TrendingUp },
-        { label: t('res.research'), value: "Active", icon: Search },
+        { label: "VeRO Guard", value: "Active", icon: Shield },
+        { label: "Policy Scan", value: "Active", icon: Shield },
+        { label: "ROI Engine", value: "Live", icon: Zap },
       ],
-      badge: "CORE",
-      badgeColor: "bg-indigo-500/20 text-indigo-400 border-indigo-500/20",
-      borderHover: "hover:border-indigo-500/30",
+      badge: "NEW",
+      badgeColor: "bg-blue-500/20 text-blue-400 border-blue-500/20",
+      borderHover: "hover:border-blue-500/30",
     },
   ];
 
