@@ -112,21 +112,11 @@ export default function Navigation() {
             {[
               { key: 'nav.home', href: '/' },
               { key: 'nav.about', href: '/about' },
+              { key: 'nav.webSolutions', href: '/web-solutions' },
               { key: 'nav.saas', href: '/dashboard' },
             ].map((item) => (
               <Link key={item.key} href={item.href} className="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all font-medium text-sm">{t(item.key)}</Link>
             ))}
-            <div className="relative group">
-              <button className="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all font-medium flex items-center gap-1 text-sm">{t('nav.webSolutions')}<ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" /></button>
-              <div className="absolute left-0 mt-1 w-52 glass-card rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 z-50 overflow-hidden">
-                {[
-                  { key: 'nav.basicSetup', href: '/web-solutions#basic' },
-                  { key: 'nav.professional', href: '/web-solutions#professional' },
-                  { key: 'nav.fullEcosystem', href: '/web-solutions#ecosystem' },
-                  { key: 'nav.getQuote', href: '/web-solutions#contact' },
-                ].map((item) => (<Link key={item.key} href={item.href} className="block px-4 py-3 text-sm text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all">{t(item.key)}</Link>))}
-              </div>
-            </div>
           </div>
 
           <div className="hidden md:flex items-center gap-3">
