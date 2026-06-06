@@ -541,13 +541,13 @@ export default function Home() {
                   <div className="bg-[#0A192F]/50 backdrop-blur-md p-8 rounded-3xl border border-white/5 hover:bg-white/5 transition-colors duration-500">
                     <h4 className="text-blue-300 text-xs font-semibold uppercase tracking-widest mb-6 border-b border-white/10 pb-4">Kurumsal İletişim</h4>
                     <div className="space-y-6">
-                      <a href="mailto:hello@allmysell.com" className="flex items-center justify-between text-white hover:text-blue-300 transition-all duration-300 group">
+                      <a href="mailto:info@allmysell.com" className="flex items-center justify-between text-white hover:text-blue-300 transition-all duration-300 group">
                         <div className="flex items-center space-x-4">
                           <div className="p-3 bg-white/5 rounded-xl group-hover:bg-blue-500/20 group-hover:scale-110 transition-all border border-white/5">
                             <Mail className="w-5 h-5 text-white/60 group-hover:text-blue-300" />
                           </div>
                           <div>
-                            <span className="text-lg md:text-xl font-light tracking-wide block">hello@allmysell.com</span>
+                            <span className="text-lg md:text-xl font-light tracking-wide block">info@allmysell.com</span>
                             <span className="text-xs text-white/40">Sadece kurumsal talepler için</span>
                           </div>
                         </div>
@@ -556,7 +556,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <a href="mailto:hello@allmysell.com" className="group flex items-center justify-center gap-3 w-full py-5 bg-white text-[#0A192F] rounded-2xl font-bold text-lg hover:bg-blue-50 hover:scale-[1.02] transition-all duration-300 shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]">
+                  <a href="mailto:info@allmysell.com" className="group flex items-center justify-center gap-3 w-full py-5 bg-white text-[#0A192F] rounded-2xl font-bold text-lg hover:bg-blue-50 hover:scale-[1.02] transition-all duration-300 shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]">
                     Mimari Analiz Toplantısı Talep Et
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </a>
