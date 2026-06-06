@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
+import { GoogleAnalytics } from '@next/third-parties/google';
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -97,6 +98,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} ${playfair.variable} font-sans antialiased text-[#0A192F] selection:bg-[#0A192F] selection:text-white`}>
         {children}
+        {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
       </body>
     </html>
   );
