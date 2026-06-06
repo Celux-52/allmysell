@@ -513,67 +513,53 @@ export default function Home() {
                     Hatalı mimari seçimleriyle bütçenizi yakmadan önce, uzman ekibimizle sisteminizi ücretsiz planlayalım.
                   </p>
                   
-                  <div className="flex items-center space-x-6 text-white/80 bg-white/5 p-4 rounded-2xl border border-white/5 w-max">
-                    <div className="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center">
-                      <MapPin className="w-5 h-5 text-blue-300" />
+                  <div className="flex flex-col gap-6">
+                    <div className="flex items-start gap-4 text-white/70">
+                      <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center shrink-0 mt-1 border border-white/10">
+                        <MapPin className="w-5 h-5 text-blue-400" />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-semibold mb-1">Genel Merkez (HQ)</h4>
+                        <p className="text-sm leading-relaxed text-white/50">ALLMYSELL LLC<br/>7901 4th St N, Ste 300<br/>St. Petersburg, FL 33702, USA</p>
+                      </div>
                     </div>
-                    <div>
-                      <div className="text-xs text-white/40 uppercase tracking-wider mb-1">Genel Merkez</div>
-                      <span className="font-medium tracking-wide text-lg">Miami, Florida, USA</span>
+                    
+                    <div className="flex items-start gap-4 text-white/70">
+                      <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center shrink-0 mt-1 border border-white/10">
+                        <Phone className="w-5 h-5 text-blue-400" />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-semibold mb-1">Türkiye Operasyon Merkezi</h4>
+                        <p className="text-sm leading-relaxed text-white/50">+90 553 706 59 12<br/>+90 551 834 30 30</p>
+                      </div>
                     </div>
                   </div>
                 </motion.div>
 
                 <motion.div variants={fadeInUp} className="space-y-6">
-                  {/* Emails Card */}
+                  {/* Digital Contact Card */}
                   <div className="bg-[#0A192F]/50 backdrop-blur-md p-8 rounded-3xl border border-white/5 hover:bg-white/5 transition-colors duration-500">
-                    <h4 className="text-blue-300 text-xs font-semibold uppercase tracking-widest mb-6 border-b border-white/10 pb-4">E-Posta Kanalları</h4>
+                    <h4 className="text-blue-300 text-xs font-semibold uppercase tracking-widest mb-6 border-b border-white/10 pb-4">Kurumsal İletişim</h4>
                     <div className="space-y-6">
-                      <a href="mailto:melih20052005gs@gmail.com" className="flex items-center justify-between text-white hover:text-blue-300 transition-all duration-300 group">
+                      <a href="mailto:hello@allmysell.com" className="flex items-center justify-between text-white hover:text-blue-300 transition-all duration-300 group">
                         <div className="flex items-center space-x-4">
-                          <div className="p-3 bg-white/5 rounded-xl group-hover:bg-blue-500/20 group-hover:scale-110 transition-all">
+                          <div className="p-3 bg-white/5 rounded-xl group-hover:bg-blue-500/20 group-hover:scale-110 transition-all border border-white/5">
                             <Mail className="w-5 h-5 text-white/60 group-hover:text-blue-300" />
                           </div>
-                          <span className="text-lg md:text-xl font-light tracking-wide">melih20052005gs@gmail.com</span>
-                        </div>
-                        <ArrowRight className="w-4 h-4 text-white/20 group-hover:text-blue-300 group-hover:translate-x-1 transition-all" />
-                      </a>
-                      <a href="mailto:yunussukur7@gmail.com" className="flex items-center justify-between text-white hover:text-blue-300 transition-all duration-300 group">
-                         <div className="flex items-center space-x-4">
-                          <div className="p-3 bg-white/5 rounded-xl group-hover:bg-blue-500/20 group-hover:scale-110 transition-all">
-                            <Mail className="w-5 h-5 text-white/60 group-hover:text-blue-300" />
+                          <div>
+                            <span className="text-lg md:text-xl font-light tracking-wide block">hello@allmysell.com</span>
+                            <span className="text-xs text-white/40">Sadece kurumsal talepler için</span>
                           </div>
-                          <span className="text-lg md:text-xl font-light tracking-wide">yunussukur7@gmail.com</span>
                         </div>
                         <ArrowRight className="w-4 h-4 text-white/20 group-hover:text-blue-300 group-hover:translate-x-1 transition-all" />
                       </a>
                     </div>
                   </div>
 
-                  {/* Phones Card */}
-                  <div className="bg-[#0A192F]/50 backdrop-blur-md p-8 rounded-3xl border border-white/5 hover:bg-white/5 transition-colors duration-500">
-                    <h4 className="text-green-300 text-xs font-semibold uppercase tracking-widest mb-6 border-b border-white/10 pb-4">Direkt Hat & WhatsApp</h4>
-                    <div className="space-y-6">
-                      <a href="tel:+905537065912" className="flex items-center justify-between text-white hover:text-green-300 transition-all duration-300 group">
-                        <div className="flex items-center space-x-4">
-                          <div className="p-3 bg-white/5 rounded-xl group-hover:bg-green-500/20 group-hover:scale-110 transition-all">
-                            <Phone className="w-5 h-5 text-white/60 group-hover:text-green-300" />
-                          </div>
-                          <span className="text-lg md:text-xl font-light tracking-wide">+90 553 706 59 12</span>
-                        </div>
-                        <ArrowRight className="w-4 h-4 text-white/20 group-hover:text-green-300 group-hover:translate-x-1 transition-all" />
-                      </a>
-                      <a href="tel:+905518343030" className="flex items-center justify-between text-white hover:text-green-300 transition-all duration-300 group">
-                        <div className="flex items-center space-x-4">
-                          <div className="p-3 bg-white/5 rounded-xl group-hover:bg-green-500/20 group-hover:scale-110 transition-all">
-                            <Phone className="w-5 h-5 text-white/60 group-hover:text-green-300" />
-                          </div>
-                          <span className="text-lg md:text-xl font-light tracking-wide">+90 551 834 30 30</span>
-                        </div>
-                        <ArrowRight className="w-4 h-4 text-white/20 group-hover:text-green-300 group-hover:translate-x-1 transition-all" />
-                      </a>
-                    </div>
-                  </div>
+                  <a href="mailto:hello@allmysell.com" className="group flex items-center justify-center gap-3 w-full py-5 bg-white text-[#0A192F] rounded-2xl font-bold text-lg hover:bg-blue-50 hover:scale-[1.02] transition-all duration-300 shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]">
+                    Mimari Analiz Toplantısı Talep Et
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </a>
                 </motion.div>
               </div>
             </div>
