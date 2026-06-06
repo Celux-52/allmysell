@@ -1,54 +1,85 @@
-import type { Metadata } from 'next';
-import { Inter, Geist } from 'next/font/google';
-import './globals.css';
-import Navigation from '@/components/Navigation';
-import HideOnRoutes from '@/components/HideOnRoutes';
-import Footer from '@/components/Footer';
-import { Analytics } from '@vercel/analytics/next';
-import WhatsAppButton from '@/components/WhatsAppButton';
-import CookieBanner from '@/components/CookieBanner';
-import GoogleAnalytics from '@/components/GoogleAnalytics';
-import { cn } from "@/lib/utils";
-import { I18nProvider } from '@/lib/i18n/context';
+import type { Metadata } from "next";
+import { Inter, Playfair_Display } from "next/font/google";
+import "./globals.css";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 
-const inter = Inter({ subsets: ['latin'] });
+const siteUrl = 'https://allmysell.com'; // Change this to your actual domain
 
 export const metadata: Metadata = {
-  title: { default: 'AllMySell | AI-Powered E-Commerce Automation Platform', template: '%s | AllMySell' },
-  description: 'Scale your e-commerce business with AllMySell. AI-powered trend research, automated listing, cross-platform management, and professional web development services.',
-  keywords: ['e-commerce automation', 'AI trend research', 'SaaS platform', 'web development services', 'AllMySell', 'online business tools', 'e-commerce software'],
-  metadataBase: new URL('https://allmysell.com'),
-  openGraph: {
-    title: { default: 'AllMySell | AI-Powered E-Commerce Automation Platform', template: '%s | AllMySell' },
-    description: 'Scale your e-commerce business with AllMySell. AI-powered trend research, automated listing, and professional web development services.',
-    url: 'https://allmysell.com',
-    siteName: 'AllMySell',
-    images: [
-      {
-        url: 'https://allmysell.com/favicon.svg',
-        width: 1200,
-        height: 630,
-        alt: 'AllMySell - E-Commerce Automation Platform',
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Allmysell LLC | Premium Dijital Çözümler & Teknoloji Ajansı",
+    template: "%s | Allmysell LLC"
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: { default: 'AllMySell | AI-Powered E-Commerce Automation Platform', template: '%s | AllMySell' },
-    description: 'Scale your e-commerce business with AllMySell. AI-powered trend research, automated listing, and professional web development services.',
-    images: ['https://allmysell.com/favicon.svg'],
-  },
-  verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION_ID || undefined,
-    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION_ID || undefined,
-    other: {
-      'msvalidate.01': process.env.NEXT_PUBLIC_BING_VERIFICATION_ID || '',
+  description: "Miami merkezli Allmysell LLC; e-ticaret otonomisi, özel SaaS yazılımları, yapay zeka entegrasyonları ve kurumsal web platformları inşa eden stratejik teknoloji partnerinizdir.",
+  keywords: ["yazılım ajansı", "miami teknoloji şirketi", "e-ticaret altyapısı", "saas geliştirme", "yapay zeka entegrasyonu", "dijital dönüşüm", "kurumsal web tasarım", "mobil uygulama geliştirme"],
+  authors: [{ name: "Allmysell LLC" }],
+  creator: "Allmysell LLC",
+  publisher: "Allmysell LLC",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   },
+  alternates: {
+    canonical: siteUrl,
+  },
+  openGraph: {
+    type: "website",
+    locale: "tr_TR",
+    url: siteUrl,
+    title: "Allmysell LLC | Premium Dijital Çözümler & Teknoloji Ajansı",
+    description: "Şirketinizin dijital altyapısını bir satış makinesine dönüştürüyoruz. Miami merkezli kurumsal teknoloji partneriniz.",
+    siteName: "Allmysell LLC",
+    images: [
+      {
+        url: `${siteUrl}/og-image.jpg`, // You can put a real image in public/og-image.jpg
+        width: 1200,
+        height: 630,
+        alt: "Allmysell LLC Teknoloji Ajansı",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Allmysell LLC | Premium Dijital Çözümler",
+    description: "Şirketinizin dijital altyapısını bir satış makinesine dönüştürüyoruz.",
+    images: [`${siteUrl}/og-image.jpg`],
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Allmysell LLC",
+  "url": siteUrl,
+  "logo": `${siteUrl}/logo.png`,
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+90-553-706-59-12",
+      "contactType": "customer service"
+    },
+    {
+      "@type": "ContactPoint",
+      "telephone": "+90-551-834-30-30",
+      "contactType": "sales"
+    }
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Miami",
+    "addressRegion": "FL",
+    "addressCountry": "US"
+  }
 };
 
 export default function RootLayout({
@@ -57,28 +88,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("dark", "font-sans", geist.variable)} translate="no" suppressHydrationWarning>
+    <html lang="tr" className="scroll-smooth">
       <head>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" />
-        <meta name="google" content="notranslate" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
-      <body className={`${inter.className} bg-[#030712] text-slate-100 antialiased`} suppressHydrationWarning>
-        <I18nProvider>
-          <HideOnRoutes>
-            <Navigation />
-          </HideOnRoutes>
-          <main className="min-h-screen">
-            {children}
-          </main>
-          <HideOnRoutes>
-            <Footer />
-            <WhatsAppButton />
-          </HideOnRoutes>
-          <CookieBanner />
-        </I18nProvider>
-        <GoogleAnalytics />
-        <Analytics />
+      <body className={`${inter.variable} ${playfair.variable} font-sans antialiased text-[#0A192F] selection:bg-[#0A192F] selection:text-white`}>
+        {children}
       </body>
     </html>
   );
