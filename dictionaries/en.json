@@ -1,0 +1,150 @@
+{
+  "nav": {
+    "web": "Web",
+    "ecommerce": "E-Commerce",
+    "saas": "SaaS",
+    "consulting": "Consulting",
+    "ai": "AI",
+    "mobile": "Mobile",
+    "freeAnalysis": "Free Analysis"
+  },
+  "hero": {
+    "badge": "Growth-Oriented Technology Partner",
+    "title1": "Transform Your Digital Infrastructure",
+    "title2": "Into a Sales Machine.",
+    "description": "Not just beautiful sites; we build systems that lower operational costs, increase profitability, and work completely autonomously.",
+    "cta1": "Let's Review Your System",
+    "cta2": "How We Do It?"
+  },
+  "metrics": {
+    "conversionIncrease": "Conversion Increase",
+    "avgResponseTime": "Avg Response Time"
+  },
+  "industries": {
+    "title": "Industries We Lead in Digital Transformation",
+    "list": [
+      "E-Commerce & Retail",
+      "Finance & Fintech",
+      "Health Tech",
+      "Logistics & Supply",
+      "B2B SaaS",
+      "Real Estate",
+      "EdTech"
+    ]
+  },
+  "services": {
+    "title1": "Premium Solutions That",
+    "title2": "Break Boundaries in Digital.",
+    "subtitle": "We build systems with custom architectures and the latest technologies for every project.",
+    "web": {
+      "title": "Comprehensive Web Platforms",
+      "desc": "Enterprise-level modern web applications with advanced performance metrics, SEO compliance, and unmatched user experience."
+    },
+    "ecommerce": {
+      "title": "E-Commerce Autonomy",
+      "desc": "Smart e-commerce infrastructures that can autonomously manage all processes from sales to logistics."
+    },
+    "saas": {
+      "title": "Custom SaaS Software",
+      "desc": "Highly secure and instantly scalable cloud architectures tailored to your needs."
+    },
+    "consulting": {
+      "title": "Strategic Consulting",
+      "desc": "We don't just write code. We restructure your project's business model, market share, and sustainable growth steps from scratch."
+    },
+    "ai": {
+      "title": "AI & Automation",
+      "desc": "Take operational efficiency to the top with AI assistants (RAG) and data analysis algorithms trained specifically for your company."
+    },
+    "mobile": {
+      "title": "Mobile Applications",
+      "desc": "High-performance native architectures that can instantly host millions of users in the iOS and Android ecosystems."
+    }
+  },
+  "features": {
+    "title1": "Why",
+    "title2": "Allmysell LLC?",
+    "subtitle": "Performance metrics that go beyond standards and our high-level engineering principles.",
+    "f1": {
+      "title": "Maximum Performance",
+      "desc": "Flawless scores on Google Core Web Vitals metrics. Zero latency with Edge network and SSR architecture.",
+      "b1": "100/100 Lighthouse Score",
+      "b2": "Instant Loading (Sub-second)"
+    },
+    "f2": {
+      "title": "Military Grade Security",
+      "desc": "Your corporate data and customer information are end-to-end encrypted. Data protection at international standards.",
+      "b1": "End-to-End Encryption",
+      "b2": "GDPR Compliance"
+    },
+    "f3": {
+      "title": "Unlimited Scalability",
+      "desc": "Even if traffic increases 100x suddenly, your systems instantly increase server resources instead of crashing.",
+      "b1": "Auto-Scaling Cloud Architecture",
+      "b2": "Microservice Integration"
+    }
+  },
+  "cases": {
+    "title": "We Speak with Numbers.",
+    "subtitle": "Beyond beautiful designs, we create measurable success stories that directly impact companies' balance sheets.",
+    "c1": {
+      "tag": "Global Logistics Company",
+      "title": "Operational Automation",
+      "problem": "Problem Encountered",
+      "problemDesc": "Daily loss of 4 hours of data entry due to manual order management and lack of cargo integration.",
+      "solution": "Our Solution & Result",
+      "solutionDesc": "Time savings achieved. All order and cargo processes were made autonomous with zero errors."
+    },
+    "c2": {
+      "tag": "Premium E-Commerce Brand",
+      "title": "Conversion Optimization",
+      "problem": "Problem Encountered",
+      "problemDesc": "Despite high traffic, a 70% cart abandonment rate due to a clunky infrastructure.",
+      "solution": "Our Solution & Result",
+      "solutionDesc": "Sales (CR) increase. With the new generation architecture, page load speeds were reduced to an average of 0.8 seconds."
+    }
+  },
+  "process": {
+    "title1": "Flawless Execution,",
+    "title2": "Clear Results.",
+    "subtitle": "We manage every step from idea to launch in a data-driven and transparent way.",
+    "steps": {
+      "s1": {
+        "title": "1. Discovery and Analysis",
+        "desc": "Market research, competitor analysis, and determination of needs."
+      },
+      "s2": {
+        "title": "2. Architectural Design",
+        "desc": "Drawing UI/UX prototypes and structuring the system infrastructure."
+      },
+      "s3": {
+        "title": "3. Agile Development",
+        "desc": "Coding with modern technologies and transparent testing processes."
+      },
+      "s4": {
+        "title": "4. Deployment",
+        "desc": "Server setup, launch, and continuous performance optimization."
+      }
+    }
+  },
+  "contact": {
+    "badge": "Time is Running Out",
+    "title1": "80% of Your Projects",
+    "title2": "Start Wrong.",
+    "subtitle": "Let's plan your system for free with our expert team before you burn your budget with faulty architectural choices.",
+    "hq": {
+      "title": "Headquarters (HQ)"
+    },
+    "tr": {
+      "title": "Turkey Operation Center"
+    },
+    "card": {
+      "title": "Corporate Communication",
+      "desc": "Only for corporate requests"
+    },
+    "cta": "Request Architecture Analysis Meeting"
+  },
+  "footer": {
+    "text": "Allmysell LLC. | Design and Technology"
+  }
+}

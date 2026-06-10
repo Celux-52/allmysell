@@ -4,9 +4,16 @@ import { useEffect, useState } from "react";
 import { Compass, Layout, ShoppingCart, Cpu, Mail, Phone, MapPin, ArrowRight, Sparkles, Globe, Layers, ShieldCheck, Activity, Code2, Rocket, CheckCircle2, Search, Bot, Smartphone, TrendingUp, BarChart3 } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 import Link from "next/link";
+import { useParams, usePathname, useRouter } from "next/navigation";
+import { dictionaries, Locale } from "@/dictionaries";
 
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const params = useParams();
+  const lang = (params?.lang as Locale) || "en";
+  const dict = dictionaries[lang];
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,7 +39,12 @@ export default function Home() {
     }
   };
 
-  const industries = ["E-Ticaret & Perakende", "Finans & Fintech", "Sağlık Teknolojileri", "Lojistik & Tedarik", "B2B SaaS", "Gayrimenkul", "Eğitim Teknolojileri"];
+  const switchLanguage = (newLocale: string) => {
+    // pathname looks like /en/hizmetler or /tr/hizmetler
+    if (!pathname) return;
+    const newPath = pathname.replace(`/${lang}`, `/${newLocale}`);
+    router.push(newPath);
+  };
 
   return (
     <div className="relative min-h-screen bg-[#FAFAFA] overflow-hidden selection:bg-[#0A192F] selection:text-white">
@@ -52,7 +64,7 @@ export default function Home() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
-          <a href="#" className="flex items-center gap-2 font-serif text-2xl md:text-3xl font-bold tracking-tight text-[#0A192F] mr-auto">
+          <a href={`/${lang}`} className="flex items-center gap-2 font-serif text-2xl md:text-3xl font-bold tracking-tight text-[#0A192F] mr-auto">
             <div className="w-8 h-8 rounded-lg bg-[#0A192F] flex items-center justify-center shadow-lg shadow-[#0A192F]/20">
                <span className="text-white text-lg leading-none">A</span>
             </div>
@@ -60,20 +72,37 @@ export default function Home() {
           </a>
 
           <nav className="hidden lg:flex items-center gap-8 mr-8">
-            <Link href="/hizmetler/web-cozumleri" className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">Web</Link>
-            <Link href="/hizmetler/e-ticaret" className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">E-Ticaret</Link>
-            <Link href="/hizmetler/saas-yazilimlari" className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">SaaS</Link>
-            <Link href="/hizmetler/stratejik-danismanlik" className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">Danışmanlık</Link>
-            <Link href="/hizmetler/yapay-zeka" className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors flex items-center gap-1"><Sparkles className="w-3 h-3 text-blue-500" />Yapay Zeka</Link>
-            <Link href="/hizmetler/mobil-uygulama" className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">Mobil</Link>
+            <Link href={`/${lang}/hizmetler/web-cozumleri`} className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">{dict.nav.web}</Link>
+            <Link href={`/${lang}/hizmetler/e-ticaret`} className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">{dict.nav.ecommerce}</Link>
+            <Link href={`/${lang}/hizmetler/saas-yazilimlari`} className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">{dict.nav.saas}</Link>
+            <Link href={`/${lang}/hizmetler/stratejik-danismanlik`} className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">{dict.nav.consulting}</Link>
+            <Link href={`/${lang}/hizmetler/yapay-zeka`} className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors flex items-center gap-1"><Sparkles className="w-3 h-3 text-blue-500" />{dict.nav.ai}</Link>
+            <Link href={`/${lang}/hizmetler/mobil-uygulama`} className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">{dict.nav.mobile}</Link>
           </nav>
 
-          <a
-            href="#contact"
-            className="flex shrink-0 items-center gap-2 bg-[#0A192F] hover:bg-[#112240] text-white px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide transition-all shadow-[0_0_40px_-10px_rgba(10,25,47,0.5)] hover:shadow-[0_0_50px_-10px_rgba(10,25,47,0.6)] hover:-translate-y-0.5 border border-white/10"
-          >
-            Ücretsiz Analiz <ArrowRight className="w-4 h-4" />
-          </a>
+          <div className="flex items-center gap-4">
+            <div className="flex bg-slate-200/50 p-1 rounded-full text-xs font-semibold">
+              <button 
+                onClick={() => switchLanguage('en')} 
+                className={`px-3 py-1.5 rounded-full transition-all ${lang === 'en' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-800'}`}
+              >
+                EN
+              </button>
+              <button 
+                onClick={() => switchLanguage('tr')} 
+                className={`px-3 py-1.5 rounded-full transition-all ${lang === 'tr' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-800'}`}
+              >
+                TR
+              </button>
+            </div>
+            
+            <a
+              href="#contact"
+              className="hidden sm:flex shrink-0 items-center gap-2 bg-[#0A192F] hover:bg-[#112240] text-white px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide transition-all shadow-[0_0_40px_-10px_rgba(10,25,47,0.5)] hover:shadow-[0_0_50px_-10px_rgba(10,25,47,0.6)] hover:-translate-y-0.5 border border-white/10"
+            >
+              {dict.nav.freeAnalysis} <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
         </div>
       </header>
 
@@ -88,24 +117,24 @@ export default function Home() {
           >
             <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-blue-200 bg-white/60 backdrop-blur-md text-sm font-semibold text-blue-900 shadow-sm">
               <Sparkles className="w-4 h-4 text-blue-500" />
-              Büyüme Odaklı Teknoloji Partneriniz
+              {dict.hero.badge}
             </motion.div>
             
             <motion.h1 variants={fadeInUp} className="font-sans text-5xl md:text-7xl lg:text-[6.5rem] leading-[1.05] font-bold mb-8 text-[#0A192F] tracking-tighter">
-              Dijital Altyapınızı <br className="md:hidden" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0A192F] via-blue-800 to-[#0A192F]">Satış Makinesine Dönüştürün.</span>
+              {dict.hero.title1} <br className="md:hidden" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0A192F] via-blue-800 to-[#0A192F]">{dict.hero.title2}</span>
             </motion.h1>
             
             <motion.p variants={fadeInUp} className="font-sans text-xl md:text-2xl text-slate-500 font-light max-w-3xl mx-auto leading-relaxed mb-12">
-              Sadece güzel görünen siteler değil; şirketinizin operasyonel maliyetlerini düşüren, <span className="font-medium text-[#0A192F]">karlılığı artıran ve tam otonom çalışan</span> sistemler kuruyoruz.
+              {dict.hero.description}
             </motion.p>
             
             <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-4">
               <a href="#contact" className="bg-[#0A192F] text-white px-8 py-4 rounded-2xl text-sm font-semibold tracking-wide transition-all shadow-[0_20px_40px_-15px_rgba(10,25,47,0.5)] hover:bg-[#112240] hover:-translate-y-1 border border-white/10 flex items-center gap-2">
-                Sisteminizi İnceleyelim <ArrowRight className="w-4 h-4" />
+                {dict.hero.cta1} <ArrowRight className="w-4 h-4" />
               </a>
               <a href="#services" className="bg-white/80 backdrop-blur-md border border-slate-200 hover:border-[#0A192F]/30 hover:bg-white text-[#0A192F] px-8 py-4 rounded-2xl text-sm font-semibold tracking-wide transition-all shadow-sm hover:shadow-md">
-                Nasıl Yapıyoruz?
+                {dict.hero.cta2}
               </a>
             </motion.div>
           </motion.div>
@@ -130,14 +159,14 @@ export default function Home() {
                         <TrendingUp className="w-4 h-4 text-blue-600" />
                       </div>
                       <div className="text-2xl font-bold text-slate-800 mb-1">+210%</div>
-                      <div className="text-xs text-slate-500">Dönüşüm Artışı</div>
+                      <div className="text-xs text-slate-500">{dict.metrics.conversionIncrease}</div>
                    </div>
                    <div className="h-32 bg-slate-100/50 rounded-2xl border border-slate-200/50 flex flex-col justify-center px-6 hover:bg-indigo-50/50 transition-colors">
                       <div className="w-8 h-8 rounded-full bg-indigo-100 mb-3 flex items-center justify-center">
                         <Activity className="w-4 h-4 text-indigo-600" />
                       </div>
                       <div className="text-2xl font-bold text-slate-800 mb-1">0.8s</div>
-                      <div className="text-xs text-slate-500">Ortalama Yanıt Süresi</div>
+                      <div className="text-xs text-slate-500">{dict.metrics.avgResponseTime}</div>
                    </div>
                    <div className="h-32 bg-[#0A192F]/5 rounded-2xl border border-[#0A192F]/10 flex flex-col justify-center px-6">
                       <div className="w-8 h-8 rounded-full bg-[#0A192F]/10 mb-3"></div>
@@ -152,13 +181,13 @@ export default function Home() {
         {/* Industry Marquee */}
         <section className="py-10 bg-white border-y border-slate-200/60 overflow-hidden relative z-10">
           <div className="max-w-7xl mx-auto px-6 mb-6 text-center">
-            <p className="text-sm font-semibold text-slate-400 uppercase tracking-widest">Dijital Dönüşümüne Öncülük Ettiğimiz Sektörler</p>
+            <p className="text-sm font-semibold text-slate-400 uppercase tracking-widest">{dict.industries.title}</p>
           </div>
           <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-white to-transparent z-10"></div>
           <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-white to-transparent z-10"></div>
           <div className="flex w-[200%] md:w-[100%] overflow-hidden">
             <div className="flex w-max animate-marquee items-center opacity-40">
-              {[...industries, ...industries, ...industries].map((ind, idx) => (
+              {[...dict.industries.list, ...dict.industries.list, ...dict.industries.list].map((ind, idx) => (
                 <div key={idx} className="mx-8 md:mx-16 flex items-center text-xl md:text-2xl font-sans text-slate-800 font-bold tracking-tight whitespace-nowrap">
                   {ind}
                 </div>
@@ -177,59 +206,55 @@ export default function Home() {
           >
             <motion.div variants={fadeInUp} className="mb-16">
               <h2 className="font-sans text-4xl md:text-5xl lg:text-6xl font-bold text-[#0A192F] tracking-tight mb-6">
-                Dijitalde Sınırları Aşan <br/><span className="text-blue-600">Premium Çözümler.</span>
+                {dict.services.title1} <br/><span className="text-blue-600">{dict.services.title2}</span>
               </h2>
               <p className="text-slate-500 max-w-2xl text-lg md:text-xl font-light">
-                Her projeye özel mimari ve en son teknolojilerle geliştirilmiş sistemler inşa ediyoruz.
+                {dict.services.subtitle}
               </p>
             </motion.div>
 
             {/* Bento Grid Layout */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(280px,auto)]">
               
-              {/* Card 1 - Spans 2 columns */}
-              <Link href="/hizmetler/web-cozumleri" className="md:col-span-2 block">
+              <Link href={`/${lang}/hizmetler/web-cozumleri`} className="md:col-span-2 block">
                 <motion.div variants={fadeInUp} className="h-full group bg-white p-10 md:p-12 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 relative overflow-hidden cursor-pointer">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-700 ease-out"></div>
                   <div className="w-14 h-14 bg-white shadow-md border border-slate-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
                     <Globe className="w-6 h-6 text-blue-600 stroke-[1.5]" />
                   </div>
-                  <h3 className="font-sans text-2xl md:text-3xl font-bold mb-4 text-[#0A192F] tracking-tight">Kapsamlı Web Platformları</h3>
+                  <h3 className="font-sans text-2xl md:text-3xl font-bold mb-4 text-[#0A192F] tracking-tight">{dict.services.web.title}</h3>
                   <p className="text-slate-500 leading-relaxed text-lg max-w-md">
-                    Gelişmiş performans metriklerine sahip, SEO uyumlu ve eşsiz kullanıcı deneyimi sunan kurumsal seviyede modern web uygulamaları.
+                    {dict.services.web.desc}
                   </p>
                 </motion.div>
               </Link>
 
-              {/* Card 2 */}
-              <Link href="/hizmetler/e-ticaret" className="block">
+              <Link href={`/${lang}/hizmetler/e-ticaret`} className="block">
                 <motion.div variants={fadeInUp} className="h-full group bg-[#0A192F] p-10 md:p-12 rounded-[2rem] border border-[#0A192F] shadow-lg hover:shadow-2xl hover:shadow-[#0A192F]/20 transition-all duration-500 relative overflow-hidden cursor-pointer">
                   <div className="absolute top-[-50%] right-[-50%] w-[100%] h-[100%] bg-blue-500/20 rounded-full blur-3xl group-hover:bg-blue-400/30 transition-colors duration-700"></div>
                   <div className="w-14 h-14 bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
                     <ShoppingCart className="w-6 h-6 text-white stroke-[1.5]" />
                   </div>
-                  <h3 className="font-sans text-2xl md:text-3xl font-bold mb-4 text-white tracking-tight">E-Ticaret Otonomisi</h3>
+                  <h3 className="font-sans text-2xl md:text-3xl font-bold mb-4 text-white tracking-tight">{dict.services.ecommerce.title}</h3>
                   <p className="text-blue-100/70 leading-relaxed text-lg">
-                    Satıştan lojistiğe kadar tüm süreçleri insansız yönetebilen akıllı e-ticaret altyapıları.
+                    {dict.services.ecommerce.desc}
                   </p>
                 </motion.div>
               </Link>
 
-              {/* Card 3 */}
-              <Link href="/hizmetler/saas-yazilimlari" className="block">
+              <Link href={`/${lang}/hizmetler/saas-yazilimlari`} className="block">
                 <motion.div variants={fadeInUp} className="h-full group bg-white p-10 md:p-12 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 relative overflow-hidden cursor-pointer">
                    <div className="w-14 h-14 bg-white shadow-md border border-slate-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                     <ShieldCheck className="w-6 h-6 text-indigo-600 stroke-[1.5]" />
                   </div>
-                  <h3 className="font-sans text-2xl md:text-3xl font-bold mb-4 text-[#0A192F] tracking-tight">Özel SaaS Yazılımları</h3>
+                  <h3 className="font-sans text-2xl md:text-3xl font-bold mb-4 text-[#0A192F] tracking-tight">{dict.services.saas.title}</h3>
                   <p className="text-slate-500 leading-relaxed text-lg">
-                    İhtiyaçlarınıza özel, yüksek güvenlikli ve anında ölçeklenebilir bulut mimarileri.
+                    {dict.services.saas.desc}
                   </p>
                 </motion.div>
               </Link>
 
-              {/* Card 4 - Spans 2 columns */}
-              <Link href="/hizmetler/stratejik-danismanlik" className="md:col-span-2 block">
+              <Link href={`/${lang}/hizmetler/stratejik-danismanlik`} className="md:col-span-2 block">
                 <motion.div variants={fadeInUp} className="h-full group bg-white p-10 md:p-12 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 relative overflow-hidden cursor-pointer">
                   <div className="absolute bottom-0 right-0 w-48 h-48 bg-slate-50 rounded-tl-[100px] -z-10 group-hover:bg-blue-50/50 transition-colors duration-700"></div>
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
@@ -237,9 +262,9 @@ export default function Home() {
                       <div className="w-14 h-14 bg-white shadow-md border border-slate-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                         <Layers className="w-6 h-6 text-slate-800 stroke-[1.5]" />
                       </div>
-                      <h3 className="font-sans text-2xl md:text-3xl font-bold mb-4 text-[#0A192F] tracking-tight">Stratejik Danışmanlık</h3>
+                      <h3 className="font-sans text-2xl md:text-3xl font-bold mb-4 text-[#0A192F] tracking-tight">{dict.services.consulting.title}</h3>
                       <p className="text-slate-500 leading-relaxed text-lg max-w-md">
-                        Yalnızca kod yazmıyoruz. Projenizin iş modelini, pazar payını ve sürdürülebilir büyüme adımlarını baştan kurguluyoruz.
+                        {dict.services.consulting.desc}
                       </p>
                     </div>
                     <div className="hidden md:block w-32 h-32 bg-slate-100 rounded-full border-[8px] border-white shadow-inner flex items-center justify-center relative">
@@ -250,30 +275,28 @@ export default function Home() {
                 </motion.div>
               </Link>
 
-              {/* Card 5 - Spans 2 columns */}
-              <Link href="/hizmetler/yapay-zeka" className="md:col-span-2 block">
+              <Link href={`/${lang}/hizmetler/yapay-zeka`} className="md:col-span-2 block">
                 <motion.div variants={fadeInUp} className="h-full group bg-white p-10 md:p-12 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 relative overflow-hidden cursor-pointer">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50/50 rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-700 ease-out"></div>
                   <div className="w-14 h-14 bg-white shadow-md border border-slate-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                     <Bot className="w-6 h-6 text-blue-600 stroke-[1.5]" />
                   </div>
-                  <h3 className="font-sans text-2xl md:text-3xl font-bold mb-4 text-[#0A192F] tracking-tight">Yapay Zeka & Otomasyon</h3>
+                  <h3 className="font-sans text-2xl md:text-3xl font-bold mb-4 text-[#0A192F] tracking-tight">{dict.services.ai.title}</h3>
                   <p className="text-slate-500 leading-relaxed text-lg max-w-md">
-                    Şirketinize özel eğitilmiş yapay zeka asistanları (RAG) ve veri analiz algoritmalarıyla operasyonel verimliliği zirveye taşıyın.
+                    {dict.services.ai.desc}
                   </p>
                 </motion.div>
               </Link>
 
-              {/* Card 6 */}
-              <Link href="/hizmetler/mobil-uygulama" className="block">
+              <Link href={`/${lang}/hizmetler/mobil-uygulama`} className="block">
                 <motion.div variants={fadeInUp} className="h-full group bg-[#0A192F] p-10 md:p-12 rounded-[2rem] border border-[#0A192F] shadow-lg hover:shadow-2xl hover:shadow-[#0A192F]/20 transition-all duration-500 relative overflow-hidden cursor-pointer">
                   <div className="absolute top-[-50%] right-[-50%] w-[100%] h-[100%] bg-indigo-500/20 rounded-full blur-3xl group-hover:bg-indigo-400/30 transition-colors duration-700"></div>
                   <div className="w-14 h-14 bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
                     <Smartphone className="w-6 h-6 text-white stroke-[1.5]" />
                   </div>
-                  <h3 className="font-sans text-2xl md:text-3xl font-bold mb-4 text-white tracking-tight">Mobil Uygulamalar</h3>
+                  <h3 className="font-sans text-2xl md:text-3xl font-bold mb-4 text-white tracking-tight">{dict.services.mobile.title}</h3>
                   <p className="text-indigo-100/70 leading-relaxed text-lg">
-                    iOS ve Android ekosistemlerinde milyonlarca kullanıcıyı anında ağırlayabilecek yüksek performanslı native mimariler.
+                    {dict.services.mobile.desc}
                   </p>
                 </motion.div>
               </Link>
@@ -296,10 +319,10 @@ export default function Home() {
             <div className="flex flex-col md:flex-row gap-12 items-end mb-16">
               <motion.div variants={fadeInUp} className="flex-1">
                 <h2 className="font-sans text-4xl md:text-5xl font-bold text-[#0A192F] tracking-tight mb-6">
-                  Neden <span className="text-blue-600">Allmysell LLC?</span>
+                  {dict.features.title1} <span className="text-blue-600">{dict.features.title2}</span>
                 </h2>
                 <p className="text-slate-500 max-w-xl text-lg font-light">
-                  Standartların ötesine geçen performans metrikleri ve üst düzey mühendislik prensiplerimiz.
+                  {dict.features.subtitle}
                 </p>
               </motion.div>
             </div>
@@ -310,16 +333,16 @@ export default function Home() {
                 <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                   <Activity className="w-6 h-6 text-blue-600" />
                 </div>
-                <h4 className="text-xl font-bold text-[#0A192F] mb-4">Maksimum Performans</h4>
+                <h4 className="text-xl font-bold text-[#0A192F] mb-4">{dict.features.f1.title}</h4>
                 <p className="text-slate-500 font-light leading-relaxed mb-6">
-                  Google Core Web Vitals metriklerinde kusursuz skorlar. Edge network ve SSR mimarisi ile sıfır gecikme.
+                  {dict.features.f1.desc}
                 </p>
                 <ul className="space-y-3">
                   <li className="flex items-center gap-3 text-sm font-medium text-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500" /> 100/100 Lighthouse Skoru
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {dict.features.f1.b1}
                   </li>
                   <li className="flex items-center gap-3 text-sm font-medium text-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Anında Yüklenme (Sub-second)
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {dict.features.f1.b2}
                   </li>
                 </ul>
               </motion.div>
@@ -329,16 +352,16 @@ export default function Home() {
                 <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 group-hover:bg-white/10 group-hover:border-white/10">
                   <ShieldCheck className="w-6 h-6 text-indigo-600 group-hover:text-white" />
                 </div>
-                <h4 className="text-xl font-bold text-[#0A192F] group-hover:text-white mb-4 transition-colors">Askeri Düzey Güvenlik</h4>
+                <h4 className="text-xl font-bold text-[#0A192F] group-hover:text-white mb-4 transition-colors">{dict.features.f2.title}</h4>
                 <p className="text-slate-500 group-hover:text-blue-100/70 font-light leading-relaxed mb-6 transition-colors">
-                  Kurumsal verileriniz ve müşteri bilgileriniz uçtan uca şifrelenir. Uluslararası standartlarda veri koruması.
+                  {dict.features.f2.desc}
                 </p>
                 <ul className="space-y-3">
                   <li className="flex items-center gap-3 text-sm font-medium text-slate-700 group-hover:text-white transition-colors">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500" /> End-to-End Encryption
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {dict.features.f2.b1}
                   </li>
                   <li className="flex items-center gap-3 text-sm font-medium text-slate-700 group-hover:text-white transition-colors">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500" /> GDPR & KVKK Uyumluluğu
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {dict.features.f2.b2}
                   </li>
                 </ul>
               </motion.div>
@@ -348,16 +371,16 @@ export default function Home() {
                 <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                   <Cpu className="w-6 h-6 text-blue-600" />
                 </div>
-                <h4 className="text-xl font-bold text-[#0A192F] mb-4">Sınırsız Ölçeklenebilirlik</h4>
+                <h4 className="text-xl font-bold text-[#0A192F] mb-4">{dict.features.f3.title}</h4>
                 <p className="text-slate-500 font-light leading-relaxed mb-6">
-                  Trafik ani olarak 100 katına çıksa bile sistemleriniz çökmek yerine sunucu kaynaklarını anında artırır.
+                  {dict.features.f3.desc}
                 </p>
                 <ul className="space-y-3">
                   <li className="flex items-center gap-3 text-sm font-medium text-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Auto-Scaling Bulut Mimarisi
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {dict.features.f3.b1}
                   </li>
                   <li className="flex items-center gap-3 text-sm font-medium text-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Mikroservis Entegrasyonu
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {dict.features.f3.b2}
                   </li>
                 </ul>
               </motion.div>
@@ -377,10 +400,10 @@ export default function Home() {
           >
             <div className="text-center mb-20">
               <h2 className="font-sans text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-6">
-                Rakamlarla Konuşuyoruz.
+                {dict.cases.title}
               </h2>
               <p className="text-blue-100/60 max-w-2xl mx-auto text-lg md:text-xl font-light">
-                Güzel tasarımların ötesinde, şirketlerin bilançosuna doğrudan etki eden ölçülebilir başarı hikayeleri yaratıyoruz.
+                {dict.cases.subtitle}
               </p>
             </div>
 
@@ -392,21 +415,21 @@ export default function Home() {
                      <TrendingUp className="w-8 h-8 text-blue-400" />
                    </div>
                    <div>
-                     <div className="text-sm text-blue-300 font-semibold tracking-widest uppercase mb-1">Global Lojistik Firması</div>
-                     <div className="text-white font-bold text-xl md:text-2xl">Operasyonel Otomasyon</div>
+                     <div className="text-sm text-blue-300 font-semibold tracking-widest uppercase mb-1">{dict.cases.c1.tag}</div>
+                     <div className="text-white font-bold text-xl md:text-2xl">{dict.cases.c1.title}</div>
                    </div>
                 </div>
                 <div className="space-y-6">
                   <div>
-                     <div className="text-white/40 text-sm uppercase tracking-wider font-semibold mb-2">Karşılaşılan Sorun</div>
-                     <p className="text-white/80 font-light leading-relaxed text-lg">Manuel sipariş yönetimi ve kargo entegrasyonu eksikliği nedeniyle günlük 4 saatlik veri girişi kaybı.</p>
+                     <div className="text-white/40 text-sm uppercase tracking-wider font-semibold mb-2">{dict.cases.c1.problem}</div>
+                     <p className="text-white/80 font-light leading-relaxed text-lg">{dict.cases.c1.problemDesc}</p>
                   </div>
                   <div className="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent my-8"></div>
                   <div>
-                     <div className="text-white/40 text-sm uppercase tracking-wider font-semibold mb-2">Bizim Çözümümüz & Sonuç</div>
+                     <div className="text-white/40 text-sm uppercase tracking-wider font-semibold mb-2">{dict.cases.c1.solution}</div>
                      <div className="flex flex-col sm:flex-row sm:items-end gap-4 mt-4">
                        <span className="text-6xl font-bold text-emerald-400 leading-none">%85</span>
-                       <span className="text-white/80 font-light leading-relaxed pb-1 text-lg">Zaman tasarrufu sağlandı. Tüm sipariş ve kargo süreçleri sıfır hata ile otonom hale getirildi.</span>
+                       <span className="text-white/80 font-light leading-relaxed pb-1 text-lg">{dict.cases.c1.solutionDesc}</span>
                      </div>
                   </div>
                 </div>
@@ -419,21 +442,21 @@ export default function Home() {
                      <BarChart3 className="w-8 h-8 text-indigo-400" />
                    </div>
                    <div>
-                     <div className="text-sm text-indigo-300 font-semibold tracking-widest uppercase mb-1">Premium E-Ticaret Markası</div>
-                     <div className="text-white font-bold text-xl md:text-2xl">Dönüşüm Optimizasyonu</div>
+                     <div className="text-sm text-indigo-300 font-semibold tracking-widest uppercase mb-1">{dict.cases.c2.tag}</div>
+                     <div className="text-white font-bold text-xl md:text-2xl">{dict.cases.c2.title}</div>
                    </div>
                 </div>
                 <div className="space-y-6">
                   <div>
-                     <div className="text-white/40 text-sm uppercase tracking-wider font-semibold mb-2">Karşılaşılan Sorun</div>
-                     <p className="text-white/80 font-light leading-relaxed text-lg">Yüksek trafik alınmasına rağmen hantal altyapı nedeniyle sepette terk edilme (cart abandonment) oranının %70 olması.</p>
+                     <div className="text-white/40 text-sm uppercase tracking-wider font-semibold mb-2">{dict.cases.c2.problem}</div>
+                     <p className="text-white/80 font-light leading-relaxed text-lg">{dict.cases.c2.problemDesc}</p>
                   </div>
                   <div className="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent my-8"></div>
                   <div>
-                     <div className="text-white/40 text-sm uppercase tracking-wider font-semibold mb-2">Bizim Çözümümüz & Sonuç</div>
+                     <div className="text-white/40 text-sm uppercase tracking-wider font-semibold mb-2">{dict.cases.c2.solution}</div>
                      <div className="flex flex-col sm:flex-row sm:items-end gap-4 mt-4">
                        <span className="text-6xl font-bold text-emerald-400 leading-none">%210</span>
-                       <span className="text-white/80 font-light leading-relaxed pb-1 text-lg">Satış (CR) artışı. Yeni nesil mimari ile sayfa açılış hızları ortalama 0.8 saniyeye düşürüldü.</span>
+                       <span className="text-white/80 font-light leading-relaxed pb-1 text-lg">{dict.cases.c2.solutionDesc}</span>
                      </div>
                   </div>
                 </div>
@@ -452,10 +475,10 @@ export default function Home() {
           >
             <motion.div variants={fadeInUp} className="text-center mb-20">
               <h2 className="font-sans text-4xl md:text-5xl font-bold text-[#0A192F] tracking-tight mb-6">
-                Kusursuz İşleyiş, <br/><span className="text-blue-600">Net Sonuçlar.</span>
+                {dict.process.title1} <br/><span className="text-blue-600">{dict.process.title2}</span>
               </h2>
               <p className="text-slate-500 max-w-2xl mx-auto text-lg font-light">
-                Fikirden lansmana kadar her adımı veri odaklı ve şeffaf bir şekilde yönetiyoruz.
+                {dict.process.subtitle}
               </p>
             </motion.div>
 
@@ -465,10 +488,10 @@ export default function Home() {
 
               <div className="grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
                 {[
-                  { icon: Search, title: "1. Keşif ve Analiz", desc: "Pazar araştırması, rakip analizi ve ihtiyaçların belirlenmesi." },
-                  { icon: Layers, title: "2. Mimari Tasarım", desc: "UI/UX prototiplerinin çizilmesi ve sistem altyapısının kurgulanması." },
-                  { icon: Code2, title: "3. Çevik Geliştirme", desc: "Modern teknolojilerle kodlama ve şeffaf test süreçleri." },
-                  { icon: Rocket, title: "4. Canlıya Alma", desc: "Sunucu kurulumu, lansman ve sürekli performans optimizasyonu." }
+                  { icon: Search, title: dict.process.steps.s1.title, desc: dict.process.steps.s1.desc },
+                  { icon: Layers, title: dict.process.steps.s2.title, desc: dict.process.steps.s2.desc },
+                  { icon: Code2, title: dict.process.steps.s3.title, desc: dict.process.steps.s3.desc },
+                  { icon: Rocket, title: dict.process.steps.s4.title, desc: dict.process.steps.s4.desc }
                 ].map((step, i) => (
                   <motion.div key={i} variants={fadeInUp} className="relative text-center group">
                     <div className="w-24 h-24 mx-auto bg-white rounded-full border border-slate-200 shadow-sm flex items-center justify-center mb-8 relative z-10 group-hover:scale-110 group-hover:border-blue-400 group-hover:shadow-xl group-hover:shadow-blue-900/10 transition-all duration-500">
@@ -503,14 +526,14 @@ export default function Home() {
                 <motion.div variants={fadeInUp}>
                   <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-white/10 border border-white/10 text-xs font-semibold text-red-400 uppercase tracking-widest">
                     <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
-                    Zaman Daralıyor
+                    {dict.contact.badge}
                   </div>
                   <h2 className="font-sans text-5xl md:text-6xl font-bold text-white mb-8 tracking-tighter leading-[1.1]">
-                    Projelerinizin <span className="text-red-400">%80'i</span> <br className="hidden md:block"/>
-                    Yanlış Başlıyor.
+                    {dict.contact.title1} <br className="hidden md:block"/>
+                    {dict.contact.title2}
                   </h2>
                   <p className="text-blue-100/60 text-lg md:text-xl font-light mb-12 max-w-md leading-relaxed">
-                    Hatalı mimari seçimleriyle bütçenizi yakmadan önce, uzman ekibimizle sisteminizi ücretsiz planlayalım.
+                    {dict.contact.subtitle}
                   </p>
                   
                   <div className="flex flex-col gap-6">
@@ -519,7 +542,7 @@ export default function Home() {
                         <MapPin className="w-5 h-5 text-blue-400" />
                       </div>
                       <div>
-                        <h4 className="text-white font-semibold mb-1">Genel Merkez (HQ)</h4>
+                        <h4 className="text-white font-semibold mb-1">{dict.contact.hq.title}</h4>
                         <p className="text-sm leading-relaxed text-white/50">ALLMYSELL LLC<br/>7901 4th St N, Ste 300<br/>St. Petersburg, FL 33702, USA</p>
                       </div>
                     </div>
@@ -529,7 +552,7 @@ export default function Home() {
                         <Phone className="w-5 h-5 text-blue-400" />
                       </div>
                       <div>
-                        <h4 className="text-white font-semibold mb-1">Türkiye Operasyon Merkezi</h4>
+                        <h4 className="text-white font-semibold mb-1">{dict.contact.tr.title}</h4>
                         <p className="text-sm leading-relaxed text-white/50">+90 553 706 59 12<br/>+90 551 834 30 30</p>
                       </div>
                     </div>
@@ -539,7 +562,7 @@ export default function Home() {
                 <motion.div variants={fadeInUp} className="space-y-6">
                   {/* Digital Contact Card */}
                   <div className="bg-[#0A192F]/50 backdrop-blur-md p-8 rounded-3xl border border-white/5 hover:bg-white/5 transition-colors duration-500">
-                    <h4 className="text-blue-300 text-xs font-semibold uppercase tracking-widest mb-6 border-b border-white/10 pb-4">Kurumsal İletişim</h4>
+                    <h4 className="text-blue-300 text-xs font-semibold uppercase tracking-widest mb-6 border-b border-white/10 pb-4">{dict.contact.card.title}</h4>
                     <div className="space-y-6">
                       <a href="mailto:info@allmysell.com" className="flex items-center justify-between text-white hover:text-blue-300 transition-all duration-300 group">
                         <div className="flex items-center space-x-4">
@@ -548,7 +571,7 @@ export default function Home() {
                           </div>
                           <div>
                             <span className="text-lg md:text-xl font-light tracking-wide block">info@allmysell.com</span>
-                            <span className="text-xs text-white/40">Sadece kurumsal talepler için</span>
+                            <span className="text-xs text-white/40">{dict.contact.card.desc}</span>
                           </div>
                         </div>
                         <ArrowRight className="w-4 h-4 text-white/20 group-hover:text-blue-300 group-hover:translate-x-1 transition-all" />
@@ -557,7 +580,7 @@ export default function Home() {
                   </div>
 
                   <a href="mailto:info@allmysell.com" className="group flex items-center justify-center gap-3 w-full py-5 bg-white text-[#0A192F] rounded-2xl font-bold text-lg hover:bg-blue-50 hover:scale-[1.02] transition-all duration-300 shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]">
-                    Mimari Analiz Toplantısı Talep Et
+                    {dict.contact.cta}
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </a>
                 </motion.div>
@@ -570,7 +593,7 @@ export default function Home() {
       {/* Modern Footer */}
       <footer className="py-8 bg-[#020A16] px-6 text-center border-t border-white/5">
         <p className="text-xs md:text-sm text-white/30 font-semibold tracking-[0.2em] uppercase">
-          &copy; 2026 Allmysell LLC. <span className="mx-2">|</span> Tasarım ve Teknoloji
+          &copy; 2026 {dict.footer.text}
         </p>
       </footer>
     </div>

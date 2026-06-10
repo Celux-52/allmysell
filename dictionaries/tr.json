@@ -1,0 +1,150 @@
+{
+  "nav": {
+    "web": "Web",
+    "ecommerce": "E-Ticaret",
+    "saas": "SaaS",
+    "consulting": "Danışmanlık",
+    "ai": "Yapay Zeka",
+    "mobile": "Mobil",
+    "freeAnalysis": "Ücretsiz Analiz"
+  },
+  "hero": {
+    "badge": "Büyüme Odaklı Teknoloji Partneriniz",
+    "title1": "Dijital Altyapınızı",
+    "title2": "Satış Makinesine Dönüştürün.",
+    "description": "Sadece güzel görünen siteler değil; şirketinizin operasyonel maliyetlerini düşüren, karlılığı artıran ve tam otonom çalışan sistemler kuruyoruz.",
+    "cta1": "Sisteminizi İnceleyelim",
+    "cta2": "Nasıl Yapıyoruz?"
+  },
+  "metrics": {
+    "conversionIncrease": "Dönüşüm Artışı",
+    "avgResponseTime": "Ortalama Yanıt Süresi"
+  },
+  "industries": {
+    "title": "Dijital Dönüşümüne Öncülük Ettiğimiz Sektörler",
+    "list": [
+      "E-Ticaret & Perakende",
+      "Finans & Fintech",
+      "Sağlık Teknolojileri",
+      "Lojistik & Tedarik",
+      "B2B SaaS",
+      "Gayrimenkul",
+      "Eğitim Teknolojileri"
+    ]
+  },
+  "services": {
+    "title1": "Dijitalde Sınırları Aşan",
+    "title2": "Premium Çözümler.",
+    "subtitle": "Her projeye özel mimari ve en son teknolojilerle geliştirilmiş sistemler inşa ediyoruz.",
+    "web": {
+      "title": "Kapsamlı Web Platformları",
+      "desc": "Gelişmiş performans metriklerine sahip, SEO uyumlu ve eşsiz kullanıcı deneyimi sunan kurumsal seviyede modern web uygulamaları."
+    },
+    "ecommerce": {
+      "title": "E-Ticaret Otonomisi",
+      "desc": "Satıştan lojistiğe kadar tüm süreçleri insansız yönetebilen akıllı e-ticaret altyapıları."
+    },
+    "saas": {
+      "title": "Özel SaaS Yazılımları",
+      "desc": "İhtiyaçlarınıza özel, yüksek güvenlikli ve anında ölçeklenebilir bulut mimarileri."
+    },
+    "consulting": {
+      "title": "Stratejik Danışmanlık",
+      "desc": "Yalnızca kod yazmıyoruz. Projenizin iş modelini, pazar payını ve sürdürülebilir büyüme adımlarını baştan kurguluyoruz."
+    },
+    "ai": {
+      "title": "Yapay Zeka & Otomasyon",
+      "desc": "Şirketinize özel eğitilmiş yapay zeka asistanları (RAG) ve veri analiz algoritmalarıyla operasyonel verimliliği zirveye taşıyın."
+    },
+    "mobile": {
+      "title": "Mobil Uygulamalar",
+      "desc": "iOS ve Android ekosistemlerinde milyonlarca kullanıcıyı anında ağırlayabilecek yüksek performanslı native mimariler."
+    }
+  },
+  "features": {
+    "title1": "Neden",
+    "title2": "Allmysell LLC?",
+    "subtitle": "Standartların ötesine geçen performans metrikleri ve üst düzey mühendislik prensiplerimiz.",
+    "f1": {
+      "title": "Maksimum Performans",
+      "desc": "Google Core Web Vitals metriklerinde kusursuz skorlar. Edge network ve SSR mimarisi ile sıfır gecikme.",
+      "b1": "100/100 Lighthouse Skoru",
+      "b2": "Anında Yüklenme (Sub-second)"
+    },
+    "f2": {
+      "title": "Askeri Düzey Güvenlik",
+      "desc": "Kurumsal verileriniz ve müşteri bilgileriniz uçtan uca şifrelenir. Uluslararası standartlarda veri koruması.",
+      "b1": "End-to-End Encryption",
+      "b2": "GDPR & KVKK Uyumluluğu"
+    },
+    "f3": {
+      "title": "Sınırsız Ölçeklenebilirlik",
+      "desc": "Trafik ani olarak 100 katına çıksa bile sistemleriniz çökmek yerine sunucu kaynaklarını anında artırır.",
+      "b1": "Auto-Scaling Bulut Mimarisi",
+      "b2": "Mikroservis Entegrasyonu"
+    }
+  },
+  "cases": {
+    "title": "Rakamlarla Konuşuyoruz.",
+    "subtitle": "Güzel tasarımların ötesinde, şirketlerin bilançosuna doğrudan etki eden ölçülebilir başarı hikayeleri yaratıyoruz.",
+    "c1": {
+      "tag": "Global Lojistik Firması",
+      "title": "Operasyonel Otomasyon",
+      "problem": "Karşılaşılan Sorun",
+      "problemDesc": "Manuel sipariş yönetimi ve kargo entegrasyonu eksikliği nedeniyle günlük 4 saatlik veri girişi kaybı.",
+      "solution": "Bizim Çözümümüz & Sonuç",
+      "solutionDesc": "Zaman tasarrufu sağlandı. Tüm sipariş ve kargo süreçleri sıfır hata ile otonom hale getirildi."
+    },
+    "c2": {
+      "tag": "Premium E-Ticaret Markası",
+      "title": "Dönüşüm Optimizasyonu",
+      "problem": "Karşılaşılan Sorun",
+      "problemDesc": "Yüksek trafik alınmasına rağmen hantal altyapı nedeniyle sepette terk edilme (cart abandonment) oranının %70 olması.",
+      "solution": "Bizim Çözümümüz & Sonuç",
+      "solutionDesc": "Satış (CR) artışı. Yeni nesil mimari ile sayfa açılış hızları ortalama 0.8 saniyeye düşürüldü."
+    }
+  },
+  "process": {
+    "title1": "Kusursuz İşleyiş,",
+    "title2": "Net Sonuçlar.",
+    "subtitle": "Fikirden lansmana kadar her adımı veri odaklı ve şeffaf bir şekilde yönetiyoruz.",
+    "steps": {
+      "s1": {
+        "title": "1. Keşif ve Analiz",
+        "desc": "Pazar araştırması, rakip analizi ve ihtiyaçların belirlenmesi."
+      },
+      "s2": {
+        "title": "2. Mimari Tasarım",
+        "desc": "UI/UX prototiplerinin çizilmesi ve sistem altyapısının kurgulanması."
+      },
+      "s3": {
+        "title": "3. Çevik Geliştirme",
+        "desc": "Modern teknolojilerle kodlama ve şeffaf test süreçleri."
+      },
+      "s4": {
+        "title": "4. Canlıya Alma",
+        "desc": "Sunucu kurulumu, lansman ve sürekli performans optimizasyonu."
+      }
+    }
+  },
+  "contact": {
+    "badge": "Zaman Daralıyor",
+    "title1": "Projelerinizin %80'i",
+    "title2": "Yanlış Başlıyor.",
+    "subtitle": "Hatalı mimari seçimleriyle bütçenizi yakmadan önce, uzman ekibimizle sisteminizi ücretsiz planlayalım.",
+    "hq": {
+      "title": "Genel Merkez (HQ)"
+    },
+    "tr": {
+      "title": "Türkiye Operasyon Merkezi"
+    },
+    "card": {
+      "title": "Kurumsal İletişim",
+      "desc": "Sadece kurumsal talepler için"
+    },
+    "cta": "Mimari Analiz Toplantısı Talep Et"
+  },
+  "footer": {
+    "text": "Allmysell LLC. | Tasarım ve Teknoloji"
+  }
+}
