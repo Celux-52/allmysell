@@ -74,7 +74,6 @@ const content = {
     faq_2_q: 'Web sitem mobil uyumlu (responsive) olacak mı?',
     faq_2_a: 'Kesinlikle. Platformunuzun tüm cihaz boyutlarında ve ekran yönelimlerinde mükemmel görünmesini ve çalışmasını sağlayacak şekilde katı bir "mobile-first" felsefesiyle tasarlıyor ve geliştiriyoruz.',
     faq_3_q: 'Web geliştirme ile birlikte SEO hizmeti de sağlıyor musunuz?',
-    faq_3_q: 'Web geliştirme ile birlikte SEO hizmeti de sağlıyor musunuz?',
     faq_3_a: 'Projelerimizde kapsamlı "Teknik SEO" (schema markup, semantik HTML, Core Web Vitals optimizasyonu) mimarisini kutudan çıktığı haliyle sunuyoruz. Ayrıca On-Page SEO performansınızın yüksek olması için içerik mimarisini doğru kurguluyoruz.',
     faq_4_q: 'Yeni platforma üçüncü parti (third-party) araçları entegre edebilir miyiz?',
     faq_4_a: 'Evet, headless ve API-first (önce API) yaklaşımımız sayesinde, modern üçüncü parti servisleri (Salesforce/HubSpot gibi CRM\'ler, ödeme geçitleri, pazarlama araçları) kolaylıkla entegre edebiliyoruz.'

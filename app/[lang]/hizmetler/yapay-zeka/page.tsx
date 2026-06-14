@@ -74,7 +74,6 @@ const content = {
     faq_2_q: 'Yapay zeka asistanları müşteri desteğini tamamen otonom bir şekilde yönetebilir mi?',
     faq_2_a: 'Evet, yapay zeka asistanlarımız birden fazla dilde gelen Tier-1 ve Tier-2 müşteri taleplerinin %80\'e kadarını kendi başına çözebilir. Çözemediği yüksek karmaşıklıktaki "edge case" vakaları bağlamıyla birlikte insan temsilcilere sorunsuz bir şekilde aktarır.',
     faq_3_q: 'Özel bir yapay zeka asistanının devreye alınması ne kadar sürer?',
-    faq_3_q: 'Özel bir yapay zeka asistanının devreye alınması ne kadar sürer?',
     faq_3_a: 'İşlememiz ve temizlememiz gereken veri miktarına bağlı olarak, sağlam bir kurum içi RAG asistanı veya müşteriye dönük bir chatbot genellikle 4 ila 8 hafta içinde yayına alınabilir.',
     faq_4_q: 'Yapay zeka modelleri için sürekli bakım ve güncelleme hizmeti sunuyor musunuz?',
     faq_4_a: 'Evet. Şirket verileriniz büyüdükçe yapay zeka modellerinin ve vektör veritabanlarının sürekli ayarlanması gerekir. Sürekli bakım, prompt mühendisliği optimizasyonu ve performans izleme (monitoring) sağlıyoruz.'

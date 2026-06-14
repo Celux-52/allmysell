@@ -74,7 +74,6 @@ const content = {
     faq_2_q: 'Kurumsal bir mobil uygulama geliştirme süreci ne kadar sürer?',
     faq_2_a: 'Minimum Uygulanabilir Ürün (MVP) genellikle 3 ila 4 ay sürer. Karmaşık backend entegrasyonlarına sahip kapsamlı kurumsal uygulamalar, projenin kapsamına bağlı olarak 6 ay veya daha fazla sürebilir.',
     faq_3_q: 'App Store ve Google Play yayınlama sürecini siz mi yönetiyorsunuz?',
-    faq_3_q: 'App Store ve Google Play yayınlama sürecini siz mi yönetiyorsunuz?',
     faq_3_a: 'Evet, uygulama mağazası optimizasyonu (ASO), uyumluluk kontrolleri, inceleme gönderimleri ve güvenlik sertifikalarının yönetimi dahil olmak üzere tüm yayınlama döngüsünü (deployment) biz yönetiyoruz.',
     faq_4_q: 'Uygulama internet bağlantısı olmadan da (Offline) çalışabilir mi?',
     faq_4_a: 'Kesinlikle. Yerel (local) SQLite veritabanları ve asenkron depolama kullanarak "Önce Çevrimdışı" (Offline-First) mimarisiyle uygulamalar tasarlıyor; bağlantı geri geldiğinde verilerin bulutla güvenli bir şekilde senkronize olmasını sağlıyoruz.'
