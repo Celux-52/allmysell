@@ -126,7 +126,7 @@ export default async function RootLayout({
   const resolvedParams = await params;
   const lang = resolvedParams?.lang || 'en';
   return (
-    <html lang={lang} className="scroll-smooth">
+    <html lang={lang} className="scroll-smooth" data-scroll-behavior="smooth">
       <head>
         <script
           type="application/ld+json"

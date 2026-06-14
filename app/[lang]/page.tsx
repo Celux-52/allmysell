@@ -5,10 +5,12 @@ import Header from "@/components/Header";
 import { StaggerWrapper, FadeInUpWrapper, FadeInUpWrapperInitialHidden, DashboardMockupWrapper } from "@/components/MotionWrappers";
 import { constructAlternates } from '@/lib/seo';
 import { Metadata } from "next";
+import { notFound } from 'next/navigation';
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
   return {
-    alternates: constructAlternates('', '')
+    alternates: constructAlternates('', resolvedParams?.lang || 'en')
   };
 }
 
@@ -16,6 +18,10 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || "en";
   const dict = dictionaries[lang];
+
+  if (!dict) {
+    notFound();
+  }
 
   return (
     <div className="relative min-h-screen bg-[#FAFAFA] overflow-hidden selection:bg-[#0A192F] selection:text-white">
