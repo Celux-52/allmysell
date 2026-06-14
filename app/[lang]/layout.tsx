@@ -10,15 +10,13 @@ const siteUrl = 'https://allmysell.com';
 
 const seoData = {
   en: {
-    title: "Allmysell LLC | Premium Digital Solutions & Tech Agency",
-    description: "Miami-based Allmysell LLC is your strategic technology partner building e-commerce autonomy, custom SaaS software, AI integrations, and enterprise web platforms.",
-    keywords: ["software agency", "miami tech company", "e-commerce infrastructure", "saas development", "ai integration", "digital transformation", "enterprise web design", "mobile app development"],
+    title: "Allmysell LLC | Enterprise Software Development & Tech Agency",
+    description: "Miami-based tech agency specializing in B2B SaaS development, e-commerce automation, custom web platforms, and AI integrations. Scale your business today.",
     ogLocale: "en_US"
   },
   tr: {
-    title: "Allmysell LLC | Premium Dijital Çözümler & Teknoloji Ajansı",
-    description: "Miami merkezli Allmysell LLC; e-ticaret otonomisi, özel SaaS yazılımları, yapay zeka entegrasyonları ve kurumsal web platformları inşa eden stratejik teknoloji partnerinizdir.",
-    keywords: ["yazılım ajansı", "miami teknoloji şirketi", "e-ticaret altyapısı", "saas geliştirme", "yapay zeka entegrasyonu", "dijital dönüşüm", "kurumsal web tasarım", "mobil uygulama geliştirme"],
+    title: "Allmysell LLC | Kurumsal Yazılım Ajansı & E-Ticaret Altyapısı",
+    description: "Miami ve Türkiye merkezli teknoloji partneriniz. B2B SaaS geliştirme, e-ticaret otomasyonu, yapay zeka entegrasyonu ve kurumsal web platformları inşa ediyoruz.",
     ogLocale: "tr_TR"
   }
 };
@@ -35,7 +33,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       template: "%s | Allmysell LLC"
     },
     description: data.description,
-    keywords: data.keywords,
     authors: [{ name: "Allmysell LLC" }],
     creator: "Allmysell LLC",
     publisher: "Allmysell LLC",
@@ -48,13 +45,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         'max-video-preview': -1,
         'max-image-preview': 'large',
         'max-snippet': -1,
-      },
-    },
-    alternates: {
-      canonical: siteUrl,
-      languages: {
-        'en-US': '/en',
-        'tr-TR': '/tr',
       },
     },
     openGraph: {
@@ -78,6 +68,11 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       title: data.title,
       description: data.description,
       images: [`${siteUrl}/og-image.jpg`],
+    },
+    icons: {
+      icon: '/favicon.ico',
+      shortcut: '/favicon.ico',
+      apple: '/apple-icon.png',
     },
   };
 }

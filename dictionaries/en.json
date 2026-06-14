@@ -6,10 +6,14 @@
     "consulting": "Consulting",
     "ai": "AI",
     "mobile": "Mobile",
+    "about": "About Us",
+    "blog": "Insights",
+    "contact": "Contact",
     "freeAnalysis": "Free Analysis"
   },
   "hero": {
     "badge": "Growth-Oriented Technology Partner",
+    "seoH1": "Enterprise B2B SaaS Development & E-Commerce Infrastructure Agency",
     "title1": "Transform Your Digital Infrastructure",
     "title2": "Into a Sales Machine.",
     "description": "Not just beautiful sites; we build systems that lower operational costs, increase profitability, and work completely autonomously.",
@@ -145,6 +149,8 @@
     "cta": "Request Architecture Analysis Meeting"
   },
   "footer": {
-    "text": "Allmysell LLC. | Design and Technology"
+    "text": "Allmysell LLC. | Design and Technology",
+    "privacy": "Privacy Policy",
+    "cookie": "Cookie Policy"
   }
 }

@@ -1,0 +1,74 @@
+import { NextResponse } from 'next/server';
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const { name, company, email, message } = body;
+
+    // Server-side validation
+    if (!name || !email || !message) {
+      return NextResponse.json(
+        { error: 'Name, email, and message are required fields.' },
+        { status: 400 }
+      );
+    }
+
+    // Send email via Resend
+    const { error } = await resend.emails.send({
+      from: 'Allmysell Contact Form <onboarding@resend.dev>',
+      to: ['info@allmysell.com'],
+      replyTo: email,
+      subject: `[Allmysell] New Contact: ${name} — ${company || 'No Company'}`,
+      html: `
+        <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f8fafc; padding: 32px; border-radius: 16px;">
+          <div style="background: #0A192F; padding: 24px 32px; border-radius: 12px; margin-bottom: 24px;">
+            <h1 style="color: white; margin: 0; font-size: 20px;">🚀 New Contact Request</h1>
+          </div>
+          <div style="background: white; padding: 24px 32px; border-radius: 12px; border: 1px solid #e2e8f0;">
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr>
+                <td style="padding: 12px 0; border-bottom: 1px solid #f1f5f9; color: #64748b; font-size: 14px; width: 140px;"><strong>Name</strong></td>
+                <td style="padding: 12px 0; border-bottom: 1px solid #f1f5f9; color: #0A192F; font-size: 14px;">${name}</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 0; border-bottom: 1px solid #f1f5f9; color: #64748b; font-size: 14px;"><strong>Company</strong></td>
+                <td style="padding: 12px 0; border-bottom: 1px solid #f1f5f9; color: #0A192F; font-size: 14px;">${company || '—'}</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 0; border-bottom: 1px solid #f1f5f9; color: #64748b; font-size: 14px;"><strong>Email</strong></td>
+                <td style="padding: 12px 0; border-bottom: 1px solid #f1f5f9; color: #0A192F; font-size: 14px;"><a href="mailto:${email}" style="color: #4f46e5;">${email}</a></td>
+              </tr>
+            </table>
+            <div style="margin-top: 20px; padding: 16px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
+              <p style="color: #64748b; font-size: 12px; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 1px;"><strong>Message</strong></p>
+              <p style="color: #0A192F; font-size: 14px; line-height: 1.6; margin: 0; white-space: pre-wrap;">${message}</p>
+            </div>
+          </div>
+          <p style="color: #94a3b8; font-size: 11px; text-align: center; margin-top: 16px;">This email was sent from the allmysell.com contact form.</p>
+        </div>
+      `,
+    });
+
+    if (error) {
+      console.error('Resend API Error:', error);
+      return NextResponse.json(
+        { error: 'Failed to send email.' },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(
+      { success: true, message: 'Message sent successfully' },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error('Contact API Error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error while processing your request.' },
+      { status: 500 }
+    );
+  }
+}

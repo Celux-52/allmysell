@@ -1,66 +1,95 @@
 import { Metadata } from 'next';
 import { ArrowLeft, ShoppingCart, Box, TrendingUp, HelpCircle } from 'lucide-react';
 import Link from 'next/link';
+import { constructAlternates } from '@/lib/seo';
 
 const content = {
   en: {
     meta: {
-      title: 'E-Commerce Autonomy | Allmysell LLC',
-      description: 'We build innovative e-commerce infrastructures that manage your sales, logistics, and inventory processes with AI and automation.',
-      keywords: 'e-commerce infrastructure, e-commerce automation, b2b e-commerce, b2c e-commerce solutions, miami software agency, autonomous commerce',
+      title: 'B2B & B2C E-Commerce Autonomy | Allmysell LLC',
+      description: 'We build innovative, conversion-optimized e-commerce infrastructures that manage your sales, logistics, and multi-channel inventory processes with AI and automation.',
+      keywords: 'e-commerce infrastructure, e-commerce automation, b2b e-commerce, b2c e-commerce solutions, miami software agency, autonomous commerce, headless commerce',
     },
     back: 'Back to Services',
     tag: 'Sales & Conversion',
     title: 'E-Commerce Autonomy',
-    p1: 'E-commerce is not just about listing products. It is a massive operation ranging from ordering to shipping, customer relations to return management. Successful brands entrust these processes to autonomous systems by eliminating human errors.',
+    p1: 'Modern e-commerce is not just about listing products on a website. It is a massive, complex operation ranging from order fulfillment to international shipping, from customer relations to automated return management. Successful brands dominate the market by entrusting these heavy processes to autonomous systems, eliminating human errors entirely.',
     h2_1: 'Unmanned and Lossless Operations',
-    p2: 'The biggest problem of traditional e-commerce sites is condemning the business to the slowness of manual processes. The autonomous e-commerce architectures we build as Allmysell LLC are fully integrated with your ERP software, cargo companies, and supply chain. The moment an order comes in, the invoice is automatically issued, the cargo barcode is printed, and stocks are updated simultaneously on all marketplaces.',
-    f1_title: 'Integrated Inventory Management',
-    f1_desc: 'Manage and analyze data from all your sales channels instantly from a single center with zero error tolerance.',
-    f2_title: 'High Conversion Optimization',
-    f2_desc: 'Smart checkout pages and AI-supported product recommendations that reduce cart abandonment rates.',
-    h2_2: 'Personalized Shopping Experience',
-    p3: 'The era of standard stores that look the same to everyone is over. Thanks to our AI algorithms that analyze your customers\' past behaviors, your store offers a custom showcase for every visitor. This hyper-personalization strategy significantly increases customer loyalty (LTV) and average order value (AOV).',
-    h2_3: 'Scalability',
-    p4: 'During campaign periods like Black Friday, your system crashing damages your brand reputation more than revenue loss. The cloud-based e-commerce infrastructures we build automatically scale server resources even if traffic suddenly increases 100 times, continuing to offer a seamless experience to your customers.',
+    p2: 'The biggest bottleneck of traditional monolithic e-commerce platforms is condemning the business to the slowness of manual, repetitive processes. The Headless and autonomous e-commerce architectures we build as Allmysell LLC are fully integrated with your central ERP software, third-party logistics (3PL), cargo companies, and global supply chains. The exact moment an order comes in, the e-invoice is automatically generated, the cargo barcode is printed at the warehouse, and inventory levels are updated simultaneously across all marketplaces (Amazon, Shopify, custom storefronts) in milliseconds.',
+    f1_title: 'Omnichannel Inventory Management',
+    f1_desc: 'Manage and analyze sales data from all your digital channels instantly from a single source of truth with absolute zero error tolerance.',
+    f2_title: 'High Conversion Optimization (CRO)',
+    f2_desc: 'Smart checkout pages, dynamic pricing modules, and AI-supported product recommendations designed specifically to reduce cart abandonment rates.',
+    h2_2: 'Hyper-Personalized Shopping Experience',
+    p3: 'The era of standard storefronts that look identical to every visitor is over. Thanks to our integrated machine learning algorithms that analyze your customers\' past browsing and purchasing behaviors in real-time, your store automatically generates a custom product showcase for every unique visitor. This hyper-personalization strategy significantly increases Customer Lifetime Value (LTV) and boosts the Average Order Value (AOV) by up to 30%.',
+    h2_3: 'Infinite Scalability and Uptime',
+    p4: 'During peak campaign periods like Black Friday or Cyber Monday, a system crash damages your brand reputation far more than the immediate revenue loss. The cloud-native e-commerce infrastructures we build leverage auto-scaling Kubernetes clusters and Edge caching. Even if traffic suddenly spikes 100x within minutes, the system scales server resources automatically, ensuring your customers never see a loading screen.',
+    h2_4: 'Our E-Commerce Technology Stack',
+    tech_1_title: 'Headless Storefronts',
+    tech_1_desc: 'Next.js Commerce, React, and Hydrogen for blazing-fast, decoupled user interfaces independent of the backend.',
+    tech_2_title: 'Backend Platforms',
+    tech_2_desc: 'Shopify Plus (Headless API), MedusaJS, and custom Node.js/Go architectures for complex B2B routing.',
+    tech_3_title: 'Search & Infrastructure',
+    tech_3_desc: 'Algolia for typo-tolerant instant search, Redis for session caching, and AWS/Vercel for global deployment.',
     faq_title: 'Frequently Asked Questions',
-    faq_1_q: 'How long does it take to build an autonomous e-commerce system?',
-    faq_1_a: 'Depending on the complexity and integrations required, a fully autonomous system usually takes between 4 to 8 weeks to deploy.',
-    faq_2_q: 'Does it integrate with our existing ERP?',
-    faq_2_a: 'Yes, our architectures are built to seamlessly integrate with most modern ERP and CRM systems via APIs.'
+    faq_1_q: 'How long does it take to build an autonomous headless e-commerce system?',
+    faq_1_a: 'Depending on the complexity, payment gateways, and external ERP integrations required, a fully autonomous Headless system usually takes between 6 to 12 weeks to deploy safely.',
+    faq_2_q: 'Does your architecture integrate with our existing ERP (SAP, Microsoft Dynamics)?',
+    faq_2_a: 'Yes, our architectures are built "API-first" to seamlessly integrate with major enterprise ERP, PIM (Product Information Management), and CRM systems via secure REST or GraphQL APIs.',
+    faq_3_q: 'What is the difference between Headless Commerce and traditional Shopify/WooCommerce?',
+    faq_3_a: 'Headless commerce separates the frontend (what the user sees) from the backend (inventory, checkout). This allows for lightning-fast page loads and complete design freedom, overcoming the rigid limitations of traditional themes.',
+    faq_4_q: 'Can you handle B2B specific features like tiered pricing and bulk ordering?',
+    faq_4_a: 'Absolutely. We develop specialized B2B portals featuring role-based access, tiered discount structures, minimum order quantities (MOQ), and automated quote generation.'
   },
   tr: {
     meta: {
-      title: 'E-Ticaret Otonomisi | Allmysell LLC',
-      description: 'Satış, lojistik ve stok süreçlerinizi yapay zeka ve otomasyonlarla yöneten yenilikçi e-ticaret altyapıları kuruyoruz.',
-      keywords: 'e-ticaret altyapısı, e-ticaret otomasyonu, b2b e-ticaret, b2c e-ticaret çözümleri, miami yazılım ajansı, otonom ticaret',
+      title: 'B2B & B2C E-Ticaret Otonomisi ve Altyapısı | Allmysell LLC',
+      description: 'Satış, lojistik ve çoklu kanal stok süreçlerinizi yapay zeka ve otomasyonlarla yöneten, Headless tabanlı yenilikçi e-ticaret altyapıları kuruyoruz.',
+      keywords: 'e-ticaret altyapısı, e-ticaret otomasyonu, b2b e-ticaret, b2c e-ticaret çözümleri, miami yazılım ajansı, otonom ticaret, headless e-ticaret',
     },
     back: 'Hizmetlere Dön',
     tag: 'Satış & Dönüşüm',
     title: 'E-Ticaret Otonomisi',
-    p1: 'E-ticaret yalnızca ürünleri listelemekten ibaret değildir. Siparişten kargolamaya, müşteri ilişkilerinden iade yönetimine kadar uzanan devasa bir operasyondur. Başarılı markalar, bu süreçleri insan hatalarından arındırarak otonom sistemlere emanet edenlerdir.',
+    p1: 'Modern e-ticaret, yalnızca ürünleri bir web sitesinde listelemekten ibaret değildir. Sipariş anından uluslararası kargolamaya, müşteri ilişkilerinden otomatik iade yönetimine kadar uzanan devasa ve karmaşık bir operasyondur. Sektörü domine eden başarılı markalar, bu ağır süreçleri insan hatalarından tamamen arındırarak otonom sistemlere emanet edenlerdir.',
     h2_1: 'İnsansız ve Kayıpsız Operasyonlar',
-    p2: 'Geleneksel e-ticaret sitelerinin en büyük problemi, işletmeyi manuel süreçlerin yavaşlığına mahkum etmesidir. Allmysell LLC olarak kurduğumuz otonom e-ticaret mimarileri; ERP yazılımlarınız, kargo firmalarınız ve tedarik zincirinizle tam entegre çalışır. Bir sipariş geldiği anda fatura otomatik kesilir, kargo barkodu basılır ve stoklar tüm pazaryerlerinde eş zamanlı olarak güncellenir.',
-    f1_title: 'Entegre Stok Yönetimi',
-    f1_desc: 'Tüm satış kanallarınızdaki verileri tek bir merkezden, sıfır hata toleransıyla anlık olarak yönetin ve analiz edin.',
-    f2_title: 'Yüksek Dönüşüm Optimizasyonu',
-    f2_desc: 'Sepeti terk etme oranlarını düşüren akıllı ödeme (checkout) sayfaları ve yapay zeka destekli ürün önerileri.',
-    h2_2: 'Kişiselleştirilmiş Alışveriş Deneyimi',
-    p3: 'Standart ve herkese aynı görünen mağazalar dönemi sona erdi. Müşterilerinizin geçmiş davranışlarını analiz eden yapay zeka algoritmalarımız sayesinde, mağazanız her ziyaretçiye özel bir vitrin sunar. Bu hiper-kişiselleştirme stratejisi, müşteri sadakatini (LTV) ve ortalama sepet tutarını (AOV) ciddi ölçüde yukarı çeker.',
-    h2_3: 'Ölçeklenebilirlik',
-    p4: 'Kampanya dönemlerinde sisteminizin çökmesi, ciro kaybından çok marka itibarınıza zarar verir. Kurduğumuz bulut tabanlı e-ticaret altyapıları, trafik aniden 100 katına çıksa bile sunucu kaynaklarını otomatik olarak artırır (auto-scaling) ve müşterilerinize kesintisiz bir deneyim sunmaya devam eder.',
+    p2: 'Geleneksel ve monolitik e-ticaret platformlarının en büyük problemi, işletmeyi manuel ve tekrarlayan süreçlerin yavaşlığına mahkum etmesidir. Allmysell LLC olarak kurduğumuz Headless (başsız) ve otonom e-ticaret mimarileri; merkez ERP yazılımlarınız, 3PL (üçüncü parti lojistik), kargo firmalarınız ve global tedarik zincirinizle tam entegre çalışır. Bir sipariş geldiği milisaniye içinde e-fatura otomatik kesilir, depoda kargo barkodu basılır ve stok seviyeleri tüm pazaryerlerinde (Amazon, Trendyol, kendi siteniz) eş zamanlı olarak güncellenir.',
+    f1_title: 'Omnichannel (Çoklu Kanal) Stok Yönetimi',
+    f1_desc: 'Tüm dijital kanallarınızdaki satış ve envanter verilerini tek bir "doğruluk merkezinden" (SSOT), sıfır hata toleransıyla anlık olarak yönetin.',
+    f2_title: 'Yüksek Dönüşüm Optimizasyonu (CRO)',
+    f2_desc: 'Sepeti terk etme oranlarını minimize etmek için özel tasarlanmış akıllı ödeme sayfaları, dinamik fiyatlandırma modülleri ve yapay zeka destekli çapraz satış (cross-sell) önerileri.',
+    h2_2: 'Hiper-Kişiselleştirilmiş Alışveriş Deneyimi',
+    p3: 'Standart ve her ziyaretçiye aynı görünen mağazalar dönemi kesin olarak sona erdi. Müşterilerinizin geçmiş gezinme ve satın alma davranışlarını gerçek zamanlı analiz eden makine öğrenimi (AI) algoritmalarımız sayesinde, mağazanız her tekil ziyaretçiye anında özel bir vitrin oluşturur. Bu hiper-kişiselleştirme stratejisi, Müşteri Yaşam Boyu Değerini (LTV) artırırken, Ortalama Sepet Tutarını (AOV) %30\'a kadar yukarı çeker.',
+    h2_3: 'Sonsuz Ölçeklenebilirlik ve Kesintisizlik',
+    p4: 'Black Friday veya Cyber Monday gibi agresif kampanya dönemlerinde sisteminizin çökmesi, anlık ciro kaybından çok marka itibarınıza ve SEO skorunuza zarar verir. Kurduğumuz bulut tabanlı (cloud-native) e-ticaret altyapıları, Kubernetes ve Edge önbellekleme teknolojilerini kullanır. Trafik dakikalar içinde aniden 100 katına çıksa bile sunucu kaynakları otomatik olarak artırılır (auto-scaling) ve müşterileriniz hiçbir zaman bir "yükleniyor" ekranı görmez.',
+    h2_4: 'E-Ticaret Teknoloji Yığınımız (Tech Stack)',
+    tech_1_title: 'Headless Vitrin (Frontend)',
+    tech_1_desc: 'Backend\'den bağımsız, ışık hızında çalışan ve SEO dostu arayüzler için Next.js Commerce, React ve Hydrogen mimarisi.',
+    tech_2_title: 'Backend ve Yönetim Platformları',
+    tech_2_desc: 'Yüksek hacimli ve B2B odaklı karmaşık satış rotaları için Shopify Plus (Headless API), MedusaJS ve özel Node.js mimarileri.',
+    tech_3_title: 'Arama ve Altyapı',
+    tech_3_desc: 'Yazım hatalarını anlayan anında arama (instant search) için Algolia, oturum yönetimi için Redis ve global CDN dağıtımı için AWS/Vercel.',
     faq_title: 'Sıkça Sorulan Sorular',
-    faq_1_q: 'Otonom bir e-ticaret sisteminin kurulması ne kadar sürer?',
-    faq_1_a: 'Karmaşıklığa ve entegrasyonlara bağlı olarak, tam otonom bir sistemin devreye alınması genellikle 4 ila 8 hafta sürer.',
-    faq_2_q: 'Mevcut ERP sistemimizle entegre çalışır mı?',
-    faq_2_a: 'Evet, mimarilerimiz API\'ler aracılığıyla çoğu modern ERP ve CRM sistemiyle sorunsuz bir şekilde entegre olacak şekilde tasarlanmıştır.'
+    faq_1_q: 'Otonom ve Headless bir e-ticaret sisteminin kurulması ne kadar sürer?',
+    faq_1_a: 'İş mantığının karmaşıklığına, ödeme geçitlerine ve harici ERP entegrasyonlarına bağlı olarak, tam otonom bir sistemin güvenle devreye alınması genellikle 6 ila 12 hafta sürer.',
+    faq_2_q: 'Mevcut Kurumsal ERP sistemimizle (SAP, Logo, Microsoft Dynamics) entegre çalışır mı?',
+    faq_2_a: 'Evet, mimarilerimiz "API-first" mantığıyla kurulduğu için sektör standartlarındaki tüm ERP, PIM (Ürün Bilgi Yönetimi) ve CRM sistemleriyle güvenli REST veya GraphQL API\'leri üzerinden kusursuz entegre olur.',
+    faq_3_q: 'Headless E-Ticaret ile geleneksel Shopify veya WooCommerce arasındaki fark nedir?',
+    faq_3_a: 'Headless e-ticaret, vitrini (kullanıcının gördüğü kısım) arka uçtan (veritabanı ve ödeme) ayırır. Bu sayede geleneksel temaların hantal yapısından kurtulur, saniyenin altında sayfa yükleme hızlarına ve %100 özgür tasarıma ulaşırsınız.',
+    faq_4_q: 'B2B için toptan sipariş, kademeli fiyatlandırma ve bayilik modülleri yapabiliyor musunuz?',
+    faq_4_a: 'Kesinlikle. Rol bazlı erişim, bayilere özel iskonto oranları, minimum sipariş miktarı (MOQ) ve otomatik teklif oluşturma özelliklerine sahip, tamamen kapalı devre veya hibrit B2B portalları geliştiriyoruz.'
   }
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const lang = (await params)?.lang || 'en';
   const data = content[lang as keyof typeof content] || content.en;
-  return data.meta;
+  
+  const path = lang === 'tr' ? '/tr/hizmetler/e-ticaret' : '/en/services/e-commerce';
+  
+  return {
+    ...data.meta,
+    alternates: constructAlternates('services/e-commerce', 'hizmetler/e-ticaret')
+  };
 }
 
 export default async function ETicaret({ params }: { params: Promise<{ lang: string }> }) {
@@ -120,6 +149,22 @@ export default async function ETicaret({ params }: { params: Promise<{ lang: str
           "@type": "Answer",
           "text": dict.faq_2_a
         }
+      },
+      {
+        "@type": "Question",
+        "name": dict.faq_3_q,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": dict.faq_3_a
+        }
+      },
+      {
+        "@type": "Question",
+        "name": dict.faq_4_q,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": dict.faq_4_a
+        }
       }
     ]
   };
@@ -133,7 +178,7 @@ export default async function ETicaret({ params }: { params: Promise<{ lang: str
           <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
           <div className="absolute top-[-50%] right-[-10%] w-[60%] h-[150%] bg-indigo-500/20 rounded-full blur-[120px]"></div>
           <div className="max-w-4xl mx-auto w-full px-6 lg:px-12 pb-16 relative z-10">
-            <Link href={`/${lang}/#services`} className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-8 text-sm font-medium tracking-wide">
+            <Link prefetch={false} href={`/${lang}/#services`} className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-8 text-sm font-medium tracking-wide">
               <ArrowLeft className="w-4 h-4" /> {dict.back}
             </Link>
             <div className="flex items-center gap-4 mb-4">
@@ -178,6 +223,24 @@ export default async function ETicaret({ params }: { params: Promise<{ lang: str
             
             <hr className="my-16 border-slate-200" />
             
+            <h2 className="text-3xl font-bold text-[#0A192F] mt-16 mb-6 tracking-tight">{dict.h2_4}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-8 not-prose">
+              <div className="bg-[#0A192F] p-6 rounded-2xl border border-[#0A192F]/20 text-white shadow-lg hover:scale-105 transition-transform duration-300">
+                <h3 className="text-lg font-bold text-indigo-400 mb-2">{dict.tech_1_title}</h3>
+                <p className="text-white/70 text-sm leading-relaxed">{dict.tech_1_desc}</p>
+              </div>
+              <div className="bg-[#0A192F] p-6 rounded-2xl border border-[#0A192F]/20 text-white shadow-lg hover:scale-105 transition-transform duration-300">
+                <h3 className="text-lg font-bold text-indigo-400 mb-2">{dict.tech_2_title}</h3>
+                <p className="text-white/70 text-sm leading-relaxed">{dict.tech_2_desc}</p>
+              </div>
+              <div className="bg-[#0A192F] p-6 rounded-2xl border border-[#0A192F]/20 text-white shadow-lg hover:scale-105 transition-transform duration-300">
+                <h3 className="text-lg font-bold text-indigo-400 mb-2">{dict.tech_3_title}</h3>
+                <p className="text-white/70 text-sm leading-relaxed">{dict.tech_3_desc}</p>
+              </div>
+            </div>
+
+            <hr className="my-16 border-slate-200" />
+
             <h2 className="text-3xl font-bold text-[#0A192F] mb-8 tracking-tight flex items-center gap-3">
               <HelpCircle className="w-8 h-8 text-indigo-600" />
               {dict.faq_title}
@@ -200,6 +263,24 @@ export default async function ETicaret({ params }: { params: Promise<{ lang: str
                   </span>
                 </summary>
                 <p className="text-slate-500 mt-4 leading-relaxed font-sans">{dict.faq_2_a}</p>
+              </details>
+              <details className="group bg-white p-6 rounded-2xl border border-slate-200 cursor-pointer">
+                <summary className="text-lg font-bold text-[#0A192F] font-sans list-none flex justify-between items-center">
+                  {dict.faq_3_q}
+                  <span className="transition group-open:rotate-180">
+                    <svg fill="none" height="24" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                  </span>
+                </summary>
+                <p className="text-slate-500 mt-4 leading-relaxed font-sans">{dict.faq_3_a}</p>
+              </details>
+              <details className="group bg-white p-6 rounded-2xl border border-slate-200 cursor-pointer">
+                <summary className="text-lg font-bold text-[#0A192F] font-sans list-none flex justify-between items-center">
+                  {dict.faq_4_q}
+                  <span className="transition group-open:rotate-180">
+                    <svg fill="none" height="24" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                  </span>
+                </summary>
+                <p className="text-slate-500 mt-4 leading-relaxed font-sans">{dict.faq_4_a}</p>
               </details>
             </div>
           </div>

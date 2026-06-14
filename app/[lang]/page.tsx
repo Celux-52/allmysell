@@ -1,50 +1,21 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { Compass, Layout, ShoppingCart, Cpu, Mail, Phone, MapPin, ArrowRight, Sparkles, Globe, Layers, ShieldCheck, Activity, Code2, Rocket, CheckCircle2, Search, Bot, Smartphone, TrendingUp, BarChart3 } from "lucide-react";
-import { motion, Variants } from "framer-motion";
 import Link from "next/link";
-import { useParams, usePathname, useRouter } from "next/navigation";
 import { dictionaries, Locale } from "@/dictionaries";
+import Header from "@/components/Header";
+import { StaggerWrapper, FadeInUpWrapper, FadeInUpWrapperInitialHidden, DashboardMockupWrapper } from "@/components/MotionWrappers";
+import { constructAlternates } from '@/lib/seo';
+import { Metadata } from "next";
 
-export default function Home() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const params = useParams();
-  const lang = (params?.lang as Locale) || "en";
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    alternates: constructAlternates('', '')
+  };
+}
+
+export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
+  const resolvedParams = await params;
+  const lang = (resolvedParams?.lang as Locale) || "en";
   const dict = dictionaries[lang];
-  const router = useRouter();
-  const pathname = usePathname();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const fadeInUp: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
-  };
-
-  const staggerContainer: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
-  };
-
-  const switchLanguage = (newLocale: string) => {
-    // pathname looks like /en/hizmetler or /tr/hizmetler
-    if (!pathname) return;
-    const newPath = pathname.replace(`/${lang}`, `/${newLocale}`);
-    router.push(newPath);
-  };
 
   return (
     <div className="relative min-h-screen bg-[#FAFAFA] overflow-hidden selection:bg-[#0A192F] selection:text-white">
@@ -55,97 +26,42 @@ export default function Home() {
       <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-blue-500/10 rounded-full blur-[150px] pointer-events-none -z-10 animate-pulse" style={{ animationDuration: '10s' }}></div>
       <div className="absolute top-[20%] right-[-10%] w-[40%] h-[60%] bg-indigo-500/10 rounded-full blur-[150px] pointer-events-none -z-10 animate-pulse" style={{ animationDuration: '14s' }}></div>
 
-      {/* Header */}
-      <header
-        className={`sticky top-0 z-50 transition-all duration-500 border-b ${
-          isScrolled 
-            ? "bg-white/70 backdrop-blur-xl border-slate-200/50 shadow-sm py-4" 
-            : "bg-transparent border-transparent py-6"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
-          <a href={`/${lang}`} className="flex items-center gap-2 font-serif text-2xl md:text-3xl font-bold tracking-tight text-[#0A192F] mr-auto">
-            <div className="w-8 h-8 rounded-lg bg-[#0A192F] flex items-center justify-center shadow-lg shadow-[#0A192F]/20">
-               <span className="text-white text-lg leading-none">A</span>
-            </div>
-            Allmysell <span className="text-[#0A192F]/40 font-light">LLC</span>
-          </a>
-
-          <nav className="hidden lg:flex items-center gap-8 mr-8">
-            <Link href={`/${lang}/hizmetler/web-cozumleri`} className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">{dict.nav.web}</Link>
-            <Link href={`/${lang}/hizmetler/e-ticaret`} className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">{dict.nav.ecommerce}</Link>
-            <Link href={`/${lang}/hizmetler/saas-yazilimlari`} className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">{dict.nav.saas}</Link>
-            <Link href={`/${lang}/hizmetler/stratejik-danismanlik`} className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">{dict.nav.consulting}</Link>
-            <Link href={`/${lang}/hizmetler/yapay-zeka`} className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors flex items-center gap-1"><Sparkles className="w-3 h-3 text-blue-500" />{dict.nav.ai}</Link>
-            <Link href={`/${lang}/hizmetler/mobil-uygulama`} className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">{dict.nav.mobile}</Link>
-          </nav>
-
-          <div className="flex items-center gap-4">
-            <div className="flex bg-slate-200/50 p-1 rounded-full text-xs font-semibold">
-              <button 
-                onClick={() => switchLanguage('en')} 
-                className={`px-3 py-1.5 rounded-full transition-all ${lang === 'en' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-800'}`}
-              >
-                EN
-              </button>
-              <button 
-                onClick={() => switchLanguage('tr')} 
-                className={`px-3 py-1.5 rounded-full transition-all ${lang === 'tr' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-800'}`}
-              >
-                TR
-              </button>
-            </div>
-            
-            <a
-              href="#contact"
-              className="hidden sm:flex shrink-0 items-center gap-2 bg-[#0A192F] hover:bg-[#112240] text-white px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide transition-all shadow-[0_0_40px_-10px_rgba(10,25,47,0.5)] hover:shadow-[0_0_50px_-10px_rgba(10,25,47,0.6)] hover:-translate-y-0.5 border border-white/10"
-            >
-              {dict.nav.freeAnalysis} <ArrowRight className="w-4 h-4" />
-            </a>
-          </div>
-        </div>
-      </header>
+      {/* Header - Interactive Client Component */}
+      <Header lang={lang} dict={dict} />
 
       <main>
         {/* Modern Hero Section */}
         <section className="relative pt-24 pb-20 px-6 lg:px-12 max-w-7xl mx-auto min-h-[85vh] flex flex-col justify-center">
-          <motion.div 
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-            className="text-center relative z-10 max-w-5xl mx-auto"
-          >
-            <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-blue-200 bg-white/60 backdrop-blur-md text-sm font-semibold text-blue-900 shadow-sm">
+          <StaggerWrapper className="text-center relative z-10 max-w-5xl mx-auto">
+            <FadeInUpWrapper className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-blue-200 bg-white/60 backdrop-blur-md text-sm font-semibold text-blue-900 shadow-sm">
               <Sparkles className="w-4 h-4 text-blue-500" />
               {dict.hero.badge}
-            </motion.div>
+            </FadeInUpWrapper>
             
-            <motion.h1 variants={fadeInUp} className="font-sans text-5xl md:text-7xl lg:text-[6.5rem] leading-[1.05] font-bold mb-8 text-[#0A192F] tracking-tighter">
-              {dict.hero.title1} <br className="md:hidden" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0A192F] via-blue-800 to-[#0A192F]">{dict.hero.title2}</span>
-            </motion.h1>
+            <FadeInUpWrapper className="font-sans text-5xl md:text-7xl lg:text-[6.5rem] leading-[1.05] font-bold mb-8 text-[#0A192F] tracking-tighter flex flex-col">
+              <span className="text-sm md:text-base font-semibold text-blue-600 tracking-widest uppercase mb-4 opacity-80">{dict.hero.seoH1}</span>
+              <span>
+                {dict.hero.title1} <br className="md:hidden" />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0A192F] via-blue-800 to-[#0A192F]">{dict.hero.title2}</span>
+              </span>
+            </FadeInUpWrapper>
             
-            <motion.p variants={fadeInUp} className="font-sans text-xl md:text-2xl text-slate-500 font-light max-w-3xl mx-auto leading-relaxed mb-12">
+            <FadeInUpWrapper className="font-sans text-xl md:text-2xl text-slate-500 font-light max-w-3xl mx-auto leading-relaxed mb-12">
               {dict.hero.description}
-            </motion.p>
+            </FadeInUpWrapper>
             
-            <motion.div variants={fadeInUp} className="flex flex-wrap justify-center gap-4">
+            <FadeInUpWrapper className="flex flex-wrap justify-center gap-4">
               <a href="#contact" className="bg-[#0A192F] text-white px-8 py-4 rounded-2xl text-sm font-semibold tracking-wide transition-all shadow-[0_20px_40px_-15px_rgba(10,25,47,0.5)] hover:bg-[#112240] hover:-translate-y-1 border border-white/10 flex items-center gap-2">
                 {dict.hero.cta1} <ArrowRight className="w-4 h-4" />
               </a>
               <a href="#services" className="bg-white/80 backdrop-blur-md border border-slate-200 hover:border-[#0A192F]/30 hover:bg-white text-[#0A192F] px-8 py-4 rounded-2xl text-sm font-semibold tracking-wide transition-all shadow-sm hover:shadow-md">
                 {dict.hero.cta2}
               </a>
-            </motion.div>
-          </motion.div>
+            </FadeInUpWrapper>
+          </StaggerWrapper>
 
           {/* Abstract Dashboard Mockup Graphic */}
-          <motion.div 
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-20 relative max-w-5xl mx-auto hidden md:block"
-          >
+          <DashboardMockupWrapper>
              <div className="absolute inset-0 bg-gradient-to-t from-[#FAFAFA] via-transparent to-transparent z-20 h-full w-full pointer-events-none"></div>
              <div className="w-full h-64 bg-white/40 backdrop-blur-xl border border-white/60 shadow-2xl rounded-t-3xl p-6 relative overflow-hidden">
                 <div className="flex gap-2 mb-6 border-b border-slate-200/50 pb-4">
@@ -175,7 +91,7 @@ export default function Home() {
                    </div>
                 </div>
              </div>
-          </motion.div>
+          </DashboardMockupWrapper>
         </section>
 
         {/* Industry Marquee */}
@@ -198,26 +114,21 @@ export default function Home() {
 
         {/* Bento Grid Services Section */}
         <section id="services" className="py-32 px-6 lg:px-12 max-w-7xl mx-auto relative">
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-          >
-            <motion.div variants={fadeInUp} className="mb-16">
+          <StaggerWrapper>
+            <FadeInUpWrapper className="mb-16">
               <h2 className="font-sans text-4xl md:text-5xl lg:text-6xl font-bold text-[#0A192F] tracking-tight mb-6">
                 {dict.services.title1} <br/><span className="text-blue-600">{dict.services.title2}</span>
               </h2>
               <p className="text-slate-500 max-w-2xl text-lg md:text-xl font-light">
                 {dict.services.subtitle}
               </p>
-            </motion.div>
+            </FadeInUpWrapper>
 
             {/* Bento Grid Layout */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(280px,auto)]">
               
-              <Link href={`/${lang}/hizmetler/web-cozumleri`} className="md:col-span-2 block">
-                <motion.div variants={fadeInUp} className="h-full group bg-white p-10 md:p-12 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 relative overflow-hidden cursor-pointer">
+              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/web-cozumleri' : '/en/services/web-solutions'} className="md:col-span-2 block">
+                <FadeInUpWrapper className="h-full group bg-white p-10 md:p-12 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 relative overflow-hidden cursor-pointer">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-700 ease-out"></div>
                   <div className="w-14 h-14 bg-white shadow-md border border-slate-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
                     <Globe className="w-6 h-6 text-blue-600 stroke-[1.5]" />
@@ -226,11 +137,11 @@ export default function Home() {
                   <p className="text-slate-500 leading-relaxed text-lg max-w-md">
                     {dict.services.web.desc}
                   </p>
-                </motion.div>
+                </FadeInUpWrapper>
               </Link>
 
-              <Link href={`/${lang}/hizmetler/e-ticaret`} className="block">
-                <motion.div variants={fadeInUp} className="h-full group bg-[#0A192F] p-10 md:p-12 rounded-[2rem] border border-[#0A192F] shadow-lg hover:shadow-2xl hover:shadow-[#0A192F]/20 transition-all duration-500 relative overflow-hidden cursor-pointer">
+              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/e-ticaret' : '/en/services/e-commerce'} className="block">
+                <FadeInUpWrapper className="h-full group bg-[#0A192F] p-10 md:p-12 rounded-[2rem] border border-[#0A192F] shadow-lg hover:shadow-2xl hover:shadow-[#0A192F]/20 transition-all duration-500 relative overflow-hidden cursor-pointer">
                   <div className="absolute top-[-50%] right-[-50%] w-[100%] h-[100%] bg-blue-500/20 rounded-full blur-3xl group-hover:bg-blue-400/30 transition-colors duration-700"></div>
                   <div className="w-14 h-14 bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
                     <ShoppingCart className="w-6 h-6 text-white stroke-[1.5]" />
@@ -239,11 +150,11 @@ export default function Home() {
                   <p className="text-blue-100/70 leading-relaxed text-lg">
                     {dict.services.ecommerce.desc}
                   </p>
-                </motion.div>
+                </FadeInUpWrapper>
               </Link>
 
-              <Link href={`/${lang}/hizmetler/saas-yazilimlari`} className="block">
-                <motion.div variants={fadeInUp} className="h-full group bg-white p-10 md:p-12 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 relative overflow-hidden cursor-pointer">
+              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/saas-yazilimlari' : '/en/services/saas-software'} className="block">
+                <FadeInUpWrapper className="h-full group bg-white p-10 md:p-12 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 relative overflow-hidden cursor-pointer">
                    <div className="w-14 h-14 bg-white shadow-md border border-slate-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                     <ShieldCheck className="w-6 h-6 text-indigo-600 stroke-[1.5]" />
                   </div>
@@ -251,11 +162,11 @@ export default function Home() {
                   <p className="text-slate-500 leading-relaxed text-lg">
                     {dict.services.saas.desc}
                   </p>
-                </motion.div>
+                </FadeInUpWrapper>
               </Link>
 
-              <Link href={`/${lang}/hizmetler/stratejik-danismanlik`} className="md:col-span-2 block">
-                <motion.div variants={fadeInUp} className="h-full group bg-white p-10 md:p-12 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 relative overflow-hidden cursor-pointer">
+              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/stratejik-danismanlik' : '/en/services/strategic-consulting'} className="md:col-span-2 block">
+                <FadeInUpWrapper className="h-full group bg-white p-10 md:p-12 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 relative overflow-hidden cursor-pointer">
                   <div className="absolute bottom-0 right-0 w-48 h-48 bg-slate-50 rounded-tl-[100px] -z-10 group-hover:bg-blue-50/50 transition-colors duration-700"></div>
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
                     <div>
@@ -272,11 +183,11 @@ export default function Home() {
                       <Compass className="w-8 h-8 text-slate-400" />
                     </div>
                   </div>
-                </motion.div>
+                </FadeInUpWrapper>
               </Link>
 
-              <Link href={`/${lang}/hizmetler/yapay-zeka`} className="md:col-span-2 block">
-                <motion.div variants={fadeInUp} className="h-full group bg-white p-10 md:p-12 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 relative overflow-hidden cursor-pointer">
+              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/yapay-zeka' : '/en/services/artificial-intelligence'} className="md:col-span-2 block">
+                <FadeInUpWrapper className="h-full group bg-white p-10 md:p-12 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 relative overflow-hidden cursor-pointer">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50/50 rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-700 ease-out"></div>
                   <div className="w-14 h-14 bg-white shadow-md border border-slate-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                     <Bot className="w-6 h-6 text-blue-600 stroke-[1.5]" />
@@ -285,11 +196,11 @@ export default function Home() {
                   <p className="text-slate-500 leading-relaxed text-lg max-w-md">
                     {dict.services.ai.desc}
                   </p>
-                </motion.div>
+                </FadeInUpWrapper>
               </Link>
 
-              <Link href={`/${lang}/hizmetler/mobil-uygulama`} className="block">
-                <motion.div variants={fadeInUp} className="h-full group bg-[#0A192F] p-10 md:p-12 rounded-[2rem] border border-[#0A192F] shadow-lg hover:shadow-2xl hover:shadow-[#0A192F]/20 transition-all duration-500 relative overflow-hidden cursor-pointer">
+              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/mobil-uygulama' : '/en/services/mobile-application'} className="block">
+                <FadeInUpWrapper className="h-full group bg-[#0A192F] p-10 md:p-12 rounded-[2rem] border border-[#0A192F] shadow-lg hover:shadow-2xl hover:shadow-[#0A192F]/20 transition-all duration-500 relative overflow-hidden cursor-pointer">
                   <div className="absolute top-[-50%] right-[-50%] w-[100%] h-[100%] bg-indigo-500/20 rounded-full blur-3xl group-hover:bg-indigo-400/30 transition-colors duration-700"></div>
                   <div className="w-14 h-14 bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
                     <Smartphone className="w-6 h-6 text-white stroke-[1.5]" />
@@ -298,38 +209,31 @@ export default function Home() {
                   <p className="text-indigo-100/70 leading-relaxed text-lg">
                     {dict.services.mobile.desc}
                   </p>
-                </motion.div>
+                </FadeInUpWrapper>
               </Link>
             </div>
-          </motion.div>
+          </StaggerWrapper>
         </section>
 
         {/* Why Us / Features Section */}
         <section className="py-24 bg-white border-y border-slate-200/60 relative overflow-hidden">
-          {/* Subtle Background Glow */}
           <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-blue-50/50 to-transparent pointer-events-none"></div>
           
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10"
-          >
+          <StaggerWrapper className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
             <div className="flex flex-col md:flex-row gap-12 items-end mb-16">
-              <motion.div variants={fadeInUp} className="flex-1">
+              <FadeInUpWrapper className="flex-1">
                 <h2 className="font-sans text-4xl md:text-5xl font-bold text-[#0A192F] tracking-tight mb-6">
                   {dict.features.title1} <span className="text-blue-600">{dict.features.title2}</span>
                 </h2>
                 <p className="text-slate-500 max-w-xl text-lg font-light">
                   {dict.features.subtitle}
                 </p>
-              </motion.div>
+              </FadeInUpWrapper>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Feature 1 */}
-              <motion.div variants={fadeInUp} className="group relative bg-[#FAFAFA] rounded-3xl p-10 hover:bg-white transition-colors duration-500 border border-slate-200/50 hover:shadow-2xl hover:shadow-blue-900/5 hover:-translate-y-1">
+              <FadeInUpWrapper className="group relative bg-[#FAFAFA] rounded-3xl p-10 hover:bg-white transition-colors duration-500 border border-slate-200/50 hover:shadow-2xl hover:shadow-blue-900/5 hover:-translate-y-1">
                 <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                   <Activity className="w-6 h-6 text-blue-600" />
                 </div>
@@ -345,10 +249,10 @@ export default function Home() {
                     <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {dict.features.f1.b2}
                   </li>
                 </ul>
-              </motion.div>
+              </FadeInUpWrapper>
 
               {/* Feature 2 */}
-              <motion.div variants={fadeInUp} className="group relative bg-[#FAFAFA] rounded-3xl p-10 hover:bg-[#0A192F] transition-colors duration-500 border border-slate-200/50 hover:border-[#0A192F] hover:shadow-2xl hover:shadow-[#0A192F]/20 hover:-translate-y-1">
+              <FadeInUpWrapper className="group relative bg-[#FAFAFA] rounded-3xl p-10 hover:bg-[#0A192F] transition-colors duration-500 border border-slate-200/50 hover:border-[#0A192F] hover:shadow-2xl hover:shadow-[#0A192F]/20 hover:-translate-y-1">
                 <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 group-hover:bg-white/10 group-hover:border-white/10">
                   <ShieldCheck className="w-6 h-6 text-indigo-600 group-hover:text-white" />
                 </div>
@@ -364,10 +268,10 @@ export default function Home() {
                     <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {dict.features.f2.b2}
                   </li>
                 </ul>
-              </motion.div>
+              </FadeInUpWrapper>
 
               {/* Feature 3 */}
-              <motion.div variants={fadeInUp} className="group relative bg-[#FAFAFA] rounded-3xl p-10 hover:bg-white transition-colors duration-500 border border-slate-200/50 hover:shadow-2xl hover:shadow-blue-900/5 hover:-translate-y-1">
+              <FadeInUpWrapper className="group relative bg-[#FAFAFA] rounded-3xl p-10 hover:bg-white transition-colors duration-500 border border-slate-200/50 hover:shadow-2xl hover:shadow-blue-900/5 hover:-translate-y-1">
                 <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                   <Cpu className="w-6 h-6 text-blue-600" />
                 </div>
@@ -383,21 +287,15 @@ export default function Home() {
                     <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {dict.features.f3.b2}
                   </li>
                 </ul>
-              </motion.div>
+              </FadeInUpWrapper>
             </div>
-          </motion.div>
+          </StaggerWrapper>
         </section>
 
         {/* Case Studies / Proof Section */}
         <section className="py-32 bg-[#0A192F] relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-full bg-grid-pattern opacity-[0.03] pointer-events-none"></div>
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10"
-          >
+          <StaggerWrapper className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
             <div className="text-center mb-20">
               <h2 className="font-sans text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-6">
                 {dict.cases.title}
@@ -409,7 +307,7 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Case 1 */}
-              <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-10 hover:bg-white/10 transition-colors duration-500">
+              <FadeInUpWrapper className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-10 hover:bg-white/10 transition-colors duration-500">
                 <div className="flex items-center gap-4 mb-8">
                    <div className="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center border border-blue-500/30">
                      <TrendingUp className="w-8 h-8 text-blue-400" />
@@ -433,10 +331,10 @@ export default function Home() {
                      </div>
                   </div>
                 </div>
-              </motion.div>
+              </FadeInUpWrapper>
 
               {/* Case 2 */}
-              <motion.div variants={fadeInUp} className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-10 hover:bg-white/10 transition-colors duration-500">
+              <FadeInUpWrapper className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-10 hover:bg-white/10 transition-colors duration-500">
                 <div className="flex items-center gap-4 mb-8">
                    <div className="w-16 h-16 bg-indigo-500/20 rounded-2xl flex items-center justify-center border border-indigo-500/30">
                      <BarChart3 className="w-8 h-8 text-indigo-400" />
@@ -460,27 +358,22 @@ export default function Home() {
                      </div>
                   </div>
                 </div>
-              </motion.div>
+              </FadeInUpWrapper>
             </div>
-          </motion.div>
+          </StaggerWrapper>
         </section>
 
         {/* Process Section */}
         <section className="py-32 px-6 lg:px-12 max-w-7xl mx-auto relative">
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-          >
-            <motion.div variants={fadeInUp} className="text-center mb-20">
+          <StaggerWrapper>
+            <FadeInUpWrapper className="text-center mb-20">
               <h2 className="font-sans text-4xl md:text-5xl font-bold text-[#0A192F] tracking-tight mb-6">
                 {dict.process.title1} <br/><span className="text-blue-600">{dict.process.title2}</span>
               </h2>
               <p className="text-slate-500 max-w-2xl mx-auto text-lg font-light">
                 {dict.process.subtitle}
               </p>
-            </motion.div>
+            </FadeInUpWrapper>
 
             <div className="relative">
               {/* Connecting Line */}
@@ -493,7 +386,7 @@ export default function Home() {
                   { icon: Code2, title: dict.process.steps.s3.title, desc: dict.process.steps.s3.desc },
                   { icon: Rocket, title: dict.process.steps.s4.title, desc: dict.process.steps.s4.desc }
                 ].map((step, i) => (
-                  <motion.div key={i} variants={fadeInUp} className="relative text-center group">
+                  <FadeInUpWrapper key={i} className="relative text-center group">
                     <div className="w-24 h-24 mx-auto bg-white rounded-full border border-slate-200 shadow-sm flex items-center justify-center mb-8 relative z-10 group-hover:scale-110 group-hover:border-blue-400 group-hover:shadow-xl group-hover:shadow-blue-900/10 transition-all duration-500">
                       <step.icon className="w-8 h-8 text-[#0A192F] group-hover:text-blue-600 transition-colors" />
                     </div>
@@ -501,29 +394,23 @@ export default function Home() {
                     <p className="text-slate-500 font-light text-sm md:text-base leading-relaxed px-4">
                       {step.desc}
                     </p>
-                  </motion.div>
+                  </FadeInUpWrapper>
                 ))}
               </div>
             </div>
-          </motion.div>
+          </StaggerWrapper>
         </section>
 
         {/* Deep Modern Contact Section */}
         <section id="contact" className="py-32 bg-[#0A192F] px-6 lg:px-12 relative overflow-hidden mt-10">
           <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-blue-500/20 rounded-full blur-[150px] pointer-events-none"></div>
           
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="max-w-7xl mx-auto relative z-10"
-          >
+          <StaggerWrapper className="max-w-7xl mx-auto relative z-10">
             <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-10 md:p-16 lg:p-24 shadow-2xl overflow-hidden relative">
               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center relative z-10">
-                <motion.div variants={fadeInUp}>
+                <FadeInUpWrapper>
                   <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-white/10 border border-white/10 text-xs font-semibold text-red-400 uppercase tracking-widest">
                     <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
                     {dict.contact.badge}
@@ -557,9 +444,9 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </FadeInUpWrapper>
 
-                <motion.div variants={fadeInUp} className="space-y-6">
+                <FadeInUpWrapper className="space-y-6">
                   {/* Digital Contact Card */}
                   <div className="bg-[#0A192F]/50 backdrop-blur-md p-8 rounded-3xl border border-white/5 hover:bg-white/5 transition-colors duration-500">
                     <h4 className="text-blue-300 text-xs font-semibold uppercase tracking-widest mb-6 border-b border-white/10 pb-4">{dict.contact.card.title}</h4>
@@ -583,15 +470,21 @@ export default function Home() {
                     {dict.contact.cta}
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </a>
-                </motion.div>
+                </FadeInUpWrapper>
               </div>
             </div>
-          </motion.div>
+          </StaggerWrapper>
         </section>
       </main>
 
       {/* Modern Footer */}
-      <footer className="py-8 bg-[#020A16] px-6 text-center border-t border-white/5">
+      <footer className="py-12 bg-[#020A16] px-6 text-center border-t border-white/5">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-8">
+          <Link href={lang === 'tr' ? '/tr/hakkimizda' : '/en/about-us'} prefetch={false} className="text-sm font-medium text-white/50 hover:text-white transition-colors">{dict.nav.about}</Link>
+          <Link href={lang === 'tr' ? '/tr/iletisim' : '/en/contact'} prefetch={false} className="text-sm font-medium text-white/50 hover:text-white transition-colors">{dict.nav.contact}</Link>
+          <Link href={lang === 'tr' ? '/tr/gizlilik-politikasi' : '/en/privacy-policy'} prefetch={false} className="text-sm font-medium text-white/50 hover:text-white transition-colors">{dict.footer.privacy}</Link>
+          <Link href={lang === 'tr' ? '/tr/cerez-politikasi' : '/en/cookie-policy'} prefetch={false} className="text-sm font-medium text-white/50 hover:text-white transition-colors">{dict.footer.cookie}</Link>
+        </div>
         <p className="text-xs md:text-sm text-white/30 font-semibold tracking-[0.2em] uppercase">
           &copy; 2026 {dict.footer.text}
         </p>

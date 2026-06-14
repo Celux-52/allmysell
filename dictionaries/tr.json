@@ -6,10 +6,14 @@
     "consulting": "Danışmanlık",
     "ai": "Yapay Zeka",
     "mobile": "Mobil",
+    "about": "Hakkımızda",
+    "blog": "Blog",
+    "contact": "İletişim",
     "freeAnalysis": "Ücretsiz Analiz"
   },
   "hero": {
     "badge": "Büyüme Odaklı Teknoloji Partneriniz",
+    "seoH1": "Kurumsal B2B SaaS Geliştirme & E-Ticaret Altyapı Ajansı",
     "title1": "Dijital Altyapınızı",
     "title2": "Satış Makinesine Dönüştürün.",
     "description": "Sadece güzel görünen siteler değil; şirketinizin operasyonel maliyetlerini düşüren, karlılığı artıran ve tam otonom çalışan sistemler kuruyoruz.",
@@ -145,6 +149,8 @@
     "cta": "Mimari Analiz Toplantısı Talep Et"
   },
   "footer": {
-    "text": "Allmysell LLC. | Tasarım ve Teknoloji"
+    "text": "Allmysell LLC. | Tasarım ve Teknoloji",
+    "privacy": "Gizlilik Politikası",
+    "cookie": "Çerez Politikası"
   }
 }
