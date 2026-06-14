@@ -8,7 +8,7 @@ const content = {
     meta: {
       title: 'Enterprise AI & Automation Solutions',
       description: 'Automate your data processing processes with custom-trained AI assistants (RAG) and machine learning algorithms for your business.',
-      keywords: 'ai integration, machine learning, enterprise ai, rag systems, data analytics, miami tech agency, automation solutions, llm integration, custom chatgpt',
+      keywords: 'ai integration, machine learning, enterprise ai, rag systems, data analytics, st petersburg tech agency, automation solutions, llm integration, custom chatgpt',
     },
     back: 'Back to Services',
     tag: 'Innovation & Future',
@@ -45,7 +45,7 @@ const content = {
     meta: {
       title: 'Kurumsal Yapay Zeka ve Otomasyon Çözümleri',
       description: 'İşletmenize özel eğitilmiş yapay zeka asistanları (RAG) ve makine öğrenimi algoritmalarıyla veri işleme süreçlerinizi otomatikleştirin.',
-      keywords: 'yapay zeka entegrasyonu, makine öğrenimi, kurumsal yapay zeka, rag sistemleri, veri analitiği, miami teknoloji ajansı, otomasyon çözümleri, özel chatgpt',
+      keywords: 'yapay zeka entegrasyonu, makine öğrenimi, kurumsal yapay zeka, rag sistemleri, veri analitiği, st petersburg teknoloji ajansı, otomasyon çözümleri, özel chatgpt',
     },
     back: 'Hizmetlere Dön',
     tag: 'Yenilik & Gelecek',

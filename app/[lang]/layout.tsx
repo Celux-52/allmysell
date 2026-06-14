@@ -11,14 +11,14 @@ const siteUrl = 'https://allmysell.com';
 const seoData = {
   en: {
     title: "Allmysell LLC | Enterprise Software Development & Tech Agency",
-    description: "Miami-based tech agency specializing in B2B SaaS development, e-commerce automation, custom web platforms, and AI integrations. Scale your business today.",
-    keywords: "allmysell, software agency miami, enterprise software development, b2b saas development, e-commerce automation, headless commerce, ai integration, web platform development, react next.js agency, digital transformation, fractional cto, custom software solutions, mobile app development, strategic technology consulting",
+    description: "St. Petersburg, FL-based tech agency specializing in B2B SaaS development, e-commerce automation, custom web platforms, and AI integrations. Scale your business today.",
+    keywords: "allmysell, software agency st petersburg fl, enterprise software development, b2b saas development, e-commerce automation, headless commerce, ai integration, web platform development, react next.js agency, digital transformation, fractional cto, custom software solutions, mobile app development, strategic technology consulting",
     ogLocale: "en_US"
   },
   tr: {
     title: "Allmysell LLC | Kurumsal Yazılım Ajansı & E-Ticaret Altyapısı",
-    description: "Miami ve Türkiye merkezli teknoloji partneriniz. B2B SaaS geliştirme, e-ticaret otomasyonu, yapay zeka entegrasyonu ve kurumsal web platformları inşa ediyoruz.",
-    keywords: "allmysell, yazılım ajansı, kurumsal yazılım geliştirme, b2b saas geliştirme, e-ticaret otomasyonu, headless e-ticaret, yapay zeka entegrasyonu, web platformu geliştirme, react next.js ajansı, dijital dönüşüm, fractional cto, özel yazılım çözümleri, mobil uygulama geliştirme, stratejik teknoloji danışmanlığı, miami yazılım şirketi",
+    description: "St. Petersburg, Florida ve Türkiye merkezli teknoloji partneriniz. B2B SaaS geliştirme, e-ticaret otomasyonu, yapay zeka entegrasyonu ve kurumsal web platformları inşa ediyoruz.",
+    keywords: "allmysell, yazılım ajansı, kurumsal yazılım geliştirme, b2b saas geliştirme, e-ticaret otomasyonu, headless e-ticaret, yapay zeka entegrasyonu, web platformu geliştirme, react next.js ajansı, dijital dönüşüm, fractional cto, özel yazılım çözümleri, mobil uygulama geliştirme, stratejik teknoloji danışmanlığı, st petersburg yazılım şirketi",
     ogLocale: "tr_TR"
   }
 };
@@ -113,7 +113,7 @@ const jsonLd = {
   ],
   "address": {
     "@type": "PostalAddress",
-    "addressLocality": "Miami",
+    "addressLocality": "St. Petersburg",
     "addressRegion": "FL",
     "addressCountry": "US"
   }

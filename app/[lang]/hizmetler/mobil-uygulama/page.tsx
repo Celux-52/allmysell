@@ -8,7 +8,7 @@ const content = {
     meta: {
       title: 'Enterprise Mobile Application Development',
       description: 'We develop enterprise mobile applications for iOS and Android that are high-performance, native-feeling, and instantly scalable.',
-      keywords: 'mobile app development, ios app, android app, react native, enterprise mobile software, miami app developer, mobile ux, cross-platform apps, mobile strategy',
+      keywords: 'mobile app development, ios app, android app, react native, enterprise mobile software, st petersburg app developer, mobile ux, cross-platform apps, mobile strategy',
     },
     back: 'Back to Services',
     tag: 'Connection & Experience',
@@ -45,7 +45,7 @@ const content = {
     meta: {
       title: 'Kurumsal Mobil Uygulama Geliştirme (iOS & Android)',
       description: 'iOS ve Android için yüksek performanslı, native hissi veren ve anında ölçeklenebilen kurumsal mobil uygulamalar geliştiriyoruz.',
-      keywords: 'mobil uygulama geliştirme, ios uygulama, android uygulama, react native, kurumsal mobil yazılım, miami uygulama geliştirici, mobil ux, cross-platform uygulama',
+      keywords: 'mobil uygulama geliştirme, ios uygulama, android uygulama, react native, kurumsal mobil yazılım, st petersburg uygulama geliştirici, mobil ux, cross-platform uygulama',
     },
     back: 'Hizmetlere Dön',
     tag: 'Bağlantı & Deneyim',

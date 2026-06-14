@@ -7,13 +7,13 @@ const content = {
   en: {
     meta: {
       title: 'About Us',
-      description: 'We are Allmysell LLC, a Miami-based enterprise software and digital transformation agency. We act as your fractional CTO and build high-performance scalable systems.',
-      keywords: 'about allmysell, software agency miami, enterprise software company, digital transformation team, fractional cto',
+      description: 'We are Allmysell LLC, a St. Petersburg, FL-based enterprise software and digital transformation agency. We act as your fractional CTO and build high-performance scalable systems.',
+      keywords: 'about allmysell, software agency st petersburg, enterprise software company, digital transformation team, fractional cto',
     },
     back: 'Back to Home',
     tag: 'Who We Are',
     title: 'Architects of the Digital Future',
-    p1: 'Founded in Miami, Allmysell LLC was born out of a simple frustration: The market was flooded with "agencies" delivering bloated, slow, and unscalable websites built on outdated templates. We believed B2B enterprises and fast-growing startups deserved better. They deserved engineering, not just design.',
+    p1: 'Founded in St. Petersburg, Florida, Allmysell LLC was born out of a simple frustration: The market was flooded with "agencies" delivering bloated, slow, and unscalable websites built on outdated templates. We believed B2B enterprises and fast-growing startups deserved better. They deserved engineering, not just design.',
     h2_1: 'More Than Just an Agency',
     p2: 'We do not view ourselves as a traditional software outsourcing agency. When you partner with Allmysell LLC, we become your dedicated Fractional CTO. We embed ourselves into your business model, understand your pain points, and engineer scalable systems (React, Next.js, Headless Architectures) that solve real operational bottlenecks.',
     h2_2: 'Our Core Philosophy',
@@ -24,18 +24,18 @@ const content = {
     f3_title: 'Sustainable Scalability',
     f3_desc: 'We build systems that scale horizontally. Whether you have 100 or 1,000,000 concurrent users, the infrastructure auto-scales effortlessly.',
     h2_3: 'Global Vision, Local Expertise',
-    p3: 'While our roots are in Miami, our reach is global. We have successfully led digital transformations for companies across North America, Europe, and Turkey, bridging the gap between cutting-edge Silicon Valley tech and local market dynamics.'
+    p3: 'While our roots are in St. Petersburg, FL, our reach is global. We have successfully led digital transformations for companies across North America, Europe, and Turkey, bridging the gap between cutting-edge Silicon Valley tech and local market dynamics.'
   },
   tr: {
     meta: {
       title: 'Hakkımızda',
-      description: 'Miami merkezli kurumsal yazılım ve dijital dönüşüm ajansı Allmysell LLC. Fractional CTO\'nuz olarak yüksek performanslı, ölçeklenebilir sistemler inşa ediyoruz.',
-      keywords: 'allmysell kimdir, yazılım ajansı miami, kurumsal yazılım şirketi, dijital dönüşüm ekibi, fractional cto',
+      description: 'St. Petersburg, Florida merkezli kurumsal yazılım ve dijital dönüşüm ajansı Allmysell LLC. Fractional CTO\'nuz olarak yüksek performanslı, ölçeklenebilir sistemler inşa ediyoruz.',
+      keywords: 'allmysell kimdir, yazılım ajansı st petersburg, kurumsal yazılım şirketi, dijital dönüşüm ekibi, fractional cto',
     },
     back: 'Anasayfaya Dön',
     tag: 'Biz Kimiz?',
     title: 'Dijital Geleceğin Mimarları',
-    p1: 'Miami merkezli olarak kurulan Allmysell LLC, basit bir hayal kırıklığından doğdu: Piyasa, eski şablonlar üzerine inşa edilmiş hantal, yavaş ve ölçeklenemeyen web siteleri teslim eden "ajanslarla" doluydu. B2B kurumsal şirketlerin ve hızla büyüyen girişimlerin (startup) çok daha iyisini hak ettiğine inandık. Onlar sadece şık bir tasarım değil, gerçek mühendislik hak ediyordu.',
+    p1: 'St. Petersburg, Florida merkezli olarak kurulan Allmysell LLC, basit bir hayal kırıklığından doğdu: Piyasa, eski şablonlar üzerine inşa edilmiş hantal, yavaş ve ölçeklenemeyen web siteleri teslim eden "ajanslarla" doluydu. B2B kurumsal şirketlerin ve hızla büyüyen girişimlerin (startup) çok daha iyisini hak ettiğine inandık. Onlar sadece şık bir tasarım değil, gerçek mühendislik hak ediyordu.',
     h2_1: 'Sıradan Bir Ajanstan Çok Daha Fazlası',
     p2: 'Kendimizi geleneksel bir yazılım taşeronu olarak görmüyoruz. Allmysell LLC ile ortaklık kurduğunuzda, sizin atanmış "Fractional CTO"nuz (Yarı Zamanlı Teknoloji Lideri) oluyoruz. İş modelinize entegre oluyor, operasyonel darboğazlarınızı anlıyor ve bu sorunları çözen (React, Next.js, Headless mimariler vb.) ölçeklenebilir sistemler mühendisliği yapıyoruz.',
     h2_2: 'Temel Felsefemiz',
@@ -46,7 +46,7 @@ const content = {
     f3_title: 'Sürdürülebilir Ölçeklenebilirlik',
     f3_desc: 'Yatay olarak ölçeklenebilen sistemler kuruyoruz. 100 veya 1.000.000 anlık kullanıcınız olsun, altyapı sorunsuz bir şekilde otomatik olarak ölçeklenir.',
     h2_3: 'Global Vizyon, Yerel Uzmanlık',
-    p3: 'Köklerimiz Miami\'de olsa da vizyonumuz globaldir. Kuzey Amerika, Avrupa ve Türkiye\'deki şirketler için dijital dönüşümlere başarıyla liderlik ettik; Silikon Vadisi\'nin en son teknolojisi ile yerel pazar dinamikleri arasındaki köprüyü kurduk.'
+    p3: 'Köklerimiz St. Petersburg, Florida\'da olsa da vizyonumuz globaldir. Kuzey Amerika, Avrupa ve Türkiye\'deki şirketler için dijital dönüşümlere başarıyla liderlik ettik; Silikon Vadisi\'nin en son teknolojisi ile yerel pazar dinamikleri arasındaki köprüyü kurduk.'
   }
 };
 
@@ -73,7 +73,7 @@ export default async function Hakkimizda({ params }: { params: Promise<{ lang: s
     "description": dict.meta.description,
     "foundingLocation": {
       "@type": "Place",
-      "name": "Miami, FL"
+      "name": "St. Petersburg, FL"
     },
     "sameAs": [
       "https://www.linkedin.com/company/allmysell",

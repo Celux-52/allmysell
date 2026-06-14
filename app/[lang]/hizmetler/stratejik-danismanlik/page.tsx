@@ -8,7 +8,7 @@ const content = {
     meta: {
       title: 'Digital Transformation & Strategic Technology Consulting',
       description: 'We restructure your project\'s business model, market share, and sustainable growth steps from scratch. Data-driven strategic technology and GTM consulting.',
-      keywords: 'technology consulting, digital transformation, strategic planning, business model structure, miami consulting firm, sustainable growth, GTM strategy, saas consulting',
+      keywords: 'technology consulting, digital transformation, strategic planning, business model structure, st petersburg consulting firm, sustainable growth, GTM strategy, saas consulting',
     },
     back: 'Back to Services',
     tag: 'Management & Growth',
@@ -45,7 +45,7 @@ const content = {
     meta: {
       title: 'Dijital Dönüşüm ve Stratejik Teknoloji Danışmanlığı',
       description: 'Projenizin iş modelini, pazar payını ve büyüme adımlarını baştan kurguluyoruz. Veri odaklı stratejik teknoloji ve GTM (Pazara Çıkış) danışmanlığı.',
-      keywords: 'teknoloji danışmanlığı, dijital dönüşüm, stratejik planlama, iş modeli kurgusu, miami danışmanlık firması, sürdürülebilir büyüme, saas danışmanlığı, cto hizmeti',
+      keywords: 'teknoloji danışmanlığı, dijital dönüşüm, stratejik planlama, iş modeli kurgusu, st petersburg danışmanlık firması, sürdürülebilir büyüme, saas danışmanlığı, cto hizmeti',
     },
     back: 'Hizmetlere Dön',
     tag: 'Yönetim & Büyüme',

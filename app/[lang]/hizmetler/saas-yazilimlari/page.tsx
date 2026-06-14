@@ -8,7 +8,7 @@ const content = {
     meta: {
       title: 'Custom B2B SaaS Software Development',
       description: 'We develop custom, highly secure, instantly scalable and cloud-based B2B/B2C SaaS (Software as a Service) architectures for your business. Enterprise solutions.',
-      keywords: 'saas development, custom software solutions, cloud-based software, b2b saas, software agency, miami saas developer',
+      keywords: 'saas development, custom software solutions, cloud-based software, b2b saas, software agency, st petersburg saas developer',
     },
     back: 'Back to Services',
     tag: 'Cloud & Security',
@@ -45,7 +45,7 @@ const content = {
     meta: {
       title: 'Kurumsal B2B SaaS Geliştirme',
       description: 'İşletmenize özel, yüksek güvenlikli, anında ölçeklenebilen ve bulut tabanlı B2B/B2C SaaS (Software as a Service) mimarileri geliştiriyoruz.',
-      keywords: 'saas geliştirme, özel yazılım çözümleri, bulut tabanlı yazılımlar, b2b saas, yazılım ajansı, miami saas geliştirici',
+      keywords: 'saas geliştirme, özel yazılım çözümleri, bulut tabanlı yazılımlar, b2b saas, yazılım ajansı, st petersburg saas geliştirici',
     },
     back: 'Hizmetlere Dön',
     tag: 'Bulut & Güvenlik',

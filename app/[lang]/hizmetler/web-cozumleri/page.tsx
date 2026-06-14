@@ -8,7 +8,7 @@ const content = {
     meta: {
       title: 'Enterprise Web Platform Development',
       description: 'We build enterprise-level, hyper-performance, and fully SEO-compliant modern web platforms. Rebuild your digital identity with Next.js and React.',
-      keywords: 'enterprise web design, web platform development, seo compliant website, miami web agency, high performance sites, digital transformation',
+      keywords: 'enterprise web design, web platform development, seo compliant website, st petersburg web agency, high performance sites, digital transformation',
     },
     back: 'Back to Services',
     tag: 'Technology & Design',
@@ -45,7 +45,7 @@ const content = {
     meta: {
       title: 'Kurumsal Web Platformu Geliştirme',
       description: 'Kurumsal seviyede, hiper performanslı ve tam anlamıyla teknik SEO uyumlu modern web platformları inşa ediyoruz. Next.js ile dijital kimliğinizi baştan kurgulayın.',
-      keywords: 'kurumsal web tasarımı, web platformu geliştirme, seo uyumlu web sitesi, miami web ajansı, yüksek performanslı siteler, dijital dönüşüm',
+      keywords: 'kurumsal web tasarımı, web platformu geliştirme, seo uyumlu web sitesi, st petersburg web ajansı, yüksek performanslı siteler, dijital dönüşüm',
     },
     back: 'Hizmetlere Dön',
     tag: 'Teknoloji & Tasarım',

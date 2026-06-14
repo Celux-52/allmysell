@@ -9,14 +9,14 @@ const content = {
     meta: {
       title: 'Contact Us',
       description: 'Get in touch with Allmysell LLC. Schedule a B2B discovery call or reach out for enterprise digital transformation projects.',
-      keywords: 'contact allmysell, miami software agency contact, b2b discovery call, reach out software developers',
+      keywords: 'contact allmysell, st petersburg software agency contact, b2b discovery call, reach out software developers',
     },
     back: 'Back to Home',
     tag: 'Let\'s Connect',
     title: 'Start Your Digital Transformation',
     p1: 'Whether you need a full-scale Headless e-commerce rebuild or an autonomous AI agent for your SaaS platform, our engineering team is ready to analyze your bottleneck and propose a robust architecture.',
     address_title: 'Global Headquarters',
-    address_desc: 'Miami, Florida, USA',
+    address_desc: 'St. Petersburg, Florida, USA',
     email_title: 'Direct Email',
     email_desc: 'hello@allmysell.com',
     phone_title: 'Phone / WhatsApp',
@@ -33,14 +33,14 @@ const content = {
     meta: {
       title: 'İletişim',
       description: 'Allmysell LLC ile iletişime geçin. B2B keşif toplantısı (Discovery Call) planlayın veya kurumsal projeleriniz için bize ulaşın.',
-      keywords: 'allmysell iletişim, miami yazılım ajansı iletişim, b2b toplantı, yazılım şirketi iletişim',
+      keywords: 'allmysell iletişim, st petersburg yazılım ajansı iletişim, b2b toplantı, yazılım şirketi iletişim',
     },
     back: 'Anasayfaya Dön',
     tag: 'Bizimle İletişime Geçin',
     title: 'Dijital Dönüşümünüzü Başlatın',
     p1: 'İster kapsamlı bir Headless e-ticaret altyapısı, ister SaaS platformunuz için otonom bir yapay zeka asistanı (RAG) olsun; mühendislik ekibimiz darboğazınızı analiz etmeye ve size en sağlam mimariyi sunmaya hazır.',
     address_title: 'Global Merkez',
-    address_desc: 'Miami, Florida, ABD',
+    address_desc: 'St. Petersburg, Florida, ABD',
     email_title: 'Doğrudan E-Posta',
     email_desc: 'hello@allmysell.com',
     phone_title: 'Telefon / WhatsApp',
@@ -80,7 +80,7 @@ export default async function Iletisim({ params }: { params: Promise<{ lang: str
     "email": "hello@allmysell.com",
     "address": {
       "@type": "PostalAddress",
-      "addressLocality": "Miami",
+      "addressLocality": "St. Petersburg",
       "addressRegion": "FL",
       "addressCountry": "US"
     }

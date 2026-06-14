@@ -8,7 +8,7 @@ const content = {
     meta: {
       title: 'B2B & B2C E-Commerce Autonomy',
       description: 'We build innovative, conversion-optimized e-commerce infrastructures that manage your sales, logistics, and multi-channel inventory processes with AI and automation.',
-      keywords: 'e-commerce infrastructure, e-commerce automation, b2b e-commerce, b2c e-commerce solutions, miami software agency, autonomous commerce, headless commerce',
+      keywords: 'e-commerce infrastructure, e-commerce automation, b2b e-commerce, b2c e-commerce solutions, st petersburg software agency, autonomous commerce, headless commerce',
     },
     back: 'Back to Services',
     tag: 'Sales & Conversion',
@@ -45,7 +45,7 @@ const content = {
     meta: {
       title: 'B2B & B2C E-Ticaret Otonomisi ve Altyapısı',
       description: 'Satış, lojistik ve çoklu kanal stok süreçlerinizi yapay zeka ve otomasyonlarla yöneten, Headless tabanlı yenilikçi e-ticaret altyapıları kuruyoruz.',
-      keywords: 'e-ticaret altyapısı, e-ticaret otomasyonu, b2b e-ticaret, b2c e-ticaret çözümleri, miami yazılım ajansı, otonom ticaret, headless e-ticaret',
+      keywords: 'e-ticaret altyapısı, e-ticaret otomasyonu, b2b e-ticaret, b2c e-ticaret çözümleri, st petersburg yazılım ajansı, otonom ticaret, headless e-ticaret',
     },
     back: 'Hizmetlere Dön',
     tag: 'Satış & Dönüşüm',
