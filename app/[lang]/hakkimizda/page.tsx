@@ -6,7 +6,7 @@ import { constructAlternates } from '@/lib/seo';
 const content = {
   en: {
     meta: {
-      title: 'About Us | Allmysell LLC - Enterprise Software Agency',
+      title: 'About Us',
       description: 'We are Allmysell LLC, a Miami-based enterprise software and digital transformation agency. We act as your fractional CTO and build high-performance scalable systems.',
       keywords: 'about allmysell, software agency miami, enterprise software company, digital transformation team, fractional cto',
     },
@@ -28,7 +28,7 @@ const content = {
   },
   tr: {
     meta: {
-      title: 'Hakkımızda | Allmysell LLC - Kurumsal Yazılım Ajansı',
+      title: 'Hakkımızda',
       description: 'Miami merkezli kurumsal yazılım ve dijital dönüşüm ajansı Allmysell LLC. Fractional CTO\'nuz olarak yüksek performanslı, ölçeklenebilir sistemler inşa ediyoruz.',
       keywords: 'allmysell kimdir, yazılım ajansı miami, kurumsal yazılım şirketi, dijital dönüşüm ekibi, fractional cto',
     },
@@ -54,11 +54,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lang = (await params)?.lang || 'en';
   const data = content[lang as keyof typeof content] || content.en;
   
-  const path = lang === 'tr' ? '/tr/hakkimizda' : '/en/about-us';
-  
   return {
     ...data.meta,
-    alternates: constructAlternates('about-us', 'hakkimizda')
+    alternates: constructAlternates('about-us', 'hakkimizda', lang)
   };
 }
 

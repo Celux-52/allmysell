@@ -6,7 +6,7 @@ import { constructAlternates } from '@/lib/seo';
 const content = {
   en: {
     meta: {
-      title: 'Enterprise Web Platform Development | Allmysell LLC',
+      title: 'Enterprise Web Platform Development',
       description: 'We build enterprise-level, hyper-performance, and fully SEO-compliant modern web platforms. Rebuild your digital identity with Next.js and React.',
       keywords: 'enterprise web design, web platform development, seo compliant website, miami web agency, high performance sites, digital transformation',
     },
@@ -43,7 +43,7 @@ const content = {
   },
   tr: {
     meta: {
-      title: 'Kurumsal Web Platformu Geliştirme | Allmysell LLC',
+      title: 'Kurumsal Web Platformu Geliştirme',
       description: 'Kurumsal seviyede, hiper performanslı ve tam anlamıyla teknik SEO uyumlu modern web platformları inşa ediyoruz. Next.js ile dijital kimliğinizi baştan kurgulayın.',
       keywords: 'kurumsal web tasarımı, web platformu geliştirme, seo uyumlu web sitesi, miami web ajansı, yüksek performanslı siteler, dijital dönüşüm',
     },
@@ -84,11 +84,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lang = (await params)?.lang || 'en';
   const data = content[lang as keyof typeof content] || content.en;
   
-  const path = lang === 'tr' ? '/tr/hizmetler/web-cozumleri' : '/en/services/web-solutions';
-  
   return {
     ...data.meta,
-    alternates: constructAlternates('services/web-solutions', 'hizmetler/web-cozumleri')
+    alternates: constructAlternates('services/web-solutions', 'hizmetler/web-cozumleri', lang)
   };
 }
 

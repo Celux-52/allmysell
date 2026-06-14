@@ -6,7 +6,7 @@ import { constructAlternates } from '@/lib/seo';
 const content = {
   en: {
     meta: {
-      title: 'Privacy Policy | Allmysell LLC',
+      title: 'Privacy Policy',
       description: 'Privacy Policy and data protection guidelines for Allmysell LLC. We take your corporate data security seriously.',
       keywords: 'privacy policy, data protection, gdpr, ccpa, allmysell privacy',
     },
@@ -39,7 +39,7 @@ const content = {
   },
   tr: {
     meta: {
-      title: 'Gizlilik Politikası | Allmysell LLC',
+      title: 'Gizlilik Politikası',
       description: 'Allmysell LLC Gizlilik Politikası ve veri koruma yönergeleri. Kurumsal veri güvenliğinizi ciddiye alıyoruz.',
       keywords: 'gizlilik politikası, veri koruma, kvkk, gdpr, allmysell gizlilik',
     },
@@ -76,11 +76,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lang = (await params)?.lang || 'en';
   const data = content[lang as keyof typeof content] || content.en;
   
-  const path = lang === 'tr' ? '/tr/gizlilik-politikasi' : '/en/privacy-policy';
-  
   return {
     ...data.meta,
-    alternates: constructAlternates('privacy-policy', 'gizlilik-politikasi')
+    alternates: constructAlternates('privacy-policy', 'gizlilik-politikasi', lang)
   };
 }
 

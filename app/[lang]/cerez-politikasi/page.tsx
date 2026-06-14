@@ -6,7 +6,7 @@ import { constructAlternates } from '@/lib/seo';
 const content = {
   en: {
     meta: {
-      title: 'Cookie Policy | Allmysell LLC',
+      title: 'Cookie Policy',
       description: 'Cookie Policy and usage guidelines for Allmysell LLC. Learn how we use cookies to improve your experience.',
       keywords: 'cookie policy, tracking, cookies, allmysell cookies, user experience',
     },
@@ -35,7 +35,7 @@ const content = {
   },
   tr: {
     meta: {
-      title: 'Çerez Politikası | Allmysell LLC',
+      title: 'Çerez Politikası',
       description: 'Allmysell LLC Çerez Politikası ve kullanım yönergeleri. Deneyiminizi iyileştirmek için çerezleri nasıl kullandığımızı öğrenin.',
       keywords: 'çerez politikası, izleme, çerezler, allmysell çerezleri, kullanıcı deneyimi',
     },
@@ -68,11 +68,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lang = (await params)?.lang || 'en';
   const data = content[lang as keyof typeof content] || content.en;
   
-  const path = lang === 'tr' ? '/tr/cerez-politikasi' : '/en/cookie-policy';
-  
   return {
     ...data.meta,
-    alternates: constructAlternates('cookie-policy', 'cerez-politikasi')
+    alternates: constructAlternates('cookie-policy', 'cerez-politikasi', lang)
   };
 }
 

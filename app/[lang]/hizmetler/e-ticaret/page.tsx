@@ -6,7 +6,7 @@ import { constructAlternates } from '@/lib/seo';
 const content = {
   en: {
     meta: {
-      title: 'B2B & B2C E-Commerce Autonomy | Allmysell LLC',
+      title: 'B2B & B2C E-Commerce Autonomy',
       description: 'We build innovative, conversion-optimized e-commerce infrastructures that manage your sales, logistics, and multi-channel inventory processes with AI and automation.',
       keywords: 'e-commerce infrastructure, e-commerce automation, b2b e-commerce, b2c e-commerce solutions, miami software agency, autonomous commerce, headless commerce',
     },
@@ -43,7 +43,7 @@ const content = {
   },
   tr: {
     meta: {
-      title: 'B2B & B2C E-Ticaret Otonomisi ve Altyapısı | Allmysell LLC',
+      title: 'B2B & B2C E-Ticaret Otonomisi ve Altyapısı',
       description: 'Satış, lojistik ve çoklu kanal stok süreçlerinizi yapay zeka ve otomasyonlarla yöneten, Headless tabanlı yenilikçi e-ticaret altyapıları kuruyoruz.',
       keywords: 'e-ticaret altyapısı, e-ticaret otomasyonu, b2b e-ticaret, b2c e-ticaret çözümleri, miami yazılım ajansı, otonom ticaret, headless e-ticaret',
     },
@@ -88,7 +88,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   
   return {
     ...data.meta,
-    alternates: constructAlternates('services/e-commerce', 'hizmetler/e-ticaret')
+    alternates: constructAlternates('services/e-commerce', 'hizmetler/e-ticaret', lang)
   };
 }
 

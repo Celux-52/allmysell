@@ -6,7 +6,7 @@ import { constructAlternates } from '@/lib/seo';
 const content = {
   en: {
     meta: {
-      title: 'Enterprise Mobile Application Development | Allmysell LLC',
+      title: 'Enterprise Mobile Application Development',
       description: 'We develop enterprise mobile applications for iOS and Android that are high-performance, native-feeling, and instantly scalable.',
       keywords: 'mobile app development, ios app, android app, react native, enterprise mobile software, miami app developer, mobile ux, cross-platform apps, mobile strategy',
     },
@@ -43,7 +43,7 @@ const content = {
   },
   tr: {
     meta: {
-      title: 'Kurumsal Mobil Uygulama Geliştirme (iOS & Android) | Allmysell LLC',
+      title: 'Kurumsal Mobil Uygulama Geliştirme (iOS & Android)',
       description: 'iOS ve Android için yüksek performanslı, native hissi veren ve anında ölçeklenebilen kurumsal mobil uygulamalar geliştiriyoruz.',
       keywords: 'mobil uygulama geliştirme, ios uygulama, android uygulama, react native, kurumsal mobil yazılım, miami uygulama geliştirici, mobil ux, cross-platform uygulama',
     },
@@ -88,7 +88,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   
   return {
     ...data.meta,
-    alternates: constructAlternates('services/mobile-application', 'hizmetler/mobil-uygulama')
+    alternates: constructAlternates('services/mobile-application', 'hizmetler/mobil-uygulama', lang)
   };
 }
 

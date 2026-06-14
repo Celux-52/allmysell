@@ -11,13 +11,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const article = await getArticleBySlug(slug, lang as 'en' | 'tr');
 
   if (!article) {
-    return { title: 'Article Not Found | Allmysell LLC' };
+    return { title: 'Article Not Found' };
   }
 
   return {
-    title: `${article.title} | Allmysell LLC Blog`,
+    title: article.title,
     description: article.excerpt,
-    alternates: constructAlternates(`blog/${slug}`, `blog/${slug}`)
+    alternates: constructAlternates(`blog/${slug}`, `blog/${slug}`, lang)
   };
 }
 

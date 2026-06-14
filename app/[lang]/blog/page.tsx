@@ -7,7 +7,7 @@ import { constructAlternates } from '@/lib/seo';
 const content = {
   en: {
     meta: {
-      title: 'Blog & Insights | Allmysell LLC',
+      title: 'Blog & Insights',
       description: 'Read the latest technical articles, B2B insights, and SaaS engineering practices from the Allmysell LLC team.',
       keywords: 'allmysell blog, software engineering blog, b2b saas insights, headless commerce articles',
     },
@@ -18,7 +18,7 @@ const content = {
   },
   tr: {
     meta: {
-      title: 'Blog ve İçerik Merkezi | Allmysell LLC',
+      title: 'Blog ve İçerik Merkezi',
       description: 'Allmysell LLC ekibinden en son teknik makaleleri, B2B içgörülerini ve SaaS mühendislik pratiklerini okuyun.',
       keywords: 'allmysell blog, yazılım mühendisliği blogu, b2b saas makaleleri, headless e-ticaret',
     },
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     title: data.meta.title,
     description: data.meta.description,
     keywords: data.meta.keywords,
-    alternates: constructAlternates('blog', 'blog')
+    alternates: constructAlternates('blog', 'blog', lang)
   };
 }
 

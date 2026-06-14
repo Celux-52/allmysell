@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter } from "next/font/google";
 import { GoogleAnalytics } from '@next/third-parties/google';
 import "../globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
+const inter = Inter({ subsets: ["latin", "latin-ext"], variable: "--font-inter" });
+
 
 const siteUrl = 'https://allmysell.com';
 
@@ -12,11 +12,13 @@ const seoData = {
   en: {
     title: "Allmysell LLC | Enterprise Software Development & Tech Agency",
     description: "Miami-based tech agency specializing in B2B SaaS development, e-commerce automation, custom web platforms, and AI integrations. Scale your business today.",
+    keywords: "allmysell, software agency miami, enterprise software development, b2b saas development, e-commerce automation, headless commerce, ai integration, web platform development, react next.js agency, digital transformation, fractional cto, custom software solutions, mobile app development, strategic technology consulting",
     ogLocale: "en_US"
   },
   tr: {
     title: "Allmysell LLC | Kurumsal Yazılım Ajansı & E-Ticaret Altyapısı",
     description: "Miami ve Türkiye merkezli teknoloji partneriniz. B2B SaaS geliştirme, e-ticaret otomasyonu, yapay zeka entegrasyonu ve kurumsal web platformları inşa ediyoruz.",
+    keywords: "allmysell, yazılım ajansı, kurumsal yazılım geliştirme, b2b saas geliştirme, e-ticaret otomasyonu, headless e-ticaret, yapay zeka entegrasyonu, web platformu geliştirme, react next.js ajansı, dijital dönüşüm, fractional cto, özel yazılım çözümleri, mobil uygulama geliştirme, stratejik teknoloji danışmanlığı, miami yazılım şirketi",
     ogLocale: "tr_TR"
   }
 };
@@ -33,6 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       template: "%s | Allmysell LLC"
     },
     description: data.description,
+    keywords: data.keywords,
     authors: [{ name: "Allmysell LLC" }],
     creator: "Allmysell LLC",
     publisher: "Allmysell LLC",
@@ -50,7 +53,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     openGraph: {
       type: "website",
       locale: data.ogLocale,
-      url: siteUrl,
+      url: `${siteUrl}/${lang}`,
       title: data.title,
       description: data.description,
       siteName: "Allmysell LLC",
@@ -133,7 +136,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${inter.variable} ${playfair.variable} font-sans antialiased text-[#0A192F] selection:bg-[#0A192F] selection:text-white`}>
+      <body className={`${inter.variable} font-sans antialiased text-[#0A192F] selection:bg-[#0A192F] selection:text-white`}>
         {children}
         {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
       </body>

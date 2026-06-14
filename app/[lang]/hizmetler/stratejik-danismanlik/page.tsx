@@ -6,7 +6,7 @@ import { constructAlternates } from '@/lib/seo';
 const content = {
   en: {
     meta: {
-      title: 'Digital Transformation & Strategic Technology Consulting | Allmysell LLC',
+      title: 'Digital Transformation & Strategic Technology Consulting',
       description: 'We restructure your project\'s business model, market share, and sustainable growth steps from scratch. Data-driven strategic technology and GTM consulting.',
       keywords: 'technology consulting, digital transformation, strategic planning, business model structure, miami consulting firm, sustainable growth, GTM strategy, saas consulting',
     },
@@ -43,7 +43,7 @@ const content = {
   },
   tr: {
     meta: {
-      title: 'Dijital Dönüşüm ve Stratejik Teknoloji Danışmanlığı | Allmysell LLC',
+      title: 'Dijital Dönüşüm ve Stratejik Teknoloji Danışmanlığı',
       description: 'Projenizin iş modelini, pazar payını ve büyüme adımlarını baştan kurguluyoruz. Veri odaklı stratejik teknoloji ve GTM (Pazara Çıkış) danışmanlığı.',
       keywords: 'teknoloji danışmanlığı, dijital dönüşüm, stratejik planlama, iş modeli kurgusu, miami danışmanlık firması, sürdürülebilir büyüme, saas danışmanlığı, cto hizmeti',
     },
@@ -88,7 +88,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   
   return {
     ...data.meta,
-    alternates: constructAlternates('services/strategic-consulting', 'hizmetler/stratejik-danismanlik')
+    alternates: constructAlternates('services/strategic-consulting', 'hizmetler/stratejik-danismanlik', lang)
   };
 }
 

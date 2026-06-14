@@ -6,7 +6,7 @@ import { constructAlternates } from '@/lib/seo';
 const content = {
   en: {
     meta: {
-      title: 'Custom B2B SaaS Software Development | Allmysell LLC',
+      title: 'Custom B2B SaaS Software Development',
       description: 'We develop custom, highly secure, instantly scalable and cloud-based B2B/B2C SaaS (Software as a Service) architectures for your business. Enterprise solutions.',
       keywords: 'saas development, custom software solutions, cloud-based software, b2b saas, software agency, miami saas developer',
     },
@@ -43,7 +43,7 @@ const content = {
   },
   tr: {
     meta: {
-      title: 'Kurumsal B2B SaaS Geliştirme | Allmysell LLC',
+      title: 'Kurumsal B2B SaaS Geliştirme',
       description: 'İşletmenize özel, yüksek güvenlikli, anında ölçeklenebilen ve bulut tabanlı B2B/B2C SaaS (Software as a Service) mimarileri geliştiriyoruz.',
       keywords: 'saas geliştirme, özel yazılım çözümleri, bulut tabanlı yazılımlar, b2b saas, yazılım ajansı, miami saas geliştirici',
     },
@@ -88,7 +88,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   
   return {
     ...data.meta,
-    alternates: constructAlternates('services/saas-software', 'hizmetler/saas-yazilimlari')
+    alternates: constructAlternates('services/saas-software', 'hizmetler/saas-yazilimlari', lang)
   };
 }
 

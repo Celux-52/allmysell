@@ -6,7 +6,7 @@ import { constructAlternates } from '@/lib/seo';
 const content = {
   en: {
     meta: {
-      title: 'Enterprise AI & Automation Solutions | Allmysell LLC',
+      title: 'Enterprise AI & Automation Solutions',
       description: 'Automate your data processing processes with custom-trained AI assistants (RAG) and machine learning algorithms for your business.',
       keywords: 'ai integration, machine learning, enterprise ai, rag systems, data analytics, miami tech agency, automation solutions, llm integration, custom chatgpt',
     },
@@ -43,7 +43,7 @@ const content = {
   },
   tr: {
     meta: {
-      title: 'Kurumsal Yapay Zeka ve Otomasyon Çözümleri | Allmysell LLC',
+      title: 'Kurumsal Yapay Zeka ve Otomasyon Çözümleri',
       description: 'İşletmenize özel eğitilmiş yapay zeka asistanları (RAG) ve makine öğrenimi algoritmalarıyla veri işleme süreçlerinizi otomatikleştirin.',
       keywords: 'yapay zeka entegrasyonu, makine öğrenimi, kurumsal yapay zeka, rag sistemleri, veri analitiği, miami teknoloji ajansı, otomasyon çözümleri, özel chatgpt',
     },
@@ -88,7 +88,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   
   return {
     ...data.meta,
-    alternates: constructAlternates('services/artificial-intelligence', 'hizmetler/yapay-zeka')
+    alternates: constructAlternates('services/artificial-intelligence', 'hizmetler/yapay-zeka', lang)
   };
 }
 

@@ -58,11 +58,11 @@ export default function Header({ lang, dict }: { lang: string, dict: any }) {
       <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
         <Link 
           href={`/${lang}`} 
-          className="flex items-center gap-2 font-serif text-2xl md:text-3xl font-bold tracking-tight text-[#0A192F] mr-auto relative z-50"
+          className="flex items-center gap-2 font-sans text-2xl md:text-3xl font-bold tracking-tight text-[#0A192F] mr-auto relative z-50"
           onClick={() => setIsMobileMenuOpen(false)}
         >
-          <div className="w-8 h-8 rounded-lg bg-[#0A192F] flex items-center justify-center shadow-lg shadow-[#0A192F]/20">
-             <span className="text-white text-lg leading-none">A</span>
+          <div className="w-9 h-9 rounded-full bg-[#0A192F] flex items-center justify-center shadow-lg shadow-[#0A192F]/20">
+             <span className="text-white text-xs font-bold leading-none tracking-tight">MY</span>
           </div>
           Allmysell <span className="text-[#0A192F]/40 font-light hidden sm:inline-block">LLC</span>
         </Link>

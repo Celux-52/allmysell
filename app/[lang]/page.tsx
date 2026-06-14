@@ -9,8 +9,9 @@ import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
+  const lang = resolvedParams?.lang || 'en';
   return {
-    alternates: constructAlternates('', resolvedParams?.lang || 'en')
+    alternates: constructAlternates('', '', lang)
   };
 }
 

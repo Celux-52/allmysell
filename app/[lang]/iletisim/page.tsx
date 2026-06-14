@@ -7,7 +7,7 @@ import ContactForm from '@/components/ContactForm';
 const content = {
   en: {
     meta: {
-      title: 'Contact Us | Allmysell LLC',
+      title: 'Contact Us',
       description: 'Get in touch with Allmysell LLC. Schedule a B2B discovery call or reach out for enterprise digital transformation projects.',
       keywords: 'contact allmysell, miami software agency contact, b2b discovery call, reach out software developers',
     },
@@ -31,7 +31,7 @@ const content = {
   },
   tr: {
     meta: {
-      title: 'İletişim | Allmysell LLC',
+      title: 'İletişim',
       description: 'Allmysell LLC ile iletişime geçin. B2B keşif toplantısı (Discovery Call) planlayın veya kurumsal projeleriniz için bize ulaşın.',
       keywords: 'allmysell iletişim, miami yazılım ajansı iletişim, b2b toplantı, yazılım şirketi iletişim',
     },
@@ -59,11 +59,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lang = (await params)?.lang || 'en';
   const data = content[lang as keyof typeof content] || content.en;
   
-  const path = lang === 'tr' ? '/tr/iletisim' : '/en/contact';
-  
   return {
     ...data.meta,
-    alternates: constructAlternates('contact', 'iletisim')
+    alternates: constructAlternates('contact', 'iletisim', lang)
   };
 }
 
