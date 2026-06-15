@@ -30,6 +30,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
   return {
     metadataBase: new URL(siteUrl),
+    verification: {
+      google: "dKGiBtLhfxvP_CvDfhGKOLh2JqJU0tDQf_emZcbyd0I",
+    },
     title: {
       default: data.title,
       template: "%s | Allmysell LLC"
