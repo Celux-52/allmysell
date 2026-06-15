@@ -48,15 +48,15 @@ export default function ContactForm({ dict }: ContactFormProps) {
         <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-6">
           <CheckCircle2 className="w-8 h-8" />
         </div>
-        <h3 className="text-2xl font-bold text-[#0A192F] mb-2">Message Sent!</h3>
+        <h3 className="text-2xl font-bold text-[#0A192F] mb-2">{dict.form_success_title}</h3>
         <p className="text-slate-500 mb-6">
-          Thank you for reaching out. Our architects will contact you shortly.
+          {dict.form_success_desc}
         </p>
         <button
           onClick={() => setStatus("idle")}
           className="text-indigo-600 font-semibold hover:text-indigo-800 transition-colors"
         >
-          Send another message
+          {dict.form_success_another}
         </button>
       </div>
     );
@@ -67,7 +67,7 @@ export default function ContactForm({ dict }: ContactFormProps) {
       {status === "error" && (
         <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-3 text-red-700 animate-in fade-in slide-in-from-top-2">
           <AlertCircle className="w-5 h-5 shrink-0" />
-          <p className="text-sm font-medium">An error occurred while sending your message. Please try again later.</p>
+          <p className="text-sm font-medium">{dict.form_error}</p>
         </div>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -121,7 +121,7 @@ export default function ContactForm({ dict }: ContactFormProps) {
         className="w-full bg-[#0A192F] hover:bg-indigo-600 text-white font-bold py-4 rounded-xl transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
       >
         {status === "loading" && <Loader2 className="w-5 h-5 animate-spin" />}
-        {status === "loading" ? "Sending..." : dict.form_submit}
+        {status === "loading" ? dict.form_sending : dict.form_submit}
       </button>
     </form>
   );

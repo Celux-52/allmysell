@@ -27,7 +27,12 @@ const content = {
     form_company: 'Company Name',
     form_email: 'Corporate Email',
     form_message: 'Project Details & Bottlenecks',
-    form_submit: 'Send Request'
+    form_submit: 'Send Request',
+    form_success_title: 'Message Sent!',
+    form_success_desc: 'Thank you for reaching out. Our architects will contact you shortly.',
+    form_success_another: 'Send another message',
+    form_error: 'An error occurred while sending your message. Please try again later.',
+    form_sending: 'Sending...'
   },
   tr: {
     meta: {
@@ -51,7 +56,12 @@ const content = {
     form_company: 'Şirket Adı',
     form_email: 'Kurumsal E-Posta',
     form_message: 'Proje Detayları ve Mevcut Sorunlar',
-    form_submit: 'Talebi Gönder'
+    form_submit: 'Talebi Gönder',
+    form_success_title: 'Mesajınız Gönderildi!',
+    form_success_desc: 'Bizimle iletişime geçtiğiniz için teşekkürler. Mimarlarımız en kısa sürede sizinle iletişime geçecektir.',
+    form_success_another: 'Yeni mesaj gönder',
+    form_error: 'Mesajınız gönderilirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.',
+    form_sending: 'Gönderiliyor...'
   }
 };
 
