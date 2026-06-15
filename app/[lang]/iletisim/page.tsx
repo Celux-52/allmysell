@@ -18,9 +18,9 @@ const content = {
     address_title: 'Global Headquarters',
     address_desc: 'St. Petersburg, Florida, USA',
     email_title: 'Direct Email',
-    email_desc: 'hello@allmysell.com',
-    phone_title: 'Phone / WhatsApp',
-    phone_desc: '+1 (555) 123-4567',
+    email_desc: 'info@allmysell.com',
+    phone_title: 'Turkey Operations Center',
+    phone_desc: '+90 553 706 59 12\n+90 551 834 30 30',
     form_title: 'Request a Discovery Call',
     form_desc: 'Fill out the form below. Our lead architects will get back to you within 24 hours with an initial technical assessment.',
     form_name: 'Full Name',
@@ -42,9 +42,9 @@ const content = {
     address_title: 'Global Merkez',
     address_desc: 'St. Petersburg, Florida, ABD',
     email_title: 'Doğrudan E-Posta',
-    email_desc: 'hello@allmysell.com',
-    phone_title: 'Telefon / WhatsApp',
-    phone_desc: '+1 (555) 123-4567',
+    email_desc: 'info@allmysell.com',
+    phone_title: 'Türkiye Operasyon Merkezi',
+    phone_desc: '+90 553 706 59 12\n+90 551 834 30 30',
     form_title: 'Keşif Toplantısı (Discovery Call) Talep Edin',
     form_desc: 'Aşağıdaki formu doldurun. Baş mimarlarımız 24 saat içinde ilk teknik değerlendirmeyle size geri dönüş yapacaktır.',
     form_name: 'Adınız Soyadınız',
@@ -76,8 +76,8 @@ export default async function Iletisim({ params }: { params: Promise<{ lang: str
     "image": "https://allmysell.com/logo.png",
     "@id": "https://allmysell.com",
     "url": "https://allmysell.com",
-    "telephone": "+15551234567",
-    "email": "hello@allmysell.com",
+    "telephone": "+905537065912",
+    "email": "info@allmysell.com",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "St. Petersburg",
@@ -141,7 +141,7 @@ export default async function Iletisim({ params }: { params: Promise<{ lang: str
                 </div>
                 <div>
                   <h3 className="font-bold text-[#0A192F]">{dict.phone_title}</h3>
-                  <p className="text-slate-500 mt-1">{dict.phone_desc}</p>
+                  <p className="text-slate-500 mt-1 whitespace-pre-line">{dict.phone_desc}</p>
                 </div>
               </div>
             </div>
