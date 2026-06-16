@@ -55,20 +55,20 @@ export default function Header({ lang, dict }: { lang: string, dict: any }) {
           : "bg-transparent border-transparent py-6"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between gap-4 xl:gap-8">
         <Link 
           href={`/${lang}`} 
-          className="flex items-center gap-2 font-sans text-2xl md:text-3xl font-bold tracking-tight text-[#0A192F] mr-auto relative z-50"
+          className="flex items-center gap-1.5 md:gap-2 font-sans text-xl md:text-2xl lg:text-3xl font-bold tracking-tight text-[#0A192F] mr-auto relative z-50 shrink-0"
           onClick={() => setIsMobileMenuOpen(false)}
         >
-          <div className="w-9 h-9 rounded-full bg-[#0A192F] flex items-center justify-center shadow-lg shadow-[#0A192F]/20">
-             <span className="text-white text-xs font-bold leading-none tracking-tight">MY</span>
+          <div className="w-7 h-7 md:w-9 md:h-9 rounded-full bg-[#0A192F] flex items-center justify-center shadow-lg shadow-[#0A192F]/20">
+             <span className="text-white text-[10px] md:text-xs font-bold leading-none tracking-tight">MY</span>
           </div>
-          Allmysell <span className="text-[#0A192F]/40 font-light hidden sm:inline-block">LLC</span>
+          Allmysell <span className="text-[#0A192F]/40 font-light hidden sm:inline-block ml-1">LLC</span>
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-8 mr-8">
+        <nav className="hidden lg:flex items-center gap-4 lg:gap-5 xl:gap-8 mr-2 xl:mr-8">
           {navLinks.map((link, idx) => (
             <Link key={idx} href={link.href} prefetch={false} className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">
               {link.name}
@@ -76,17 +76,17 @@ export default function Header({ lang, dict }: { lang: string, dict: any }) {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3 relative z-50">
-          <div className="flex bg-slate-200/50 p-1 rounded-full text-xs font-semibold">
+        <div className="flex items-center gap-2 md:gap-3 relative z-50">
+          <div className="flex bg-slate-200/50 p-0.5 md:p-1 rounded-full text-[10px] md:text-xs font-semibold">
             <button 
               onClick={() => switchLanguage('en')} 
-              className={`px-3 py-1.5 rounded-full transition-all ${lang === 'en' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-800'}`}
+              className={`px-2 py-1 md:px-3 md:py-1.5 rounded-full transition-all ${lang === 'en' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-800'}`}
             >
               EN
             </button>
             <button 
               onClick={() => switchLanguage('tr')} 
-              className={`px-3 py-1.5 rounded-full transition-all ${lang === 'tr' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-800'}`}
+              className={`px-2 py-1 md:px-3 md:py-1.5 rounded-full transition-all ${lang === 'tr' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-800'}`}
             >
               TR
             </button>
@@ -102,9 +102,9 @@ export default function Header({ lang, dict }: { lang: string, dict: any }) {
           {/* Mobile Menu Hamburger Button */}
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors"
+            className="lg:hidden flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors"
           >
-            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {isMobileMenuOpen ? <X className="w-4 h-4 md:w-5 md:h-5" /> : <Menu className="w-4 h-4 md:w-5 md:h-5" />}
           </button>
         </div>
       </div>
@@ -122,7 +122,7 @@ export default function Header({ lang, dict }: { lang: string, dict: any }) {
               href={link.href} 
               prefetch={false}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-xl font-bold text-[#0A192F] border-b border-slate-100 pb-4"
+              className="text-lg md:text-xl font-bold text-[#0A192F] border-b border-slate-100 pb-3 md:pb-4"
             >
               {link.name}
             </Link>
@@ -130,9 +130,9 @@ export default function Header({ lang, dict }: { lang: string, dict: any }) {
           <Link 
             href={lang === 'tr' ? '/tr/iletisim' : '/en/contact'}
             onClick={() => setIsMobileMenuOpen(false)}
-            className="mt-4 flex items-center justify-center gap-2 bg-[#0A192F] text-white px-6 py-4 rounded-xl text-lg font-bold w-full"
+            className="mt-4 flex items-center justify-center gap-2 bg-[#0A192F] text-white px-6 py-3 md:py-4 rounded-lg md:rounded-xl text-base md:text-lg font-bold w-full"
           >
-            {dict.nav.freeAnalysis} <ArrowRight className="w-5 h-5" />
+            {dict.nav.freeAnalysis} <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
           </Link>
         </div>
       </div>
