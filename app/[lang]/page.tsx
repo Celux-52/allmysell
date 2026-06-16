@@ -483,19 +483,6 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           </StaggerWrapper>
         </section>
       </main>
-
-      {/* Modern Footer */}
-      <footer className="py-12 bg-[#020A16] px-6 text-center border-t border-white/5">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-8">
-          <Link href={lang === 'tr' ? '/tr/hakkimizda' : '/en/about-us'} prefetch={false} className="text-sm font-medium text-white/50 hover:text-white transition-colors">{dict.nav.about}</Link>
-          <Link href={lang === 'tr' ? '/tr/iletisim' : '/en/contact'} prefetch={false} className="text-sm font-medium text-white/50 hover:text-white transition-colors">{dict.nav.contact}</Link>
-          <Link href={lang === 'tr' ? '/tr/gizlilik-politikasi' : '/en/privacy-policy'} prefetch={false} className="text-sm font-medium text-white/50 hover:text-white transition-colors">{dict.footer.privacy}</Link>
-          <Link href={lang === 'tr' ? '/tr/cerez-politikasi' : '/en/cookie-policy'} prefetch={false} className="text-sm font-medium text-white/50 hover:text-white transition-colors">{dict.footer.cookie}</Link>
-        </div>
-        <p className="text-xs md:text-sm text-white/30 font-semibold tracking-[0.2em] uppercase">
-          &copy; 2026 {dict.footer.text}
-        </p>
-      </footer>
     </div>
   );
 }

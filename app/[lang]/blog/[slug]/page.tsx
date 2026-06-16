@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { ArrowLeft, Clock, User } from 'lucide-react';
 import Link from 'next/link';
-import { getArticleBySlug } from '@/lib/articles';
+import { getArticleBySlug, getAllArticles } from '@/lib/articles';
 import { constructAlternates } from '@/lib/seo';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string, slug: string }> }): Promise<Metadata> {
@@ -9,16 +9,41 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lang = resolvedParams.lang || 'en';
   const slug = resolvedParams.slug;
   const article = await getArticleBySlug(slug, lang as 'en' | 'tr');
+  const enArticle = await getArticleBySlug(slug, 'en');
 
-  if (!article) {
+  if (!article || !enArticle) {
     return { title: 'Article Not Found' };
   }
 
   return {
     title: article.title,
     description: article.excerpt,
-    alternates: constructAlternates(`blog/${slug}`, `blog/${slug}`, lang)
+    alternates: constructAlternates(`blog/${slug}`, `blog/${slug}`, lang),
+    openGraph: {
+      type: 'article',
+      title: article.title,
+      description: article.excerpt,
+      publishedTime: new Date(enArticle.date).toISOString(),
+      authors: [article.author],
+      url: `https://allmysell.com/${lang}/blog/${slug}`,
+      siteName: 'Allmysell LLC',
+      images: [
+        {
+          url: 'https://allmysell.com/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: article.title,
+        }
+      ]
+    }
   };
+}
+
+export async function generateStaticParams() {
+  const articles = await getAllArticles('en');
+  return articles.flatMap((a) =>
+    ['en', 'tr'].map((lang) => ({ lang, slug: a.slug }))
+  );
 }
 
 export default async function BlogPost({ params }: { params: Promise<{ lang: string, slug: string }> }) {
@@ -27,31 +52,65 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: str
   const slug = resolvedParams.slug;
   
   const article = await getArticleBySlug(slug, lang as 'en' | 'tr');
+  const enArticle = await getArticleBySlug(slug, 'en');
   const backText = lang === 'tr' ? 'Blog\'a Dön' : 'Back to Blog';
 
-  if (!article) {
+  if (!article || !enArticle) {
     return <div className="min-h-screen flex items-center justify-center text-2xl font-bold">404 - Article Not Found</div>;
   }
 
+  const publishedTime = new Date(enArticle.date).toISOString();
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     "headline": article.title,
     "image": [
-      "https://allmysell.com/logo.png"
+      "https://allmysell.com/og-image.jpg"
     ],
-    "datePublished": "2026-06-12T08:00:00+08:00",
-    "dateModified": "2026-06-12T09:20:00+08:00",
+    "datePublished": publishedTime,
+    "dateModified": publishedTime,
     "author": [{
         "@type": "Person",
         "name": article.author,
-        "url": "https://allmysell.com/about-us"
-      }]
+        "url": `https://allmysell.com/${lang}/about-us`
+      }],
+    "publisher": {
+        "@type": "Organization",
+        "name": "Allmysell LLC",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://allmysell.com/logo.png"
+        }
+    }
   };
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": lang === 'tr' ? 'Ana Sayfa' : 'Home',
+            "item": `https://allmysell.com/${lang}`
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": `https://allmysell.com/${lang}/blog`
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": article.title,
+            "item": `https://allmysell.com/${lang}/blog/${slug}`
+          }
+        ]
+      }) }} />
       <div className="min-h-screen bg-[#FAFAFA] text-[#0A192F] selection:bg-[#0A192F] selection:text-white pb-32">
         <div className="w-full bg-[#0A192F] relative overflow-hidden pt-32 pb-16">
           <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>

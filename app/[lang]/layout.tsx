@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { GoogleAnalytics } from '@next/third-parties/google';
+import Footer from "@/components/Footer";
+import Newsletter from "@/components/Newsletter";
+import { dictionaries, Locale } from "@/dictionaries";
 import "../globals.css";
 
 const inter = Inter({ subsets: ["latin", "latin-ext"], variable: "--font-inter" });
@@ -83,44 +86,36 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
 }
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Allmysell LLC",
-  "url": siteUrl,
-  "logo": `${siteUrl}/logo.png`,
-  "sameAs": [
-    "https://www.linkedin.com/company/allmysell",
-    "https://twitter.com/allmysell",
-    "https://instagram.com/allmysell"
-  ],
-  "knowsAbout": [
-    "E-commerce Autonomy",
-    "SaaS Development",
-    "Artificial Intelligence Integration",
-    "Web Development",
-    "Digital Transformation",
-    "Mobile Applications"
-  ],
-  "contactPoint": [
-    {
-      "@type": "ContactPoint",
-      "telephone": "+90-553-706-59-12",
-      "contactType": "customer service"
-    },
-    {
-      "@type": "ContactPoint",
-      "telephone": "+90-551-834-30-30",
-      "contactType": "sales"
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Allmysell LLC - US HQ",
+    "url": siteUrl,
+    "logo": `${siteUrl}/logo.png`,
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "St. Petersburg",
+      "addressRegion": "FL",
+      "addressCountry": "US"
     }
-  ],
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "St. Petersburg",
-    "addressRegion": "FL",
-    "addressCountry": "US"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Allmysell LLC - Turkey",
+    "url": siteUrl,
+    "logo": `${siteUrl}/logo.png`,
+    "telephone": [
+      "+90-553-706-59-12",
+      "+90-551-834-30-30"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "TR"
+    }
   }
-};
+];
 
 export default async function RootLayout({
   children,
@@ -131,6 +126,7 @@ export default async function RootLayout({
 }) {
   const resolvedParams = await params;
   const lang = resolvedParams?.lang || 'en';
+  const dict = dictionaries[lang as Locale] || dictionaries['en'];
   return (
     <html lang={lang} className="scroll-smooth" data-scroll-behavior="smooth">
       <head>
@@ -141,8 +137,14 @@ export default async function RootLayout({
       </head>
       <body className={`${inter.variable} font-sans antialiased text-[#0A192F] selection:bg-[#0A192F] selection:text-white`}>
         {children}
+        <Newsletter lang={lang} />
+        <Footer lang={lang} dict={dict} />
         {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
       </body>
     </html>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'tr' }];
 }

@@ -14,6 +14,7 @@ export default function ContactForm({ dict }: ContactFormProps) {
     company: "",
     email: "",
     message: "",
+    honeypot: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -33,7 +34,7 @@ export default function ContactForm({ dict }: ContactFormProps) {
 
       if (response.ok) {
         setStatus("success");
-        setFormData({ name: "", company: "", email: "", message: "" });
+        setFormData({ name: "", company: "", email: "", message: "", honeypot: "" });
       } else {
         setStatus("error");
       }
@@ -64,6 +65,10 @@ export default function ContactForm({ dict }: ContactFormProps) {
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
+      {/* Honeypot field for anti-spam */}
+      <div className="hidden" aria-hidden="true" style={{ display: "none" }}>
+        <input type="text" name="honeypot" tabIndex={-1} autoComplete="off" onChange={handleChange} value={formData.honeypot} />
+      </div>
       {status === "error" && (
         <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-3 text-red-700 animate-in fade-in slide-in-from-top-2">
           <AlertCircle className="w-5 h-5 shrink-0" />

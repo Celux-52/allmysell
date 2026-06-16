@@ -30,7 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // English version
     sitemaps.push({
       url: `${baseUrl}/en${enPath}`,
-      lastModified: new Date(),
+      lastModified: new Date('2024-05-20T00:00:00Z'),
       changeFrequency: route.changeFrequency,
       priority: route.priority,
       alternates: {
@@ -45,7 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Turkish version
     sitemaps.push({
       url: `${baseUrl}/tr${trPath}`,
-      lastModified: new Date(),
+      lastModified: new Date('2024-05-20T00:00:00Z'),
       changeFrequency: route.changeFrequency,
       priority: route.priority,
       alternates: {
@@ -68,7 +68,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // English version
     sitemaps.push({
       url: `${baseUrl}/en${routePath}`,
-      lastModified: new Date(),
+      lastModified: new Date(article.date),
       changeFrequency: 'monthly',
       priority: 0.8,
       alternates: {
@@ -83,7 +83,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Turkish version
     sitemaps.push({
       url: `${baseUrl}/tr${routePath}`,
-      lastModified: new Date(),
+      lastModified: new Date(article.date),
       changeFrequency: 'monthly',
       priority: 0.8,
       alternates: {
