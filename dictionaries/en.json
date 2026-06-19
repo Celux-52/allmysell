@@ -152,5 +152,18 @@
     "text": "Allmysell LLC. | Design and Technology",
     "privacy": "Privacy Policy",
     "cookie": "Cookie Policy"
+  },
+  "ctaBand": {
+    "title": "Free Architectural Analysis for Your Project",
+    "desc": "Let us analyze your current system, identify bottlenecks, and recommend the best technology stack. First consultation is completely free.",
+    "cta": "Get a Free Quote",
+    "title2": "Ready for Digital Transformation?",
+    "desc2": "Our team is ready to evaluate your project and create a custom roadmap for you.",
+    "cta2": "Contact Us Now"
+  },
+  "serviceCta": {
+    "title": "Want to Use This Service for Your Project?",
+    "desc": "Our team is ready to prepare a custom technical assessment for your project. First consultation is free.",
+    "cta": "Free Discovery Call"
   }
 }

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Mail, ArrowRight, CheckCircle, AlertCircle } from "lucide-react";
+import { trackNewsletterSubscribe } from "@/lib/gtag";
 
 export default function Newsletter({ lang }: { lang: string }) {
   const [email, setEmail] = useState("");
@@ -33,6 +34,7 @@ export default function Newsletter({ lang }: { lang: string }) {
       });
 
       if (res.ok) {
+        trackNewsletterSubscribe();
         setStatus("success");
         setEmail("");
       } else {

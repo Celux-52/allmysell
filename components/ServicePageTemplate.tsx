@@ -46,6 +46,11 @@ export interface ServicePageTemplateProps {
   HeaderIcon: React.ElementType;
   Feature1Icon: React.ElementType;
   Feature2Icon: React.ElementType;
+  serviceCta: {
+    title: string;
+    desc: string;
+    cta: string;
+  };
 }
 
 export default function ServicePageTemplate({
@@ -53,7 +58,8 @@ export default function ServicePageTemplate({
   dict,
   HeaderIcon,
   Feature1Icon,
-  Feature2Icon
+  Feature2Icon,
+  serviceCta
 }: ServicePageTemplateProps) {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -213,6 +219,31 @@ export default function ServicePageTemplate({
                 </summary>
                 <p className="text-slate-500 mt-4 leading-relaxed font-sans">{dict.faq_4_a}</p>
               </details>
+            </div>
+
+            {/* Service CTA Section */}
+            <div className="mt-20 bg-gradient-to-br from-[#0A192F] via-[#112240] to-[#0A192F] rounded-[2rem] p-10 md:p-16 text-center relative overflow-hidden not-prose">
+              <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none"></div>
+              <div className="absolute top-[-30%] right-[-20%] w-[50%] h-[150%] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+              <div className="relative z-10">
+                <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-white/10 border border-white/10 text-xs font-semibold text-emerald-400 uppercase tracking-widest">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+                  {lang === 'tr' ? 'Ücretsiz Değerlendirme' : 'Free Assessment'}
+                </div>
+                <h3 className="font-sans text-2xl md:text-4xl font-bold text-white tracking-tight mb-4 leading-tight">
+                  {serviceCta.title}
+                </h3>
+                <p className="text-blue-100/60 text-lg font-light max-w-xl mx-auto mb-8 leading-relaxed">
+                  {serviceCta.desc}
+                </p>
+                <Link
+                  href={lang === 'tr' ? '/tr/iletisim' : '/en/contact'}
+                  className="inline-flex items-center gap-2 bg-white text-[#0A192F] px-8 py-4 rounded-2xl text-base font-bold tracking-wide transition-all shadow-[0_20px_40px_-15px_rgba(255,255,255,0.3)] hover:bg-blue-50 hover:-translate-y-1 hover:shadow-[0_25px_50px_-15px_rgba(255,255,255,0.4)]"
+                >
+                  {serviceCta.cta}
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+                </Link>
+              </div>
             </div>
           </div>
         </article>

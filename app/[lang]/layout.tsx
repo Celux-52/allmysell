@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { GoogleAnalytics } from '@next/third-parties/google';
 import Footer from "@/components/Footer";
 import Newsletter from "@/components/Newsletter";
+import FloatingCTA from "@/components/FloatingCTA";
 import { dictionaries, Locale } from "@/dictionaries";
 import "../globals.css";
 
@@ -137,6 +138,7 @@ export default async function RootLayout({
       </head>
       <body className={`${inter.variable} font-sans antialiased text-[#0A192F] selection:bg-[#0A192F] selection:text-white`}>
         {children}
+        <FloatingCTA lang={lang} />
         <Newsletter lang={lang} />
         <Footer lang={lang} dict={dict} />
         {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}

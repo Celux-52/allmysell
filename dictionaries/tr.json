@@ -152,5 +152,18 @@
     "text": "Allmysell LLC. | Tasarım ve Teknoloji",
     "privacy": "Gizlilik Politikası",
     "cookie": "Çerez Politikası"
+  },
+  "ctaBand": {
+    "title": "Projeniz İçin Ücretsiz Mimari Analiz",
+    "desc": "Mevcut sisteminizi analiz edelim, darboğazları tespit edelim ve size en uygun teknolojiyi önerelim. İlk görüşme tamamen ücretsiz.",
+    "cta": "Ücretsiz Teklif Al",
+    "title2": "Dijital Dönüşüme Hazır mısınız?",
+    "desc2": "Ekibimiz projenizi değerlendirmek ve size özel bir yol haritası çıkarmak için hazır.",
+    "cta2": "Hemen İletişime Geç"
+  },
+  "serviceCta": {
+    "title": "Bu Hizmeti Projenizde Kullanmak İster misiniz?",
+    "desc": "Ekibimiz, projenize özel bir teknik değerlendirme hazırlamak için hazır. İlk görüşme ücretsizdir.",
+    "cta": "Ücretsiz Keşif Toplantısı"
   }
 }

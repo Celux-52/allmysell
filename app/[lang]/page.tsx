@@ -222,6 +222,47 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           </StaggerWrapper>
         </section>
 
+        {/* CTA Band - After Services */}
+        <section className="py-20 bg-gradient-to-br from-[#0A192F] via-[#112240] to-[#0A192F] relative overflow-hidden">
+          <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none"></div>
+          <div className="absolute top-[-50%] left-[-20%] w-[60%] h-[200%] bg-blue-500/10 rounded-full blur-[150px] pointer-events-none"></div>
+          <div className="absolute bottom-[-50%] right-[-20%] w-[50%] h-[200%] bg-indigo-500/10 rounded-full blur-[150px] pointer-events-none"></div>
+          
+          <StaggerWrapper className="max-w-4xl mx-auto px-6 lg:px-12 text-center relative z-10">
+            <FadeInUpWrapper>
+              <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-white/10 border border-white/10 text-xs font-semibold text-emerald-400 uppercase tracking-widest">
+                <Sparkles className="w-3.5 h-3.5" />
+                {lang === 'tr' ? 'Ücretsiz Değerlendirme' : 'Free Assessment'}
+              </div>
+            </FadeInUpWrapper>
+            <FadeInUpWrapper>
+              <h2 className="font-sans text-3xl md:text-5xl font-bold text-white tracking-tight mb-6 leading-tight">
+                {dict.ctaBand.title}
+              </h2>
+            </FadeInUpWrapper>
+            <FadeInUpWrapper>
+              <p className="text-blue-100/60 text-lg md:text-xl font-light max-w-2xl mx-auto mb-10 leading-relaxed">
+                {dict.ctaBand.desc}
+              </p>
+            </FadeInUpWrapper>
+            <FadeInUpWrapper className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link 
+                href={lang === 'tr' ? '/tr/iletisim' : '/en/contact'}
+                className="bg-white text-[#0A192F] px-8 py-4 rounded-2xl text-base font-bold tracking-wide transition-all shadow-[0_20px_40px_-15px_rgba(255,255,255,0.3)] hover:bg-blue-50 hover:-translate-y-1 hover:shadow-[0_25px_50px_-15px_rgba(255,255,255,0.4)] flex items-center justify-center gap-2"
+              >
+                {dict.ctaBand.cta} <ArrowRight className="w-5 h-5" />
+              </Link>
+              <a 
+                href="#contact"
+                className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-2xl text-base font-semibold tracking-wide transition-all hover:bg-white/20 hover:-translate-y-1 flex items-center justify-center gap-2"
+              >
+                <Phone className="w-4 h-4" />
+                {lang === 'tr' ? '+90 553 706 59 12' : '+90 553 706 59 12'}
+              </a>
+            </FadeInUpWrapper>
+          </StaggerWrapper>
+        </section>
+
         {/* Why Us / Features Section */}
         <section className="py-24 bg-white border-y border-slate-200/60 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-blue-50/50 to-transparent pointer-events-none"></div>
@@ -404,6 +445,31 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                   </FadeInUpWrapper>
                 ))}
               </div>
+            </div>
+          </StaggerWrapper>
+        </section>
+
+        {/* CTA Band 2 - Before Contact */}
+        <section className="py-16 bg-white border-y border-slate-200/60 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-blue-50/50 via-transparent to-indigo-50/50 pointer-events-none"></div>
+          <StaggerWrapper className="max-w-5xl mx-auto px-6 lg:px-12 relative z-10">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+              <FadeInUpWrapper className="flex-1 text-center md:text-left">
+                <h2 className="font-sans text-2xl md:text-4xl font-bold text-[#0A192F] tracking-tight mb-3">
+                  {dict.ctaBand.title2}
+                </h2>
+                <p className="text-slate-500 text-lg font-light max-w-lg">
+                  {dict.ctaBand.desc2}
+                </p>
+              </FadeInUpWrapper>
+              <FadeInUpWrapper className="shrink-0">
+                <Link
+                  href={lang === 'tr' ? '/tr/iletisim' : '/en/contact'}
+                  className="bg-[#0A192F] text-white px-8 py-4 rounded-2xl text-base font-bold tracking-wide transition-all shadow-[0_20px_40px_-15px_rgba(10,25,47,0.5)] hover:bg-[#112240] hover:-translate-y-1 hover:shadow-[0_25px_50px_-15px_rgba(10,25,47,0.6)] flex items-center gap-2 border border-white/10 whitespace-nowrap"
+                >
+                  {dict.ctaBand.cta2} <ArrowRight className="w-5 h-5" />
+                </Link>
+              </FadeInUpWrapper>
             </div>
           </StaggerWrapper>
         </section>

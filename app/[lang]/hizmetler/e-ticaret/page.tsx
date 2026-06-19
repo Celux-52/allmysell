@@ -103,6 +103,10 @@ export default async function ETicaret({ params }: { params: Promise<{ lang: str
       HeaderIcon={ShoppingCart}
       Feature1Icon={Box}
       Feature2Icon={TrendingUp}
+      serviceCta={lang === 'tr' 
+        ? { title: "Bu Hizmeti Projenizde Kullanmak İster misiniz?", desc: "Ekibimiz, projenize özel bir teknik değerlendirme hazırlamak için hazır. İlk görüşme ücretsizdir.", cta: "Ücretsiz Keşif Toplantısı" }
+        : { title: "Want to Use This Service for Your Project?", desc: "Our team is ready to prepare a custom technical assessment for your project. First consultation is free.", cta: "Free Discovery Call" }
+      }
     />
   );
 }

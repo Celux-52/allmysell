@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { trackContactFormSubmit } from "@/lib/gtag";
 
 interface ContactFormProps {
   dict: any;
@@ -33,6 +34,7 @@ export default function ContactForm({ dict }: ContactFormProps) {
       });
 
       if (response.ok) {
+        trackContactFormSubmit(formData.email, formData.company);
         setStatus("success");
         setFormData({ name: "", company: "", email: "", message: "", honeypot: "" });
       } else {
