@@ -72,7 +72,7 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: str
     "author": [{
         "@type": "Person",
         "name": article.author,
-        "url": `https://allmysell.com/${lang}/about-us`
+        "url": "https://www.instagram.com/melihbicak_8?igsh=MWQ5a3BocXJ6aHM5Nw%3D%3D&utm_source=qr"
       }],
     "publisher": {
         "@type": "Organization",
@@ -130,10 +130,15 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: str
             </h1>
             
             <div className="flex items-center gap-3 border-t border-white/10 pt-6 mt-6">
-              <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center border border-white/10">
+              <a href="https://www.instagram.com/melihbicak_8?igsh=MWQ5a3BocXJ6aHM5Nw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center border border-white/10 hover:bg-white/20 transition-colors">
                 <User className="w-5 h-5 text-white/60" />
+              </a>
+              <div className="flex flex-col">
+                <a href="https://www.instagram.com/melihbicak_8?igsh=MWQ5a3BocXJ6aHM5Nw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-white/90 hover:text-white transition-colors">
+                  {article.author}
+                </a>
+                <span className="text-xs font-medium text-white/50">{lang === 'tr' ? 'Kurucu / Yazılım Mühendisi' : 'Founder / Software Engineer'}</span>
               </div>
-              <div className="text-sm font-semibold text-white/80">{article.author}</div>
             </div>
           </div>
         </div>
