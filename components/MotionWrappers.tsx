@@ -15,7 +15,7 @@ const staggerContainer: Variants = {
 
 export function StaggerWrapper({ children, className }: { children: ReactNode, className?: string }) {
   return (
-    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className={className}>
+    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "0px" }} variants={staggerContainer} className={`${className || ''} framer-mobile-fix`}>
       {children}
     </motion.div>
   );
@@ -23,7 +23,7 @@ export function StaggerWrapper({ children, className }: { children: ReactNode, c
 
 export function FadeInUpWrapper({ children, className }: { children: ReactNode, className?: string }) {
   return (
-    <motion.div variants={fadeInUp} className={className}>
+    <motion.div variants={fadeInUp} className={`${className || ''} framer-mobile-fix`}>
       {children}
     </motion.div>
   );
@@ -31,7 +31,7 @@ export function FadeInUpWrapper({ children, className }: { children: ReactNode, 
 
 export function FadeInUpWrapperInitialHidden({ children, className }: { children: ReactNode, className?: string }) {
   return (
-    <motion.div initial="hidden" animate="visible" variants={fadeInUp} className={className}>
+    <motion.div initial="hidden" animate="visible" variants={fadeInUp} className={`${className || ''} framer-mobile-fix`}>
       {children}
     </motion.div>
   );
@@ -49,3 +49,4 @@ export function DashboardMockupWrapper({ children }: { children: ReactNode }) {
     </motion.div>
   );
 }
+

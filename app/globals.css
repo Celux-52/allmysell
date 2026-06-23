@@ -27,9 +27,23 @@
 
 .animate-marquee {
   animation: marquee 35s linear infinite;
+  will-change: transform;
 }
 
 body {
   background-color: #FAFAFA; /* Slightly off-white for better contrast with white cards */
   color: #0A192F;
+}
+
+/* 
+  Bulletproof fix for Framer Motion on Mobile.
+  If Intersection Observer fails or JS hangs, elements will be invisible (opacity: 0) forever.
+  This CSS overrides the inline styles on mobile screens, making everything instantly visible.
+*/
+@media (max-width: 768px) {
+  .framer-mobile-fix {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
 }

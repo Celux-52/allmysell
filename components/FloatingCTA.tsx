@@ -42,7 +42,7 @@ export default function FloatingCTA({ lang }: { lang: string }) {
           : "translate-y-full opacity-0 pointer-events-none"
       }`}
     >
-      <div className="bg-[#0A192F]/95 backdrop-blur-xl border-t border-white/10 shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.3)]">
+      <div className="bg-[#0A192F]/95 md:backdrop-blur-xl border-t border-white/10 shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.3)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between gap-3 sm:gap-6">
           {/* Text - hidden on very small screens */}
           <p className="hidden sm:block text-white/70 text-sm font-medium truncate">

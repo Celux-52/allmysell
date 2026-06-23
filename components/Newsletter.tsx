@@ -48,7 +48,7 @@ export default function Newsletter({ lang }: { lang: string }) {
   return (
     <div className="bg-indigo-600 border-y border-indigo-700 py-16 px-6 lg:px-12 font-sans relative overflow-hidden">
       <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/5 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/5 rounded-full hidden md:block blur-[100px] pointer-events-none"></div>
       
       <div className="max-w-4xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
         <div className="flex-1 text-center md:text-left">

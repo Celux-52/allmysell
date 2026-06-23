@@ -29,9 +29,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       {/* Modern Dot Grid Background */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.4] pointer-events-none -z-20"></div>
       
-      {/* Ambient Glows */}
-      <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-blue-500/10 rounded-full blur-[150px] pointer-events-none -z-10 animate-pulse" style={{ animationDuration: '10s' }}></div>
-      <div className="absolute top-[20%] right-[-10%] w-[40%] h-[60%] bg-indigo-500/10 rounded-full blur-[150px] pointer-events-none -z-10 animate-pulse" style={{ animationDuration: '14s' }}></div>
+      {/* Ambient Glows - Disabled on mobile to prevent GPU compositor crashes (white screen bug) */}
+      <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-blue-500/10 rounded-full hidden md:block blur-[150px] pointer-events-none -z-10 animate-pulse" style={{ animationDuration: '10s' }}></div>
+      <div className="absolute top-[20%] right-[-10%] w-[40%] h-[60%] bg-indigo-500/10 rounded-full hidden md:block blur-[150px] pointer-events-none -z-10 animate-pulse" style={{ animationDuration: '14s' }}></div>
 
       {/* Header - Interactive Client Component */}
       <Header lang={lang} dict={dict} />
@@ -225,8 +225,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         {/* CTA Band - After Services */}
         <section className="py-20 bg-gradient-to-br from-[#0A192F] via-[#112240] to-[#0A192F] relative overflow-hidden">
           <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none"></div>
-          <div className="absolute top-[-50%] left-[-20%] w-[60%] h-[200%] bg-blue-500/10 rounded-full blur-[150px] pointer-events-none"></div>
-          <div className="absolute bottom-[-50%] right-[-20%] w-[50%] h-[200%] bg-indigo-500/10 rounded-full blur-[150px] pointer-events-none"></div>
+          <div className="absolute top-[-50%] left-[-20%] w-[60%] h-[200%] bg-blue-500/10 rounded-full hidden md:block blur-[150px] pointer-events-none"></div>
+          <div className="absolute bottom-[-50%] right-[-20%] w-[50%] h-[200%] bg-indigo-500/10 rounded-full hidden md:block blur-[150px] pointer-events-none"></div>
           
           <StaggerWrapper className="max-w-4xl mx-auto px-6 lg:px-12 text-center relative z-10">
             <FadeInUpWrapper>
@@ -513,7 +513,10 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                       </div>
                       <div>
                         <h4 className="text-white font-semibold mb-1">{dict.contact.tr.title}</h4>
-                        <p className="text-sm leading-relaxed text-white/50">+90 553 706 59 12<br/>+90 551 834 30 30</p>
+                        <p className="text-sm leading-relaxed text-white/50">
+                          <a href="tel:+905537065912" className="hover:text-white transition-colors">+90 553 706 59 12</a><br/>
+                          <a href="tel:+905518343030" className="hover:text-white transition-colors">+90 551 834 30 30</a>
+                        </p>
                       </div>
                     </div>
                   </div>

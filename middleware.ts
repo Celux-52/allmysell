@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+kimport { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 const locales = ['en', 'tr'];
@@ -35,11 +35,11 @@ const reverseEnglishRouteMap: Record<string, string> = {
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  
+
   // Skip static files, images, api routes
   if (
-    pathname.includes('.') || 
-    pathname.startsWith('/_next') || 
+    pathname.includes('.') ||
+    pathname.startsWith('/_next') ||
     pathname.startsWith('/api')
   ) {
     return;

@@ -20,7 +20,10 @@ export default function Footer({ lang, dict }: { lang: string, dict: any }) {
             </div>
             <div className="flex items-start gap-3 text-white/70">
               <Phone className="w-5 h-5 text-blue-400 shrink-0" />
-              <span className="text-sm">+90 553 706 59 12<br/>+90 551 834 30 30 (TR)</span>
+              <span className="text-sm">
+                <a href="tel:+905537065912" className="hover:text-white transition-colors">+90 553 706 59 12</a><br/>
+                <a href="tel:+905518343030" className="hover:text-white transition-colors">+90 551 834 30 30 (TR)</a>
+              </span>
             </div>
             <div className="flex items-start gap-3 text-white/70">
               <Mail className="w-5 h-5 text-blue-400 shrink-0" />

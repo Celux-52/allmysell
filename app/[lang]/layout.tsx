@@ -34,6 +34,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
   return {
     metadataBase: new URL(siteUrl),
+    formatDetection: {
+      telephone: false,
+      date: false,
+      email: false,
+      address: false,
+    },
     verification: {
       google: "dKGiBtLhfxvP_CvDfhGKOLh2JqJU0tDQf_emZcbyd0I",
       yandex: "712b8435272d4503",

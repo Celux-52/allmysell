@@ -13,10 +13,11 @@ export default function Header({ lang, dict }: { lang: string, dict: any }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
+      const scrolled = window.scrollY > 40;
+      setIsScrolled((prevScrolled) => (prevScrolled !== scrolled ? scrolled : prevScrolled));
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
@@ -51,7 +52,7 @@ export default function Header({ lang, dict }: { lang: string, dict: any }) {
     <header
       className={`fixed w-full top-0 z-50 transition-all duration-500 border-b ${
         isScrolled || isMobileMenuOpen
-          ? "bg-white/80 backdrop-blur-xl border-slate-200/50 shadow-sm py-4" 
+          ? "bg-white/95 md:bg-white/80 backdrop-blur-none md:backdrop-blur-xl border-slate-200/50 shadow-sm py-4" 
           : "bg-transparent border-transparent py-6"
       }`}
     >
