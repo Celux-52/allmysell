@@ -57,7 +57,7 @@ export default function Newsletter({ lang }: { lang: string }) {
           </div>
           <p className="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">
             {dict.title}
-          </h2>
+          </p>
           <p className="text-indigo-200 text-lg max-w-xl">
             {dict.desc}
           </p>
