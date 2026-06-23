@@ -55,7 +55,7 @@ export default function Newsletter({ lang }: { lang: string }) {
           <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-1.5 rounded-full text-indigo-100 text-sm font-semibold mb-4 border border-white/10 backdrop-blur-sm">
             <Mail className="w-4 h-4" /> Newsletter
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">
+          <p className="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">
             {dict.title}
           </h2>
           <p className="text-indigo-200 text-lg max-w-xl">

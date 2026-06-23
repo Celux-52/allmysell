@@ -94,15 +94,35 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 const jsonLd = [
   {
     "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Allmysell LLC",
+    "url": siteUrl,
+    "logo": `${siteUrl}/logo.png`,
+    "sameAs": [
+      "https://www.linkedin.com/company/allmysell",
+      "https://clutch.co/profile/allmysell-llc"
+    ]
+  },
+  {
+    "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Allmysell LLC - US HQ",
     "url": siteUrl,
     "logo": `${siteUrl}/logo.png`,
+    "telephone": "+90-553-706-59-12",
+    "priceRange": "$$$",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "7901 4th St N, Ste 300",
       "addressLocality": "St. Petersburg",
       "addressRegion": "FL",
+      "postalCode": "33702",
       "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "27.85",
+      "longitude": "-82.64"
     }
   },
   {
@@ -115,6 +135,7 @@ const jsonLd = [
       "+90-553-706-59-12",
       "+90-551-834-30-30"
     ],
+    "priceRange": "₺₺₺",
     "address": {
       "@type": "PostalAddress",
       "addressCountry": "TR"

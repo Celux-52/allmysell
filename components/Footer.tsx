@@ -9,7 +9,7 @@ export default function Footer({ lang, dict }: { lang: string, dict: any }) {
         
         {/* Company Info & NAP */}
         <div>
-          <h3 className="text-white font-bold text-xl mb-6">Allmysell LLC</h3>
+          <p className="text-white font-bold text-xl mb-6">Allmysell LLC</p>
           <p className="text-white/60 font-light leading-relaxed mb-6">
             {isTr ? "Kurumsal yazılım geliştirme, B2B SaaS otomasyonu ve yapay zeka ajansı." : "Enterprise software development, B2B SaaS automation, and AI agency."}
           </p>
@@ -31,7 +31,7 @@ export default function Footer({ lang, dict }: { lang: string, dict: any }) {
 
         {/* Services */}
         <div>
-          <h4 className="text-white font-semibold mb-6 uppercase tracking-wider text-sm">{dict?.nav?.services || (isTr ? "Hizmetler" : "Services")}</h4>
+          <p className="text-white font-semibold mb-6 uppercase tracking-wider text-sm">{dict?.nav?.services || (isTr ? "Hizmetler" : "Services")}</p>
           <ul className="space-y-3">
             <li><Link href={isTr ? '/tr/hizmetler/web-cozumleri' : '/en/services/web-solutions'} className="text-white/60 hover:text-white transition-colors text-sm">{dict?.services?.web?.title || (isTr ? "Web Çözümleri" : "Web Solutions")}</Link></li>
             <li><Link href={isTr ? '/tr/hizmetler/e-ticaret' : '/en/services/e-commerce'} className="text-white/60 hover:text-white transition-colors text-sm">{dict?.services?.ecommerce?.title || (isTr ? "E-ticaret" : "E-commerce")}</Link></li>
@@ -44,7 +44,7 @@ export default function Footer({ lang, dict }: { lang: string, dict: any }) {
 
         {/* Company */}
         <div>
-          <h4 className="text-white font-semibold mb-6 uppercase tracking-wider text-sm">{dict?.nav?.company || (isTr ? "Şirket" : "Company")}</h4>
+          <p className="text-white font-semibold mb-6 uppercase tracking-wider text-sm">{dict?.nav?.company || (isTr ? "Şirket" : "Company")}</p>
           <ul className="space-y-3">
             <li><Link href={isTr ? '/tr/hakkimizda' : '/en/about-us'} className="text-white/60 hover:text-white transition-colors text-sm">{dict?.nav?.about || (isTr ? "Hakkımızda" : "About Us")}</Link></li>
             <li><Link href={`/${lang}/blog`} className="text-white/60 hover:text-white transition-colors text-sm">Blog</Link></li>
@@ -54,7 +54,7 @@ export default function Footer({ lang, dict }: { lang: string, dict: any }) {
 
         {/* Legal & Social */}
         <div>
-          <h4 className="text-white font-semibold mb-6 uppercase tracking-wider text-sm">{dict?.nav?.legal || (isTr ? "Yasal" : "Legal")}</h4>
+          <p className="text-white font-semibold mb-6 uppercase tracking-wider text-sm">{dict?.nav?.legal || (isTr ? "Yasal" : "Legal")}</p>
           <ul className="space-y-3 mb-8">
             <li><Link href={isTr ? '/tr/gizlilik-politikasi' : '/en/privacy-policy'} className="text-white/60 hover:text-white transition-colors text-sm">{dict?.footer?.privacy || (isTr ? "Gizlilik Politikası" : "Privacy Policy")}</Link></li>
             <li><Link href={isTr ? '/tr/cerez-politikasi' : '/en/cookie-policy'} className="text-white/60 hover:text-white transition-colors text-sm">{dict?.footer?.cookie || (isTr ? "Çerez Politikası" : "Cookie Policy")}</Link></li>
