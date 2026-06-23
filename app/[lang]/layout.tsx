@@ -99,8 +99,7 @@ const jsonLd = [
     "url": siteUrl,
     "logo": `${siteUrl}/logo.png`,
     "sameAs": [
-      "https://www.linkedin.com/company/allmysell",
-      "https://clutch.co/profile/allmysell-llc"
+      "https://www.instagram.com/melihbicak_8"
     ]
   },
   {
