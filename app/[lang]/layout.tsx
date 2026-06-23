@@ -36,6 +36,10 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     metadataBase: new URL(siteUrl),
     verification: {
       google: "dKGiBtLhfxvP_CvDfhGKOLh2JqJU0tDQf_emZcbyd0I",
+      yandex: "712b8435272d4503",
+      other: {
+        "naver-site-verification": "0b63d4358f3b9ebe8ded3facb84c25922215eb6d",
+      },
     },
     title: {
       default: data.title,
