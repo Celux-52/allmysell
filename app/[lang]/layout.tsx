@@ -4,6 +4,8 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import Footer from "@/components/Footer";
 import Newsletter from "@/components/Newsletter";
 import FloatingCTA from "@/components/FloatingCTA";
+import LeadPopup from "@/components/LeadPopup";
+import PushNotification from "@/components/PushNotification";
 import { dictionaries, Locale } from "@/dictionaries";
 import "../globals.css";
 
@@ -170,6 +172,8 @@ export default async function RootLayout({
         {children}
         <FloatingCTA lang={lang} />
         <Newsletter lang={lang} />
+        <LeadPopup lang={lang} />
+        <PushNotification />
         <Footer lang={lang} dict={dict} />
         {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
       </body>
