@@ -50,7 +50,8 @@ export default function Footer({ lang, dict }: { lang: string, dict: any }) {
           <p className="text-white font-semibold mb-6 uppercase tracking-wider text-sm">{dict?.nav?.company || (isTr ? "Şirket" : "Company")}</p>
           <ul className="space-y-3">
             <li><Link href={isTr ? '/tr/hakkimizda' : '/en/about-us'} className="text-white/60 hover:text-white transition-colors text-sm">{dict?.nav?.about || (isTr ? "Hakkımızda" : "About Us")}</Link></li>
-            <li><Link href={`/${lang}/blog`} className="text-white/60 hover:text-white transition-colors text-sm">Blog</Link></li>
+            <li><Link href={isTr ? '/tr/egitimler/ebay-dropshipping' : '/en/courses/ebay-dropshipping'} className="text-white/60 hover:text-white transition-colors text-sm">{dict?.nav?.courses || (isTr ? "Eğitimler" : "Courses")}</Link></li>
+            <li><Link href={isTr ? '/tr/blog' : '/en/blog'} className="text-white/60 hover:text-white transition-colors text-sm">{dict?.nav?.blog || (isTr ? "Blog" : "Blog")}</Link></li>
             <li><Link href={isTr ? '/tr/iletisim' : '/en/contact'} className="text-white/60 hover:text-white transition-colors text-sm">{dict?.nav?.contact || (isTr ? "İletişim" : "Contact")}</Link></li>
           </ul>
         </div>

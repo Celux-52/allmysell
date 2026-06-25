@@ -16,7 +16,8 @@ const englishRouteMap: Record<string, string> = {
   '/en/contact': '/en/iletisim',
   '/en/privacy-policy': '/en/gizlilik-politikasi',
   '/en/cookie-policy': '/en/cerez-politikasi',
-  '/en/blog': '/en/blog'
+  '/en/blog': '/en/blog',
+  '/en/courses/ebay-dropshipping': '/en/egitimler/ebay-dropshipping'
 };
 
 // Reverse map for redirecting direct visits to the turkish slug in english locale
@@ -30,7 +31,8 @@ const reverseEnglishRouteMap: Record<string, string> = {
   '/en/hakkimizda': '/en/about-us',
   '/en/iletisim': '/en/contact',
   '/en/gizlilik-politikasi': '/en/privacy-policy',
-  '/en/cerez-politikasi': '/en/cookie-policy'
+  '/en/cerez-politikasi': '/en/cookie-policy',
+  '/en/egitimler/ebay-dropshipping': '/en/courses/ebay-dropshipping'
 };
 
 export function middleware(request: NextRequest) {

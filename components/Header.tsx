@@ -44,6 +44,7 @@ export default function Header({ lang, dict }: { lang: string, dict: any }) {
     { name: dict.nav.saas, href: lang === 'tr' ? '/tr/hizmetler/saas-yazilimlari' : '/en/services/saas-software' },
     { name: dict.nav.consulting, href: lang === 'tr' ? '/tr/hizmetler/stratejik-danismanlik' : '/en/services/strategic-consulting' },
     { name: dict.nav.about, href: lang === 'tr' ? '/tr/hakkimizda' : '/en/about-us' },
+    { name: dict.nav.courses || (lang === 'tr' ? 'Eğitimler' : 'Courses'), href: lang === 'tr' ? '/tr/egitimler/ebay-dropshipping' : '/en/courses/ebay-dropshipping' },
     { name: dict.nav.blog, href: lang === 'tr' ? '/tr/blog' : '/en/blog' },
     { name: dict.nav.contact, href: lang === 'tr' ? '/tr/iletisim' : '/en/contact' },
   ];
