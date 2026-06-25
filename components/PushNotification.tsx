@@ -14,9 +14,26 @@ export default function PushNotification() {
       try {
         await OneSignal.init({
           appId: "0e773e33-6a8a-47d7-8b56-4c02945ff065",
-          allowLocalhostAsSecureOrigin: true, // Localhost'ta test edebilmek için
+          allowLocalhostAsSecureOrigin: true,
           notifyButton: {
             enable: true,
+            prenotify: true,
+            showCredit: false,
+            text: {
+              'tip.state.unsubscribed': 'Subscribe to notifications',
+              'tip.state.subscribed': 'You are subscribed',
+              'tip.state.blocked': 'Notifications are blocked',
+              'message.prenotify': 'Click to subscribe',
+              'message.action.subscribed': 'Thanks for subscribing!',
+              'message.action.subscribing': 'Subscribing...',
+              'message.action.resubscribed': 'You are subscribed',
+              'message.action.unsubscribed': 'You will not receive notifications',
+              'dialog.main.title': 'Manage Notifications',
+              'dialog.main.button.subscribe': 'SUBSCRIBE',
+              'dialog.main.button.unsubscribe': 'UNSUBSCRIBE',
+              'dialog.blocked.title': 'Unblock Notifications',
+              'dialog.blocked.message': 'Follow these instructions to allow notifications:',
+            },
           },
         });
         
