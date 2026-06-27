@@ -72,6 +72,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     openGraph: {
       type: "website",
       locale: data.ogLocale,
+      alternateLocale: lang === 'tr' ? 'en_US' : 'tr_TR',
       url: `${siteUrl}/${lang}`,
       title: data.title,
       description: data.description,
@@ -109,6 +110,20 @@ const jsonLd = [
     "sameAs": [
       "https://www.instagram.com/melihbicak_8"
     ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Allmysell LLC",
+    "url": siteUrl,
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": `${siteUrl}/en/blog?q={search_term_string}`
+      },
+      "query-input": "required name=search_term_string"
+    }
   },
   {
     "@context": "https://schema.org",

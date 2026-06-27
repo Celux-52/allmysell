@@ -4,7 +4,9 @@ import { getAllArticles } from '../lib/articles';
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://allmysell.com';
 
-  // Static routes mapping
+  // Static routes mapping — lastModified set to current build time
+  const now = new Date();
+
   const staticRoutes = [
     { path: '', priority: 1, changeFrequency: 'weekly' as const },
     { path: '/hizmetler/web-cozumleri', enPath: '/services/web-solutions', priority: 0.8, changeFrequency: 'monthly' as const },
@@ -30,7 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // English version
     sitemaps.push({
       url: `${baseUrl}/en${enPath}`,
-      lastModified: new Date('2024-05-20T00:00:00Z'),
+      lastModified: now,
       changeFrequency: route.changeFrequency,
       priority: route.priority,
       alternates: {
@@ -45,7 +47,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Turkish version
     sitemaps.push({
       url: `${baseUrl}/tr${trPath}`,
-      lastModified: new Date('2024-05-20T00:00:00Z'),
+      lastModified: now,
       changeFrequency: route.changeFrequency,
       priority: route.priority,
       alternates: {
@@ -58,17 +60,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   });
 
-  // Fetch dynamic blog articles
-  const articles = await getAllArticles('en'); // We just need the slugs
+  // Fetch dynamic blog articles — use dateISO for reliable parsing
+  const articles = await getAllArticles('en');
 
   // Generate sitemap for dynamic blog articles
   articles.forEach((article: any) => {
     const routePath = `/blog/${article.slug}`;
+    const articleDate = new Date(article.dateISO + 'T00:00:00Z');
 
     // English version
     sitemaps.push({
       url: `${baseUrl}/en${routePath}`,
-      lastModified: new Date(article.date),
+      lastModified: articleDate,
       changeFrequency: 'monthly',
       priority: 0.8,
       alternates: {
@@ -83,7 +86,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Turkish version
     sitemaps.push({
       url: `${baseUrl}/tr${routePath}`,
-      lastModified: new Date(article.date),
+      lastModified: articleDate,
       changeFrequency: 'monthly',
       priority: 0.8,
       alternates: {

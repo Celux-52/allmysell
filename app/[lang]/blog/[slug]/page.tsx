@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { ArrowLeft, Clock, User } from 'lucide-react';
+import { ArrowLeft, Clock, User, BookOpen } from 'lucide-react';
 import Link from 'next/link';
 import { getArticleBySlug, getAllArticles } from '@/lib/articles';
 import { constructAlternates } from '@/lib/seo';
@@ -23,10 +23,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       type: 'article',
       title: article.title,
       description: article.excerpt,
-      publishedTime: new Date(enArticle.date).toISOString(),
+      publishedTime: new Date(enArticle.dateISO + 'T00:00:00Z').toISOString(),
       authors: [article.author],
+      tags: [article.category],
       url: `https://allmysell.com/${lang}/blog/${slug}`,
       siteName: 'Allmysell LLC',
+      locale: lang === 'tr' ? 'tr_TR' : 'en_US',
+      alternateLocale: lang === 'tr' ? 'en_US' : 'tr_TR',
       images: [
         {
           url: 'https://allmysell.com/og-image.jpg',
@@ -35,6 +38,11 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
           alt: article.title,
         }
       ]
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description: article.excerpt,
     }
   };
 }
@@ -54,21 +62,26 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: str
   const article = await getArticleBySlug(slug, lang as 'en' | 'tr');
   const enArticle = await getArticleBySlug(slug, 'en');
   const backText = lang === 'tr' ? 'Blog\'a Dön' : 'Back to Blog';
+  const readTimeLabel = lang === 'tr' ? 'dk okuma' : 'min read';
 
   if (!article || !enArticle) {
     return <div className="min-h-screen flex items-center justify-center text-2xl font-bold">404 - Article Not Found</div>;
   }
 
-  const publishedTime = new Date(enArticle.date).toISOString();
+  const publishedTime = new Date(enArticle.dateISO + 'T00:00:00Z').toISOString();
+  
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": article.title,
+    "description": article.excerpt,
     "image": [
       "https://allmysell.com/og-image.jpg"
     ],
     "datePublished": publishedTime,
     "dateModified": publishedTime,
+    "inLanguage": lang === 'tr' ? 'tr-TR' : 'en-US',
+    "wordCount": article.readingTime * 200,
     "author": [{
         "@type": "Person",
         "name": article.author,
@@ -81,6 +94,10 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: str
             "@type": "ImageObject",
             "url": "https://allmysell.com/logo.png"
         }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://allmysell.com/${lang}/blog/${slug}`
     }
   };
 
@@ -123,6 +140,7 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: str
             <div className="flex items-center gap-3 mb-6">
               <span className="text-xs font-bold text-blue-900 bg-blue-300 px-3 py-1 rounded-full uppercase tracking-wider">{article.category}</span>
               <span className="text-sm font-medium text-white/60 flex items-center gap-1.5"><Clock className="w-4 h-4" /> {article.date}</span>
+              <span className="text-sm font-medium text-white/60 flex items-center gap-1.5"><BookOpen className="w-4 h-4" /> {article.readingTime} {readTimeLabel}</span>
             </div>
             
             <h1 className="font-sans text-3xl md:text-5xl font-bold text-white tracking-tight leading-tight mb-8">

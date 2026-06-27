@@ -16,13 +16,30 @@ export type ArticleLanguageContent = {
 
 export type Article = {
   slug: string;
+  /** ISO 8601 date string (e.g. '2026-06-27') for sitemap & schema.org */
+  dateISO: string;
   en: ArticleLanguageContent;
   tr: ArticleLanguageContent;
 };
 
+// ——— Utility Helpers ———
+
+/** Strip HTML tags and estimate word count from content */
+function estimateWordCount(html: string): number {
+  const text = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  return text.split(' ').filter(Boolean).length;
+}
+
+/** Calculate reading time in minutes (avg 200 words/min) */
+export function calculateReadingTime(html: string): number {
+  const words = estimateWordCount(html);
+  return Math.max(1, Math.ceil(words / 200));
+}
+
 export const articles: Article[] = [
   {
     slug: 'ebay-dijital-ticaretin-oncusu',
+    dateISO: '2026-06-26',
     en: {
       title: 'eBay: The Pioneer of Digital Commerce and Its Importance Today',
       excerpt: 'Discover eBay\'s journey from an auction site to a global marketplace. Learn what eBay is, how it works, and why it remains a vital force in e-commerce in 2026.',
@@ -42,6 +59,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'walmart-perakende-devinin-hikayesi',
+    dateISO: '2026-06-26',
     en: {
       title: 'Walmart: The Story of the Retail Giant and Its Global Impact',
       excerpt: 'From a small-town store in 1962 to 10,000+ locations worldwide. Discover Walmart\'s history, business model, technology investments, and its role in modern retail.',
@@ -61,6 +79,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'walmart-vs-ebay-karsilastirma',
+    dateISO: '2026-06-26',
     en: {
       title: 'Walmart vs eBay: Comparing Two Giants of the Retail World',
       excerpt: 'Physical retail vs. online marketplace—how do Walmart and eBay compare? Explore their business models, pricing strategies, technology investments, and global reach in 2026.',
@@ -80,6 +99,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'ebay-magaza-olcekleme-limit-artirma-reklam',
+    dateISO: '2026-06-24',
     en: {
       title: 'How to Scale Your eBay Dropshipping Store: Limits, Promoted Listings & Automation',
       excerpt: 'Ready to scale your eBay store? Learn how to increase selling limits, master Promoted Listings, and use automation tools to build an empire.',
@@ -99,6 +119,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'ebay-siparis-yonetimi-musteri-hizmetleri-iadeler',
+    dateISO: '2026-06-24',
     en: {
       title: 'eBay Order Management & Returns: The Complete Customer Service Guide',
       excerpt: 'You got your first sale! Now what? A complete guide to fulfilling dropshipping orders, managing tracking numbers, and handling eBay returns like a pro.',
@@ -118,6 +139,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'ebay-seo-cassini-algoritmasi-listeleme',
+    dateISO: '2026-06-24',
     en: {
       title: 'eBay SEO Guide 2026: Mastering the Cassini Algorithm for High Conversions',
       excerpt: 'How to rank on page 1 of eBay search results. A complete guide to mastering the Cassini algorithm, title optimization, and building high-converting listings.',
@@ -137,6 +159,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'ebay-winning-product-research-suppliers',
+    dateISO: '2026-06-24',
     en: {
       title: 'What to Sell on eBay? Winning Product Research & Supplier Guide 2026',
       excerpt: 'Learn how to find high-profit items for eBay dropshipping. Complete guide to data-driven product research and sourcing reliable AliExpress suppliers in 2026.',
@@ -156,6 +179,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'ebay-seller-account-payoneer-setup',
+    dateISO: '2026-06-24',
     en: {
       title: 'How to Set Up an eBay Seller Account & Payoneer Integration Guide 2026',
       excerpt: 'Step-by-step guide to creating an eBay seller account and integrating Payoneer. Learn how to avoid early suspensions with 2026 updated policies.',
@@ -175,6 +199,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'ebay-nedir-yeni-baslayanlara-rehber',
+    dateISO: '2026-06-24',
     en: {
       title: 'What is eBay? Complete Beginner\'s Guide to Dropshipping 2026',
       excerpt: 'Learn what eBay is and how to start dropshipping in 2026. Complete guide for beginners with step-by-step instructions.',
@@ -194,6 +219,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'global-business-2026-ai-ecommerce-startup-revolution',
+    dateISO: '2026-06-24',
     en: {
       title: 'Global Business in 2026: The AI, E-Commerce, and Startup Revolution',
       excerpt: 'A Comprehensive Guide for Entrepreneurs Worldwide',
@@ -213,6 +239,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'ai-automation-for-singapore-startups-2026',
+    dateISO: '2026-06-24',
     en: {
       title: 'AI Automation for Singapore Startups: A Complete Guide to 2026',
       excerpt: 'How to Save 40% in Operating Costs with Intelligent Automation',
@@ -232,6 +259,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'agentic-ai-2026nin-en-onemli-teknoloji-trendi',
+    dateISO: '2026-06-23',
     en: {
       title: 'Agentic AI: The Most Important Technology Trend of 2026',
       excerpt: 'Autonomous AI agents are transforming businesses and providing competitive advantages. We are entering the era of Agentic AI in 2026. Discover how Agentic AI is transforming the business world.',
@@ -251,6 +279,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'teknik-yigini-isinizi-neden-yavaslatiyor',
+    dateISO: '2026-06-22',
     en: {
       title: 'Why Your Tech Stack is Slowing Down Your Business',
       excerpt: 'If features that should take 2 weeks take 6 weeks, your problem isn\'t your team. It\'s your tech stack. Here is why legacy infrastructure is costing you millions.',
@@ -270,6 +299,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'yapay-zeka-calisma-arkadasi-2026',
+    dateISO: '2026-06-21',
     en: {
       title: 'AI is No Longer an "Assistant", but a "Coworker": A Look at Technology in Mid-2026',
       excerpt: 'A year ago, AI was just a chatbot. Today, in mid-2026, AI has stepped out of the screen, taken over coding, and infiltrated factories. Here is a look at AI, software, and the tech world in mid-2026.',
@@ -289,6 +319,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'xiaomi-mimo-code-acik-kaynak',
+    dateISO: '2026-06-20',
     en: {
       title: 'Xiaomi Releases Open-Source Coding AI "MiMo Code": A Serious Rival to Claude Code',
       excerpt: 'A surprise player has entered the AI race. Xiaomi has released its terminal-based coding assistant MiMo Code as open-source. Here is everything you need to know.',
@@ -308,6 +339,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'kod-bilmeden-mobil-uygulama',
+    dateISO: '2026-06-18',
     en: {
       title: 'How to Build a Mobile App Without Coding? (2026 Beginner\'s Guide)',
       excerpt: 'How to build a mobile app without coding? Learn the step-by-step way to create your own app in 5 minutes using AI and no-code tools in this comprehensive guide.',
@@ -327,6 +359,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'kurumsal-web-sitesi-ux-hatalari',
+    dateISO: '2026-06-15',
     en: {
       title: 'Why Your Corporate Website Isn\'t Winning Customers: 5 Mistakes You\'re Probably Making Right Now',
       excerpt: 'You spent months building your website. Traffic is coming in. But nobody fills out the contact form. Sound familiar? Here are the five UX traps we see over and over again in B2B websites.',
@@ -346,6 +379,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'ai-seo-geo-veri-cekme',
+    dateISO: '2026-06-14',
     en: {
       title: 'Extracting SEO and GEO Data with AI: The 2026 Guide',
       excerpt: 'Discover how AI (Artificial Intelligence) is revolutionizing the way we extract and analyze SEO and GEO data for global business strategies.',
@@ -365,6 +399,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'headless-commerce-vs-traditional',
+    dateISO: '2026-06-11',
     en: {
       title: 'Headless Commerce vs Traditional E-commerce: What B2B Needs in 2026',
       excerpt: 'Why traditional monolithic e-commerce platforms are dying, and how Headless architectures are taking over the B2B sector.',
@@ -384,6 +419,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'rag-architecture-enterprise-ai',
+    dateISO: '2026-06-04',
     en: {
       title: 'Building Hallucination-Free AI with RAG Architecture',
       excerpt: 'How to build private, secure, and accurate AI agents for your corporate data using Retrieval-Augmented Generation (RAG) and Pinecone vector databases.',
@@ -403,6 +439,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'nextjs-core-web-vitals',
+    dateISO: '2026-05-27',
     en: {
       title: 'Achieving 100/100 Core Web Vitals with Next.js App Router',
       excerpt: 'A technical deep-dive into Server Components, Edge Caching, and advanced optimization techniques to dominate Google search rankings.',
@@ -422,6 +459,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'b2b-saas-multi-tenant-architecture',
+    dateISO: '2026-05-31',
     en: {
       title: 'Architecting Scalable Multi-Tenant B2B SaaS Platforms',
       excerpt: 'Explore the database patterns and security protocols required to build enterprise-grade multi-tenant SaaS applications.',
@@ -441,6 +479,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'edge-computing-in-web-development',
+    dateISO: '2026-05-14',
     en: {
       title: 'The Era of Edge Computing: Rendering Apps Closer to Users',
       excerpt: 'How Vercel and Cloudflare Edge networks are revolutionizing global web performance by eliminating regional server latency.',
@@ -460,6 +499,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'b2b-digital-transformation-strategy',
+    dateISO: '2026-05-09',
     en: {
       title: 'Digital Transformation in B2B: A Roadmap for Legacy Enterprises',
       excerpt: 'Stop relying on spreadsheets and outdated ERPs. Discover the step-by-step strategy for migrating legacy B2B operations to the cloud.',
@@ -479,6 +519,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'typescript-enterprise-codebases',
+    dateISO: '2026-05-01',
     en: {
       title: 'Why TypeScript is Mandatory for Enterprise Codebases in 2026',
       excerpt: 'The hidden costs of writing plain JavaScript in large teams, and how strict typing prevents catastrophic production bugs.',
@@ -498,6 +539,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'seo-automation-nextjs',
+    dateISO: '2026-04-24',
     en: {
       title: 'Automating Technical SEO at Scale with Next.js',
       excerpt: 'How to dynamically generate XML Sitemaps, canonical tags, and JSON-LD schemas for 100,000+ pages without manual effort.',
@@ -517,6 +559,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'ai-agents-customer-support',
+    dateISO: '2026-04-17',
     en: {
       title: 'Replacing Chatbots with Autonomous AI Agents in SaaS',
       excerpt: 'Why decision-tree chatbots are obsolete, and how autonomous AI agents are resolving 80% of customer support tickets autonomously.',
@@ -536,6 +579,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'microservices-vs-monolith-b2b',
+    dateISO: '2026-04-09',
     en: {
       title: 'Microservices vs Monoliths: The Truth for B2B Startups',
       excerpt: 'Don\'t over-engineer your infrastructure. When should a B2B startup actually split their monolithic app into microservices?',
@@ -555,6 +599,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'e-ticaret-sitesi-kurma-rehberi',
+    dateISO: '2026-06-13',
     en: {
       title: 'How to Build an E-Commerce Website from Scratch in 2026: The Complete Guide',
       excerpt: 'Everything you need to know about building a modern e-commerce website — from choosing the right tech stack to launching your first product.',
@@ -574,6 +619,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'saas-nedir-b2b-rehberi',
+    dateISO: '2026-06-12',
     en: {
       title: 'What is SaaS? The Complete B2B SaaS Business Model Guide for 2026',
       excerpt: 'Understanding Software-as-a-Service: from subscription models and MRR to building your own B2B SaaS product from the ground up.',
@@ -593,6 +639,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'isletmenize-yapay-zeka-entegre-etmek',
+    dateISO: '2026-06-09',
     en: {
       title: '7 Ways to Integrate AI Into Your Business in 2026',
       excerpt: 'Practical, revenue-generating AI use cases for SMBs and enterprises — from customer support automation to predictive analytics.',
@@ -612,6 +659,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'kurumsal-web-sitesi-maliyeti',
+    dateISO: '2026-06-07',
     en: {
       title: 'How Much Does a Professional Website Cost in 2026? Complete Pricing Guide',
       excerpt: 'A transparent breakdown of website development costs — from simple landing pages to complex enterprise platforms. Know what to expect before you invest.',
@@ -631,6 +679,7 @@ export const articles: Article[] = [
   },
   {
     slug: 'mobil-uygulama-gelistirme-sureci',
+    dateISO: '2026-06-05',
     en: {
       title: 'Mobile App Development Process: From Idea to App Store in 2026',
       excerpt: 'A step-by-step guide to building iOS and Android apps — covering design, development, testing, and launch strategies.',
@@ -651,18 +700,26 @@ export const articles: Article[] = [
 ];
 
 export async function getAllArticles(lang: 'en' | 'tr') {
-  return articles.map((article) => ({
-    slug: article.slug,
-    ...article[lang]
-  }));
+  return articles.map((article) => {
+    const langContent = article[lang];
+    return {
+      slug: article.slug,
+      dateISO: article.dateISO,
+      readingTime: calculateReadingTime(langContent.content),
+      ...langContent
+    };
+  });
 }
 
 export async function getArticleBySlug(slug: string, lang: 'en' | 'tr') {
   const article = articles.find((a) => a.slug === slug);
   if (!article) return null;
   
+  const langContent = article[lang];
   return {
     slug: article.slug,
-    ...article[lang]
+    dateISO: article.dateISO,
+    readingTime: calculateReadingTime(langContent.content),
+    ...langContent
   };
 }
