@@ -87,6 +87,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     ...data.meta,
     alternates: constructAlternates('services/automation', 'hizmetler/otomasyon', lang)
+  };
+}
+
 import { CheckCircle2, Download } from 'lucide-react';
 import Link from 'next/link';
 
