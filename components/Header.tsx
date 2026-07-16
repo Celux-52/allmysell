@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Menu, X, ChevronDown, Code, ShoppingCart, Cloud, Briefcase } from "lucide-react";
+import { ArrowRight, Menu, X, ChevronDown, Code, ShoppingCart, Cloud, Briefcase, Settings } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 export default function Header({ lang, dict }: { lang: string, dict: any }) {
@@ -44,6 +44,7 @@ export default function Header({ lang, dict }: { lang: string, dict: any }) {
     { name: dict.nav.ecommerce, href: lang === 'tr' ? '/tr/hizmetler/e-ticaret' : '/en/services/e-commerce', icon: ShoppingCart, desc: lang === 'tr' ? 'Global satış altyapısı' : 'Global sales platforms' },
     { name: dict.nav.saas, href: lang === 'tr' ? '/tr/hizmetler/saas-yazilimlari' : '/en/services/saas-software', icon: Cloud, desc: lang === 'tr' ? 'Bulut tabanlı ürünler' : 'Cloud-based products' },
     { name: dict.nav.consulting, href: lang === 'tr' ? '/tr/hizmetler/stratejik-danismanlik' : '/en/services/strategic-consulting', icon: Briefcase, desc: lang === 'tr' ? 'Büyüme stratejileri' : 'Growth strategies' },
+    { name: dict.nav.automation || (lang === 'tr' ? 'Otomasyon' : 'Automation'), href: lang === 'tr' ? '/tr/hizmetler/otomasyon' : '/en/services/automation', icon: Settings, desc: lang === 'tr' ? 'Süreç ve yapay zeka otomasyonları' : 'Process & AI automation' },
   ];
 
   const mainLinks = [

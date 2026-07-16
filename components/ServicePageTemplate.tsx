@@ -51,6 +51,7 @@ export interface ServicePageTemplateProps {
     desc: string;
     cta: string;
   };
+  children?: React.ReactNode;
 }
 
 export default function ServicePageTemplate({
@@ -59,7 +60,8 @@ export default function ServicePageTemplate({
   HeaderIcon,
   Feature1Icon,
   Feature2Icon,
-  serviceCta
+  serviceCta,
+  children
 }: ServicePageTemplateProps) {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -175,6 +177,12 @@ export default function ServicePageTemplate({
                 <p className="text-white/70 text-sm leading-relaxed">{dict.tech_3_desc}</p>
               </div>
             </div>
+
+            {children && (
+              <div className="my-16 not-prose">
+                {children}
+              </div>
+            )}
 
             <hr className="my-16 border-slate-200" />
 

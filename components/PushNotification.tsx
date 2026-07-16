@@ -39,7 +39,14 @@ export default function PushNotification() {
         
         // Kullanıcıya otomatik olarak bildirim izni sor
         OneSignal.Slidedown.promptPush();
-      } catch (e) {
+      } catch (e: any) {
+        if (e?.message?.includes("already initialized")) {
+          return;
+        }
+        if (e?.message?.includes("App not configured for web push")) {
+          console.warn("OneSignal Warning: App not configured for web push. Please configure it in your OneSignal dashboard.");
+          return;
+        }
         console.error("OneSignal init error:", e);
       }
     };

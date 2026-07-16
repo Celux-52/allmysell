@@ -87,12 +87,26 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     ...data.meta,
     alternates: constructAlternates('services/automation', 'hizmetler/otomasyon', lang)
-  };
-}
+import { CheckCircle2, Download } from 'lucide-react';
+import Link from 'next/link';
 
 export default async function Otomasyon({ params }: { params: Promise<{ lang: string }> }) {
   const lang = (await params)?.lang || 'en';
   const dict = content[lang as keyof typeof content] || content.en;
+
+  const automations = lang === 'tr' ? [
+    { title: "Nostr & AI Raporlama", desc: "Nostr ağındaki etiketleri takip ederek Gemini yapay zeka ile raporlar çıkarır ve Gmail/Telegram'a gönderir.", file: "/workflows/nostr_ai.json" },
+    { title: "N8N TOTP Oluşturucu", desc: "İki faktörlü doğrulama (2FA) gerektiren sistemlere otomatik giriş için güvenli şifre üretimi.", file: "/workflows/totp_generator.json" },
+    { title: "Bitwarden Yönetimi", desc: "Bitwarden şifre yöneticisi üzerindeki grupları ve üyeleri (members) API üzerinden senkronize eder.", file: "/workflows/bitwarden_sync.json" },
+    { title: "Geri Bildirim Yönlendirme", desc: "Typeform anket sonuçlarını puanına göre analiz edip, olumlu ve olumsuz verileri farklı Google Sheets tablolarına ayırır.", file: "/workflows/typeform_routing.json" },
+    { title: "Twitter & Airtable Senkronu", desc: "Belirli anahtar kelimelere göre atılan yeni tweetleri analiz edip Airtable veritabanına sadece yeni (daha önce kaydedilmemiş) olanları arşivler.", file: "/workflows/twitter_airtable.json" }
+  ] : [
+    { title: "Nostr & AI Reporting", desc: "Tracks hashtags on the Nostr network, generates AI reports using Gemini, and sends them via Gmail/Telegram.", file: "/workflows/nostr_ai.json" },
+    { title: "N8N TOTP Generator", desc: "Secure password generation for automated logins to systems requiring two-factor authentication (2FA).", file: "/workflows/totp_generator.json" },
+    { title: "Bitwarden Management", desc: "Synchronizes groups and members on the Bitwarden password manager via API.", file: "/workflows/bitwarden_sync.json" },
+    { title: "Feedback Routing", desc: "Analyzes Typeform survey results by score and routes positive and negative feedback into different Google Sheets.", file: "/workflows/typeform_routing.json" },
+    { title: "Twitter & Airtable Sync", desc: "Analyzes new tweets based on specific keywords and archives only the new ones into an Airtable database.", file: "/workflows/twitter_airtable.json" }
+  ];
 
   return (
     <ServicePageTemplate 
@@ -105,6 +119,31 @@ export default async function Otomasyon({ params }: { params: Promise<{ lang: st
         ? { title: "Bu Hizmeti Projenizde Kullanmak İster misiniz?", desc: "Ekibimiz, projenize özel bir teknik değerlendirme hazırlamak için hazır. İlk görüşme ücretsizdir.", cta: "Ücretsiz Keşif Toplantısı" }
         : { title: "Want to Use This Service for Your Project?", desc: "Our team is ready to prepare a custom technical assessment for your project. First consultation is free.", cta: "Free Discovery Call" }
       }
-    />
+    >
+      <div className="bg-white rounded-3xl p-8 md:p-12 border border-slate-200 shadow-sm mt-8">
+        <h3 className="text-2xl md:text-3xl font-bold text-[#0A192F] mb-8">
+          {lang === 'tr' ? 'Açık Kaynak Örnek Otomasyonlar' : 'Open Source Automation Scenarios'}
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {automations.map((auto, idx) => (
+            <div key={idx} className="flex flex-col gap-4 p-6 rounded-2xl bg-slate-50 hover:bg-indigo-50/50 transition-colors border border-slate-100">
+              <div className="flex gap-4">
+                <CheckCircle2 className="w-6 h-6 text-indigo-500 shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="text-lg font-bold text-slate-800 mb-2">{auto.title}</h4>
+                  <p className="text-sm text-slate-600 leading-relaxed">{auto.desc}</p>
+                </div>
+              </div>
+              <div className="mt-auto pt-4 flex justify-end">
+                <Link href={auto.file} target="_blank" download className="inline-flex items-center gap-2 text-xs font-bold bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                  <Download className="w-4 h-4" />
+                  {lang === 'tr' ? 'JSON İndir' : 'Download JSON'}
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </ServicePageTemplate>
   );
 }
