@@ -1,0 +1,170 @@
+{
+  "nav": {
+    "web": "Veb",
+    "ecommerce": "E-tijorat",
+    "saas": "SaaS",
+    "consulting": "Konsalting",
+    "ai": "Sun'iy Intellekt",
+    "mobile": "Mobil",
+    "about": "Biz Haqimizda",
+    "blog": "Blog",
+    "courses": "Kurslar",
+    "contact": "Aloqa",
+    "freeAnalysis": "Bepul Tahlil"
+  },
+  "hero": {
+    "badge": "O'sishga Qaratilgan Texnologik Hamkoringiz",
+    "seoH1": "Korporativ B2B SaaS Dasturlash va E-tijorat Infratuzilmasi Agentligi",
+    "title1": "Raqamli Infratuzilmangizni",
+    "title2": "Savdo Mashinasiga Aylantiring.",
+    "description": "Biz nafaqat chiroyli ko'rinadigan saytlarni, balki kompaniyangizning operatsion xarajatlarini kamaytiradigan, daromadni oshiradigan va to'liq avtonom ishlaydigan tizimlarni yaratamiz.",
+    "cta1": "Tizimingizni Ko'rib Chiqamiz",
+    "cta2": "Buni Qanday Qilamiz?"
+  },
+  "metrics": {
+    "conversionIncrease": "Konversiya O'sishi",
+    "avgResponseTime": "O'rtacha Javob Vaqti"
+  },
+  "industries": {
+    "title": "Raqamli Transformatsiyaga Boshchilik Qilayotgan Sohalarimiz",
+    "list": [
+      "E-tijorat va Chakana Savdo",
+      "Moliya va Fintex",
+      "Sog'liqni Saqlash Texnologiyalari",
+      "Logistika va Ta'minot",
+      "B2B SaaS",
+      "Ko'chmas Mulk",
+      "Ta'lim Texnologiyalari"
+    ]
+  },
+  "services": {
+    "title1": "Raqamli Chegaralardan Oshib O'tuvchi",
+    "title2": "Premium Yechimlar.",
+    "subtitle": "Biz har bir loyiha uchun maxsus arxitektura va eng so'nggi texnologiyalar bilan ishlab chiqilgan tizimlarni quramiz.",
+    "web": {
+      "title": "Keng Qamrovli Veb-Platformalar",
+      "desc": "Kengaytirilgan ishlash ko'rsatkichlariga ega, SEO-mos va noyob foydalanuvchi tajribasini taqdim etuvchi korporativ darajadagi zamonaviy veb-ilovalar."
+    },
+    "ecommerce": {
+      "title": "E-tijorat Avtonomiyasi",
+      "desc": "Savdodan tortib logistikagacha bo'lgan barcha jarayonlarni inson ishtirokisiz boshqara oladigan aqlli e-tijorat infratuzilmalari."
+    },
+    "saas": {
+      "title": "Maxsus SaaS Dasturiy Ta'minoti",
+      "desc": "Sizning ehtiyojlaringizga moslashtirilgan, yuqori darajada xavfsiz va bir zumda kengaytiriladigan bulut arxitekturalari."
+    },
+    "consulting": {
+      "title": "Strategik Konsalting",
+      "desc": "Biz shunchaki kod yozmaymiz. Loyihangizning biznes modelini, bozor ulushini va barqaror o'sish qadamlarini noldan qayta quramiz."
+    },
+    "ai": {
+      "title": "Sun'iy Intellekt va Avtomatlashtirish",
+      "desc": "Kompaniyangiz uchun maxsus o'qitilgan sun'iy intellekt yordamchilari (RAG) va ma'lumotlarni tahlil qilish algoritmlari orqali operatsion samaradorlikni maksimal darajaga ko'taring."
+    },
+    "mobile": {
+      "title": "Mobil Ilovalar",
+      "desc": "iOS va Android ekotizimlarida bir zumda millionlab foydalanuvchilarni joylashtira oladigan yuqori samarali mahalliy arxitekturalar."
+    }
+  },
+  "features": {
+    "title1": "Nima uchun",
+    "title2": "Allmysell LLC?",
+    "subtitle": "Standartlardan oshib ketadigan ishlash ko'rsatkichlari va yuqori darajadagi muhandislik prinsiplarimiz.",
+    "f1": {
+      "title": "Maksimal Ishlash",
+      "desc": "Google Core Web Vitals ko'rsatkichlarida mukammal ballar. Edge tarmog'i va SSR arxitekturasi bilan nol kechikish.",
+      "b1": "100/100 Lighthouse Balli",
+      "b2": "Bir Zumda Yuklash (Sub-second)"
+    },
+    "f2": {
+      "title": "Harbiy Darajadagi Xavfsizlik",
+      "desc": "Sizning korporativ ma'lumotlaringiz va mijozlar ma'lumotlari uchdan uchgacha shifrlangan. Xalqaro standartlarda ma'lumotlarni himoya qilish.",
+      "b1": "Uchdan Uchgacha Shifrlash",
+      "b2": "GDPR va KVKK Muvofiqligi"
+    },
+    "f3": {
+      "title": "Cheksiz Kengaytirish imkoniyati",
+      "desc": "Agar trafik to'satdan 100 baravar ko'paysa ham, tizimlaringiz ishdan chiqish o'rniga server resurslarini darhol oshiradi.",
+      "b1": "Avtomatik Kengayuvchi Bulut Arxitekturasi",
+      "b2": "Mikroservis Integratsiyasi"
+    }
+  },
+  "cases": {
+    "title": "Biz Raqamlar bilan Gaplashamiz.",
+    "subtitle": "Biz shunchaki chiroyli dizaynlarni emas, balki kompaniyalar balansiga bevosita ta'sir ko'rsatadigan o'lchanadigan muvaffaqiyat tarixlarini yaratamiz.",
+    "c1": {
+      "tag": "Global Logistika Kompaniyasi",
+      "title": "Operatsion Avtomatlashtirish",
+      "problem": "Duch Kelingan Muammo",
+      "problemDesc": "Buyurtmalarni qo'lda boshqarish va yuk integratsiyasining yo'qligi sababli kuniga 4 soat ma'lumotlarni kiritish yo'qotilishi.",
+      "solution": "Bizning Yechimimiz va Natija",
+      "solutionDesc": "Vaqtni tejash. Barcha buyurtma va yuk jarayonlari nol xato bilan to'liq avtonom holatga keltirildi."
+    },
+    "c2": {
+      "tag": "Premium E-tijorat Brendi",
+      "title": "Konversiyani Optimallashtirish",
+      "problem": "Duch Kelingan Muammo",
+      "problemDesc": "Yuqori trafikka qaramay, og'ir infratuzilma tufayli aravachani tashlab ketish (cart abandonment) darajasi 70%.",
+      "solution": "Bizning Yechimimiz va Natija",
+      "solutionDesc": "Savdo (CR) o'sishi. Yangi avlod arxitekturasi bilan sahifa yuklash tezligi o'rtacha 0.8 soniyagacha tushirildi."
+    }
+  },
+  "process": {
+    "title1": "Mukammal Ishlash,",
+    "title2": "Aniq Natijalar.",
+    "subtitle": "Biz g'oyadan tortib to ishga tushirishgacha bo'lgan har bir qadamni ma'lumotlarga asoslangan va shaffof tarzda boshqaramiz.",
+    "steps": {
+      "s1": {
+        "title": "1. Izlanish va Tahlil",
+        "desc": "Bozor tadqiqotlari, raqobatchilarni tahlil qilish va ehtiyojlarni aniqlash."
+      },
+      "s2": {
+        "title": "2. Arxitektura Dizayni",
+        "desc": "UI/UX prototiplarini chizish va tizim infratuzilmasini qurish."
+      },
+      "s3": {
+        "title": "3. Moslashuvchan Rivojlanish",
+        "desc": "Zamonaviy texnologiyalar yordamida kod yozish va shaffof sinov jarayonlari."
+      },
+      "s4": {
+        "title": "4. Jonli Efirga Uzatish",
+        "desc": "Serverni o'rnatish, ishga tushirish va uzluksiz ishlashni optimallashtirish."
+      }
+    }
+  },
+  "contact": {
+    "badge": "Vaqt Tugab Bormoqda",
+    "title1": "Loyihalaringizning 80 foizi",
+    "title2": "Noto'g'ri Boshlanadi.",
+    "subtitle": "Noto'g'ri arxitektura tanlovlari bilan byudjetingizni yoqishdan oldin, keling, mutaxassislar guruhimiz bilan tizimingizni bepul rejalashtiramiz.",
+    "hq": {
+      "title": "Bosh Qarorgoh (HQ)"
+    },
+    "tr": {
+      "title": "Turkiya Operatsiya Markazi"
+    },
+    "card": {
+      "title": "Korporativ Aloqa",
+      "desc": "Faqat korporativ so'rovlar uchun"
+    },
+    "cta": "Arxitektura Tahlili Uchrashuvini So'rash"
+  },
+  "footer": {
+    "text": "Allmysell LLC. | Dizayn va Texnologiya",
+    "privacy": "Maxfiylik Siyosati",
+    "cookie": "Kuki Siyosati"
+  },
+  "ctaBand": {
+    "title": "Loyihangiz uchun Bepul Arxitektura Tahlili",
+    "desc": "Keling, mavjud tizimingizni tahlil qilamiz, muammolarni aniqlaymiz va sizga eng mos texnologiyani tavsiya qilamiz. Birinchi uchrashuv butunlay bepul.",
+    "cta": "Bepul Taklif Oling",
+    "title2": "Raqamli Transformatsiyaga Tayyormisiz?",
+    "desc2": "Jamoamiz loyihangizni baholashga va maxsus yo'l xaritasini yaratishga tayyor.",
+    "cta2": "Hozir Bog'laning"
+  },
+  "serviceCta": {
+    "title": "Ushbu Xizmatdan Loyihangizda Foydalanishni Xohlaysizmi?",
+    "desc": "Bizning jamoamiz loyihangiz uchun maxsus texnik baholashni tayyorlashga tayyor. Birinchi uchrashuv bepul.",
+    "cta": "Bepul Keshfiyot Uchrashuvi"
+  }
+}

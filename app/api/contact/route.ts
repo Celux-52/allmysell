@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy_key');
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
 export async function POST(request: Request) {
   try {
@@ -20,6 +20,17 @@ export async function POST(request: Request) {
       );
     }
 
+    // Resend API key kontrolü
+    if (!RESEND_API_KEY || RESEND_API_KEY === 're_dummy_key') {
+      console.error('Contact API Error: RESEND_API_KEY is not configured. Please set it in .env.local');
+      return NextResponse.json(
+        { error: 'Email service is not configured. Please contact us directly at info@allmysell.com' },
+        { status: 503 }
+      );
+    }
+
+    const resend = new Resend(RESEND_API_KEY);
+
     const escapeHtml = (unsafe: string) => {
       return (unsafe || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
     };
@@ -29,8 +40,10 @@ export async function POST(request: Request) {
     const safeMessage = escapeHtml(message);
 
     // Send email via Resend
-    const { error } = await resend.emails.send({
-      from: 'Allmysell Contact Form <contact@allmysell.com>',
+    // Not: Resend'de domain doğrulanmamışsa "onboarding@resend.dev" kullanılmalı
+    // Domain doğrulandıktan sonra "contact@allmysell.com" kullanılabilir
+    const { data, error } = await resend.emails.send({
+      from: 'Allmysell Contact Form <onboarding@resend.dev>',
       to: ['info@allmysell.com'],
       replyTo: email,
       subject: `[Allmysell] New Contact: ${safeName} — ${safeCompany || 'No Company'}`,
@@ -65,9 +78,19 @@ export async function POST(request: Request) {
     });
 
     if (error) {
-      console.error('Resend API Error:', error);
+      console.error('Resend API Error:', JSON.stringify(error));
+      
+      // Domain doğrulama hatası kontrolü
+      const errorMessage = (error as any)?.message || JSON.stringify(error);
+      if (errorMessage.includes('verify') || errorMessage.includes('domain') || errorMessage.includes('not allowed')) {
+        return NextResponse.json(
+          { error: 'Email delivery is temporarily unavailable. Please contact us directly at info@allmysell.com' },
+          { status: 503 }
+        );
+      }
+
       return NextResponse.json(
-        { error: 'Failed to send email.' },
+        { error: 'Failed to send your message. Please try again or contact us at info@allmysell.com' },
         { status: 500 }
       );
     }
@@ -79,8 +102,9 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Contact API Error:', error);
     return NextResponse.json(
-      { error: 'Internal server error while processing your request.' },
+      { error: 'An unexpected error occurred. Please contact us directly at info@allmysell.com' },
       { status: 500 }
     );
   }
 }
+

@@ -39,6 +39,35 @@ export default function LeadPopup({ lang }: { lang: string }) {
 
   if (!isOpen) return null;
 
+  const title = 
+    lang === 'tr' ? 'Gitmeden Önce!' :
+    lang === 'ru' ? 'Подождите, перед тем как уйти!' :
+    lang === 'uz' ? 'Ketishdan oldin!' : 'Wait, Before You Go!';
+
+  const desc = 
+    lang === 'tr' 
+      ? 'E-ticaret ve yazılım dünyasındaki en son stratejileri, gizli eBay taktiklerini ve özel indirimleri kaçırmayın. Ücretsiz bültenimize katılın.'
+      : lang === 'ru'
+      ? 'Не упустите последние стратегии в области электронной коммерции, секретные тактики eBay и эксклюзивные скидки. Подпишитесь на нашу бесплатную рассылку.'
+      : lang === 'uz'
+      ? 'Elektron tijoratdagi so\'nggi strategiyalarni, maxfiy eBay taktikalarini va eksklyuziv chegirmalarni o\'tkazib yubormang. Bepul xabarnomamizga qo\'shiling.'
+      : 'Don\'t miss out on the latest e-commerce strategies, hidden eBay tactics, and exclusive discounts. Join our free newsletter.';
+
+  const placeholder = 
+    lang === 'tr' ? 'E-posta adresiniz...' :
+    lang === 'ru' ? 'Ваш адрес электронной почты...' :
+    lang === 'uz' ? 'Elektron pochta manzilingiz...' : 'Your email address...';
+
+  const btn = 
+    lang === 'tr' ? 'Ücretsiz Kaydol' :
+    lang === 'ru' ? 'Подписаться бесплатно' :
+    lang === 'uz' ? 'Bepul obuna bo\'lish' : 'Subscribe for Free';
+
+  const footerText = 
+    lang === 'tr' ? 'İstediğiniz zaman abonelikten çıkabilirsiniz.' :
+    lang === 'ru' ? 'Вы можете отписаться в любое время.' :
+    lang === 'uz' ? 'Istalgan vaqtda obunani bekor qilishingiz mumkin.' : 'You can unsubscribe at any time.';
+
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
       <div 
@@ -56,18 +85,16 @@ export default function LeadPopup({ lang }: { lang: string }) {
         </div>
         
         <h3 className="text-2xl font-bold text-[#0A192F] mb-3">
-          {lang === 'tr' ? 'Gitmeden Önce!' : 'Wait, Before You Go!'}
+          {title}
         </h3>
         <p className="text-slate-600 mb-6 leading-relaxed">
-          {lang === 'tr' 
-            ? 'E-ticaret ve yazılım dünyasındaki en son stratejileri, gizli eBay taktiklerini ve özel indirimleri kaçırmayın. Ücretsiz bültenimize katılın.'
-            : 'Don\'t miss out on the latest e-commerce strategies, hidden eBay tactics, and exclusive discounts. Join our free newsletter.'}
+          {desc}
         </p>
 
         <form className="flex flex-col gap-3" onSubmit={(e) => { e.preventDefault(); setIsOpen(false); }}>
           <input 
             type="email" 
-            placeholder={lang === 'tr' ? 'E-posta adresiniz...' : 'Your email address...'} 
+            placeholder={placeholder} 
             required
             className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50"
           />
@@ -75,11 +102,11 @@ export default function LeadPopup({ lang }: { lang: string }) {
             type="submit"
             className="w-full bg-[#0A192F] hover:bg-indigo-600 text-white font-bold py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2"
           >
-            {lang === 'tr' ? 'Ücretsiz Kaydol' : 'Subscribe for Free'} <ArrowRight className="w-4 h-4" />
+            {btn} <ArrowRight className="w-4 h-4" />
           </button>
         </form>
         <p className="text-xs text-slate-400 mt-4 text-center">
-          {lang === 'tr' ? 'İstediğiniz zaman abonelikten çıkabilirsiniz.' : 'You can unsubscribe at any time.'}
+          {footerText}
         </p>
       </div>
     </div>

@@ -9,9 +9,21 @@ export default function FloatingCTA({ lang }: { lang: string }) {
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
-  const isTr = lang === "tr";
-  const text = isTr ? "Ücretsiz Teklif Al" : "Get a Free Quote";
-  const href = isTr ? "/tr/iletisim" : "/en/contact";
+  const text = 
+    lang === "tr" ? "Ücretsiz Teklif Al" :
+    lang === "ru" ? "Получить Предложение" :
+    lang === "uz" ? "Bepul Taklif Olish" : "Get a Free Quote";
+
+  const bannerText = 
+    lang === "tr" ? "Projenizi birlikte planlayalım. İlk görüşme ücretsiz." :
+    lang === "ru" ? "Давайте спланируем ваш проект вместе. Первая консультация бесплатна." :
+    lang === "uz" ? "Loyihangizni birgalikda rejalashtiramiz. Birinchi uchrashuv bepul." :
+    "Let's plan your project together. First consultation is free.";
+
+  const href = 
+    lang === "tr" ? "/tr/iletisim" :
+    lang === "ru" ? "/ru/kontakty" :
+    lang === "uz" ? "/uz/aloqa" : "/en/contact";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,9 +58,7 @@ export default function FloatingCTA({ lang }: { lang: string }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between gap-3 sm:gap-6">
           {/* Text - hidden on very small screens */}
           <p className="hidden sm:block text-white/70 text-sm font-medium truncate">
-            {isTr
-              ? "Projenizi birlikte planlayalım. İlk görüşme ücretsiz."
-              : "Let's plan your project together. First consultation is free."}
+            {bannerText}
           </p>
 
           <div className="flex items-center gap-2 sm:gap-3 ml-auto">

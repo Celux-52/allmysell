@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import OneSignal from 'react-onesignal';
 
 export default function PushNotification() {
   const initialized = useRef(false);
@@ -10,11 +9,17 @@ export default function PushNotification() {
     const initOneSignal = async () => {
       if (initialized.current) return;
       initialized.current = true;
-      
+
+      // OneSignal sadece production ortamında çalışsın
+      if (process.env.NODE_ENV !== "production") {
+        return;
+      }
+
       try {
+        const OneSignal = (await import('react-onesignal')).default;
+
         await OneSignal.init({
           appId: "0e773e33-6a8a-47d7-8b56-4c02945ff065",
-          allowLocalhostAsSecureOrigin: true,
           notifyButton: {
             enable: true,
             prenotify: true,
@@ -36,18 +41,18 @@ export default function PushNotification() {
             },
           },
         });
-        
-        // Kullanıcıya otomatik olarak bildirim izni sor
+
         OneSignal.Slidedown.promptPush();
       } catch (e: any) {
-        if (e?.message?.includes("already initialized")) {
+        // Bilinen hataları sessizce yoksay
+        if (
+          e?.message?.includes("already initialized") ||
+          e?.message?.includes("App not configured for web push")
+        ) {
           return;
         }
-        if (e?.message?.includes("App not configured for web push")) {
-          console.warn("OneSignal Warning: App not configured for web push. Please configure it in your OneSignal dashboard.");
-          return;
-        }
-        console.error("OneSignal init error:", e);
+        // Beklenmeyen hataları sadece warn olarak logla
+        console.warn("OneSignal init warning:", e?.message || e);
       }
     };
 

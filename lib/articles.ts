@@ -15,6 +15,8 @@ export type Article = {
   dateISO: string;
   en: ArticleLanguageContent;
   tr: ArticleLanguageContent;
+  ru?: ArticleLanguageContent;
+  uz?: ArticleLanguageContent;
 };
 
 // ——— Utility Helpers ———
@@ -59,8 +61,16 @@ function parseFrontmatter(fileContent: string) {
   return { data, content };
 }
 
-export async function getAllArticles(lang: 'en' | 'tr') {
-  const dirPath = path.join(process.cwd(), 'content', 'blog', lang);
+export async function getAllArticles(lang: 'en' | 'tr' | 'ru' | 'uz' = 'en') {
+  let targetLang = lang;
+  let dirPath = path.join(process.cwd(), 'content', 'blog', targetLang);
+  
+  // Fallback to 'en' if directory doesn't exist
+  if (!fs.existsSync(dirPath)) {
+    targetLang = 'en';
+    dirPath = path.join(process.cwd(), 'content', 'blog', 'en');
+  }
+  
   if (!fs.existsSync(dirPath)) return [];
   
   const files = fs.readdirSync(dirPath);
@@ -90,8 +100,13 @@ export async function getAllArticles(lang: 'en' | 'tr') {
   return articles;
 }
 
-export async function getArticleBySlug(slug: string, lang: 'en' | 'tr') {
-  const filePath = path.join(process.cwd(), 'content', 'blog', lang, `${slug}.mdx`);
+export async function getArticleBySlug(slug: string, lang: 'en' | 'tr' | 'ru' | 'uz' = 'en') {
+  let filePath = path.join(process.cwd(), 'content', 'blog', lang, `${slug}.mdx`);
+  
+  if (!fs.existsSync(filePath)) {
+    // Fallback to English if not found
+    filePath = path.join(process.cwd(), 'content', 'blog', 'en', `${slug}.mdx`);
+  }
   
   if (!fs.existsSync(filePath)) return null;
   

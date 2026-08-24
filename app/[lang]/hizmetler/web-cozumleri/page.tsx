@@ -77,6 +77,80 @@ const content = {
     faq_3_a: 'Projelerimizde kapsamlı "Teknik SEO" (schema markup, semantik HTML, Core Web Vitals optimizasyonu) mimarisini kutudan çıktığı haliyle sunuyoruz. Ayrıca On-Page SEO performansınızın yüksek olması için içerik mimarisini doğru kurguluyoruz.',
     faq_4_q: 'Yeni platforma üçüncü parti (third-party) araçları entegre edebilir miyiz?',
     faq_4_a: 'Evet, headless ve API-first (önce API) yaklaşımımız sayesinde, modern üçüncü parti servisleri (Salesforce/HubSpot gibi CRM\'ler, ödeme geçitleri, pazarlama araçları) kolaylıkla entegre edebiliyoruz.'
+  },
+  ru: {
+    meta: {
+      title: 'Разработка Корпоративных Веб-Платформ',
+      description: 'Создаем корпоративные, высокопроизводительные и оптимизированные для SEO веб-платформы на базе Next.js и React.',
+      keywords: 'корпоративный веб дизайн, разработка веб платформ, seo оптимизация сайтов, агентство разработки по, высокопроизводительные сайты',
+    },
+    back: 'К Услугам',
+    tag: 'Технологии и Дизайн',
+    title: 'Комплексные Веб-Платформы',
+    p1: 'В современных конкурентных условиях простого шаблонного сайта уже недостаточно. Ваше цифровое присутствие должно быть живой системой, реагирующей за миллисекунды, доминирующей в поисковой выдаче и превращающей посетителей в лояльных клиентов.',
+    h2_1: 'Наш Архитектурный Подход',
+    p2: 'Allmysell LLC создает проекты на Next.js и React, ориентируясь на нулевую задержку с помощью Server-Side Rendering (SSR) и Static Site Generation (SSG). Это не только гарантирует безупречный опыт пользователей, но и обеспечивает наивысшие оценки (95+) в Google Core Web Vitals.',
+    f1_title: 'Максимальная Скорость и Edge Сети',
+    f1_desc: 'Мгновенная загрузка страниц из любой точки мира через глобальные сети Edge CDN, снижающая показатель отказов.',
+    f2_title: 'Встроенное Техническое SEO',
+    f2_desc: 'Семантический HTML5, микроразметка Schema.org и динамические метатеги для идеальной индексации поисковыми роботами.',
+    h2_2: 'Ориентированный на Данные Дизайн (UX/UI)',
+    p3: 'Мы проектируем интерфейсы, превращающие посетителей в покупателей. Расположение кнопок CTA, психология цветовой гаммы и типографика подчеркивают авторитет вашего бренда.',
+    h2_3: 'Масштабируемость и Безопасность',
+    p4: 'Модульная архитектура систем позволяет легко расширять функционал. Данные защищены строгими политиками Content Security Policy (CSP) и сквозным шифрованием.',
+    h2_4: 'Используемый Стек Технологий',
+    tech_1_title: 'Основные Фреймворки',
+    tech_1_desc: 'Next.js (App Router), React и TypeScript для безопасного и масштабируемого фронтенда.',
+    tech_2_title: 'Стили и Анимация',
+    tech_2_desc: 'TailwindCSS для быстрой стилизации и Framer Motion для плавных аппаратных микроанимаций.',
+    tech_3_title: 'CMS и Инфраструктура',
+    tech_3_desc: 'Headless CMS (Sanity, Strapi), деплой на Vercel/AWS Edge и кэширование в Redis.',
+    faq_title: 'Часто Задаваемые Вопросы',
+    faq_1_q: 'Почему Next.js, а не WordPress?',
+    faq_1_a: 'Next.js обеспечивает моментальную загрузку страниц и непревзойденное SEO благодаря SSR и SSG, исключая тяжеловесность традиционных CMS.',
+    faq_2_q: 'Будет ли сайт адаптирован под мобильные устройства?',
+    faq_2_a: 'Да, мы следуем принципу Mobile-First, гарантируя идеальное отображение на экранах любых размеров.',
+    faq_3_q: 'Входит ли SEO оптимизация в разработку?',
+    faq_3_a: 'Да, мы закладываем полное техническое SEO (Schema markup, Core Web Vitals, семантику) в базовую архитектуру.',
+    faq_4_q: 'Можно ли интегрировать сторонние сервисы?',
+    faq_4_a: 'Благодаря подходу API-First мы легко подключаем любые CRM, платежные системы и маркетинговые инструменты.'
+  },
+  uz: {
+    meta: {
+      title: 'Korporativ Veb Platformalar Yaratish',
+      description: 'Next.js va React asosida korporativ darajadagi, yuqori tezlikdagi va to\'liq SEO talablariga javob beruvchi zamonaviy veb platformalar quramiz.',
+      keywords: 'korporativ veb dizayn, veb platformalar yaratish, seo talablariga mos sayt, veb dasturlash agentligi, tezkor saytlar',
+    },
+    back: 'Xizmatlarga Qaytish',
+    tag: 'Texnologiya va Dizayn',
+    title: 'Keng Qamrovli Veb Platformalar',
+    p1: 'Bugungi raqobat sharoitida oddiy shablon saytga ega bo\'lish yetarli emas. Sizning raqamli tizimingiz millisekundlarda ishlaydigan, qidiruv tizimlarida yetakchi o\'rinlarni egallaydigan va tashrif buyuruvchilarni mijozga aylantiradigan platforma bo\'lishi shart.',
+    h2_1: 'Arxitektura Yondashuvimiz',
+    p2: 'Allmysell LLC loyihalarni Next.js va React texnologiyalarida yaratib, serverda renderlash (SSR) va statik generatsiya (SSG) orqali nol kechikishni maqsad qiladi. Bu Google Core Web Vitals ko\'rsatkichlarida eng yuqori ballarni (95+) ta\'minlab, organik qidiruv trafigini oshiradi.',
+    f1_title: 'Yuqori Tezlik va Edge Tarmoqlari',
+    f1_desc: 'Dunyoning istalgan nuqtasidan bir zumda ochiluvchi interfeyslar orqali saytdan chiqib ketish foizini kamaytiramiz.',
+    f2_title: 'O\'rnatilgan Texnik SEO',
+    f2_desc: 'Semantik HTML5, Schema.org mikro-ma\'lumotlari va dinamik meta teglari orqali qidiruv tizimlarida maksimal ko\'rinuvchanlik.',
+    h2_2: 'Foydalanuvchiga Yo\'naltirilgan Dizayn (UX/UI)',
+    p3: 'Ma\'lumotlarga asoslangan UX sinovlari va zamonaviy UI prinsiplari orqali tashrif buyuruvchilarni xaridorga aylantiruvchi qulay yo\'nalishlarni loyihalashtiramiz.',
+    h2_3: 'Barqarorlik va Xavfsizlik',
+    p4: 'Modulli (headless) arxitektura biznesingiz o\'sishi bilan tizimni qayta yozmasdan kengaytirish imkonini beradi. Ma\'lumotlar CSP protokollari bilan himoyalangan.',
+    h2_4: 'Texnologiyalarimiz',
+    tech_1_title: 'Asosiy Freymvorklar',
+    tech_1_desc: 'Next.js (App Router), React va TypeScript ishonchli va xavfsiz frontend uchun.',
+    tech_2_title: 'Uslub va Animatsiya',
+    tech_2_desc: 'TailwindCSS va silliq apparat tezlashuviga ega Framer Motion animatsiyalari.',
+    tech_3_title: 'CMS va Infratuzilma',
+    tech_3_desc: 'Headless CMS (Sanity, Strapi), Vercel/AWS Edge serverlari va Redis kesh tizimi.',
+    faq_title: 'Ko\'p Beriladigan Savollar',
+    faq_1_q: 'Nega WordPress o\'rniga Next.js ishlatasiz?',
+    faq_1_a: 'Next.js bir zumda ochilish tezligi va WordPress kabi og\'ir CMS larga qaraganda ancha ustun SEO ko\'rsatkichlarini taqdim etadi.',
+    faq_2_q: 'Sayt telefonlarga moslashuvchan (responsive) bo\'ladimi?',
+    faq_2_a: 'Albatta. Biz Mobile-First falsafasiga tayangan holda barcha ekran o\'lchamlariga mos dizayn yaratamiz.',
+    faq_3_q: 'Dasturlash bilan birga SEO xizmati ham taqdim etiladimi?',
+    faq_3_a: 'Ha, barcha loyihalarimiz to\'liq texnik SEO (schema, core web vitals optimizatsiyasi) bilan birga yetkaziladi.',
+    faq_4_q: 'Uchinchi tomon xizmatlarini (CRM, to\'lov tizimlari) ulash mumkinmi?',
+    faq_4_a: 'Ha, API-first yondashuvimiz orqali har qanday zamonaviy CRM va to\'lov tizimlari oson ulanadi.'
   }
 };
 
@@ -86,13 +160,20 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   
   return {
     ...data.meta,
-    alternates: constructAlternates('services/web-solutions', 'hizmetler/web-cozumleri', lang)
+    alternates: constructAlternates('services/web-solutions', 'hizmetler/web-cozumleri', lang, 'uslugi/veb-resheniya', 'xizmatlar/veb-yechimlar')
   };
 }
 
 export default async function WebCozumleri({ params }: { params: Promise<{ lang: string }> }) {
   const lang = (await params)?.lang || 'en';
   const dict = content[lang as keyof typeof content] || content.en;
+
+  const ctaMap = {
+    tr: { title: "Bu Hizmeti Projenizde Kullanmak İster misiniz?", desc: "Ekibimiz, projenize özel bir teknik değerlendirme hazırlamak için hazır. İlk görüşme ücretsizdir.", cta: "Ücretsiz Keşif Toplantısı" },
+    ru: { title: "Хотите использовать эту услугу в своем проекте?", desc: "Наша команда готова подготовить индивидуальную техническую оценку для вашего проекта. Первая встреча бесплатна.", cta: "Бесплатная Консультация" },
+    uz: { title: "Ushbu xizmatdan loyihangizda foydalanmoqchimisiz?", desc: "Bizning jamoamiz loyihangiz uchun maxsus texnik baholash tayyorlashga tayyor. Birinchi uchrashuv bepul.", cta: "Bepul Konsultatsiya" },
+    en: { title: "Want to Use This Service for Your Project?", desc: "Our team is ready to prepare a custom technical assessment for your project. First consultation is free.", cta: "Free Discovery Call" }
+  };
 
   return (
     <ServicePageTemplate 
@@ -101,10 +182,7 @@ export default async function WebCozumleri({ params }: { params: Promise<{ lang:
       HeaderIcon={Globe}
       Feature1Icon={Zap}
       Feature2Icon={Search}
-      serviceCta={lang === 'tr' 
-        ? { title: "Bu Hizmeti Projenizde Kullanmak İster misiniz?", desc: "Ekibimiz, projenize özel bir teknik değerlendirme hazırlamak için hazır. İlk görüşme ücretsizdir.", cta: "Ücretsiz Keşif Toplantısı" }
-        : { title: "Want to Use This Service for Your Project?", desc: "Our team is ready to prepare a custom technical assessment for your project. First consultation is free.", cta: "Free Discovery Call" }
-      }
+      serviceCta={ctaMap[lang as keyof typeof ctaMap] || ctaMap.en}
     />
   );
 }

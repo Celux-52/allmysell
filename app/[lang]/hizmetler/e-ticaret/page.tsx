@@ -77,6 +77,80 @@ const content = {
     faq_3_a: 'Headless e-ticaret, vitrini (kullanıcının gördüğü kısım) arka uçtan (veritabanı ve ödeme) ayırır. Bu sayede geleneksel temaların hantal yapısından kurtulur, saniyenin altında sayfa yükleme hızlarına ve %100 özgür tasarıma ulaşırsınız.',
     faq_4_q: 'B2B için toptan sipariş, kademeli fiyatlandırma ve bayilik modülleri yapabiliyor musunuz?',
     faq_4_a: 'Kesinlikle. Rol bazlı erişim, bayilere özel iskonto oranları, minimum sipariş miktarı (MOQ) ve otomatik teklif oluşturma özelliklerine sahip, tamamen kapalı devre veya hibrit B2B portalları geliştiriyoruz.'
+  },
+  ru: {
+    meta: {
+      title: 'B2B и B2C Автономия Электронной Коммерции',
+      description: 'Создаем инновационные Headless платформы электронной коммерции, управляющие продажами, логистикой и многоканальными запасами с помощью ИИ.',
+      keywords: 'инфраструктура электронной коммерции, автоматизация ecommerce, b2b ecommerce, разработка интернет магазинов, headless commerce',
+    },
+    back: 'К Услугам',
+    tag: 'Продажи и Конверсия',
+    title: 'Автономия Электронной Коммерции',
+    p1: 'Современная электронная коммерция — это не просто каталог товаров на сайте. Это масштабная операционная система: от мгновенного оформления заказа до международной логистики и автоматизированных возвратов. Ведущие бренды доверяют эти процессы автономным системам, исключая человеческий фактор.',
+    h2_1: 'Бесперебойные Автоматизированные Операции',
+    p2: 'Главная проблема устаревших платформ — зависимость от ручных процессов. Архитектуры Headless от Allmysell LLC интегрируются с вашей ERP, логистическими операторами (3PL) и глобальными цепочками поставок. При поступлении заказа счет-фактура формируется автоматически, на складе печатается штрих-код, а остатки обновляются на всех маркетплейсах за миллисекунды.',
+    f1_title: 'Омниканальное Управление Запасами',
+    f1_desc: 'Управляйте остатками и продажами со всех каналов в едином центре данных с нулевой погрешностью.',
+    f2_title: 'Оптимизация Конверсии (CRO)',
+    f2_desc: 'Умный чекаут, динамическое ценообразование и персональные ИИ-рекомендации для минимизации брошенных корзин.',
+    h2_2: 'Гиперперсонализированный Опыт Покупок',
+    p3: 'Благодаря алгоритмам машинного обучения, анализирующим действия пользователей в реальном времени, магазин формирует уникальную витрину для каждого покупателя. Это увеличивает средний чек (AOV) до 30% и повышает лояльность клиентов (LTV).',
+    h2_3: 'Неограниченная Масштабируемость',
+    p4: 'В пиковые периоды распродаж облачная инфраструктура на базе Kubernetes автоматически масштабирует серверные ресурсы. Даже при 100-кратном скачке трафика сайт работает без задержек.',
+    h2_4: 'Наш Технологический Стек',
+    tech_1_title: 'Headless Frontend',
+    tech_1_desc: 'Next.js Commerce, React и Hydrogen для молниеносной загрузки страниц и безупречного SEO.',
+    tech_2_title: 'Backend и Платформы',
+    tech_2_desc: 'Shopify Plus (Headless API), MedusaJS и микросервисы на Node.js/Go для сложных B2B сценариев.',
+    tech_3_title: 'Поиск и Инфраструктура',
+    tech_3_desc: 'Algolia для мгновенного поиска с исправлением опечаток, Redis для кэширования и AWS/Vercel CDN.',
+    faq_title: 'Часто Задаваемые Вопросы',
+    faq_1_q: 'Сколько времени занимает создание Headless e-commerce системы?',
+    faq_1_a: 'В зависимости от сложности интеграций с ERP и платежными системами, запуск занимает от 6 до 12 недель.',
+    faq_2_q: 'Интегрируется ли система с нашей ERP (SAP, 1C, Microsoft Dynamics)?',
+    faq_2_a: 'Да, наши API-first решения легко интегрируются с любыми корпоративными ERP, CRM и PIM системами.',
+    faq_3_q: 'В чем преимущество Headless перед обычным Shopify или WooCommerce?',
+    faq_3_a: 'Headless отделяет витрину от базы данных, обеспечивая мгновенную скорость загрузки и 100% свободу дизайна.',
+    faq_4_q: 'Поддерживаются ли B2B функции (оптовые цены, минимальный заказ)?',
+    faq_4_a: 'Да, мы создаем специализированные B2B кабинеты с многоуровневыми скидками, MOQ и автоматическими счетами.'
+  },
+  uz: {
+    meta: {
+      title: 'B2B va B2C E-tijorat Avtonomiyasi va Infratuzilmasi',
+      description: 'Savdo, logistika va ko\'p kanalli zaxira jarayonlarini sun\'iy intellekt va avtomatlashtirish bilan boshqaruvchi Headless e-tijorat tizimlarini quramiz.',
+      keywords: 'elektron tijorat infratuzilmasi, e-tijoratni avtomatlashtirish, b2b e-tijorat, internet do\'kon yaratish, headless commerce',
+    },
+    back: 'Xizmatlarga Qaytish',
+    tag: 'Savdo va Konversiya',
+    title: 'E-Tijorat Avtonomiyasi',
+    p1: 'Zamonaviy elektron tijorat shunchaki saytda tovarlarni ko\'rsatish emas. Bu buyurtma qabul qilishdan tortib xalqaro yetkazib berish va qaytarishlargacha bo\'lgan ulkan operatsion tizimdir. Yetakchi brendlar inson omilini kamaytirib, jarayonlarni avtonom tizimlarga topshiradilar.',
+    h2_1: 'To\'liq Avtomatlashgan Operatsiyalar',
+    p2: 'Eskirgan platformalarning asosiy muammosi — qo\'lda bajariladigan jarayonlarning sekinligidir. Allmysell LLC yaratgan Headless tizimlar sizning markaziy ERP dasturingiz, logistika va yetkazib berish xizmatlari bilan to\'liq integratsiyalashgan holda ishlaydi. Buyurtma kelishi bilan hisob-faktura shakllanadi, omborda shtrix-kod chop etiladi va zaxiralar barcha bozorlarda (Amazon, Uzum, shaxsiy sayt) bir zumda yangilanadi.',
+    f1_title: 'Ko\'p Kanalli Zaxira Boshqaruvi',
+    f1_desc: 'Barcha savdo kanallaringizdagi tovar qoldiqlarini yagona markazdan nol xato bilan boshqaring.',
+    f2_title: 'Yuqori Konversiya Optimallashtiruvi (CRO)',
+    f2_desc: 'Xaridorlar savatchani tashlab ketmasligi uchun qulay to\'lov sahifalari va aqlli tavsiyalar tizimi.',
+    h2_2: 'Shaxsiylashtirilgan Xarid Tajribasi',
+    p3: 'Mijozlarning xatti-harakatlarini real vaqtda tahlil qiluvchi mashinali o\'rganish algoritmlari orqali har bir tashrif buyuruvchiga mos tovarlar vitrinasi ko\'rsatiladi. Bu o\'rtacha xarid summasini (AOV) 30% gacha oshiradi.',
+    h2_3: 'Cheksiz Kengayuvchanlik',
+    p4: 'Katta chegirmalar paytida bulutli infratuzilma server quvvatini avtomatik oshiradi. Trafik 100 baravar ko\'paysa ham sayt qotmasdan ishlaydi.',
+    h2_4: 'Texnologik Yechimlarimiz',
+    tech_1_title: 'Headless Frontend',
+    tech_1_desc: 'Next.js Commerce va React orqali yashin tezligida yuklanuvchi zamonaviy interfeys.',
+    tech_2_title: 'Backend va Boshqaruv',
+    tech_2_desc: 'Shopify Plus (Headless API), MedusaJS va maxsus Node.js arxitekturalari.',
+    tech_3_title: 'Qidiruv va Infratuzilma',
+    tech_3_desc: 'Algolia tezkor qidiruvi, Redis kesh tizimi va AWS/Vercel global serverlari.',
+    faq_title: 'Ko\'p Beriladigan Savollar',
+    faq_1_q: 'Headless e-tijorat tizimini qurish qancha vaqt oladi?',
+    faq_1_a: 'Integratsiyalar murakkabligiga qarab to\'liq tizim 6 haftadan 12 haftagacha bo\'lgan muddatda ishga tushiriladi.',
+    faq_2_q: 'Mavjud ERP (1C, SAP) tizimlari bilan ishlaydimi?',
+    faq_2_a: 'Ha, API-first arxitekturamiz orqali har qanday korporativ ERP va CRM tizimlari bilan to\'liq bog\'lanadi.',
+    faq_3_q: 'Headless tizimning an\'anaviy Shopify dan farqi nimada?',
+    faq_3_a: 'Headless tizimda tashqi ko\'rinish bazadan ajratilgan bo\'lib, sahifa bir zumda ochiladi va dizaynda hech qanday cheklov bo\'lmaydi.',
+    faq_4_q: 'B2B ulgurji savdo funksiyalari mavjudmi?',
+    faq_4_a: 'Albatta, ulgurji narxlar, dilerlar kabineti va minimal buyurtma miqdorlarini to\'liq qo\'llab-quvvatlaymiz.'
   }
 };
 
@@ -84,17 +158,22 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lang = (await params)?.lang || 'en';
   const data = content[lang as keyof typeof content] || content.en;
   
-  const path = lang === 'tr' ? '/tr/hizmetler/e-ticaret' : '/en/services/e-commerce';
-  
   return {
     ...data.meta,
-    alternates: constructAlternates('services/e-commerce', 'hizmetler/e-ticaret', lang)
+    alternates: constructAlternates('services/e-commerce', 'hizmetler/e-ticaret', lang, 'uslugi/elektronnaya-kommerciya', 'xizmatlar/elektron-tijorat')
   };
 }
 
 export default async function ETicaret({ params }: { params: Promise<{ lang: string }> }) {
   const lang = (await params)?.lang || 'en';
   const dict = content[lang as keyof typeof content] || content.en;
+
+  const ctaMap = {
+    tr: { title: "Bu Hizmeti Projenizde Kullanmak İster misiniz?", desc: "Ekibimiz, projenize özel bir teknik değerlendirme hazırlamak için hazır. İlk görüşme ücretsizdir.", cta: "Ücretsiz Keşif Toplantısı" },
+    ru: { title: "Хотите использовать эту услугу в своем проекте?", desc: "Наша команда готова подготовить индивидуальную техническую оценку для вашего проекта. Первая встреча бесплатна.", cta: "Бесплатная Консультация" },
+    uz: { title: "Ushbu xizmatdan loyihangizda foydalanmoqchimisiz?", desc: "Bizning jamoamiz loyihangiz uchun maxsus texnik baholash tayyorlashga tayyor. Birinchi uchrashuv bepul.", cta: "Bepul Konsultatsiya" },
+    en: { title: "Want to Use This Service for Your Project?", desc: "Our team is ready to prepare a custom technical assessment for your project. First consultation is free.", cta: "Free Discovery Call" }
+  };
 
   return (
     <ServicePageTemplate 
@@ -103,10 +182,7 @@ export default async function ETicaret({ params }: { params: Promise<{ lang: str
       HeaderIcon={ShoppingCart}
       Feature1Icon={Box}
       Feature2Icon={TrendingUp}
-      serviceCta={lang === 'tr' 
-        ? { title: "Bu Hizmeti Projenizde Kullanmak İster misiniz?", desc: "Ekibimiz, projenize özel bir teknik değerlendirme hazırlamak için hazır. İlk görüşme ücretsizdir.", cta: "Ücretsiz Keşif Toplantısı" }
-        : { title: "Want to Use This Service for Your Project?", desc: "Our team is ready to prepare a custom technical assessment for your project. First consultation is free.", cta: "Free Discovery Call" }
-      }
+      serviceCta={ctaMap[lang as keyof typeof ctaMap] || ctaMap.en}
     />
   );
 }

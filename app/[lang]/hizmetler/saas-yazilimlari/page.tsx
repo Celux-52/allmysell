@@ -77,6 +77,80 @@ const content = {
     faq_3_a: 'Özelliklerin karmaşıklığına, üçüncü parti entegrasyonlara ve güvenlik gereksinimlerine bağlı olarak sağlam bir Minimum Uygulanabilir Ürün (MVP) geliştirmek genellikle 3 ila 5 ay sürer.',
     faq_4_q: 'Canlıya aldıktan sonra sunucu bakım ve destek hizmeti sunuyor musunuz?',
     faq_4_a: 'Evet. SLA (Hizmet Seviyesi Sözleşmesi) destekli bakım paketlerimizle 7/24 sunucu izleme (monitoring), güvenlik yamaları ve sürekli yeni özellik geliştirme (continuous development) hizmeti sunuyoruz.'
+  },
+  ru: {
+    meta: {
+      title: 'Разработка B2B SaaS Программного Обеспечения',
+      description: 'Разрабатываем индивидуальные, масштабируемые и безопасные облачные платформы B2B/B2C SaaS (Software as a Service).',
+      keywords: 'разработка saas, заказное программное обеспечение, облачное по, b2b saas, разработка софта',
+    },
+    back: 'К Услугам',
+    tag: 'Облако и Безопасность',
+    title: 'Индивидуальное SaaS ПО',
+    p1: 'Готовые коробочные решения не успевают за темпами роста вашего бизнеса. Откройте для себя облачные заказные SaaS архитектуры, адаптированные под ваши уникальные рабочие процессы и максимизирующие показатели рентабельности.',
+    h2_1: 'Автономия Ваших Бизнес-Процессов',
+    p2: 'Дорогое обслуживание локальных серверов и риски потери данных ушли в прошлое. Современные компании переносят CRM, ERP, биллинг и аналитику в облако. Разрабатываемые нами SaaS решения доступны за миллисекунды из любой точки планеты и защищены по банковским стандартам.',
+    f1_title: 'Бесшовная Облачная Архитектура',
+    f1_desc: 'Гарантия доступности 99.9% (Uptime) благодаря размещению на мощностях AWS, Google Cloud или Azure с авто-масштабированием.',
+    f2_title: 'API и Микросервисы',
+    f2_desc: 'Микросервисная архитектура для мгновенной интеграции со сторонними сервисами (бухгалтерия, логистика, аналитика).',
+    h2_2: 'Абсолютная Безопасность и Изоляция Данных',
+    p3: 'Мы шифруем весь трафик end-to-end (E2EE), проводим тесты на проникновение и гарантируем соответствие стандартам GDPR и HIPAA. Многопользовательская архитектура (multi-tenancy) с изоляцией на уровне строк обеспечивает надежную защиту данных каждого клиента.',
+    h2_3: 'Стратегия Выхода на Рынок (GTM)',
+    p4: 'Для стартапов мы не просто пишем код, а выстраиваем бизнес-модель: консультируем по тарифным сеткам, подпискам, онбордингу пользователей и снижению оттока (churn rate).',
+    h2_4: 'Стек Технологий',
+    tech_1_title: 'Frontend Архитектура',
+    tech_1_desc: 'Next.js, React, TailwindCSS для быстрых и отзывчивых пользовательских интерфейсов.',
+    tech_2_title: 'Backend и API',
+    tech_2_desc: 'Node.js, Python (FastAPI) и Go для высоконагруженных RESTful и GraphQL API.',
+    tech_3_title: 'Облако и Базы Данных',
+    tech_3_desc: 'AWS, Google Cloud, PostgreSQL, MongoDB и кэширование в Redis для масштабируемых сред.',
+    faq_title: 'Часто Задаваемые Вопросы',
+    faq_1_q: 'Какие облачные платформы вы используете для SaaS?',
+    faq_1_a: 'В зависимости от ваших требований мы строим архитектуру на AWS, Google Cloud или Microsoft Azure.',
+    faq_2_q: 'Реализуете ли вы multi-tenant базы данных?',
+    faq_2_a: 'Да, мы проектируем безопасные multi-tenant структуры с полной изоляцией клиентских данных.',
+    faq_3_q: 'Сколько времени занимает разработка SaaS MVP?',
+    faq_3_a: 'Разработка надежного MVP обычно занимает от 3 до 5 месяцев в зависимости от функционала.',
+    faq_4_q: 'Предоставляете ли вы поддержку после релиза?',
+    faq_4_a: 'Да, мы предоставляем SLA пакеты обслуживания: мониторинг серверов 24/7, патчи безопасности и развитие продукта.'
+  },
+  uz: {
+    meta: {
+      title: 'Maxsus B2B SaaS Dasturiy Ta\'minot Yaratish',
+      description: 'Kompaniyangiz uchun maxsus, yuqori xavfsizlikka ega, tez kengayuvchi bulutli B2B/B2C SaaS (Software as a Service) tizimlarini ishlab chiqamiz.',
+      keywords: 'saas dasturlash, maxsus dasturiy ta\'minot, bulutli dasturlar, b2b saas, dasturiy ta\'minot agentligi',
+    },
+    back: 'Xizmatlarga Qaytish',
+    tag: 'Bulut va Xavfsizlik',
+    title: 'Maxsus SaaS Dasturlari',
+    p1: 'Tayyor qolip dasturlar kompaniyangizning o\'sish tezligiga yetib bora olmaydi. Biznes jarayonlaringizga to\'liq moslashuvchi, xarajatlarni kamaytiruvchi va daromadni oshiruvchi maxsus bulutli SaaS tizimlari bilan tanishing.',
+    h2_1: 'Biznes Jarayonlaringizni Erkinlashtiring',
+    p2: 'Jismoniy serverlarga xizmat ko\'rsatish xarajatlari va ma\'lumotlar yo\'qolish xavfi o\'tmishda qoldi. Zamonaviy kompaniyalar CRM, ERP, avtomatlashgan hisob-kitob va tahlil tizimlarini bulutga o\'tkazmoqda. Biz yaratgan SaaS tizimlari bank darajasidagi xavfsizlik bilan himoyalangan bo\'lib, dunyoning istalgan nuqtasidan ochiladi.',
+    f1_title: 'Uzluksiz Bulut Arxitekturasi',
+    f1_desc: 'AWS, Google Cloud yoki Microsoft Azure infratuzilmasida avtomatik kengayish orqali 99.9% uzluksiz ishlash (uptime) kafolati.',
+    f2_title: 'API va Mikroservislar',
+    f2_desc: 'Mavjud hisob-kitob, logistika va to\'lov tizimlari bilan oson bog\'lanuvchi mustaqil mikroservislar.',
+    h2_2: 'Mukammal Ma\'lumotlar Xavfsizligi va Izolyatsiyasi',
+    p3: 'Biz barcha ma\'lumotlar oqimini to\'liq shifrlaymiz (E2EE), xavfsizlik sinovlarini o\'tkazamiz va GDPR qoidalariga rioya qilamiz. Multi-tenancy tizimi orqali bir mijozning ma\'lumotlari boshqasiga aralashmasligi 100% kafolatlanadi.',
+    h2_3: 'Bozorga Chiqish (GTM) Strategiyasi',
+    p4: 'Startaplar uchun biz nafaqat kod yozamiz, balki to\'g\'ri narx belgilash (obuna modellari), foydalanuvchilarni jalb qilish va mijozlarni saqlab qolish bo\'yicha to\'liq konsalting beramiz.',
+    h2_4: 'Texnologik Yechimlarimiz',
+    tech_1_title: 'Frontend Arxitekturasi',
+    tech_1_desc: 'Next.js, React va TailwindCSS orqali tezkor va qulay interfeyslar.',
+    tech_2_title: 'Backend va API',
+    tech_2_desc: 'Yuqori yuklamali tizimlar uchun Node.js, Python (FastAPI) va Go dasturlash tillari.',
+    tech_3_title: 'Bulut va Ma\'lumotlar Bazasi',
+    tech_3_desc: 'AWS, Google Cloud, PostgreSQL, MongoDB va Redis kesh tizimlari.',
+    faq_title: 'Ko\'p Beriladigan Savollar',
+    faq_1_q: 'SaaS uchun qaysi bulutli serverlardan foydalanasiz?',
+    faq_1_a: 'Talablaringizga qarab AWS, Google Cloud yoki Microsoft Azure bulutli infratuzilmasini quramiz.',
+    faq_2_q: 'Multi-tenant (ko\'p foydalanuvchili) bazalarni tuza olasizmi?',
+    faq_2_a: 'Ha, mijozlar ma\'lumotlari bir-biridan to\'liq ajratilgan yuqori xavfsiz arxitekturani quramiz.',
+    faq_3_q: 'SaaS MVP ni ishlab chiqish qancha vaqt oladi?',
+    faq_3_a: 'Funksiyalar hajmiga qarab sifatli MVP 3 oydan 5 oygacha bo\'lgan muddatda tayyorlanadi.',
+    faq_4_q: 'Loyihadan keyin texnik qo\'llab-quvvatlash bormi?',
+    faq_4_a: 'Albatta, 24/7 server monitoringi, xavfsizlik yangilanishlari va doimiy rivojlantirish xizmatlarini taqdim etamiz.'
   }
 };
 
@@ -84,17 +158,22 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lang = (await params)?.lang || 'en';
   const data = content[lang as keyof typeof content] || content.en;
   
-  const path = lang === 'tr' ? '/tr/hizmetler/saas-yazilimlari' : '/en/services/saas-software';
-  
   return {
     ...data.meta,
-    alternates: constructAlternates('services/saas-software', 'hizmetler/saas-yazilimlari', lang)
+    alternates: constructAlternates('services/saas-software', 'hizmetler/saas-yazilimlari', lang, 'uslugi/saas-programmnoe-obespechenie', 'xizmatlar/saas-dasturiy-taminot')
   };
 }
 
 export default async function SaaS({ params }: { params: Promise<{ lang: string }> }) {
   const lang = (await params)?.lang || 'en';
   const dict = content[lang as keyof typeof content] || content.en;
+
+  const ctaMap = {
+    tr: { title: "Bu Hizmeti Projenizde Kullanmak İster misiniz?", desc: "Ekibimiz, projenize özel bir teknik değerlendirme hazırlamak için hazır. İlk görüşme ücretsizdir.", cta: "Ücretsiz Keşif Toplantısı" },
+    ru: { title: "Хотите использовать эту услугу в своем проекте?", desc: "Наша команда готова подготовить индивидуальную техническую оценку для вашего проекта. Первая встреча бесплатна.", cta: "Бесплатная Консультация" },
+    uz: { title: "Ushbu xizmatdan loyihangizda foydalanmoqchimisiz?", desc: "Bizning jamoamiz loyihangiz uchun maxsus texnik baholash tayyorlashga tayyor. Birinchi uchrashuv bepul.", cta: "Bepul Konsultatsiya" },
+    en: { title: "Want to Use This Service for Your Project?", desc: "Our team is ready to prepare a custom technical assessment for your project. First consultation is free.", cta: "Free Discovery Call" }
+  };
 
   return (
     <ServicePageTemplate 
@@ -103,10 +182,7 @@ export default async function SaaS({ params }: { params: Promise<{ lang: string 
       HeaderIcon={ShieldCheck}
       Feature1Icon={Cpu}
       Feature2Icon={Cloud}
-      serviceCta={lang === 'tr' 
-        ? { title: "Bu Hizmeti Projenizde Kullanmak İster misiniz?", desc: "Ekibimiz, projenize özel bir teknik değerlendirme hazırlamak için hazır. İlk görüşme ücretsizdir.", cta: "Ücretsiz Keşif Toplantısı" }
-        : { title: "Want to Use This Service for Your Project?", desc: "Our team is ready to prepare a custom technical assessment for your project. First consultation is free.", cta: "Free Discovery Call" }
-      }
+      serviceCta={ctaMap[lang as keyof typeof ctaMap] || ctaMap.en}
     />
   );
 }

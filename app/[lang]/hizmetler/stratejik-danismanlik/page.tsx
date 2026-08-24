@@ -39,7 +39,7 @@ const content = {
     faq_3_q: 'Can you consult an existing in-house software team?',
     faq_3_a: 'Absolutely. We frequently act as external technical auditors and Agile mentors to help existing in-house engineering teams overcome technical debt and increase delivery speed.',
     faq_4_q: 'Do you help with investor pitch decks or startup funding strategies?',
-    faq_4_a: 'Yes. We help startups translate their technical architectures into business value for investors, ensuring your technical roadmap aligns perfectly with funding milestones.'
+    faq_4_a: 'Yes. We help startups translate their technical architectures into business value for investors, ensuring your technical roadmap aligns perfectly with funding milestones.',
   },
   tr: {
     meta: {
@@ -76,7 +76,81 @@ const content = {
     faq_3_q: 'Mevcut kurum içi (in-house) yazılım ekibimize danışmanlık verebilir misiniz?',
     faq_3_a: 'Kesinlikle. Genellikle mevcut in-house mühendislik ekiplerinin "teknik borç" (technical debt) sarmalından kurtulmasına ve ürün teslim hızını artırmasına yardımcı olmak için dış denetçi ve Çevik (Agile) mentor olarak görev yapıyoruz.',
     faq_4_q: 'Yatırımcı sunumları (Pitch Deck) veya startup fonlama stratejilerinde yardımcı oluyor musunuz?',
-    faq_4_a: 'Evet. Startupların teknik mimarilerini yatırımcılar için "ticari değere" dönüştürmelerine yardımcı oluyor, teknik yol haritanızın yatırım (funding) kilometre taşlarıyla mükemmel bir şekilde uyumlu olmasını sağlıyoruz.'
+    faq_4_a: 'Evet. Startupların teknik mimarilerini yatırımcılar için "ticari değere" dönüştürmelerine yardımcı oluyor, teknik yol haritanızın yatırım (funding) kilometre taşlarıyla mükemmel bir şekilde uyumlu olmasını sağlıyoruz.',
+  },
+  ru: {
+    meta: {
+      title: 'Цифровая Трансформация и Стратегический Технологический Консалтинг',
+      description: 'Перестраиваем бизнес-модель вашего проекта, стратегию выхода на рынок (GTM) и шаги устойчивого масштабирования.',
+      keywords: 'технологический консалтинг, цифровая трансформация, стратегическое планирование, fractional cto, gtm стратегия, масштабирование бизнеса',
+    },
+    back: 'К Услугам',
+    tag: 'Управление и Рост',
+    title: 'Стратегический Консалтинг',
+    p1: 'Создать сильный бренд невозможно одним лишь написанием кода. Чтобы продукт преуспел в условиях жесткой конкуренции, он должен опираться на правильную бизнес-модель, глубокое понимание рынка и устойчивую стратегию роста. Мы соединяем технологии и коммерческий успех.',
+    h2_1: 'Архитектура Прежде Кода',
+    p2: 'Главная ошибка — начинать разработку без исследования рынка и выверенной стратегии GTM. Работая с Allmysell LLC, вы получаете Fractional CTO и бизнес-партнера. Мы анализируем целевую аудиторию, ошибки конкурентов и структуру повторяющегося дохода (MRR), прежде чем написать первую строчку кода.',
+    f1_title: 'Дорожная Карта Трансформации',
+    f1_desc: 'Аудит устаревших систем, выявление узких мест и подбор современного технологического стека под ваши бизнес-задачи.',
+    f2_title: 'Выход на Рынок (GTM) и Масштабирование',
+    f2_desc: 'Формирование стратегий монетизации, сквозной аналитики и маркетинговых автоворонок для легкого внедрения продукта.',
+    h2_2: 'Принятие Решений на Основе Данных (DDDM)',
+    p3: 'Мы структурируем разрозненные данные вашей компании, строим модели бизнес-аналитики (BI) и превращаем отчеты в понятные действия по снижению стоимости привлечения (CAC) и оттока (Churn).',
+    h2_3: 'Agile Культура и Обучение Команды',
+    p4: 'Мы не просто внедряем инфраструктуру, но и обучаем вашу команду методологиям Agile/Scrum для ускорения внутренних инновационных циклов.',
+    h2_4: 'Методология Консалтинга',
+    tech_1_title: 'Анализ Рынка и Конкурентов',
+    tech_1_desc: 'Поиск свободных ниш и преимуществ для максимального рыночного позиционирования.',
+    tech_2_title: 'Ценообразование и Финансы',
+    tech_2_desc: 'Модели Freemium, Tiered и Usage-based для максимизации годовой повторяющейся выручки (ARR).',
+    tech_3_title: 'Аудит Технологического Стека',
+    tech_3_desc: 'Проверка безопасности (GDPR/HIPAA), масштабируемости и экономической эффективности серверов.',
+    faq_title: 'Часто Задаваемые Вопросы',
+    faq_1_q: 'Предоставляете ли вы долгосрочный консалтинг?',
+    faq_1_a: 'Да, формат долгосрочного партнерства (Retainer / Fractional CTO) позволяет гибко адаптировать продукт к изменениям рынка.',
+    faq_2_q: 'Как вы измеряете успех цифровой трансформации?',
+    faq_2_a: 'Мы фиксируем четкие метрики: снижение CAC, рост LTV, динамику MRR и сокращение операционных расходов.',
+    faq_3_q: 'Работаете ли вы с существующими командами разработчиков?',
+    faq_3_a: 'Да, мы выступаем внешними техническими аудиторами, помогая устранить техдолг и ускорить выпуск релизов.',
+    faq_4_q: 'Помогаете ли вы с презентациями для инвесторов (Pitch Deck)?',
+    faq_4_a: 'Да, мы переводим технические преимущества в понятную для инвесторов коммерческую ценность.'
+  },
+  uz: {
+    meta: {
+      title: 'Raqamli Transformatsiya va Strategik Texnologik Konsalting',
+      description: 'Loyihangizning biznes modelini, bozor ulushini va o\'sish strategiyasini noldan quramiz. Ma\'lumotlarga asoslangan texnologik va GTM konsalting.',
+      keywords: 'texnologik konsalting, raqamli transformatsiya, strategik rejalashtirish, fractional cto, biznesni kengaytirish, gtm strategiya',
+    },
+    back: 'Xizmatlarga Qaytish',
+    tag: 'Boshqaruv va O\'sish',
+    title: 'Strategik Konsalting',
+    p1: 'Faqatgina kod yozish yoki chiroyli dizayn bilan katta brend yaratib bo\'lmaydi. Texnologik mahsulotning raqobatda muvaffaqiyat qozonishi uchun to\'g\'ri biznes model, bozor talablari va barqaror o\'sish strategiyasi zarur. Biz texnologiya va tijorat o\'rtasida mustahkam ko\'prik quramiz.',
+    h2_1: 'Dasturlashdan Oldin Arxitektura',
+    p2: 'Bozor tahlilisiz va GTM rejasiz dastur yozishni boshlash eng katta investitsion xatodir. Allmysell LLC sizning Fractional CTO va biznes hamkoringiz sifatida auditoriyani, raqobatchilar xatolarini va daromad modelini chuqur tahlil qiladi.',
+    f1_title: 'Transformatsiya Yo\'l Xaritasi',
+    f1_desc: 'Mavjud tizimlarni tahlil qilib, operatsion to\'siqlarni aniqlaymiz va eng optimal texnologik yechimlarni belgilaymiz.',
+    f2_title: 'Bozorga Kirish (GTM) va O\'sish',
+    f2_desc: 'Narxlash strategiyalari, tahliliy tizimlar va marketing avtomatlashtirishlarini joriy etamiz.',
+    h2_2: 'Ma\'lumotlarga Asoslangan Qarorlar (DDDM)',
+    p3: 'Kompaniyangiz ma\'lumotlarini biznes tahlil (BI) tizimlariga ulab, mijozlarni jalb qilish narxi (CAC) va saqlab qolish bo\'yicha aniq xulosalar beramiz.',
+    h2_3: 'Agile Jamoa va Madaniyat',
+    p4: 'Biz tizimni o\'rnatibgina qolmay, xodimlaringizga Agile/Scrum boshqaruvini va yangi tizimlardan unumli foydalanishni o\'rgatamiz.',
+    h2_4: 'Konsalting Metodologiyamiz',
+    tech_1_title: 'Bozor va Raqobatchilar Tahlili',
+    tech_1_desc: 'Bozordagi bo\'shliqlarni aniqlab, mahsulotingizni eng ustun pozitsiyaga joylashtiramiz.',
+    tech_2_title: 'Moliyaviy va Narxlash Strategiyasi',
+    tech_2_desc: 'Yillik daromadni (ARR) oshiruvchi Freemium, Tiered va Usage-based SaaS narx modellari.',
+    tech_3_title: 'Texnologik Audit',
+    tech_3_desc: 'Mavjud arxitekturani xavfsizlik (GDPR), kengayish va xarajatlar samaradorligi bo\'yicha tekshirish.',
+    faq_title: 'Ko\'p Beriladigan Savollar',
+    faq_1_q: 'Uzoq muddatli konsalting taqdim etasizmi?',
+    faq_1_a: 'Ha, Fractional CTO formatida uzoq muddatli hamkorlik bozor o\'zgarishlariga tez moslashish imkonini beradi.',
+    faq_2_q: 'Raqamli transformatsiya natijasi qanday o\'lchanadi?',
+    faq_2_a: 'Biz CAC, LTV, MRR o\'sishi va ichki samaradorlik kabi aniq KPI ko\'rsatkichlarini belgilaymiz.',
+    faq_3_q: 'Mavjud dasturchilar jamoamiz bilan ishlay olasizmi?',
+    faq_3_a: 'Albatta, tashqi auditor va mentor sifatida texnik qarzlarni yopish va mahsulot chiqarish tezligini oshirishga yordam beramiz.',
+    faq_4_q: 'Investorlar uchun taqdimot (Pitch Deck) tayyorlashga yordam berasizmi?',
+    faq_4_a: 'Ha, texnik arxitekturani investorlar uchun aniq tijoriy qiymatga aylantirib beramiz.'
   }
 };
 
@@ -84,17 +158,22 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lang = (await params)?.lang || 'en';
   const data = content[lang as keyof typeof content] || content.en;
   
-  const path = lang === 'tr' ? '/tr/hizmetler/stratejik-danismanlik' : '/en/services/strategic-consulting';
-  
   return {
     ...data.meta,
-    alternates: constructAlternates('services/strategic-consulting', 'hizmetler/stratejik-danismanlik', lang)
+    alternates: constructAlternates('services/strategic-consulting', 'hizmetler/stratejik-danismanlik', lang, 'uslugi/strategicheskiy-konsalting', 'xizmatlar/strategik-konsalting')
   };
 }
 
 export default async function StratejikDanismanlik({ params }: { params: Promise<{ lang: string }> }) {
   const lang = (await params)?.lang || 'en';
   const dict = content[lang as keyof typeof content] || content.en;
+
+  const ctaMap = {
+    tr: { title: "Bu Hizmeti Projenizde Kullanmak İster misiniz?", desc: "Ekibimiz, projenize özel bir teknik değerlendirme hazırlamak için hazır. İlk görüşme ücretsizdir.", cta: "Ücretsiz Keşif Toplantısı" },
+    ru: { title: "Хотите использовать эту услугу в своем проекте?", desc: "Наша команда готова подготовить индивидуальную техническую оценку для вашего проекта. Первая встреча бесплатна.", cta: "Бесплатная Консультация" },
+    uz: { title: "Ushbu xizmatdan loyihangizda foydalanmoqchimisiz?", desc: "Bizning jamoamiz loyihangiz uchun maxsus texnik baholash tayyorlashga tayyor. Birinchi uchrashuv bepul.", cta: "Bepul Konsultatsiya" },
+    en: { title: "Want to Use This Service for Your Project?", desc: "Our team is ready to prepare a custom technical assessment for your project. First consultation is free.", cta: "Free Discovery Call" }
+  };
 
   return (
     <ServicePageTemplate 
@@ -103,10 +182,7 @@ export default async function StratejikDanismanlik({ params }: { params: Promise
       HeaderIcon={Layers}
       Feature1Icon={Compass}
       Feature2Icon={Target}
-      serviceCta={lang === 'tr' 
-        ? { title: "Bu Hizmeti Projenizde Kullanmak İster misiniz?", desc: "Ekibimiz, projenize özel bir teknik değerlendirme hazırlamak için hazır. İlk görüşme ücretsizdir.", cta: "Ücretsiz Keşif Toplantısı" }
-        : { title: "Want to Use This Service for Your Project?", desc: "Our team is ready to prepare a custom technical assessment for your project. First consultation is free.", cta: "Free Discovery Call" }
-      }
+      serviceCta={ctaMap[lang as keyof typeof ctaMap] || ctaMap.en}
     />
   );
 }

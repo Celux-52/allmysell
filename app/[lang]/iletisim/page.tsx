@@ -19,7 +19,7 @@ const content = {
     address_desc: 'St. Petersburg, Florida, USA',
     email_title: 'Direct Email',
     email_desc: 'info@allmysell.com',
-    phone_title: 'Turkey Operations Center',
+    phone_title: 'Operations Center',
     phone_desc: '+90 553 706 59 12\n+90 551 834 30 30',
     form_title: 'Request a Discovery Call',
     form_desc: 'Fill out the form below. Our lead architects will get back to you within 24 hours with an initial technical assessment.',
@@ -62,6 +62,64 @@ const content = {
     form_success_another: 'Yeni mesaj gönder',
     form_error: 'Mesajınız gönderilirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.',
     form_sending: 'Gönderiliyor...'
+  },
+  ru: {
+    meta: {
+      title: 'Контакты',
+      description: 'Свяжитесь с Allmysell LLC. Запланируйте ознакомительную B2B встречу или обсудите корпоративные проекты цифровой трансформации.',
+      keywords: 'контакты allmysell, агентство разработки по контакты, b2b встреча, связь с разработчиками',
+    },
+    back: 'На Главную',
+    tag: 'Давайте Свяжемся',
+    title: 'Начните Цифровую Трансформацию',
+    p1: 'Нужна ли вам полномасштабная Headless e-commerce платформа или автономный ИИ-ассистент (RAG) для вашего SaaS — наша команда готова проанализировать задачи и предложить надежную архитектуру.',
+    address_title: 'Глобальная Штаб-квартира',
+    address_desc: 'Сент-Питерсберг, Флорида, США',
+    email_title: 'Прямой Email',
+    email_desc: 'info@allmysell.com',
+    phone_title: 'Операционный Центр',
+    phone_desc: '+90 553 706 59 12\n+90 551 834 30 30',
+    form_title: 'Запросить Встречу (Discovery Call)',
+    form_desc: 'Заполните форму ниже. Наши ведущие архитекторы свяжутся с вами в течение 24 часов с первичной технической оценкой.',
+    form_name: 'Ваше Имя и Фамилия',
+    form_company: 'Название Компании',
+    form_email: 'Корпоративный Email',
+    form_message: 'Детали Проекта и Текущие Задачи',
+    form_submit: 'Отправить Запрос',
+    form_success_title: 'Сообщение Отправлено!',
+    form_success_desc: 'Спасибо за обращение. Наши специалисты свяжутся с вами в ближайшее время.',
+    form_success_another: 'Отправить еще одно сообщение',
+    form_error: 'Произошла ошибка при отправке сообщения. Пожалуйста, попробуйте позже.',
+    form_sending: 'Отправка...'
+  },
+  uz: {
+    meta: {
+      title: 'Aloqa',
+      description: 'Allmysell LLC bilan bog\'laning. B2B uchrashuvini rejalashtiring yoki korporativ loyihalar uchun bizga murojaat qiling.',
+      keywords: 'allmysell aloqa, dasturiy ta\'minot kompaniyasi aloqa, b2b uchrashuv, dasturchilar bilan bog\'lanish',
+    },
+    back: 'Bosh Sahifaga Qaytish',
+    tag: 'Biz Bilan Bog\'laning',
+    title: 'Raqamli Transformatsiyangizni Boshlang',
+    p1: 'Sizga to\'liq Headless e-tijorat tizimi kerakmi yoki SaaS platformangiz uchun avtonom sun\'iy intellekt yordamchisi kerakmi — bizning muhandislik guruhimiz tizimingizni tahlil qilib, eng optimal yechimni taklif qilishga tayyor.',
+    address_title: 'Bosh Qarorgoh',
+    address_desc: 'Sent-Pitersberg, Florida, AQSh',
+    email_title: 'To\'g\'ridan-to\'g\'ri Email',
+    email_desc: 'info@allmysell.com',
+    phone_title: 'Operatsiya Markazi',
+    phone_desc: '+90 553 706 59 12\n+90 551 834 30 30',
+    form_title: 'Tahlil Uchrashuvini (Discovery Call) So\'rang',
+    form_desc: 'Quyidagi shaklni to\'ldiring. Bosh me\'morlarimiz 24 soat ichida dastlabki texnik baholash bilan siz bilan bog\'lanishadi.',
+    form_name: 'Ism va Familiyangiz',
+    form_company: 'Kompaniya Nomi',
+    form_email: 'Korporativ Email',
+    form_message: 'Loyiha Tafsilotlari va Muammolar',
+    form_submit: 'So\'rovni Yuborish',
+    form_success_title: 'Xabaringiz Yuborildi!',
+    form_success_desc: 'Biz bilan bog\'langaningiz uchun tashakkur. Mutaxassislarimiz tez orada siz bilan bog\'lanishadi.',
+    form_success_another: 'Yana xabar yuborish',
+    form_error: 'Xabar yuborishda xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko\'ring.',
+    form_sending: 'Yuborilmoqda...'
   }
 };
 
@@ -71,7 +129,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   
   return {
     ...data.meta,
-    alternates: constructAlternates('contact', 'iletisim', lang)
+    alternates: constructAlternates('contact', 'iletisim', lang, 'kontakty', 'aloqa')
   };
 }
 

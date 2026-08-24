@@ -77,6 +77,80 @@ const content = {
     faq_3_a: 'Evet, uygulama mağazası optimizasyonu (ASO), uyumluluk kontrolleri, inceleme gönderimleri ve güvenlik sertifikalarının yönetimi dahil olmak üzere tüm yayınlama döngüsünü (deployment) biz yönetiyoruz.',
     faq_4_q: 'Uygulama internet bağlantısı olmadan da (Offline) çalışabilir mi?',
     faq_4_a: 'Kesinlikle. Yerel (local) SQLite veritabanları ve asenkron depolama kullanarak "Önce Çevrimdışı" (Offline-First) mimarisiyle uygulamalar tasarlıyor; bağlantı geri geldiğinde verilerin bulutla güvenli bir şekilde senkronize olmasını sağlıyoruz.'
+  },
+  ru: {
+    meta: {
+      title: 'Разработка Корпоративных Мобильных Приложений',
+      description: 'Создаем высокопроизводительные мобильные приложения для iOS и Android на базе React Native с нативной плавностью 60 FPS.',
+      keywords: 'разработка мобильных приложений, приложения для ios и android, react native, мобильный ux, агентство мобильной разработки',
+    },
+    back: 'К Услугам',
+    tag: 'Связь и Опыт',
+    title: 'Мобильные Приложения',
+    p1: 'Экран смартфона в кармане клиента — высшая точка лояльности бренду. Мы создаем плавные, стабильные и оптимизированные мобильные приложения, которые работают быстро и экономно расходуют заряд батареи.',
+    h2_1: 'Нативная Производительность и Архитектура',
+    p2: 'Используя современный стек React Native, мы создаем приложения для iOS и Android из единой кодовой базы с качеством и скоростью чисто нативного кода (Swift/Kotlin), выдерживающие миллионы одновременных пользователей.',
+    f1_title: 'Плавность 60 FPS',
+    f1_desc: 'Аппаратное ускорение анимаций и жестов без задержек и подергиваний экрана.',
+    f2_title: 'Омниканальная Интеграция API',
+    f2_desc: 'Синхронизация в реальном времени с вашей веб-платформой, ERP и платежными шлюзами через REST/GraphQL.',
+    h2_2: 'UX-First Дизайн',
+    p3: 'Мы проектируем интерфейсы с учетом анатомии хвата смартфона (Thumb Zones), делая навигацию одной рукой максимально удобной и повышая конверсию в целевые действия.',
+    h2_3: 'Безопасность и Публикация в Сторе',
+    p4: 'Сквозное шифрование данных, биометрическая авторизация (FaceID/TouchID) и полное сопровождение модерации в Apple App Store и Google Play.',
+    h2_4: 'Стек Технологий',
+    tech_1_title: 'Фреймворки',
+    tech_1_desc: 'React Native, Expo и TypeScript для быстрого запуска кроссплатформенных продуктов.',
+    tech_2_title: 'Управление Данными',
+    tech_2_desc: 'Zustand, Redux Toolkit и TanStack Query для работы в режиме Offline-First.',
+    tech_3_title: 'Backend и Облако',
+    tech_3_desc: 'Firebase, Supabase и AWS Amplify для push-уведомлений и масштабируемых облачных функций.',
+    faq_title: 'Часто Задаваемые Вопросы',
+    faq_1_q: 'Разрабатываете ли вы нативные или кроссплатформенные приложения?',
+    faq_1_a: 'Мы используем React Native и Expo, что дает скорость нативного приложения при сокращении затрат на разработку.',
+    faq_2_q: 'Сколько времени занимает разработка мобильного приложения?',
+    faq_2_a: 'MVP обычно разрабатывается за 3-4 месяца, полномасштабные корпоративные системы — от 6 месяцев.',
+    faq_3_q: 'Берете ли вы на себя публикацию в App Store и Google Play?',
+    faq_3_a: 'Да, мы полностью ведем процесс подготовки сертификатов, прохождения проверок и ASO оптимизации.',
+    faq_4_q: 'Может ли приложение работать без интернета?',
+    faq_4_a: 'Да, архитектура Offline-First с локальной базой SQLite синхронизирует данные при появлении сети.'
+  },
+  uz: {
+    meta: {
+      title: 'Korporativ Mobil Ilovalar Ishlab Chiqish (iOS & Android)',
+      description: 'iOS va Android uchun yuqori tezlikdagi, qulay va tez kengayuvchi korporativ mobil ilovalarni ishlab chiqamiz.',
+      keywords: 'mobil ilovalar yaratish, ios ilova, android ilova, react native, mobil dasturlash agentligi, cross-platform ilovalar',
+    },
+    back: 'Xizmatlarga Qaytish',
+    tag: 'Aloqa va Tajriba',
+    title: 'Mobil Ilovalar',
+    p1: 'Mijozingizning cho\'ntagidagi smartfon ekranida bo\'lish — brendga bo\'lgan sodiqlikning eng yuqori cho\'qqisidir. Biz qotmaydigan, batareyani tejaydigan va suvdek ravon ishlovchi zamonaviy mobil ilovalarni yaratamiz.',
+    h2_1: 'Mukammal Arxitektura va Tezlik',
+    p2: 'React Native texnologiyasi orqali yagona kod bazasidan iOS va Android uchun alohida ilovalar tezligida (60 FPS) ishlovchi hamda millionlab foydalanuvchilarni ko\'tara oladigan tizimlar quramiz.',
+    f1_title: '60 FPS Ravon Tajriba',
+    f1_desc: 'Ekran o\'tishlari va mikro-animatsiyalar qurilma tezlashuvidan foydalanib hech qanday kechikishsiz ishlaydi.',
+    f2_title: 'Ko\'p Kanalli API Integratsiyasi',
+    f2_desc: 'Mavjud veb-saytingiz, ERP va to\'lov tizimlari bilan real vaqtda to\'liq sinxron ishlash.',
+    h2_2: 'UX (Qulaylik) Birinchi O\'rinda',
+    p3: 'Bitta qo\'l bilan boshqarish qulayligini (Thumb Zones) hisobga olgan holda foydalanuvchilarni xarid qilishga undovchi interfeyslar yaratamiz.',
+    h2_3: 'Xavfsizlik va Do\'konlarga Joylash',
+    p4: 'Biometrik kirish (FaceID/TouchID), ma\'lumotlarni to\'liq shifrlash hamda App Store va Google Play ga rasmiy joylash jarayonini to\'liq boshqaramiz.',
+    h2_4: 'Mobil Texnologiyalarimiz',
+    tech_1_title: 'Asosiy Freymvorklar',
+    tech_1_desc: 'React Native, Expo va TypeScript tezkor va xavfsiz dasturlash uchun.',
+    tech_2_title: 'Holat va Ma\'lumotlar Boshqaruvi',
+    tech_2_desc: 'Zustand, Redux Toolkit va TanStack Query internetsiz (Offline-First) ishlash imkoniyati uchun.',
+    tech_3_title: 'Backend va Infratuzilma',
+    tech_3_desc: 'Firebase, Supabase va AWS Amplify bildirishnomalar (Push) va bulutli xizmatlar uchun.',
+    faq_title: 'Ko\'p Beriladigan Savollar',
+    faq_1_q: 'Cross-platform yoki Native ilovalar qurasizmi?',
+    faq_1_a: 'Biz React Native va Expo orqali bitta kod bilan ikkala platforma (iOS/Android) uchun yuqori sifatli ilovalar yaratamiz.',
+    faq_2_q: 'Mobil ilovani ishlab chiqish qancha vaqt oladi?',
+    faq_2_a: 'MVP odatda 3-4 oyda, murakkab korporativ tizimlar 6 oy yoki undan ko\'proq vaqtda tayyorlanadi.',
+    faq_3_q: 'App Store va Google Play ga joylashni o\'zingiz bajarasizmi?',
+    faq_3_a: 'Ha, ro\'yxatdan o\'tkazish, tekshiruvlardan o\'tish va ASO sozlamalarini to\'liq o\'z zimmamizga olamiz.',
+    faq_4_q: 'Ilova internetsiz ham ishlay oladimi?',
+    faq_4_a: 'Albatta, Offline-First arxitekturasi orqali internet bo\'lmaganda ma\'lumotlar saqlanib, tarmoq ulanganda yangilanadi.'
   }
 };
 
@@ -84,17 +158,22 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lang = (await params)?.lang || 'en';
   const data = content[lang as keyof typeof content] || content.en;
   
-  const path = lang === 'tr' ? '/tr/hizmetler/mobil-uygulama' : '/en/services/mobile-application';
-  
   return {
     ...data.meta,
-    alternates: constructAlternates('services/mobile-application', 'hizmetler/mobil-uygulama', lang)
+    alternates: constructAlternates('services/mobile-application', 'hizmetler/mobil-uygulama', lang, 'uslugi/mobilnye-prilozheniya', 'xizmatlar/mobil-ilovalar')
   };
 }
 
 export default async function MobilUygulama({ params }: { params: Promise<{ lang: string }> }) {
   const lang = (await params)?.lang || 'en';
   const dict = content[lang as keyof typeof content] || content.en;
+
+  const ctaMap = {
+    tr: { title: "Bu Hizmeti Projenizde Kullanmak İster misiniz?", desc: "Ekibimiz, projenize özel bir teknik değerlendirme hazırlamak için hazır. İlk görüşme ücretsizdir.", cta: "Ücretsiz Keşif Toplantısı" },
+    ru: { title: "Хотите использовать эту услугу в своем проекте?", desc: "Наша команда готова подготовить индивидуальную техническую оценку для вашего проекта. Первая встреча бесплатна.", cta: "Бесплатная Консультация" },
+    uz: { title: "Ushbu xizmatdan loyihangizda foydalanmoqchimisiz?", desc: "Bizning jamoamiz loyihangiz uchun maxsus texnik baholash tayyorlashga tayyor. Birinchi uchrashuv bepul.", cta: "Bepul Konsultatsiya" },
+    en: { title: "Want to Use This Service for Your Project?", desc: "Our team is ready to prepare a custom technical assessment for your project. First consultation is free.", cta: "Free Discovery Call" }
+  };
 
   return (
     <ServicePageTemplate 
@@ -103,10 +182,7 @@ export default async function MobilUygulama({ params }: { params: Promise<{ lang
       HeaderIcon={Smartphone}
       Feature1Icon={Zap}
       Feature2Icon={Layers}
-      serviceCta={lang === 'tr' 
-        ? { title: "Bu Hizmeti Projenizde Kullanmak İster misiniz?", desc: "Ekibimiz, projenize özel bir teknik değerlendirme hazırlamak için hazır. İlk görüşme ücretsizdir.", cta: "Ücretsiz Keşif Toplantısı" }
-        : { title: "Want to Use This Service for Your Project?", desc: "Our team is ready to prepare a custom technical assessment for your project. First consultation is free.", cta: "Free Discovery Call" }
-      }
+      serviceCta={ctaMap[lang as keyof typeof ctaMap] || ctaMap.en}
     />
   );
 }

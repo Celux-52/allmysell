@@ -77,6 +77,80 @@ const content = {
     faq_3_a: 'İşlememiz ve temizlememiz gereken veri miktarına bağlı olarak, sağlam bir kurum içi RAG asistanı veya müşteriye dönük bir chatbot genellikle 4 ila 8 hafta içinde yayına alınabilir.',
     faq_4_q: 'Yapay zeka modelleri için sürekli bakım ve güncelleme hizmeti sunuyor musunuz?',
     faq_4_a: 'Evet. Şirket verileriniz büyüdükçe yapay zeka modellerinin ve vektör veritabanlarının sürekli ayarlanması gerekir. Sürekli bakım, prompt mühendisliği optimizasyonu ve performans izleme (monitoring) sağlıyoruz.'
+  },
+  ru: {
+    meta: {
+      title: 'Корпоративный Искусственный Интеллект и Автоматизация',
+      description: 'Автоматизируйте обработку данных с помощью специализированных ИИ-ассистентов (RAG) и алгоритмов машинного обучения для вашего бизнеса.',
+      keywords: 'интеграция ии, машинное обучение, корпоративный ии, rag системы, аналитика данных, разработка чатботов, автоматизация бизнеса',
+    },
+    back: 'К Услугам',
+    tag: 'Инновации и Будущее',
+    title: 'ИИ и Автоматизация',
+    p1: 'Искусственный интеллект — это не фантастика, а главное правило современной конкуренции. Внедряйте интеллектуальные системы, которые сокращают время анализа данных и клиентской поддержки с дней до долей секунды.',
+    h2_1: 'Интеграция Данных (RAG)',
+    p2: 'Мы обучаем специализированных корпоративных агентов на ваших внутренних документах, истории продаж и регламентах компании. Благодаря технологии RAG ассистенты отвечают с нулевой погрешностью и знают внутренние политики компании.',
+    f1_title: 'Интеллектуальная Обработка Данных (BI)',
+    f1_desc: 'Анализ миллионов строк логов и таблиц за секунды для формирования прогнозных рекомендаций по увеличению прибыли.',
+    f2_title: 'Автономная Поддержка Клиентов',
+    f2_desc: 'Умные ИИ-агенты, понимающие контекст и эмоции пользователей, способные консультировать и закрывать сделки как живые специалисты.',
+    h2_2: 'Оптимизация Времени и Затрат',
+    p3: 'Автоматизация рутины освобождает ключевых сотрудников для решения творческих и стратегических задач, напрямую повышая рентабельность бизнеса.',
+    h2_3: 'Предиктивное Машинное Обучение (ML)',
+    p4: 'Алгоритмы прогнозируют отток пользователей (Churn), рекомендуют товары для кросс-продаж и динамически управляют ценами в зависимости от спроса.',
+    h2_4: 'Стек Технологий ИИ',
+    tech_1_title: 'LLM и Языковые Модели',
+    tech_1_desc: 'OpenAI (GPT-4), Anthropic (Claude 3) и локально развернутые модели Llama 3 на приватных серверах.',
+    tech_2_title: 'Векторные Базы Данных',
+    tech_2_desc: 'Pinecone, Qdrant и Milvus для сверхбыстрого семантического поиска по корпоративным массивам данных.',
+    tech_3_title: 'Фреймворки и Оркестрация',
+    tech_3_desc: 'LangChain, LlamaIndex и микросервисы на Python для сложных сценариев автономных агентов.',
+    faq_title: 'Часто Задаваемые Вопросы',
+    faq_1_q: 'Защищены ли наши корпоративные данные при обучении ИИ?',
+    faq_1_a: 'Да, мы разворачиваем изолированные RAG-системы в защищенном облаке (AWS/Azure). Данные не передаются в публичные модели.',
+    faq_2_q: 'Может ли ИИ полностью заменить первую линию поддержки?',
+    faq_2_a: 'ИИ-ассистенты закрывают до 80% типовых обращений на разных языках, передавая сложные случаи операторам.',
+    faq_3_q: 'Сколько времени занимает внедрение ИИ-ассистента?',
+    faq_3_a: 'В зависимости от объема и структуры данных запуск занимает от 4 до 8 недель.',
+    faq_4_q: 'Осуществляете ли вы поддержку моделей после запуска?',
+    faq_4_a: 'Да, мы проводим регулярный тюнинг промптов, мониторинг точности ответов и обновление базы знаний.'
+  },
+  uz: {
+    meta: {
+      title: 'Korporativ Sun\'iy Intellekt va Avtomatlashtirish Yechimlari',
+      description: 'Maxsus o\'rgatilgan sun\'iy intellekt yordamchilari (RAG) va mashinali o\'rganish algoritmlari orqali biznes jarayonlaringizni avtomatlashtiring.',
+      keywords: 'suniy intellekt integratsiyasi, mashinali organish, korporativ ai, rag tizimlari, ma\'lumotlar tahlili, chatbotlar yaratish',
+    },
+    back: 'Xizmatlarga Qaytish',
+    tag: 'Innovatsiya va Kelajak',
+    title: 'Sun\'iy Intellekt & Avtomatlashtirish',
+    p1: 'Sun\'iy intellekt (SI) endi kelajak ertagi emas, balki zamonaviy raqobatning eng muhim qoidasidir. Ilgari kunlab vaqt olgan ma\'lumotlar tahlili va mijozlarga xizmat ko\'rsatish jarayonlarini soniya ulushlariga tushiruvchi aqlli tizimlar bilan tanishing.',
+    h2_1: 'Ma\'lumotlar Integratsiyasi (RAG)',
+    p2: 'Biz kompaniyangiz ichki hujjatlari, sotuvlar tarixi va qoidalarini aniq biladigan maxsus korporativ yordamchilarni o\'rgatamiz. RAG texnologiyasi orqali ushbu yordamchilar nol xato bilan savollarga javob beradi.',
+    f1_title: 'Aqlli Ma\'lumotlar Tahlili (BI)',
+    f1_desc: 'Millionlab qator ma\'lumotlarni tahlil qilib, daromadni oshiruvchi strategik xulosalar beradi.',
+    f2_title: 'Avtonom Mijozlar Xizmati',
+    f2_desc: 'Mijozlarning niyatini va his-tuyg\'ularini tushunuvchi, savdoni yopishga qodir aqlli agentlar.',
+    h2_2: 'Xarajat va Vaqtni Optimallashtirish',
+    p3: 'Xodimlaringizni bir xil takrorlanuvchi ishlardan xalos qilib, ularni ijodiy va strategik vazifalarga yo\'naltirish imkonini beradi.',
+    h2_3: 'Bashorat Qiluvchi Mashinali O\'rganish (ML)',
+    p4: 'Mijozlarning ketib qolish ehtimolini (churn) oldindan aniqlash, tovarlarni tavsiya qilish va narxlarni dinamik boshqarish.',
+    h2_4: 'Sun\'iy Intellekt Texnologiyalarimiz',
+    tech_1_title: 'Katta Til Modellari (LLM)',
+    tech_1_desc: 'OpenAI (GPT-4), Anthropic (Claude 3) va shaxsiy serverlarda ishlovchi Llama 3 modellari.',
+    tech_2_title: 'Vektorli Ma\'lumotlar Bazalari',
+    tech_2_desc: 'Katta hajmdagi korporativ ma\'lumotlar ustida tezkor semantik qidiruv uchun Pinecone, Qdrant va Milvus.',
+    tech_3_title: 'Freymvorklar va Boshqaruv',
+    tech_3_desc: 'Murakkab agentlar yaratish uchun LangChain, LlamaIndex va Python mikroservislari.',
+    faq_title: 'Ko\'p Beriladigan Savollar',
+    faq_1_q: 'Kompaniyamiz ma\'lumotlari xavfsiz bo\'ladimi?',
+    faq_1_a: 'Albatta. Biz ma\'lumotlar ommaviy modellarga chiqib ketmaydigan yopiq va xavfsiz bulutli RAG tizimlarini quramiz.',
+    faq_2_q: 'Sun\'iy intellekt mijozlar qo\'llab-quvvatlashini to\'liq bajara oladimi?',
+    faq_2_a: 'Ha, standart so\'rovlarning 80% gachasini bir nechta tillarda mustaqil hal qiladi.',
+    faq_3_q: 'Yordamchini ishga tushirish qancha vaqt oladi?',
+    faq_3_a: 'Ma\'lumotlar hajmiga qarab to\'liq tizim 4 haftadan 8 haftagacha bo\'lgan muddatda ishga tushiriladi.',
+    faq_4_q: 'Modellarga keyinchalik xizmat ko\'rsatish bormi?',
+    faq_4_a: 'Ha, ma\'lumotlar bazasini yangilab borish va javoblar sifatini nazorat qilish xizmatini taqdim etamiz.'
   }
 };
 
@@ -84,17 +158,22 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lang = (await params)?.lang || 'en';
   const data = content[lang as keyof typeof content] || content.en;
   
-  const path = lang === 'tr' ? '/tr/hizmetler/yapay-zeka' : '/en/services/artificial-intelligence';
-  
   return {
     ...data.meta,
-    alternates: constructAlternates('services/artificial-intelligence', 'hizmetler/yapay-zeka', lang)
+    alternates: constructAlternates('services/artificial-intelligence', 'hizmetler/yapay-zeka', lang, 'uslugi/iskusstvenniy-intellekt', 'xizmatlar/suniy-idrok')
   };
 }
 
 export default async function YapayZeka({ params }: { params: Promise<{ lang: string }> }) {
   const lang = (await params)?.lang || 'en';
   const dict = content[lang as keyof typeof content] || content.en;
+
+  const ctaMap = {
+    tr: { title: "Bu Hizmeti Projenizde Kullanmak İster misiniz?", desc: "Ekibimiz, projenize özel bir teknik değerlendirme hazırlamak için hazır. İlk görüşme ücretsizdir.", cta: "Ücretsiz Keşif Toplantısı" },
+    ru: { title: "Хотите использовать эту услугу в своем проекте?", desc: "Наша команда готова подготовить индивидуальную техническую оценку для вашего проекта. Первая встреча бесплатна.", cta: "Бесплатная Консультация" },
+    uz: { title: "Ushbu xizmatdan loyihangizda foydalanmoqchimisiz?", desc: "Bizning jamoamiz loyihangiz uchun maxsus texnik baholash tayyorlashga tayyor. Birinchi uchrashuv bepul.", cta: "Bepul Konsultatsiya" },
+    en: { title: "Want to Use This Service for Your Project?", desc: "Our team is ready to prepare a custom technical assessment for your project. First consultation is free.", cta: "Free Discovery Call" }
+  };
 
   return (
     <ServicePageTemplate 
@@ -103,10 +182,7 @@ export default async function YapayZeka({ params }: { params: Promise<{ lang: st
       HeaderIcon={Bot}
       Feature1Icon={Sparkles}
       Feature2Icon={Database}
-      serviceCta={lang === 'tr' 
-        ? { title: "Bu Hizmeti Projenizde Kullanmak İster misiniz?", desc: "Ekibimiz, projenize özel bir teknik değerlendirme hazırlamak için hazır. İlk görüşme ücretsizdir.", cta: "Ücretsiz Keşif Toplantısı" }
-        : { title: "Want to Use This Service for Your Project?", desc: "Our team is ready to prepare a custom technical assessment for your project. First consultation is free.", cta: "Free Discovery Call" }
-      }
+      serviceCta={ctaMap[lang as keyof typeof ctaMap] || ctaMap.en}
     />
   );
 }

@@ -7,18 +7,50 @@ import { trackNewsletterSubscribe } from "@/lib/gtag";
 export default function Newsletter({ lang }: { lang: string }) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const isTr = lang === "tr";
 
-  const dict = {
-    title: isTr ? "SaaS ve Yapay Zeka Bülteni" : "SaaS & AI Newsletter",
-    desc: isTr 
-      ? "Sektörel trendler, vaka analizleri ve yazılım mühendisliği içgörüleri doğrudan gelen kutunuzda. Spam yok."
-      : "Industry trends, case studies, and software engineering insights delivered straight to your inbox. No spam.",
-    placeholder: isTr ? "E-posta adresiniz..." : "Your email address...",
-    btn: isTr ? "Abone Ol" : "Subscribe",
-    success: isTr ? "Başarıyla abone oldunuz!" : "Successfully subscribed!",
-    error: isTr ? "Bir hata oluştu. Lütfen tekrar deneyin." : "An error occurred. Please try again."
+  const dicts: Record<string, {
+    title: string;
+    desc: string;
+    placeholder: string;
+    btn: string;
+    success: string;
+    error: string;
+  }> = {
+    tr: {
+      title: "SaaS ve Yapay Zeka Bülteni",
+      desc: "Sektörel trendler, vaka analizleri ve yazılım mühendisliği içgörüleri doğrudan gelen kutunuzda. Spam yok.",
+      placeholder: "E-posta adresiniz...",
+      btn: "Abone Ol",
+      success: "Başarıyla abone oldunuz!",
+      error: "Bir hata oluştu. Lütfen tekrar deneyin."
+    },
+    ru: {
+      title: "Рассылка по SaaS и ИИ",
+      desc: "Тренды отрасли, практические кейсы и инсайты по разработке ПО прямо в вашем почтовом ящике. Без спама.",
+      placeholder: "Ваш адрес электронной почты...",
+      btn: "Подписаться",
+      success: "Вы успешно подписались!",
+      error: "Произошла ошибка. Пожалуйста, попробуйте еще раз."
+    },
+    uz: {
+      title: "SaaS va Sun'iy Intellekt Xabarnomasi",
+      desc: "Soha tendentsiyalari, amaliy tahlillar va dasturiy ta'minot muhandisligi yangiliklari to'g'ridan-to'g'ri pochtangizda. Spamsiz.",
+      placeholder: "Elektron pochta manzilingiz...",
+      btn: "Obuna Bo'lish",
+      success: "Muvaffaqiyatli obuna bo'ldingiz!",
+      error: "Xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring."
+    },
+    en: {
+      title: "SaaS & AI Newsletter",
+      desc: "Industry trends, case studies, and software engineering insights delivered straight to your inbox. No spam.",
+      placeholder: "Your email address...",
+      btn: "Subscribe",
+      success: "Successfully subscribed!",
+      error: "An error occurred. Please try again."
+    }
   };
+
+  const dict = dicts[lang] || dicts.en;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -61,6 +61,64 @@ const content = {
         content: 'Tarayıcınızda tüm veya bazı çerezlerin ayarlanmasını reddetmenize olanak tanıyan ayarı etkinleştirerek çerezleri engelleyebilirsiniz. Ancak, tarayıcı ayarlarınızı kullanarak tüm çerezleri (temel çerezler dahil) engellerseniz web sitemizin tamamına veya bazı bölümlerine erişemeyebilirsiniz.'
       }
     ]
+  },
+  ru: {
+    meta: {
+      title: 'Политика Файлов Cookie',
+      description: 'Политика использования файлов cookie компании Allmysell LLC. Узнайте, как мы используем cookie для улучшения вашего опыта.',
+      keywords: 'политика cookie, файлы cookie, отслеживание, пользовательский опыт, allmysell',
+    },
+    back: 'На Главную',
+    tag: 'Прозрачность',
+    title: 'Политика Файлов Cookie',
+    last_updated: 'Последнее обновление: Июнь 2026',
+    sections: [
+      {
+        title: '1. Что такое файлы Cookie?',
+        content: 'Файлы cookie — это небольшие текстовые файлы, которые сохраняются на вашем компьютере или мобильном устройстве при посещении веб-сайтов. Наш сайт использует файлы cookie, чтобы отличать вас от других пользователей.'
+      },
+      {
+        title: '2. Как мы используем файлы Cookie',
+        content: 'Мы используем файлы cookie для: обеспечения корректной работы сайта, сохранения ваших настроек, повышения скорости и безопасности, а также непрерывного улучшения интерфейса.'
+      },
+      {
+        title: '3. Типы используемых файлов Cookie',
+        content: 'Строго необходимые cookie (для базовой работы сайта), аналитические cookie (для подсчета посещаемости и оптимизации страниц) и функциональные cookie (для сохранения ваших персональных предпочтений).'
+      },
+      {
+        title: '4. Управление файлами Cookie',
+        content: 'Вы можете заблокировать файлы cookie в настройках вашего браузера. Однако отключение всех файлов cookie может привести к ограничению доступа к некоторым функциям сайта.'
+      }
+    ]
+  },
+  uz: {
+    meta: {
+      title: 'Kuki Siyosati',
+      description: 'Allmysell LLC Kuki siyosati va ulardan foydalanish qoidalari. Foydalanuvchi tajribasini oshirish haqida ma\'lumot oling.',
+      keywords: 'kuki siyosati, cookie fayllari, kuzatuv, foydalanuvchi tajribasi, allmysell',
+    },
+    back: 'Bosh Sahifaga Qaytish',
+    tag: 'Shaffoflik',
+    title: 'Kuki Siyosati',
+    last_updated: 'Oxirgi yangilanish: Iyun 2026',
+    sections: [
+      {
+        title: '1. Kuki nima?',
+        content: 'Kukilar (cookies) — veb-saytlarni ko\'rib chiqqaningizda kompyuteringiz yoki mobil qurilmangizga joylashtiriladigan kichik matnli fayllar. Saytimiz sizni boshqa foydalanuvchilardan ajratish uchun kukilardan foydalanadi.'
+      },
+      {
+        title: '2. Kukilardan qanday foydalanamiz',
+        content: 'Biz kukilardan saytning to\'g\'ri ishlashini ta\'minlash, sozlamalarni eslab qolish, sayt tezligi va xavfsizligini oshirish hamda xizmatlarimizni doimiy yaxshilash uchun foydalanamiz.'
+      },
+      {
+        title: '3. Foydalaniladigan kuki turlari',
+        content: 'Majburiy kukilar (sayt ishlashi uchun zarur), tahliliy kukilar (tashrif buyuruvchilar sonini hisoblash va saytni yaxshilash uchun) va funksional kukilar (tanlagan sozlamalaringizni eslab qolish uchun).'
+      },
+      {
+        title: '4. Kukilarni boshqarish',
+        content: 'Brauzeringiz sozlamalarida kukilarni bloklashingiz mumkin. Biroq, barcha kukilarni bloklash saytning ayrim funksiyalaridan foydalanishni cheklashi mumkin.'
+      }
+    ]
   }
 };
 
@@ -70,7 +128,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   
   return {
     ...data.meta,
-    alternates: constructAlternates('cookie-policy', 'cerez-politikasi', lang)
+    alternates: constructAlternates('cookie-policy', 'cerez-politikasi', lang, 'politika-kuki', 'kuki-siyosati')
   };
 }
 

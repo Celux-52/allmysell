@@ -6,19 +6,26 @@ import { constructAlternates } from '@/lib/seo';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string, slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
-  const lang = resolvedParams.lang || 'en';
+  const lang = (resolvedParams.lang || 'en') as 'en' | 'tr' | 'ru' | 'uz';
   const slug = resolvedParams.slug;
-  const article = await getArticleBySlug(slug, lang as 'en' | 'tr');
+  const article = await getArticleBySlug(slug, lang);
   const enArticle = await getArticleBySlug(slug, 'en');
 
   if (!article || !enArticle) {
     return { title: 'Article Not Found' };
   }
 
+  const ogLocaleMap = {
+    tr: 'tr_TR',
+    ru: 'ru_RU',
+    uz: 'uz_UZ',
+    en: 'en_US'
+  };
+
   return {
     title: article.title,
     description: article.excerpt,
-    alternates: constructAlternates(`blog/${slug}`, `blog/${slug}`, lang),
+    alternates: constructAlternates(`blog/${slug}`, `blog/${slug}`, lang, `blog/${slug}`, `blog/${slug}`),
     openGraph: {
       type: 'article',
       title: article.title,
@@ -28,8 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       tags: [article.category],
       url: `https://allmysell.com/${lang}/blog/${slug}`,
       siteName: 'Allmysell LLC',
-      locale: lang === 'tr' ? 'tr_TR' : 'en_US',
-      alternateLocale: lang === 'tr' ? 'en_US' : 'tr_TR',
+      locale: ogLocaleMap[lang] || 'en_US',
       images: [
         {
           url: 'https://allmysell.com/og-image.jpg',
@@ -50,19 +56,57 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export async function generateStaticParams() {
   const articles = await getAllArticles('en');
   return articles.flatMap((a) =>
-    ['en', 'tr'].map((lang) => ({ lang, slug: a.slug }))
+    ['en', 'tr', 'ru', 'uz'].map((lang) => ({ lang, slug: a.slug }))
   );
 }
 
 export default async function BlogPost({ params }: { params: Promise<{ lang: string, slug: string }> }) {
   const resolvedParams = await params;
-  const lang = resolvedParams.lang || 'en';
+  const lang = (resolvedParams.lang || 'en') as 'en' | 'tr' | 'ru' | 'uz';
   const slug = resolvedParams.slug;
   
-  const article = await getArticleBySlug(slug, lang as 'en' | 'tr');
+  const article = await getArticleBySlug(slug, lang);
   const enArticle = await getArticleBySlug(slug, 'en');
-  const backText = lang === 'tr' ? 'Blog\'a Dön' : 'Back to Blog';
-  const readTimeLabel = lang === 'tr' ? 'dk okuma' : 'min read';
+  
+  const backTextMap = {
+    tr: 'Blog\'a Dön',
+    ru: 'Вернуться в Блог',
+    uz: 'Blogga Qaytish',
+    en: 'Back to Blog'
+  };
+
+  const readTimeLabelMap = {
+    tr: 'dk okuma',
+    ru: 'мин чтения',
+    uz: 'daqiqalik o\'qish',
+    en: 'min read'
+  };
+
+  const authorRoleMap = {
+    tr: 'Kurucu / Yazılım Mühendisi',
+    ru: 'Основатель / Инженер-программист',
+    uz: 'Asoschi / Dasturiy ta\'minot muhandisi',
+    en: 'Founder / Software Engineer'
+  };
+
+  const homeLabelMap = {
+    tr: 'Ana Sayfa',
+    ru: 'Главная',
+    uz: 'Bosh Sahifa',
+    en: 'Home'
+  };
+
+  const inLanguageMap = {
+    tr: 'tr-TR',
+    ru: 'ru-RU',
+    uz: 'uz-UZ',
+    en: 'en-US'
+  };
+
+  const backText = backTextMap[lang] || backTextMap.en;
+  const readTimeLabel = readTimeLabelMap[lang] || readTimeLabelMap.en;
+  const authorRole = authorRoleMap[lang] || authorRoleMap.en;
+  const homeLabel = homeLabelMap[lang] || homeLabelMap.en;
 
   if (!article || !enArticle) {
     return <div className="min-h-screen flex items-center justify-center text-2xl font-bold">404 - Article Not Found</div>;
@@ -80,7 +124,7 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: str
     ],
     "datePublished": publishedTime,
     "dateModified": publishedTime,
-    "inLanguage": lang === 'tr' ? 'tr-TR' : 'en-US',
+    "inLanguage": inLanguageMap[lang] || 'en-US',
     "wordCount": article.readingTime * 200,
     "author": [{
         "@type": "Person",
@@ -111,7 +155,7 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: str
           {
             "@type": "ListItem",
             "position": 1,
-            "name": lang === 'tr' ? 'Ana Sayfa' : 'Home',
+            "name": homeLabel,
             "item": `https://allmysell.com/${lang}`
           },
           {
@@ -155,7 +199,7 @@ export default async function BlogPost({ params }: { params: Promise<{ lang: str
                 <a href="https://www.instagram.com/melihbicak_8?igsh=MWQ5a3BocXJ6aHM5Nw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-white/90 hover:text-white transition-colors">
                   {article.author}
                 </a>
-                <span className="text-xs font-medium text-white/50">{lang === 'tr' ? 'Kurucu / Yazılım Mühendisi' : 'Founder / Software Engineer'}</span>
+                <span className="text-xs font-medium text-white/50">{authorRole}</span>
               </div>
             </div>
           </div>

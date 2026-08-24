@@ -26,6 +26,18 @@ const seoData = {
     description: "St. Petersburg, Florida ve Türkiye merkezli teknoloji partneriniz. B2B SaaS geliştirme, e-ticaret otomasyonu, yapay zeka entegrasyonu ve kurumsal web platformları inşa ediyoruz.",
     keywords: "allmysell, yazılım ajansı, kurumsal yazılım geliştirme, b2b saas geliştirme, e-ticaret otomasyonu, headless e-ticaret, yapay zeka entegrasyonu, web platformu geliştirme, react next.js ajansı, dijital dönüşüm, fractional cto, özel yazılım çözümleri, mobil uygulama geliştirme, stratejik teknoloji danışmanlığı, st petersburg yazılım şirketi",
     ogLocale: "tr_TR"
+  },
+  ru: {
+    title: "Allmysell LLC | Агентство Разработки Корпоративного ПО и Электронной Коммерции",
+    description: "Ваш технологический партнер по разработке B2B SaaS, автоматизации e-commerce, интеграции ИИ и созданию корпоративных веб-платформ. Масштабируйте свой бизнес уже сегодня.",
+    keywords: "allmysell, агентство разработки по, корпоративная разработка по, разработка b2b saas, автоматизация электронной коммерции, интеграция ии, разработка веб-платформ, агентство react next.js, цифровая трансформация, пользовательские программные решения, разработка мобильных приложений, стратегический it консалтинг",
+    ogLocale: "ru_RU"
+  },
+  uz: {
+    title: "Allmysell LLC | Korporativ Dasturiy Ta'minot va E-tijorat Agentligi",
+    description: "B2B SaaS dasturlash, e-tijoratni avtomatlashtirish, sun'iy intellekt integratsiyasi va korporativ veb-platformalar yaratish bo'yicha texnologik hamkoringiz.",
+    keywords: "allmysell, dasturiy ta'minot agentligi, korporativ dasturiy ta'minot yaratish, b2b saas dasturlash, e-tijorat avtomatlashtirish, sun'iy intellekt integratsiyasi, veb-platforma yaratish, react next.js agentligi, raqamli transformatsiya, maxsus dasturiy yechimlar, mobil ilovalar yaratish, strategik it konsalting",
+    ogLocale: "uz_UZ"
   }
 };
 
@@ -72,7 +84,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     openGraph: {
       type: "website",
       locale: data.ogLocale,
-      alternateLocale: lang === 'tr' ? 'en_US' : 'tr_TR',
+      alternateLocale: Object.values(seoData).map(d => d.ogLocale).filter(loc => loc !== data.ogLocale),
       url: `${siteUrl}/${lang}`,
       title: data.title,
       description: data.description,
@@ -197,5 +209,5 @@ export default async function RootLayout({
 }
 
 export function generateStaticParams() {
-  return [{ lang: 'en' }, { lang: 'tr' }];
+  return [{ lang: 'en' }, { lang: 'tr' }, { lang: 'ru' }, { lang: 'uz' }];
 }

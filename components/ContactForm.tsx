@@ -18,6 +18,8 @@ export default function ContactForm({ dict }: ContactFormProps) {
     honeypot: "",
   });
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -25,6 +27,7 @@ export default function ContactForm({ dict }: ContactFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
+    setErrorMessage("");
 
     try {
       const response = await fetch("/api/contact", {
@@ -38,6 +41,8 @@ export default function ContactForm({ dict }: ContactFormProps) {
         setStatus("success");
         setFormData({ name: "", company: "", email: "", message: "", honeypot: "" });
       } else {
+        const data = await response.json().catch(() => null);
+        setErrorMessage(data?.error || "");
         setStatus("error");
       }
     } catch (error) {
@@ -74,7 +79,7 @@ export default function ContactForm({ dict }: ContactFormProps) {
       {status === "error" && (
         <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-3 text-red-700 animate-in fade-in slide-in-from-top-2">
           <AlertCircle className="w-5 h-5 shrink-0" />
-          <p className="text-sm font-medium">{dict.form_error}</p>
+          <p className="text-sm font-medium">{errorMessage || dict.form_error}</p>
         </div>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

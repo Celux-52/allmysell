@@ -69,6 +69,72 @@ const content = {
         content: 'Belirli koşullar altında, kişisel verilerinize ilişkin veri koruma yasaları (KVKK ve GDPR) kapsamında aşağıdaki haklara sahipsiniz: Kişisel verilerinize erişim talep etme, Kişisel verilerinizin düzeltilmesini talep etme, Kişisel verilerinizin silinmesini talep etme, Kişisel verilerinizin işlenmesine itiraz etme, İşlenmenin kısıtlanmasını talep etme, Kişisel verilerinizin aktarılmasını talep etme ve Rızayı geri çekme hakkı.'
       }
     ]
+  },
+  ru: {
+    meta: {
+      title: 'Политика Конфиденциальности',
+      description: 'Политика конфиденциальности и защиты данных Allmysell LLC. Мы со всей серьезностью относимся к безопасности корпоративных данных.',
+      keywords: 'политика конфиденциальности, защита данных, gdpr, безопасность данных, allmysell',
+    },
+    back: 'На Главную',
+    tag: 'Право и Безопасность',
+    title: 'Политика Конфиденциальности',
+    last_updated: 'Последнее обновление: Июнь 2026',
+    sections: [
+      {
+        title: '1. Введение',
+        content: 'В Allmysell LLC мы уважаем вашу конфиденциальность и стремимся защищать ваши личные и корпоративные данные. Данная Политика конфиденциальности объясняет, как мы обрабатываем ваши данные при посещении нашего сайта, и информирует вас о ваших правах на конфиденциальность.'
+      },
+      {
+        title: '2. Данные, которые мы собираем',
+        content: 'Мы можем собирать, использовать, хранить и передавать различные типы данных: идентификационные данные (имя, фамилия), контактные данные (адрес электронной почты, номера телефонов), технические данные (IP-адрес, тип и версия браузера) и данные об использовании сайта.'
+      },
+      {
+        title: '3. Как мы используем ваши данные',
+        content: 'Мы используем ваши данные только в случаях, разрешенных законодательством: для выполнения договорных обязательств, ответа на ваши запросы и обеспечения наших законных деловых интересов.'
+      },
+      {
+        title: '4. Безопасность данных',
+        content: 'Мы внедрили надежные меры безопасности для предотвращения случайной потери, несанкционированного использования или доступа к вашим данным (включая сквозное шифрование и строгие протоколы CSP).'
+      },
+      {
+        title: '5. Ваши законные права (GDPR)',
+        content: 'В соответствии с применимым законодательством вы имеете право: запрашивать доступ к вашим данным, требовать их исправления или удаления, ограничивать их обработку или отзывать согласие в любое время.'
+      }
+    ]
+  },
+  uz: {
+    meta: {
+      title: 'Maxfiylik Siyosati',
+      description: 'Allmysell LLC Maxfiylik siyosati va ma\'lumotlarni himoya qilish ko\'rsatmalari. Korporativ ma\'lumotlaringiz xavfsizligini ta\'minlaymiz.',
+      keywords: 'maxfiylik siyosati, ma\'lumotlarni himoya qilish, gdpr, xavfsizlik, allmysell',
+    },
+    back: 'Bosh Sahifaga Qaytish',
+    tag: 'Huquqiy & Xavfsizlik',
+    title: 'Maxfiylik Siyosati',
+    last_updated: 'Oxirgi yangilanish: Iyun 2026',
+    sections: [
+      {
+        title: '1. Kirish',
+        content: 'Allmysell LLC sifatida biz sizning maxfiyligingizni hurmat qilamiz va shaxsiy hamda korporativ ma\'lumotlaringizni himoya qilish majburiyatini olamiz. Ushbu Maxfiylik siyosati bizning saytimizga tashrif buyurganingizda ma\'lumotlaringiz qanday himoya qilinishi haqida ma\'lumot beradi.'
+      },
+      {
+        title: '2. Biz to\'playdigan ma\'lumotlar',
+        content: 'Biz siz haqingizda turli xil ma\'lumotlarni to\'plashimiz mumkin: Shaxsiy ma\'lumotlar (ism, familiya), Aloqa ma\'lumotlari (elektron pochta, telefon raqami), Texnik ma\'lumotlar (IP-manzil, brauzer turi) va Foydalanish ma\'lumotlari.'
+      },
+      {
+        title: '3. Ma\'lumotlardan foydalanish',
+        content: 'Biz ma\'lumotlaringizdan faqat qonun ruxsat bergan hollarda: siz bilan tuzilgan shartnomalarni bajarish, so\'rovlaringizga javob berish va xizmatlarimiz sifatini oshirish uchun foydalanamiz.'
+      },
+      {
+        title: '4. Ma\'lumotlar xavfsizligi',
+        content: 'Ma\'lumotlaringizning ruxsatsiz ishlatilishi yoki yo\'qolishining oldini olish uchun tegishli xavfsizlik choralarini (shifrlash, xavfsiz protokollar) joriy etdik.'
+      },
+      {
+        title: '5. Sizning huquqlaringiz',
+        content: 'Siz ma\'lumotlaringiz bilan tanishish, ularni to\'g\'rilash, o\'chirishni talab qilish yoki ulardan foydalanishga berilgan rozilikni istalgan vaqtda bekor qilish huquqiga egasiz.'
+      }
+    ]
   }
 };
 
@@ -78,7 +144,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   
   return {
     ...data.meta,
-    alternates: constructAlternates('privacy-policy', 'gizlilik-politikasi', lang)
+    alternates: constructAlternates('privacy-policy', 'gizlilik-politikasi', lang, 'politika-konfidencialnosti', 'maxfiylik-siyosati')
   };
 }
 

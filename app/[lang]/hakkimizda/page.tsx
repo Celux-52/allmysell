@@ -47,6 +47,50 @@ const content = {
     f3_desc: 'Yatay olarak ölçeklenebilen sistemler kuruyoruz. 100 veya 1.000.000 anlık kullanıcınız olsun, altyapı sorunsuz bir şekilde otomatik olarak ölçeklenir.',
     h2_3: 'Global Vizyon, Yerel Uzmanlık',
     p3: 'Köklerimiz St. Petersburg, Florida\'da olsa da vizyonumuz globaldir. Kuzey Amerika, Avrupa ve Türkiye\'deki şirketler için dijital dönüşümlere başarıyla liderlik ettik; Silikon Vadisi\'nin en son teknolojisi ile yerel pazar dinamikleri arasındaki köprüyü kurduk.'
+  },
+  ru: {
+    meta: {
+      title: 'О нас',
+      description: 'Allmysell LLC — агентство корпоративного ПО и цифровой трансформации из Сент-Питерсберга, Флорида. Мы выступаем вашим Fractional CTO и создаем высокопроизводительные системы.',
+      keywords: 'о компании allmysell, агентство разработки по сент питерсберг, компания корпоративного по, команда цифровой трансформации, fractional cto',
+    },
+    back: 'На Главную',
+    tag: 'Кто Мы',
+    title: 'Архитекторы Цифрового Будущего',
+    p1: 'Основанная в Сент-Питерсберге, штат Флорида, компания Allmysell LLC родилась из простого разочарования: рынок был переполнен «агентствами», поставлявшими медленные, громоздкие и немасштабируемые сайты на устаревших шаблонах. Мы верили, что B2B-предприятия и быстрорастущие стартапы заслуживают лучшего — настоящей инженерии, а не просто дизайна.',
+    h2_1: 'Больше, Чем Просто Агентство',
+    p2: 'Мы не считаем себя традиционным аутсорсинговым агентством. Работая с Allmysell LLC, вы получаете выделенного Fractional CTO (технического директора). Мы погружаемся в вашу бизнес-модель, устраняем операционные барьеры и разрабатываем масштабируемые системы (React, Next.js, Headless архитектуры).',
+    h2_2: 'Наша Философия',
+    f1_title: 'Бескомпромиссная Производительность',
+    f1_desc: 'Мы не выпускаем ничего, что не соответствует высочайшим стандартам Core Web Vitals. Скорость — это фундаментальное требование современного бизнеса.',
+    f2_title: 'Безопасность на Уровне Архитектуры',
+    f2_desc: 'В эпоху киберугроз мы строим цифровые крепости. От строгих CSP до сквозного шифрования — ваши корпоративные данные надежно защищены.',
+    f3_title: 'Устойчивая Масштабируемость',
+    f3_desc: 'Мы строим горизонтально масштабируемые системы. Будь у вас 100 или 1 000 000 пользователей одновременно — инфраструктура масштабируется без сбоев.',
+    h2_3: 'Глобальное Видение, Локальная Экспертиза',
+    p3: 'Наши корни находятся во Флориде, но география нашей работы глобальна. Мы успешно реализовали цифровую трансформацию для компаний в Северной Америке, Европе и Центральной Азии.'
+  },
+  uz: {
+    meta: {
+      title: 'Biz Haqimizda',
+      description: 'Allmysell LLC — Sent-Pitersberg, Florida shtatida joylashgan korporativ dasturiy ta\'minot va raqamli transformatsiya agentligi. Biz sizning Fractional CTO sifatida yuqori samarali tizimlarni quramiz.',
+      keywords: 'allmysell haqida, dasturiy ta\'minot agentligi, korporativ dasturiy kompaniya, raqamli transformatsiya jamoasi, fractional cto',
+    },
+    back: 'Bosh Sahifaga Qaytish',
+    tag: 'Biz Kim Funksiyamiz',
+    title: 'Raqamli Kelajakning Me\'morlari',
+    p1: 'Sent-Pitersberg, Florida shtatida asos solingan Allmysell LLC oddiy ehtiyojdan paydo bo\'lgan: Bozor eskirgan shablonlarga asoslangan sekin, og\'ir va kengaymaydigan veb-saytlarni yetkazib beradigan "agentliklar" bilan to\'la edi. Biz B2B korxonalari va tez rivojlanayotgan startaplar haqiqiy muhandislikka loyiq ekanligiga ishondik.',
+    h2_1: 'Oddiy Agentlikdan Ko\'proq',
+    p2: 'Biz o\'zimizni an\'anaviy dasturiy autsorsing agentligi deb hisoblamaymiz. Allmysell LLC bilan hamkorlik qilganingizda, biz sizning tayinlangan Fractional CTO (yarim kunlik texnik direktor) bo\'lamiz. Biz sizning biznes modelingizga chuqur kirib boramiz va muammolarni hal qiladigan kengaytiriladigan tizimlarni (React, Next.js, Headless) quramiz.',
+    h2_2: 'Bizning Asosiy Falsafamiz',
+    f1_title: 'Murosasiz Tezlik va Ishlash',
+    f1_desc: 'Biz Core Web Vitals standartlariga javob bermaydigan hech qanday loyihani ishga tushirmaymiz. Tezlik — zamonaviy savdoning asosiy qoidasidir.',
+    f2_title: 'Dizayn Bosqichidagi Xavfsizlik',
+    f2_desc: 'Kiberxavflar davrida biz raqamli qal\'alarni quramiz. Qat\'iy CSP protokollaridan tortib to\'liq shifrlashgacha sizning korporativ ma\'lumotlaringiz xavfsiz.',
+    f3_title: 'Barqaror Kengayuvchanlik',
+    f3_desc: 'Biz gorizontal ravishda kengaytiriladigan tizimlarni quramiz. 100 yoki 1 000 000 faol foydalanuvchingiz bo\'lishidan qat\'i nazar, tizim avtomatik kengayadi.',
+    h2_3: 'Global Qarash, Mahalliy Tajriba',
+    p3: 'Bizning ildizlarimiz Florida shtatida bo\'lsa-da, qamrovimiz globaldir. Biz Shimoliy Amerika, Yevropa va O\'zbekiston bozorlaridagi kompaniyalarga zamonaviy texnologiyalarni muvaffaqiyatli tatbiq etdik.'
   }
 };
 
@@ -56,7 +100,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   
   return {
     ...data.meta,
-    alternates: constructAlternates('about-us', 'hakkimizda', lang)
+    alternates: constructAlternates('about-us', 'hakkimizda', lang, 'o-nas', 'biz-haqimizda')
   };
 }
 

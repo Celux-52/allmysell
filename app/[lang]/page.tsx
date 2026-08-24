@@ -134,7 +134,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             {/* Bento Grid Layout */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(280px,auto)]">
               
-              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/web-cozumleri' : '/en/services/web-solutions'} className="md:col-span-2 block">
+              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/web-cozumleri' : lang === 'ru' ? '/ru/uslugi/veb-resheniya' : lang === 'uz' ? '/uz/xizmatlar/veb-yechimlar' : '/en/services/web-solutions'} className="md:col-span-2 block">
                 <FadeInUpWrapper className="h-full group bg-white p-10 md:p-12 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 relative overflow-hidden cursor-pointer">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-700 ease-out"></div>
                   <div className="w-14 h-14 bg-white shadow-md border border-slate-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
@@ -147,7 +147,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 </FadeInUpWrapper>
               </Link>
 
-              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/e-ticaret' : '/en/services/e-commerce'} className="block">
+              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/e-ticaret' : lang === 'ru' ? '/ru/uslugi/elektronnaya-kommerciya' : lang === 'uz' ? '/uz/xizmatlar/elektron-tijorat' : '/en/services/e-commerce'} className="block">
                 <FadeInUpWrapper className="h-full group bg-[#0A192F] p-10 md:p-12 rounded-[2rem] border border-[#0A192F] shadow-lg hover:shadow-2xl hover:shadow-[#0A192F]/20 transition-all duration-500 relative overflow-hidden cursor-pointer">
                   <div className="absolute top-[-50%] right-[-50%] w-[100%] h-[100%] bg-blue-500/20 rounded-full blur-3xl group-hover:bg-blue-400/30 transition-colors duration-700"></div>
                   <div className="w-14 h-14 bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
@@ -160,7 +160,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 </FadeInUpWrapper>
               </Link>
 
-              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/saas-yazilimlari' : '/en/services/saas-software'} className="block">
+              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/saas-yazilimlari' : lang === 'ru' ? '/ru/uslugi/saas-programmnoe-obespechenie' : lang === 'uz' ? '/uz/xizmatlar/saas-dasturiy-taminot' : '/en/services/saas-software'} className="block">
                 <FadeInUpWrapper className="h-full group bg-white p-10 md:p-12 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 relative overflow-hidden cursor-pointer">
                    <div className="w-14 h-14 bg-white shadow-md border border-slate-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                     <ShieldCheck className="w-6 h-6 text-indigo-600 stroke-[1.5]" />
@@ -172,7 +172,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 </FadeInUpWrapper>
               </Link>
 
-              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/stratejik-danismanlik' : '/en/services/strategic-consulting'} className="md:col-span-2 block">
+              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/stratejik-danismanlik' : lang === 'ru' ? '/ru/uslugi/strategicheskiy-konsalting' : lang === 'uz' ? '/uz/xizmatlar/strategik-konsalting' : '/en/services/strategic-consulting'} className="md:col-span-2 block">
                 <FadeInUpWrapper className="h-full group bg-white p-10 md:p-12 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 relative overflow-hidden cursor-pointer">
                   <div className="absolute bottom-0 right-0 w-48 h-48 bg-slate-50 rounded-tl-[100px] -z-10 group-hover:bg-blue-50/50 transition-colors duration-700"></div>
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
@@ -193,7 +193,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 </FadeInUpWrapper>
               </Link>
 
-              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/yapay-zeka' : '/en/services/artificial-intelligence'} className="md:col-span-2 block">
+              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/yapay-zeka' : lang === 'ru' ? '/ru/uslugi/iskusstvenniy-intellekt' : lang === 'uz' ? '/uz/xizmatlar/suniy-idrok' : '/en/services/artificial-intelligence'} className="md:col-span-2 block">
                 <FadeInUpWrapper className="h-full group bg-white p-10 md:p-12 rounded-[2rem] border border-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-blue-900/5 transition-all duration-500 relative overflow-hidden cursor-pointer">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50/50 rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-700 ease-out"></div>
                   <div className="w-14 h-14 bg-white shadow-md border border-slate-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
@@ -206,7 +206,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 </FadeInUpWrapper>
               </Link>
 
-              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/mobil-uygulama' : '/en/services/mobile-application'} className="block">
+              <Link prefetch={false} href={lang === 'tr' ? '/tr/hizmetler/mobil-uygulama' : lang === 'ru' ? '/ru/uslugi/mobilnye-prilozheniya' : lang === 'uz' ? '/uz/xizmatlar/mobil-ilovalar' : '/en/services/mobile-application'} className="block">
                 <FadeInUpWrapper className="h-full group bg-[#0A192F] p-10 md:p-12 rounded-[2rem] border border-[#0A192F] shadow-lg hover:shadow-2xl hover:shadow-[#0A192F]/20 transition-all duration-500 relative overflow-hidden cursor-pointer">
                   <div className="absolute top-[-50%] right-[-50%] w-[100%] h-[100%] bg-indigo-500/20 rounded-full blur-3xl group-hover:bg-indigo-400/30 transition-colors duration-700"></div>
                   <div className="w-14 h-14 bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
@@ -232,7 +232,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             <FadeInUpWrapper>
               <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-white/10 border border-white/10 text-xs font-semibold text-emerald-400 uppercase tracking-widest">
                 <Sparkles className="w-3.5 h-3.5" />
-                {lang === 'tr' ? 'Ücretsiz Değerlendirme' : 'Free Assessment'}
+                {lang === 'tr' ? 'Ücretsiz Değerlendirme' : lang === 'ru' ? 'Бесплатная Оценка' : lang === 'uz' ? 'Bepul Baholash' : 'Free Assessment'}
               </div>
             </FadeInUpWrapper>
             <FadeInUpWrapper>
@@ -247,7 +247,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             </FadeInUpWrapper>
             <FadeInUpWrapper className="flex flex-col sm:flex-row justify-center gap-4">
               <Link 
-                href={lang === 'tr' ? '/tr/iletisim' : '/en/contact'}
+                href={lang === 'tr' ? '/tr/iletisim' : lang === 'ru' ? '/ru/kontakty' : lang === 'uz' ? '/uz/aloqa' : '/en/contact'}
                 className="bg-white text-[#0A192F] px-8 py-4 rounded-2xl text-base font-bold tracking-wide transition-all shadow-[0_20px_40px_-15px_rgba(255,255,255,0.3)] hover:bg-blue-50 hover:-translate-y-1 hover:shadow-[0_25px_50px_-15px_rgba(255,255,255,0.4)] flex items-center justify-center gap-2"
               >
                 {dict.ctaBand.cta} <ArrowRight className="w-5 h-5" />
@@ -257,7 +257,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-2xl text-base font-semibold tracking-wide transition-all hover:bg-white/20 hover:-translate-y-1 flex items-center justify-center gap-2"
               >
                 <Phone className="w-4 h-4" />
-                {lang === 'tr' ? '+90 553 706 59 12' : '+90 553 706 59 12'}
+                +90 553 706 59 12
               </a>
             </FadeInUpWrapper>
           </StaggerWrapper>
@@ -464,7 +464,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               </FadeInUpWrapper>
               <FadeInUpWrapper className="shrink-0">
                 <Link
-                  href={lang === 'tr' ? '/tr/iletisim' : '/en/contact'}
+                  href={lang === 'tr' ? '/tr/iletisim' : lang === 'ru' ? '/ru/kontakty' : lang === 'uz' ? '/uz/aloqa' : '/en/contact'}
                   className="bg-[#0A192F] text-white px-8 py-4 rounded-2xl text-base font-bold tracking-wide transition-all shadow-[0_20px_40px_-15px_rgba(10,25,47,0.5)] hover:bg-[#112240] hover:-translate-y-1 hover:shadow-[0_25px_50px_-15px_rgba(10,25,47,0.6)] flex items-center gap-2 border border-white/10 whitespace-nowrap"
                 >
                   {dict.ctaBand.cta2} <ArrowRight className="w-5 h-5" />

@@ -245,6 +245,248 @@ const content = {
     pricingTitle: 'Dijital Varlığınızı İnşa Etmeye Hazır Mısınız?',
     pricingDesc: 'İster ücretsiz blog modüllerimiz üzerinden öğrenin, isterseniz mevcut mağazanızı devasa boyutlara ulaştırmak için teknik danışmanlığımızdan yararlanın. Büyüme partneriniz olmaya hazırız.',
     pricingCta: 'Fiyatlandırma İçin İletişime Geçin'
+  },
+  ru: {
+    meta: {
+      title: 'Курс и Консалтинг по eBay Dropshipping 2026',
+      description: 'Узнайте, как построить прибыльный автоматизированный бизнес на eBay dropshipping без склада. Полный 6-модульный курс и индивидуальный консалтинг от Allmysell LLC.',
+      keywords: 'ebay dropshipping обучение, дропшиппинг 2026, аккаунт продавца ebay, консалтинг дропшиппинг, zik analytics',
+    },
+    back: 'На Главную',
+    tag: 'E-Commerce Обучение и Консалтинг',
+    title: 'От Нуля до Автоматизированной Империи: eBay Dropshipping 2026',
+    subtitle: 'Хватит угадывать. Начните строить глобальный бизнес dropshipping на основе данных и полной автоматизации уже сегодня.',
+    ctaPrimary: 'Подать заявку на консалтинг',
+    ctaSecondary: 'Читать модули в блоге',
+    intro: 'В 2026 году традиционный ритейл замедляется, в то время как автоматизированный дропшиппинг масштабируется по всему миру. Наш эксклюзивный 6-модульный пакет обучения и индивидуальный консалтинг научат вас находить прибыльные товары, обходить алгоритмы eBay (Cassini) и полностью автоматизировать обработку заказов.',
+    modulesTitle: 'Чему вы научитесь',
+    modules: [
+      { id: 1, title: 'Освоение Платформы', desc: 'Понимание экосистемы eBay 2026 года и основ современной бизнес-модели Dropshipping.' },
+      { id: 2, title: 'Безопасная Настройка Аккаунта', desc: 'Интеграция Payoneer и "прогрев cookie" для предотвращения блокировок (Suspend).' },
+      { id: 3, title: 'Поиск Прибыльных Товаров', desc: 'Поиск востребованных и высокомаржинальных товаров на основе данных с помощью Zik Analytics.' },
+      { id: 4, title: 'SEO Cassini и Листинг', desc: 'Оптимизация заголовков и Item Specifics для взлома поискового алгоритма eBay.' },
+      { id: 5, title: 'Обработка Заказов и Возвраты', desc: 'Автоматизация заказов, управление трек-номерами и стратегии безопасных возвратов.' },
+      { id: 6, title: 'Масштабирование ($10k+)', desc: 'Увеличение лимитов продаж, реклама Promoted Listings и управление виртуальными ассистентами (VA).' },
+    ],
+    risksTitle: 'Риски в Dropshipping и Наши Решения',
+    risksSubtitle: 'Не верьте сказкам о быстром обогащении. Вот 50 критических проблем, из-за которых 90% дропшипперов терпят неудачу, и то, как наш консалтинг решает каждую из них. Нажмите на проблему, чтобы увидеть решение:',
+    risks: [
+      {
+        category: 'Риски Политики и Блокировки Аккаунта',
+        icon: 'ShieldAlert',
+        problems: [
+          { title: 'Незнание или нарушение правил eBay Dropshipping', solution: 'Мы настраиваем магазин в полном соответствии с политиками оптовых B2B-поставщиков eBay 2026 года.' },
+          { title: 'Дропшиппинг с Amazon/Walmart (главная ошибка)', solution: 'Мы подключаем вас к авторизованным оптовым поставщикам с легальными инвойсами и трек-номерами.' },
+          { title: 'Риск внезапной блокировки аккаунта (Suspension)', solution: 'Мы предотвращаем ограничения MC011 и применяем правильный прогрев cookie (cookie warming).' },
+          { title: 'Удаление листингов из-за нарушений прав (VeRO)', solution: 'Мы защищаем ваш каталог с помощью ПО для автоматического сканирования брендовых нарушений VeRO.' },
+          { title: 'Выбор неверной категории товара', solution: 'С помощью ИИ-инструментов мы размещаем ваши товары в правильных и прибыльных категориях Cassini.' },
+          { title: 'Использование вводящих в заблуждение заголовков', solution: 'Мы создаем оптимизированные по SEO заголовки, не нарушающие правила площадки.' },
+          { title: 'Стоковые фото, не соответствующие товару', solution: 'Мы получаем оригинальные lifestyle-фотографии от поставщиков для исключения жалоб INAD.' },
+          { title: 'Неверное указание времени обработки (Handling time)', solution: 'Мы настраиваем динамические сроки отправки на основе реальной статистики поставщиков.' }
+        ]
+      },
+      {
+        category: 'Проблемы с Поставщиками и Доставкой',
+        icon: 'Truck',
+        problems: [
+          { title: 'Поставщик не отправляет товар вовремя', solution: 'Мы внедряем API резервных поставщиков. Если поставщик А подвел, заказ уходит поставщику Б.' },
+          { title: 'Слишком долгая доставка (более 3 недель)', solution: 'Мы работаем только со складами в США и ЕС с гарантированной доставкой за 3-5 дней.' },
+          { title: 'Остановка бизнеса во время Китайского Нового Года', solution: 'Мы диверсифицируем цепочки поставок через склады в США и Европе, работающие круглый год.' },
+          { title: 'Доставка бракованного или не того товара', solution: 'Мы предоставляем проверенный список премиум-поставщиков с уровнем брака менее 1%.' },
+          { title: 'Товар распродан у поставщика (Out of Stock)', solution: 'Мы подключаем API синхронизации остатков в реальном времени, автоматически закрывающее листинг.' },
+          { title: 'Отказ поставщика принимать возврат', solution: 'Мы заключаем официальные соглашения RMA с поставщиками для автоматизации возвратов.' },
+          { title: 'Высокая стоимость доставки в удаленные регионы', solution: 'Мы настраиваем списки исключений (Exclusion List) в eBay, чтобы исключить невыгодные зоны.' },
+          { title: 'Внезапное закрытие компании поставщика', solution: 'Мы строим бизнес с резервированием по 3 разным поставщикам одновременно.' },
+          { title: 'Задержка загрузки трек-номера', solution: 'Мы интегрируем ботов (AutoDS/Trackerbot), загружающих трек-номера в eBay в течение 12 часов.' },
+          { title: 'Частые жалобы «Товар не получен» (INR)', solution: 'Мы настраиваем автоуведомления клиентов о статусе посылки до того, как они начнут жаловаться.' },
+          { title: 'Доставка в брендовой упаковке ритейлера', solution: 'Мы работаем с поставщиками, предлагающими "Blind Dropshipping" в нейтральных коробках.' }
+        ]
+      },
+      {
+        category: 'Затраты и Маржинальность',
+        icon: 'DollarSign',
+        problems: [
+          { title: 'Слишком низкая маржа прибыли', solution: 'Мы учим находить товары с чистой маржой более 20% с помощью Zik Analytics.' },
+          { title: 'Высокие комиссии eBay (13.25% - 13.6%)', solution: 'Мы подбираем оптимальную подписку на магазин (Store Subscription) для снижения комиссий.' },
+          { title: 'Убытки из-за бесплатной доставки', solution: 'Мы закладываем стоимость доставки в цену товара без потери поискового ранжирования.' },
+          { title: 'Ошибки в расчете международной доставки', solution: 'Мы подключаем программу eBay International Shipping (EIS), снимающую риски международной доставки.' },
+          { title: 'Убыток $0.5 - $10 на каждой продаже', solution: 'Мы предоставляем авторские финансовые Excel-калькуляторы для точного расчета чистой прибыли.' },
+          { title: 'Игнорирование комиссий платежных систем', solution: 'Наши модели автоматически учитывают конвертацию валют и сборы Payoneer.' },
+          { title: 'Внезапный рост тарифов экспресс-доставки', solution: 'Мы фиксируем единые тарифы (Flat-Rate) с проверенными партнерами.' },
+          { title: 'Налоги и скрытые комиссии банков', solution: 'Мы консультируем по оформлению Tax Exemption и оптимальным методам вывода средств.' }
+        ]
+      },
+      {
+        category: 'Служба Поддержки Клиентов',
+        icon: 'Users',
+        problems: [
+          { title: 'Медленные ответы на вопросы покупателей', solution: 'Мы настраиваем CRM-шаблоны для ответов клиентам в течение 1 часа.' },
+          { title: 'Сложности с обработкой возвратов и рефандов', solution: 'Мы даем проверенные скрипты общения, превращающие споры в довольных клиентов.' },
+          { title: 'Падение рейтинга удовлетворенности ниже 95%', solution: 'Мы внедряем автоматические цепочки запроса отзывов, нивелирующие редкий негатив.' },
+          { title: 'Высокий процент дефектов аккаунта (Defect Rate 2%+)', solution: 'Наши консультанты еженедельно проверяют Dashboard для устранения проблем до начисления дефектов.' },
+          { title: 'Время ответа на сообщения более 48 часов', solution: 'Мы помогаем нанять обученных виртуальных ассистентов (VA) для поддержки 24/7.' },
+          { title: 'Высокий уровень возвратов (более 5%)', solution: 'Мы исключаем проблемные категории (одежда, обувь с размерами) из вашей модели.' },
+          { title: 'Неумение удалять несправедливые негативные отзывы', solution: 'Мы обучаем официальным процедурам Feedback Revision для легального удаления плохих отзывов.' },
+          { title: 'Частое открытие диспутов и жалоб', solution: 'Благодаря API-синхронизации трекинга eBay автоматически закрывает споры в вашу пользу.' }
+        ]
+      },
+      {
+        category: 'Реклама и Трафик',
+        icon: 'Megaphone',
+        problems: [
+          { title: 'Пессимизация листингов в поиске (Throttling)', solution: 'Мы удерживаем статус Top Rated Seller, что гарантирует приоритет алгоритма Cassini.' },
+          { title: 'Падение показов из-за высокого уровня дефектов', solution: 'Мы аудируем здоровье аккаунта и снимаем рискованные товары до санкций алгоритма.' },
+          { title: 'Низкий приоритет товаров с медленной доставкой', solution: 'Мы оптимизируем политику доставки для получения бейджа "Fast \'N Free".' },
+          { title: 'Слив бюджета на Promoted Listings', solution: 'Мы настраиваем динамические рекламные кампании с оплатой только за реальные продажи.' },
+          { title: 'Слабое SEO в названиях и отсутствие просмотров', solution: 'Наши эксперты подбирают высокочастотные Long-tail ключи для максимального охвата.' },
+          { title: 'Низкая конверсия из-за некачественных фото', solution: 'Мы используем нейросети для улучшения качества и создания премиального вида фото.' }
+        ]
+      },
+      {
+        category: 'Конкуренция и Управление Рисками',
+        icon: 'Activity',
+        problems: [
+          { title: '90% продавцов терпят неудачу в первый год', solution: 'Наше менторство позволяет миновать метод проб и ошибок и сразу запускать рабочую систему.' },
+          { title: 'Хаос в управлении складскими остатками', solution: 'Мы автоматизируем магазин через передовые инструменты (AutoDS, Trackerbot).' },
+          { title: 'Зависимость от одного поставщика', solution: 'Мы строим 3-уровневую систему резервных поставщиков.' },
+          { title: 'Технические сбои и ошибки API синхронизации', solution: 'Наша инженерная команда Allmysell LLC оперативно решает любые интеграционные ошибки.' },
+          { title: 'Затягивание верификации аккаунтов Payoneer/eBay', solution: 'Мы пошагово сопровождаем вас в прохождении KYC проверок без задержек.' },
+          { title: 'Блокировки из-за ложных подозрений в мошенничестве', solution: 'Мы настраиваем правильное окружение (чистый IP/VPN, Cookies) для безопасности.' },
+          { title: 'Высокая конкуренция и демпинг цен', solution: 'Мы учим находить свободные микро-ниши с высокой прибылью.' },
+          { title: 'Сезонные просадки выручки', solution: 'Мы распределяем каталог по всесезонным категориям (Дом, Авто, Сад) для стабильного дохода.' }
+        ]
+      }
+    ],
+    featuresTitle: 'Почему выбирают нас?',
+    features: [
+      { title: 'Фокус на Алгоритмах', desc: 'Мы учим работать с актуальными данными поисковой системы Cassini 2026 года.' },
+      { title: 'Без Риска Заморозки Денег в Складе', desc: 'Продавайте прибыльные товары без необходимости предварительной закупки.' },
+      { title: 'Индивидуальное Менторство', desc: 'Прямые консультации для быстрого масштабирования и решения тупиковых ситуаций.' }
+    ],
+    pricingTitle: 'Готовы построить свой цифровой актив?',
+    pricingDesc: 'Изучайте наши бесплатные материалы в блоге или воспользуйтесь персональным консалтингом для быстрого масштабирования магазина.',
+    pricingCta: 'Связаться для консультации'
+  },
+  uz: {
+    meta: {
+      title: 'eBay Dropshipping Kursi va Konsaltingi 2026',
+      description: 'Omborsiz e-tijorat orqali noldan avtomatlashtirilgan eBay biznesini qurishni o\'rganing. Allmysell LLC dan 6 modulli to\'liq kurs va 1-ga-1 konsalting.',
+      keywords: 'ebay dropshipping kursi, omborsiz savdo, ebay sotuvchi hisobi, ebay konsalting, zik analytics kursi',
+    },
+    back: 'Bosh Sahifaga Qaytish',
+    tag: 'E-Tijorat Ta\'limi & Konsalting',
+    title: 'Noldan Avtomatlashgan Imperiyagacha: eBay Dropshipping 2026',
+    subtitle: 'Taxmin qilishni to\'xtating. Ma\'lumotlarga asoslangan, to\'liq avtopilotda ishlaydigan global biznesingizni bugunoq quring.',
+    ctaPrimary: 'Konsalting Uchun Ariza Qoldirish',
+    ctaSecondary: 'Modullarni Blogda O\'qish',
+    intro: '2026 yilda an\'anaviy savdo sekinlashayotgan bir paytda, avtomatlashtirilgan dropshipping butun dunyo bo\'ylab o\'smoqda. Bizning 6 modulli maxsus ta\'lim paketimiz va 1-ga-1 strategik konsalting xizmatimiz orqali yuqori daromadli mahsulotlarni topishni, qat\'iy eBay Cassini algoritmlarini to\'g\'ri boshqarishni va buyurtmalarni avtomatlashtirishni o\'rganasiz.',
+    modulesTitle: 'Nimani O\'rganasiz',
+    modules: [
+      { id: 1, title: 'Platformani O\'zlashtirish', desc: '2026 yilgi eBay ekotizimi va zamonaviy Dropshipping biznes modelining asoslari.' },
+      { id: 2, title: 'Xavfsiz Hisob Ochish', desc: 'Bloklanish (Suspend) xavfini nolga tushiruvchi Payoneer integratsiyasi va "Kuki Isitish".' },
+      { id: 3, title: 'G\'olib Mahsulotlarni Topish', desc: 'Zik Analytics yordamida yuqori talabga ega va past raqobatli mahsulotlarni tahlil qilish.' },
+      { id: 4, title: 'Cassini SEO va Listelash', desc: 'Mukammal sarlavhalar va Item Specifics orqali qidiruv tizimida yuqoriga ko\'tarilish.' },
+      { id: 5, title: 'Buyurtmalar va Qaytarishlar', desc: 'Buyurtmalarni avtomatlashtirish, trek-raqamlarni boshqarish va xavfsiz qaytarish strategiyalari.' },
+      { id: 6, title: 'Masshtablash ($10k+)', desc: 'Savdo limitlarini oshirish, Promoted Listings reklamalari va Virtual Yordamchilarni (VA) boshqarish.' },
+    ],
+    risksTitle: 'Dropshippingda Duch Kelinadigan Xatarlar va Bizning Yechimlarimiz',
+    risksSubtitle: 'Tez boyib ketish haqidagi yolg\'on va\'dalarga ishonmang. Mana dropshipperlarning 90 foizi muvaffaqiyatsizlikka uchrashiga sabab bo\'ladigan 50 ta muhim muammo va bizning konsalting ularni qanday hal qiladi (Yechimni ko\'rish uchun bosing):',
+    risks: [
+      {
+        category: 'Siyosat va Hisob Bloklanishi Xatarlari',
+        icon: 'ShieldAlert',
+        problems: [
+          { title: 'eBay Dropshipping siyosatini bilmaslik yoki buzish', solution: 'Biz hisobingizni 2026 yilgi eBay B2B yetkazib beruvchilar siyosatiga 100% mos ravishda sozlaymiz.' },
+          { title: 'Amazon/Walmart dan sotib olib eBay da sotish (katta xato)', solution: 'Sizni qonuniy faktura va to\'g\'ri trek-raqam beruvchi ulgurji B2B yetkazib beruvchilar bilan bog\'laymiz.' },
+          { title: 'Hisobning to\'satdan bloklanishi (Suspend)', solution: 'MC011 cheklovlariga qarshi choralar ko\'ramiz va algoritmlar bloklamasligi uchun cookie isitish taktikalarini qo\'llaymiz.' },
+          { title: 'Mualliflik huquqi buzilishi (VeRO)', solution: 'Katalogingizni VeRO qoidalariga qarshi avtomatik skanerlash dasturlari bilan himoya qilamiz.' },
+          { title: 'Noto\'g\'ri kategoriya tanlash', solution: 'Sun\'iy intellekt vositalarimiz orqali mahsulotlaringizni eng to\'g\'ri va daromadli kategoriyalarga joylashtiramiz.' },
+          { title: 'Chalg\'ituvchi sarlavha va tavsiflar', solution: 'Listelaringizni xaridor kutuvlariga mos keladigan va siyosatni buzmaydigan SEO sarlavhalar bilan optimallashtiramiz.' },
+          { title: 'Mahsulotga mos kelmaydigan stok rasmlari', solution: 'Yetkazib beruvchilardan original rasmlarni olib, INAD (Mos kelmaslik) shikoyatlarini yo\'qotamiz.' },
+          { title: 'Yetkazib berish vaqtini (Handling time) noto\'g\'ri ko\'rsatish', solution: 'Yetkazib beruvchining haqiqiy statistikasi asosida dinamik jo\'natish vaqtlarini belgilaymiz.' }
+        ]
+      },
+      {
+        category: 'Yetkazib Beruvchi va Yuk Tashish Muammolari',
+        icon: 'Truck',
+        problems: [
+          { title: 'Yetkazib beruvchining mahsulotni jo\'natmasligi', solution: 'Zaxira yetkazib beruvchi (Backup Supplier) API tizimini o\'rnatamiz. Agar birinchisi bajarmasa, buyurtma ikkinchisiga o\'tadi.' },
+          { title: '3 haftadan oshadigan uzoq yetkazib berish', solution: 'Faqat AQSh va Yevropa omborlaridan 3-5 kunlik tezkor yetkazib beruvchilar bilan ishlashingizni ta\'minlaymiz.' },
+          { title: 'Xitoy Yangi Yilida biznes to\'xtab qolishi', solution: 'Yetkazib berish zanjirini mahalliy bayramlarga bog\'lanmagan global omborlar orqali diversifikatsiya qilamiz.' },
+          { title: 'Noto\'g\'ri yoki past sifatli mahsulot yuborilishi', solution: 'Faqatgina nuqson darajasi 1% dan past bo\'lgan, tekshirilgan premium ulgurji yetkazib beruvchilar ro\'yxatini beramiz.' },
+          { title: 'Mahsulot yetkazib beruvchida tugab qolishi', solution: 'Zaxira nolga tushgan paytda listeni avtomatik yopadigan real vaqtdagi API sinxronizatsiya dasturlarini ulaymiz.' },
+          { title: 'Yetkazib beruvchining qaytarishni qabul qilmasligi', solution: 'Sizning nomingizdan yetkazib beruvchilar bilan rasmiy RMA shartnomalarini tuzamiz.' },
+          { title: 'Uzoq hududlarga yuqori yetkazib berish narxlari', solution: 'eBay da "Exclusion List" ni to\'g\'ri sozlab, zararga ishlovchi uzoq zonalarga yetkazishni cheklaymiz.' },
+          { title: 'Yetkazib beruvchi kompaniyaning to\'satdan yopilishi', solution: 'Bitta manbaga tayanmay, kamida 3 xil yetkazib beruvchi bilan ishlaydigan tizim quramiz.' },
+          { title: 'Trek-raqamning kech yuklanishi', solution: 'Trek-raqamlarni olib, eBay ga 12 soat ichida yuklovchi avtomatlashtirilgan botlarni ulaymiz.' },
+          { title: '"Mahsulot yetib bormadi" (INR) shikoyatlari', solution: 'Mijozlarga yetkazib berish holatini oldindan xabar qiluvchi avtomatik xabarlar zanjirini o\'rnatamiz.' },
+          { title: 'Boshqa brend qutisida jo\'natilishi', solution: 'Mahsulotlarni neytral qutilarda jo\'natuvchi "Blind Dropshipping" yetkazib beruvchilari bilan ishlaymiz.' }
+        ]
+      },
+      {
+        category: 'Xarajatlar va Foyda Marjasi Muammolari',
+        icon: 'DollarSign',
+        problems: [
+          { title: 'Juda past foyda marjasi', solution: 'Zik Analytics orqali sof foydasi 20% dan yuqori bo\'lgan yuqori qiymatli tovarlarni topishni o\'rgatamiz.' },
+          { title: 'eBay ning yuqori komissiyalari (13.25% - 13.6%)', solution: 'Savdo hajmiga mos do\'kon obunasi (Store Subscription) orqali komissiyalarni kamaytiramiz.' },
+          { title: 'Bepul yetkazib berish sababli zararga kirish', solution: 'Qidiruv reytingini yo\'qotmasdan yetkazib berish xarajatini narxga to\'g\'ri qo\'shish strategiyasini quramiz.' },
+          { title: 'Global yetkazib berish xarajatlarini hisobga olmaslik', solution: 'Sizni eBay International Shipping (EIS) dasturiga ulab, global logistika xavflarini eBay ga topshiramiz.' },
+          { title: 'Har bir tovardan $0.5 - $10 zarar ko\'rish', solution: 'Listelashdan oldin sof foydani aniq hisoblab beruvchi Excel moliyaviy kalkulyatorlarimizni taqdim etamiz.' },
+          { title: 'To\'lov tizimlari komissiyalarini hisobga olmaslik', solution: 'Modellarimizga Payoneer/PayPal konvertatsiya va to\'lov foizlarini avtomatik kiritamiz.' },
+          { title: 'Tezkor yetkazib berish narxlarining kutilmaganda oshishi', solution: 'Yetkazib beruvchilar bilan qat\'iy narxli (Flat-Rate) yetkazib berish shartnomalarini tuzamiz.' },
+          { title: 'Soliqlar va valyuta konvertatsiyasi xarajatlari', solution: 'Tax Exemption arizalarini to\'g\'ri topshirish va bank xarajatlarini kamaytirish bo\'yicha maslahat beramiz.' }
+        ]
+      },
+      {
+        category: 'Mijozlarga Xizmat Ko\'rsatish Muammolari',
+        icon: 'Users',
+        problems: [
+          { title: 'Mijozlar savollariga tez javob bera olmaslik', solution: 'Avtonom CRM shablonlari orqali 1 soat ichida javob berish standartlarini o\'rnatamiz.' },
+          { title: 'Qaytarish va pulni qaytarish talablarini boshqara olmaslik', solution: 'Mijozlarni xursand qiluvchi va qaytarishni bekorga aylantiruvchi professional skriptlarni taqdim etamiz.' },
+          { title: 'Mijozlar qoniqishining 95% dan pastga tushishi', solution: 'Buyurtmadan so\'ng avtomatik ijobiy fikr (feedback) so\'rash zanjirlarini quramiz.' },
+          { title: 'Shikoyat va nuqsonlar darajasining oshishi (2%+)', solution: 'Dashboardingizni har hafta tekshirib, muammolar metrikalarga ta\'sir qilmasidan oldin bartaraf etamiz.' },
+          { title: 'Xabarlarga javob berish 48 soatdan oshib ketishi', solution: '24/7 xizmat ko\'rsatuvchi malakali Virtual Yordamchilarni (VA) topish va yollashga yordam beramiz.' },
+          { title: 'Qaytarish darajasining yuqoriligi (5%+)', solution: 'O\'lcham talab qiluvchi xatarli kategoriyalarni biznes modelingizdan butunlay chiqaramiz.' },
+          { title: 'Salbiy baholarni o\'chira olmaslik', solution: 'Noo\'rin qo\'yilgan yomon baholarni eBay rasmiy qoidalari (Feedback Revision) orqali o\'chirishni o\'rgatamiz.' },
+          { title: 'Mijozlar bilan tez-tez nizo ochilishi', solution: 'API sinxronizatsiyasi orqali eBay "Yetib bormadi" nizolarini avtomatik sizning foydangizga yopadi.' }
+        ]
+      },
+      {
+        category: 'Reklama va Trafik Muammolari',
+        icon: 'Megaphone',
+        problems: [
+          { title: 'Qidiruv tizimida listelarning ko\'rinmasligi (Throttling)', solution: 'Sizni Top Rated Seller maqomida ushlab, Cassini qidiruv tizimida doimiy yuqori o\'rinlarni kafolatlaymiz.' },
+          { title: 'Defekt darajasi oshib listelarning orqaga tushishi', solution: 'Hisob salomatligini tekshirib, xatarli tovarlarni algoritmlar jazolashidan oldin to\'xtatamiz.' },
+          { title: 'Sekin yetkaziluvchi tovarlarning ko\'rinmay qolishi', solution: 'Yetkazib berish sozlamalarini optimallashtirib, "Fast \'N Free" nishonini olamiz.' },
+          { title: 'Promoted Listings reklamalariga behuda pul sarflash', solution: 'Faqatgina daromadli sotuvlar bo\'lgandagina to\'lanadigan ROI ga yo\'naltirilgan dinamik reklamalarni quramiz.' },
+          { title: 'Yomon SEO sarlavhalari tufayli trafik bo\'lmasligi', solution: 'Sohangizdagi eng ko\'p qidirilgan (Long-tail) kalit so\'zlar asosida mukammal SEO sarlavhalarini yozamiz.' },
+          { title: 'Past sifatli rasmlar sababli xaridorlar sotib olmasligi', solution: 'Sun\'iy intellekt vositalari orqali rasmlarni yaxshilab, premium brend darajasiga olib chiqamiz.' }
+        ]
+      },
+      {
+        category: 'Raqobat va Xatarlarni Boshqarish',
+        icon: 'Activity',
+        problems: [
+          { title: 'Sotuvchilarning 90 foizi 1-yilda muvaffaqiyatsiz bo\'lishi', solution: 'Mentorligimiz orqali xato va sinovlar bosqichini chetlab o\'tib, faqat ishlaydigan tizimlarni qo\'llaysiz.' },
+          { title: 'Zaxiralarni boshqarish qiyinlashib ketishi', solution: 'Do\'koningizni AutoDS, Trackerbot kabi avtomatlashtirish dasturlariga ulaymiz.' },
+          { title: 'Faqat bitta yetkazib beruvchiga bog\'lanib qolish', solution: '3 bosqichli zaxira tizimini quramiz. Biri to\'xtasa ham, biznesingiz to\'xtovsiz ishlayveradi.' },
+          { title: 'Dasturiy API xatolari va sinxronizatsiya muammolari', solution: 'Texnologik agentlik sifatida dasturiy xatolarni muhandislar guruhimiz bilan darhol hal qilamiz.' },
+          { title: 'Payoneer/eBay hisoblarini tasdiqlash kechikishi', solution: 'KYC hujjatlarini to\'g\'ri tayyorlash orqali hisoblaringiz tezda tasdiqlanishini ta\'minlaymiz.' },
+          { title: 'Firibgarlik shubhasi bilan noto\'g\'ri bloklanish', solution: 'eBay xavfsizlik botlari nimaga e\'tibor berishini bilib, toza IP/VPN va Kuki tizimini quramiz.' },
+          { title: 'Bozorning to\'yinishi va katta raqobat', solution: 'Katta sotuvchilar e\'tibor bermaydigan yashirin va past raqobatli mikro-nitsalarni topishni o\'rgatamiz.' },
+          { title: 'Mavsumiy tebranishlar tufayli daromad tushib ketishi', solution: 'Tovarlar katalogini har xil sohalarga (Uy, Avto, Bog\') bo\'lib, yil davomida barqaror daromad quramiz.' }
+        ]
+      }
+    ],
+    featuresTitle: 'Nega Biz Bilan Ishlashingiz Kerak?',
+    features: [
+      { title: 'Algoritmga Yo\'naltirilgan', desc: 'Eskirgan usullar emas, to\'g\'ridan-to\'g\'ri dolzarb 2026 Cassini qidiruv tizimi ma\'lumotlari bilan ishlash.' },
+      { title: 'Nol Zaxira Xatari', desc: 'Bitta ham qutiga tegmasdan yuqori daromadli tovarlarni sotishni va logistikani o\'rganing.' },
+      { title: '1-ga-1 Mentorlik', desc: 'Muammolarga duch kelganingizda yoki do\'koningizni kengaytirayotganingizda to\'g\'ridan-to\'g\'ri strategik yordam.' }
+    ],
+    pricingTitle: 'Raqamli aktivni qurishga tayyormisiz?',
+    pricingDesc: 'Bepul blog darsliklarimiz orqali o\'rganing yoki do\'koningizni kattalashtirish uchun individual texnik konsaltingimizdan foydalaning.',
+    pricingCta: 'Narxlar va Konsalting Uchun Bog\'laning'
   }
 };
 
@@ -254,7 +496,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   
   return {
     ...data.meta,
-    alternates: constructAlternates('courses/ebay-dropshipping', 'egitimler/ebay-dropshipping', lang)
+    alternates: constructAlternates('courses/ebay-dropshipping', 'egitimler/ebay-dropshipping', lang, 'kursy/ebay-dropshipping', 'kurslar/ebay-dropshipping')
   };
 }
 
@@ -262,9 +504,13 @@ export default async function EbayDropshippingCourse({ params }: { params: Promi
   const lang = (await params)?.lang || 'en';
   const dict = content[lang as keyof typeof content] || content.en;
 
-  const contactLink = lang === 'tr' ? '/tr/iletisim' : '/en/contact';
-  const blogLink = lang === 'tr' ? '/tr/blog' : '/en/blog';
-  const homeLink = lang === 'tr' ? '/tr' : '/en';
+  const contactLink = 
+    lang === 'tr' ? '/tr/iletisim' : 
+    lang === 'ru' ? '/ru/kontakty' : 
+    lang === 'uz' ? '/uz/aloqa' : '/en/contact';
+
+  const blogLink = `/${lang}/blog`;
+  const homeLink = `/${lang}`;
 
   const IconMap: { [key: string]: React.ElementType } = {
     ShieldAlert,
@@ -274,6 +520,11 @@ export default async function EbayDropshippingCourse({ params }: { params: Promi
     Megaphone,
     Activity
   };
+
+  const supportLabel = 
+    lang === 'tr' ? 'Allmysell Desteği:' : 
+    lang === 'ru' ? 'Поддержка Allmysell:' : 
+    lang === 'uz' ? 'Allmysell Yordami:' : 'Allmysell Support:';
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] text-[#0A192F] selection:bg-[#0A192F] selection:text-white pb-32">
@@ -403,7 +654,7 @@ export default async function EbayDropshippingCourse({ params }: { params: Promi
                         </summary>
                         <div className="pl-6 pr-2 pt-1 pb-3 text-sm text-slate-600 ml-[3px] mt-1 border-l-2 border-indigo-200">
                           <span className="font-bold text-indigo-700 mb-1 block">
-                            {lang === 'tr' ? 'Allmysell Desteği:' : 'Allmysell Support:'}
+                            {supportLabel}
                           </span>
                           {problem.solution}
                         </div>

@@ -28,6 +28,30 @@ const content = {
     title: 'İçgörüler ve Mühendislik',
     readMore: 'Makaleyi Oku',
     minRead: 'dk okuma',
+  },
+  ru: {
+    meta: {
+      title: 'Блог и База Знаний',
+      description: 'Читайте новейшие технические статьи, B2B аналитику и практики разработки SaaS от команды Allmysell LLC.',
+      keywords: 'блог allmysell, статьи по разработке по, b2b saas аналитика, headless commerce, ebay дропшиппинг',
+    },
+    back: 'На Главную',
+    tag: 'База Знаний',
+    title: 'Аналитика и Технологии',
+    readMore: 'Читать статью',
+    minRead: 'мин чтения',
+  },
+  uz: {
+    meta: {
+      title: 'Blog va Maqolalar Markazi',
+      description: 'Allmysell LLC jamoasining eng so\'nggi texnik maqolalari, B2B tahlillari va SaaS muhandislik amaliyotlarini o\'qing.',
+      keywords: 'allmysell blogi, dasturlash maqolalari, b2b saas tahlillari, headless e-tijorat, ebay dropshipping',
+    },
+    back: 'Bosh Sahifaga Qaytish',
+    tag: 'Bilimlar Markazi',
+    title: 'Tahlil va Muhandislik',
+    readMore: 'Maqolani o\'qish',
+    minRead: 'daqiqalik o\'qish',
   }
 };
 
@@ -39,16 +63,23 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     title: data.meta.title,
     description: data.meta.description,
     keywords: data.meta.keywords,
-    alternates: constructAlternates('blog', 'blog', lang)
+    alternates: constructAlternates('blog', 'blog', lang, 'blog', 'blog')
   };
 }
 
 export default async function BlogIndex({ params }: { params: Promise<{ lang: string }> }) {
   const resolvedParams = await params;
-  const lang = resolvedParams?.lang || 'en';
+  const lang = (resolvedParams?.lang || 'en') as 'en' | 'tr' | 'ru' | 'uz';
   const dict = content[lang as keyof typeof content] || content.en;
   
-  const articles = await getAllArticles(lang as 'en' | 'tr');
+  const articles = await getAllArticles(lang);
+
+  const inLanguageMap = {
+    tr: 'tr-TR',
+    ru: 'ru-RU',
+    uz: 'uz-UZ',
+    en: 'en-US'
+  };
 
   // CollectionPage schema for blog listing
   const collectionSchema = {
@@ -57,7 +88,7 @@ export default async function BlogIndex({ params }: { params: Promise<{ lang: st
     "name": dict.meta.title,
     "description": dict.meta.description,
     "url": `https://allmysell.com/${lang}/blog`,
-    "inLanguage": lang === 'tr' ? 'tr-TR' : 'en-US',
+    "inLanguage": inLanguageMap[lang] || 'en-US',
     "isPartOf": {
       "@type": "WebSite",
       "name": "Allmysell LLC",
